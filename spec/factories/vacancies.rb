@@ -58,7 +58,6 @@ FactoryBot.define do
          include_additional_documents]
     end
     contact_email { publisher&.email || Faker::Internet.email(domain: "contoso.com") }
-    contact_number_provided { true }
     contact_number { "01234 123456" }
     contract_type { :permanent }
     further_details_provided { true }
