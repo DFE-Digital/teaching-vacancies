@@ -35,10 +35,10 @@ RSpec.describe VcapServices do
 
   describe "#named_service_url" do
     context "for a service with a binding name that exists" do
-      let(:named_service_url) { subject.named_service_url(:redis, "queue") }
+      let(:named_service_url) { subject.named_service_url(:redis, "cache") }
 
       it "gets the url for the service of the given type and binding name" do
-        expect(named_service_url).to eq("redis_queue_uri")
+        expect(named_service_url).to eq("redis_cache_uri")
       end
     end
 

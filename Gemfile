@@ -201,10 +201,7 @@ group :test do
   gem "climate_control"
   gem "cuprite"
   gem "fastimage"
-  gem "mock_redis"
   gem "rack_session_access"
-  # needed to support mock_redis
-  gem "redis-client"
   # maintained fork of rspec-retry
   gem "rspec-rebound"
   gem "selenium-webdriver"
