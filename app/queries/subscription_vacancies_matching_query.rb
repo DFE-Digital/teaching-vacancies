@@ -99,7 +99,7 @@ class SubscriptionVacanciesMatchingQuery
 
   # Handle job_share as a special string, not in enum.
   def sanitise_working_patterns(criteria)
-    patterns = Array(criteria[:working_patterns])
+    patterns = Array(criteria[:working_patterns]).dup
     # term_time jobs should appear when jobseeker searches for either full time or part time as it could be interpeted either way.
     patterns << "term_time" if patterns.intersect?(%w[full_time part_time])
     patterns_int = patterns.reject { |p| p == "job_share" }
