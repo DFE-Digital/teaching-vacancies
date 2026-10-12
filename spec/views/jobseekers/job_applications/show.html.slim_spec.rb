@@ -39,7 +39,7 @@ RSpec.describe "jobseekers/job_applications/show" do
 
       it "shows print or save application button" do
         expect(show_view).to have_link(
-          "Print or save your application",
+          "Print or save your application (opens in new tab)",
           href: jobseekers_job_application_print_path(job_application),
           class: "govuk-button--primary",
         )
@@ -62,10 +62,11 @@ RSpec.describe "jobseekers/job_applications/show" do
     context "when jobseekers have not withdrawn" do
       it "shows print or save application button" do
         expect(show_view).to have_link(
-          "Print or save your application",
+          "Print or save your application (opens in new tab)",
           href: jobseekers_job_application_print_path(job_application),
           class: "govuk-button--primary",
         )
+        expect(show_view).to have_css("a.print-application[target='_blank'][rel='noopener']")
       end
 
       it "does not show blank application button" do
@@ -112,7 +113,7 @@ RSpec.describe "jobseekers/job_applications/show" do
         expect(banner).to have_css(selectors[:withdraw_btn])
         expect(banner).to have_link("Withdraw", href: jobseekers_job_application_confirm_withdraw_path(job_application))
         expect(banner).to have_css(selectors[:print_btn])
-        expect(banner).to have_link("Print or save your application", href: jobseekers_job_application_print_path(job_application))
+        expect(banner).to have_link("Print or save your application (opens in new tab)", href: jobseekers_job_application_print_path(job_application))
 
         expect(banner).to have_no_css(selectors[:delete_btn])
         expect(banner).to have_no_css(selectors[:vacancy_form_btn])
@@ -127,7 +128,7 @@ RSpec.describe "jobseekers/job_applications/show" do
         expect(banner).to have_css(selectors[:tag], text: "Unsuccessful")
 
         expect(banner).to have_css(selectors[:print_btn])
-        expect(banner).to have_link("Print or save your application", href: jobseekers_job_application_print_path(job_application))
+        expect(banner).to have_link("Print or save your application (opens in new tab)", href: jobseekers_job_application_print_path(job_application))
 
         expect(banner).to have_no_css(selectors[:delete_btn])
         expect(banner).to have_no_css(selectors[:withdraw_btn])
