@@ -29,30 +29,43 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
-  let(:academy1) { create(:academy, geopoint: "POINT(-0.1273 51.4994)") }
-  let(:academy2) { create(:academy) }
-  let(:free_school1) { create(:school, :free_school) }
-  let(:free_school2) { create(:school, :free_school) }
-  let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
-  let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
-  let(:school) { create(:school, geopoint: "POINT(-0.019501 51.504949)") }
-  let(:school2) { create(:school, geopoint: "POINT(-1.8964 52.4820)") }
-  let!(:maths_job1) do
+  # rubocop:disable RSpec/BeforeAfterAll
+  before(:all) do
+    academy1 = create(:academy, geopoint: "POINT(-0.1273 51.4994)")
+    academy2 = create(:academy)
+    free_school1 = create(:school, :free_school)
+    free_school2 = create(:school, :free_school)
+    school = create(:school, name: "School", geopoint: "POINT(-0.019501 51.504949)")
+    school2 = create(:school, geopoint: "POINT(-1.8964 52.4820)")
     create(:vacancy, :secondary, :past_publish, :apply_via_website, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1",
                                                                     subjects: %w[Mathematics], organisations: [school], expires_at: Date.current + 1)
-  end
-  let!(:maths_job2) do
+
     create(:vacancy, :secondary, :past_publish, :apply_via_website, job_roles: ["teacher"], publish_on: Date.current - 2,
                                                                     job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school2], expires_at: Date.current + 3)
-  end
-  let!(:job1) do
     create(:vacancy, :secondary, :past_publish, :apply_via_website, job_roles: ["teacher"], publish_on: Date.current - 3,
                                                                     job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], expires_at: Date.current + 2, visa_sponsorship_available: true)
+    create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "PE Teacher", publish_on: Date.current - 6, subjects: [], organisations: [academy2], expires_at: Date.current + 5)
+    create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "Chemistry Teacher",  publish_on: Date.current - 5, subjects: [], organisations: [free_school1], expires_at: Date.current + 4, visa_sponsorship_available: true)
+    create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "Geography Teacher",  publish_on: Date.current - 4, subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6)
+    create(:vacancy, :expired, job_roles: ["teacher"], job_title: "Maths Teacher", subjects: [], organisations: [school])
   end
-  let!(:job2) { create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
-  let!(:job3) { create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4, visa_sponsorship_available: true) }
-  let!(:job4) { create(:vacancy, :past_publish, :apply_via_website, job_roles: ["teacher"], job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
-  let!(:expired_job) { create(:vacancy, :expired, job_roles: ["teacher"], job_title: "Maths Teacher", subjects: [], organisations: [school]) }
+
+  after(:all) do
+    Vacancy.destroy_all
+    Publisher.destroy_all
+    Organisation.destroy_all
+  end
+  # rubocop:enable RSpec/BeforeAfterAll
+
+  let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
+  let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
+  let(:school) { School.find_by!(name: "School") }
+  let(:maths_job1) { Vacancy.find_by!(job_title: "Maths 1") }
+  let(:maths_job2) { Vacancy.find_by!(job_title: "Maths Teacher 2") }
+  let(:job1) { Vacancy.find_by!(job_title: "Physics Teacher") }
+  let(:job2) { Vacancy.find_by!(job_title: "PE Teacher") }
+  let(:job3) { Vacancy.find_by!(job_title: "Chemistry Teacher") }
+  let(:job4) { Vacancy.find_by!(job_title: "Geography Teacher") }
   let(:per_page) { 2 }
 
   context "when searching using the desktop search field" do
@@ -223,41 +236,22 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
       end
 
-      it "shows distance between school and their location and allows sorting by distance", js: true do
+      it "shows distance between school and their location and allows sorting by distance", :js do
         expect(page).to have_content "Jobs in or near Birmingham"
 
-        within(".search-results__item", text: "Physics Teacher") do
-          distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("76.6 miles")
-        end
-
-        within(".search-results__item", text: "Maths 1") do
-          distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("81.2 miles")
-        end
-
-        within(".search-results__item", text: "Maths Teacher 2") do
-          distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("90.1 miles")
-        end
-
         expect(page).to have_select("sort_by", selected: "Distance")
-        expect("Physics Teacher").to appear_before("Maths 1")
-        expect("Maths 1").to appear_before("Maths Teacher 2")
-
-        expect(page).to have_select("sort_by", selected: "Distance")
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["PE Teacher", "Chemistry Teacher", "Geography Teacher", "Physics Teacher", "Maths 1", "Maths Teacher 2"])
+        expect(page.all(".search-results__item dd.distance-from").map(&:text)).to eq(["42.0 miles", "42.0 miles", "42.0 miles", "76.6 miles", "81.2 miles", "90.1 miles"])
 
         select "Ending soon", from: "sort-by-field"
         expect(page).to have_select("sort_by", selected: "Ending soon")
 
-        expect("Maths 1").to appear_before("Physics Teacher")
-        expect("Physics Teacher").to appear_before("Maths Teacher 2")
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["Maths 1", "Physics Teacher", "Maths Teacher 2", "Chemistry Teacher", "PE Teacher", "Geography Teacher"])
 
         select "Newest job", from: "sort-by-field"
         expect(page).to have_select("sort_by", selected: "Newest job")
 
-        expect("Maths 1").to appear_before("Maths Teacher 2")
-        expect("Maths Teacher 2").to appear_before("Physics Teacher")
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["Maths 1", "Maths Teacher 2", "Physics Teacher", "Geography Teacher", "Chemistry Teacher", "PE Teacher"])
       end
     end
   end

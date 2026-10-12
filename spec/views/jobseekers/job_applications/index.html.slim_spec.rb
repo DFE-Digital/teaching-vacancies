@@ -31,6 +31,26 @@ RSpec.describe "jobseekers/job_applications/index" do
       end
     end
 
+    describe "job applications listing" do
+      # before { login_as(jobseeker, scope: :jobseeker) }
+      # after { logout }
+      let(:job_applications) do
+        JobApplication.statuses.transform_keys(&:to_sym).except(:reviewed).keys.map do |application_status|
+          build_stubbed(:job_application, :"status_#{application_status}", jobseeker:)
+        end
+      end
+
+      it "can view all its applications" do
+        links = index_view.all("#applications-results .card-component__content")
+        job_applications.each do |ja|
+          tag_text = JobApplicationsHelper::JOBSEEKER_STATUS_MAPPINGS[ja.status.to_sym]
+          application = links.detect { |link| link.find("a")["href"].include?(ja.id) }
+          expect(application).to be_present, "missing job application status #{ja.status}"
+          expect(application.find(".app-status-tag")).to have_text(tag_text)
+        end
+      end
+    end
+
     context "when there are some job applications" do
       let(:active_draft_job) { build_stubbed(:vacancy) }
       let(:active_draft) { build_stubbed(:job_application, :status_draft, jobseeker:, vacancy: active_draft_job) }

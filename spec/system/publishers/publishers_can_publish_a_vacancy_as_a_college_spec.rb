@@ -40,7 +40,8 @@ RSpec.describe "Creating a vacancy as an FE college" do
     publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
     expect(publisher_contract_information_page).to be_displayed
-    publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+    publisher_contract_information_page.fill_in_and_submit_form(working_patterns: vacancy.working_patterns,
+                                                                is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details)
 
     expect(publisher_start_date_page).to be_displayed
     publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)

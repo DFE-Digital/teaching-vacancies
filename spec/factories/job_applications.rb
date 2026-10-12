@@ -11,7 +11,7 @@ FactoryBot.define do
     jobseeker
     vacancy
 
-    # Personal details
+    # Prevent first names like 'Al' causing false negatives
     first_name { Faker::Name.first_name.rjust(5, "abcd") }
     # avoid last names with single quotes, as they are escaped and make tests fail sometimes
     last_name { Faker::Name.last_name.delete("'") }

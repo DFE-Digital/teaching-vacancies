@@ -69,7 +69,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
 
     after(:all) do
       Vacancy.destroy_all
-      School.destroy_all
+      Organisation.destroy_all
       Publisher.destroy_all
       Subscription.destroy_all
     end
@@ -505,7 +505,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
 
     after(:all) do
       Vacancy.destroy_all
-      School.destroy_all
+      Organisation.destroy_all
       Publisher.destroy_all
       Subscription.destroy_all
       LocationPolygon.destroy_all
