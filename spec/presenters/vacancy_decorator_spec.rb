@@ -162,6 +162,14 @@ RSpec.describe VacancyDecorator do
         expect(decorated.working_patterns_for_job_schema).to eq %w[PART_TIME]
       end
     end
+
+    context "when TERM_TIME" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[term_time], fixed_term_contract_duration: nil) }
+
+      it "returns an array containing FULL_TIME and PART_TIME" do
+        expect(decorated.working_patterns_for_job_schema).to eq %w[FULL_TIME PART_TIME]
+      end
+    end
   end
 
   describe "#school_group_names" do
