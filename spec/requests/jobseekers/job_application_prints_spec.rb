@@ -110,18 +110,12 @@ RSpec.describe "Job application prints" do
       get jobseekers_job_application_print_path(job_application)
     end
 
-    it "renders the application as HTML in the print layout" do
+    it "renders the application as printable HTML without generating a server-side PDF", :aggregate_failures do
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq("text/html")
       expect(response).to render_template(layout: "print")
       expect(page).to have_title("Print application - Teaching Vacancies - GOV.UK")
-    end
-
-    it "does not generate a server-side PDF" do
       expect(JobApplicationPdfGenerator).not_to have_received(:new)
-    end
-
-    it "renders the print header and instructions" do
       expect(page).to have_text("#{vacancy.job_title} at #{organisation.name}")
       expect(page).to have_css(".print-header__applicant-name", text: job_application.name)
       expect(page).to have_text("Use your browser's print option to print this application or save it as a PDF.")
@@ -135,29 +129,65 @@ RSpec.describe "Job application prints" do
       expect(page).to have_no_css(".govuk-header, .govuk-phase-banner, .govuk-breadcrumbs, .govuk-footer", visible: :all)
     end
 
-    it "renders the consent and personal details" do
+    it "renders the complete application", :aggregate_failures do
       expect(page).to have_css(".print-introduction", text: I18n.t("jobseekers.job_applications.show.consent_text"))
       expect(page).to have_css(".print-section__heading", text: "Personal details")
       expect(page).to have_css(".print-table__row", text: /First name#{Regexp.escape(job_application.first_name)}/)
       expect(page).to have_css(".print-table__row", text: /Last name#{Regexp.escape(job_application.last_name)}/)
       expect(page).to have_css(".print-table__row", text: /Email address#{Regexp.escape(job_application.email_address)}/)
       expect(page).to have_css(".print-table__row", text: /National Insurance number#{Regexp.escape(job_application.national_insurance_number)}/)
-    end
-
-    it "renders professional status" do
       expect(page).to have_css(".print-section__heading", text: "Professional status")
       expect(page).to have_css(".print-table__row", text: /Do you have qualified teacher status \(QTS\)\?Yes, gained in 1990/)
       expect(page).to have_css(".print-table__row", text: /Teacher reference number \(TRN\)#{job_application.teacher_reference_number}/)
       expect(page).to have_css(".print-table__row", text: /Have you completed your induction period\?Yes/)
-    end
-
-    it "renders qualifications" do
       expect(page).to have_css(".print-section__heading", text: "Qualifications")
       expect(page).to have_css(".print-subsection__heading", text: "Undergraduate degree")
       expect(page).to have_css(".print-table__row", text: /Subject:Mathematics/)
       expect(page).to have_css(".print-table__row", text: /Institution:Example University/)
       expect(page).to have_css(".print-table__row", text: /Grade:First class honours/)
       expect(page).to have_css(".print-table__row", text: /Date completed:June 2020/)
+      expect(page).to have_css(
+        ".print-section__heading",
+        text: "Training and continuing professional development (CPD)",
+      )
+      expect(page).to have_css(".print-table__row", text: /NameSafeguarding training/)
+      expect(page).to have_css(".print-table__row", text: /ProviderExample Training Provider/)
+      expect(page).to have_css(".print-table__row", text: /Course length2 days/)
+      expect(page).to have_css(".print-table__row", text: /Awarded Year2024/)
+      expect(page).to have_css(".print-section__heading", text: "Professional body memberships")
+      expect(page).to have_css(".print-table__row", text: /Name of professional body:Example Teaching Association/)
+      expect(page).to have_css(".print-table__row", text: /Membership type or level:Full member/)
+      expect(page).to have_css(".print-table__row", text: /Membership or registration number:MEM-123/)
+      expect(page).to have_css(".print-table__row", text: /Date obtained:2022/)
+      expect(page).to have_css(".print-section__heading", text: "Work history")
+      expect(page).to have_css(".print-record", minimum: 2)
+      expect(page).to have_css(".print-table__row", text: /Job Title:Mathematics teacher/)
+      expect(page).to have_css(".print-table__row", text: /School or other:Example Secondary School/)
+      expect(page).to have_css(".print-table__row", text: /Employment currently held:Yes/)
+      expect(page).to have_css(".print-table__row", text: /End date:present/)
+      expect(page).to have_css(".print-table__row", text: /Reason:Caring responsibilities/)
+
+      personal_statement = page.find("section.print-personal-statement.print-personal-statement--completed")
+
+      expect(personal_statement).to have_css(".print-section__heading", text: "Personal statement")
+      expect(personal_statement).to have_text("I am committed to helping every pupil succeed.")
+      expect(personal_statement).to have_css("strong", text: "every pupil")
+      expect(page).to have_css(".print-section__heading", text: "References")
+      expect(page).to have_css(".print-table__row", text: /Name:Morgan Example/)
+      expect(page).to have_css(".print-table__row", text: /Job Title:Headteacher/)
+      expect(page).to have_css(".print-table__row", text: /Organisation:Example Secondary School/)
+      expect(page).to have_css(".print-table__row", text: /Relationship:Line manager/)
+      expect(page).to have_css(".print-table__row", text: /Email:referee@contoso\.com/)
+      expect(page).to have_css(".print-table__row", text: /Phone Number:01234 987654/)
+      expect(page).to have_css(".print-table__row", text: /Current or most recent employer:Yes/)
+      expect(page).to have_css(
+        ".print-section__heading",
+        text: "Do you need support or adjustments for your interview?",
+      )
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Step-free interview access/)
+      expect(page).to have_css(".print-section__heading", text: "Declarations")
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Safeguarding declaration details/)
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: My sibling works at the school/)
     end
 
     context "without qualifications" do
@@ -169,43 +199,6 @@ RSpec.describe "Job application prints" do
           text: I18n.t("jobseekers.job_applications.show.qualifications.none"),
         )
       end
-    end
-
-    it "renders training and continuing professional development" do
-      expect(page).to have_css(
-        ".print-section__heading",
-        text: "Training and continuing professional development (CPD)",
-      )
-      expect(page).to have_css(".print-table__row", text: /NameSafeguarding training/)
-      expect(page).to have_css(".print-table__row", text: /ProviderExample Training Provider/)
-      expect(page).to have_css(".print-table__row", text: /Course length2 days/)
-      expect(page).to have_css(".print-table__row", text: /Awarded Year2024/)
-    end
-
-    it "renders professional body memberships" do
-      expect(page).to have_css(".print-section__heading", text: "Professional body memberships")
-      expect(page).to have_css(".print-table__row", text: /Name of professional body:Example Teaching Association/)
-      expect(page).to have_css(".print-table__row", text: /Membership type or level:Full member/)
-      expect(page).to have_css(".print-table__row", text: /Membership or registration number:MEM-123/)
-      expect(page).to have_css(".print-table__row", text: /Date obtained:2022/)
-    end
-
-    it "renders employment history" do
-      expect(page).to have_css(".print-section__heading", text: "Work history")
-      expect(page).to have_css(".print-record", minimum: 2)
-      expect(page).to have_css(".print-table__row", text: /Job Title:Mathematics teacher/)
-      expect(page).to have_css(".print-table__row", text: /School or other:Example Secondary School/)
-      expect(page).to have_css(".print-table__row", text: /Employment currently held:Yes/)
-      expect(page).to have_css(".print-table__row", text: /End date:present/)
-      expect(page).to have_css(".print-table__row", text: /Reason:Caring responsibilities/)
-    end
-
-    it "renders the rich-text personal statement as its own print section" do
-      section = page.find("section.print-personal-statement.print-personal-statement--completed")
-
-      expect(section).to have_css(".print-section__heading", text: "Personal statement")
-      expect(section).to have_text("I am committed to helping every pupil succeed.")
-      expect(section).to have_css("strong", text: "every pupil")
     end
 
     context "without a personal statement" do
@@ -294,31 +287,6 @@ RSpec.describe "Job application prints" do
       it "does not render religious information" do
         expect(page).to have_no_css(".print-section__heading", text: "Religious information")
       end
-    end
-
-    it "renders referees" do
-      expect(page).to have_css(".print-section__heading", text: "References")
-      expect(page).to have_css(".print-table__row", text: /Name:Morgan Example/)
-      expect(page).to have_css(".print-table__row", text: /Job Title:Headteacher/)
-      expect(page).to have_css(".print-table__row", text: /Organisation:Example Secondary School/)
-      expect(page).to have_css(".print-table__row", text: /Relationship:Line manager/)
-      expect(page).to have_css(".print-table__row", text: /Email:referee@contoso\.com/)
-      expect(page).to have_css(".print-table__row", text: /Phone Number:01234 987654/)
-      expect(page).to have_css(".print-table__row", text: /Current or most recent employer:Yes/)
-    end
-
-    it "renders interview support or adjustments" do
-      expect(page).to have_css(
-        ".print-section__heading",
-        text: "Do you need support or adjustments for your interview?",
-      )
-      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Step-free interview access/)
-    end
-
-    it "renders declarations" do
-      expect(page).to have_css(".print-section__heading", text: "Declarations")
-      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Safeguarding declaration details/)
-      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: My sibling works at the school/)
     end
   end
 
