@@ -67,7 +67,7 @@ RSpec.describe Publishers::ShortlistShareMailer do
     it "triggers a `publisher_shortlist_share` email event", :dfe_analytics do
       mail.deliver_now
 
-      expect(:publisher_shortlist_share).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
+      expect(:publisher_shortlist_share).to have_been_enqueued_as_tvs_analytics_events_with_data(%i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
 
     context "when an application is no longer shortlisted by delivery time" do
