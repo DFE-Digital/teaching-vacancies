@@ -146,8 +146,8 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           response_array.to_json
         end
 
-        it "maps term_time to part time" do
-          expect(vacancy.working_patterns).to eq %w[full_time part_time]
+        it "preserves term_time" do
+          expect(vacancy.working_patterns).to eq %w[full_time term_time]
         end
       end
 
@@ -158,8 +158,8 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           response_array.to_json
         end
 
-        it "maps term_time to part time" do
-          expect(vacancy.working_patterns).to eq %w[full_time part_time]
+        it "preserves term_time" do
+          expect(vacancy.working_patterns).to eq %w[full_time part_time term_time]
         end
       end
 
@@ -187,7 +187,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         end
 
         it "records both working patterns in the vacancy" do
-          expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time")
+          expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time", "term_time")
         end
       end
     end

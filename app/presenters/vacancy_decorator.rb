@@ -40,8 +40,8 @@ class VacancyDecorator < Draper::Decorator
   # simplecov:disable
   def working_patterns_for_job_schema
     [
-      ("FULL_TIME" if model.working_patterns.include? "full_time"),
-      ("PART_TIME" if model.working_patterns.include? "part_time"),
+      ("FULL_TIME" if model.working_patterns.intersect?(%w[full_time term_time])),
+      ("PART_TIME" if model.working_patterns.intersect?(%w[part_time term_time])),
       ("TEMPORARY" if model.fixed_term_contract_duration?),
       ("OTHER" if model.working_patterns.any?("job_share") && !model.fixed_term_contract_duration?),
     ].compact

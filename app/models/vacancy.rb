@@ -54,11 +54,11 @@ class Vacancy < ApplicationRecord
   #       - Check that no code depends on the keys containing "job_share".
   #       - Remove the key from the array_enum if the above conditions are met.
   LEGACY_WORKING_PATTERNS = %w[job_share].freeze
-  WORKING_PATTERNS = %w[full_time part_time].freeze
+  WORKING_PATTERNS = %w[full_time term_time part_time].freeze
 
   KEY_STAGES = { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }.freeze
   array_enum key_stages: KEY_STAGES
-  WORKING_PATTERNS_ENUM = { full_time: 0, part_time: 100, job_share: 101 }.freeze
+  WORKING_PATTERNS_ENUM = { full_time: 0, part_time: 100, job_share: 101, term_time: 102 }.freeze
   array_enum working_patterns: WORKING_PATTERNS_ENUM
   # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
   PHASES = { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }.freeze

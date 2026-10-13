@@ -172,6 +172,19 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
+        context "when working patterns include term time", document: false do
+          let(:vacancy_params) { super().merge(working_patterns: %w[full_time term_time]) }
+
+          it "creates the vacancy with all working patterns" do |example|
+            vacancy_count = Vacancy.count
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(Vacancy.count).to eq(vacancy_count + 1)
+            expect(Vacancy.last.working_patterns).to eq(%w[full_time term_time])
+          end
+        end
+
         context "when subjects and key_stages are empty arrays", document: false do
           let(:vacancy_params) do
             {
@@ -657,6 +670,17 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
+        context "when the vacancy has a term time working pattern", document: false do
+          before { original_vacancy.update!(working_patterns: %w[part_time term_time]) }
+
+          it "returns all working patterns" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(response.parsed_body["working_patterns"]).to eq(%w[part_time term_time])
+          end
+        end
+
         context "when the vacancy is still not published", document: false do
           let(:original_publish_on) { (Time.zone.today + 1).strftime("%Y-%m-%d") }
 
@@ -779,6 +803,18 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "schools" => { "school_urns" => [], # Reassigned the vacancy to the trust central office
                            "trust_uid" => original_vacancy.trust_uid },
           )
+        end
+
+        context "when working patterns include term time", document: false do
+          let(:vacancy_params) { super().merge(working_patterns: %w[part_time term_time]) }
+
+          it "updates the vacancy with all working patterns" do |example|
+            expect { submit_request(example.metadata) }.not_to change(Vacancy, :count)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(response.parsed_body["working_patterns"]).to eq(%w[part_time term_time])
+            expect(original_vacancy.reload.working_patterns).to eq(%w[part_time term_time])
+          end
         end
 
         it "enqueues UpdateGoogleIndexQueueJob with the correct job URL", document: false do |example|
@@ -961,7 +997,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             expect(response.parsed_body.keys).to eq(%w[errors])
             expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
               .to contain_exactly("The property '#/vacancy/key_stages/0' value \"wrong_ks\" did not match one of the following values: early_years, ks1, ks2, ks3, ks4, ks5",
-                                  "The property '#/vacancy/working_patterns/0' value \"wrong_time\" did not match one of the following values: full_time, part_time",
+                                  "The property '#/vacancy/working_patterns/0' value \"wrong_time\" did not match one of the following values: full_time, part_time, term_time",
                                   "The property '#/vacancy/phases/0' value \"wrong_phase\" did not match one of the following values: nursery, primary, secondary, sixth_form_or_college, through")
           end
         end
