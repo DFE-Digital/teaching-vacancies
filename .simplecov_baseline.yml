@@ -7990,7 +7990,7 @@ app/views/vacancies/search/_radius.html.slim:
     missed: 0
 app/views/vacancies/search/_results.html.slim:
   lines:
-    percent: 93.18
+    percent: 93.02
     missed: 3
   branches:
     percent: 75.0

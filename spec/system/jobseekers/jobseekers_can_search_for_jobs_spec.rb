@@ -242,18 +242,20 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect(page).to have_select("sort_by", selected: "Distance")
         expect(page.all(".search-results__item a.view-vacancy-link").map(&:text))
           .to eq(["Geography Teacher", "Physics Teacher", "Maths 1", "PE Teacher", "Maths Teacher 2", "Chemistry Teacher"])
-        expect(page.all(".search-results__item dd.distance-from").map(&:text))
+        expect(page.all(".search-results__item .distance-from").map(&:text))
           .to eq(["61.8 miles", "76.6 miles", "81.2 miles", "83.3 miles", "90.1 miles", "106.4 miles"])
 
         select "Ending soon", from: "sort-by-field"
         expect(page).to have_select("sort_by", selected: "Ending soon")
 
-        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["Maths 1", "Physics Teacher", "Maths Teacher 2", "Chemistry Teacher", "PE Teacher", "Geography Teacher"])
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text))
+          .to eq(["Maths 1", "Physics Teacher", "Maths Teacher 2", "Chemistry Teacher", "PE Teacher", "Geography Teacher"])
 
         select "Newest job", from: "sort-by-field"
         expect(page).to have_select("sort_by", selected: "Newest job")
 
-        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["Maths 1", "Maths Teacher 2", "Physics Teacher", "Geography Teacher", "Chemistry Teacher", "PE Teacher"])
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text))
+          .to eq(["Maths 1", "Maths Teacher 2", "Physics Teacher", "Geography Teacher", "Chemistry Teacher", "PE Teacher"])
       end
     end
   end
