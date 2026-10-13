@@ -9,9 +9,9 @@ RSpec.describe "vacancies/index" do
   let(:vacancies_search) { Search::VacancySearch.new(form.to_hash, sort:) }
   let(:landing_page) { LandingPage[landing_page_slug] }
   let(:landing_page_slug) { "part-time-potions-and-sorcery-teacher-jobs" }
-  let(:school) { build_stubbed(:school) }
-  let(:vacancy) { build_stubbed(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
-  let(:vacancies) { [vacancy] }
+  let(:school) { create(:school, :with_image) }
+  let(:vacancy) { create(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
+  let(:vacancies) { [vacancy].map(&:decorate) }
   let(:search_criteria) { {} }
   let(:sort) { form.sort }
   let(:pagy) { pagy_array(build_stubbed_list(:vacancy, 2)).first }
@@ -36,10 +36,9 @@ RSpec.describe "vacancies/index" do
 
   describe "landing pages" do
     it "contains the expected content and vacancies" do
-      expect(index_view).to have_css("h1", text: "Jobs (1)")
-      expect(index_view).to have_link("Head of Hogwarts")
-      expect(index_view).to have_link(vacancy.job_title.to_s)
-      expect(index_view).to have_css("p", text: school.name)
+      expect(rendered).to have_css("h1", text: "Jobs (1)")
+      expect(rendered).to have_link("Head of Hogwarts")
+      expect(rendered).to have_css("p", text: school.name)
     end
   end
 end

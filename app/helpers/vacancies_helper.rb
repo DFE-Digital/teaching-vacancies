@@ -100,13 +100,7 @@ module VacanciesHelper
     t("publishers.vacancies.show.page_title", job_title: vacancy.job_title)
   end
 
-  def organisation_type_label(vacancy)
-    vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
-  end
-
   def organisation_type_value(vacancy)
-    return organisation_type(vacancy.organisation) unless vacancy.organisations.many?
-
     safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
       tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
     end)
