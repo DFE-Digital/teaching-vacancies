@@ -2484,8 +2484,8 @@ app/helpers/vacancies_helper.rb:
     percent: 94.32
     missed: 8
   branches:
-    percent: 90.78
-    missed: 7
+    percent: 91.66
+    missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
     percent: 100.0
@@ -5918,7 +5918,7 @@ app/views/layouts/application.html.slim:
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
-    percent: 73.52
+    percent: 74.28
     missed: 9
   branches:
     percent: 50.0
@@ -6182,21 +6182,7 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
 app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
   lines:
     percent: 100.0
     missed: 0
@@ -7990,11 +7976,11 @@ app/views/vacancies/search/_radius.html.slim:
     missed: 0
 app/views/vacancies/search/_results.html.slim:
   lines:
-    percent: 93.02
+    percent: 93.18
     missed: 3
   branches:
-    percent: 75.0
-    missed: 4
+    percent: 83.33
+    missed: 1
 app/views/vacancies/search/_sort.html.slim:
   lines:
     percent: 100.0
