@@ -40,10 +40,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
-    if session[:newly_created_user]
-      @newly_created_user = true
-      session.delete(:newly_created_user)
-    end
+    set_one_login_banners
 
     @has_previous_application = nil
     if quick_apply?
@@ -55,10 +52,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       else
         @has_previous_application = current_jobseeker.has_submitted_native_job_application?
       end
-    end
-    if session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
     end
   end
 
@@ -214,6 +207,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     return unless job_application
 
     redirect_to jobseekers_job_application_path(job_application), warning: t(".warning") unless job_application.draft?
+  end
+
+  def set_one_login_banners
+    @newly_created_user = session.delete(:newly_created_user).present?
+    @user_exists_first_log_in = session.delete(:user_exists_first_log_in).present?
   end
 
   def raise_cannot_apply
