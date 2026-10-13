@@ -32,9 +32,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   # rubocop:disable RSpec/BeforeAfterAll
   before(:all) do
     academy1 = create(:academy, geopoint: "POINT(-0.1273 51.4994)")
-    academy2 = create(:academy)
-    free_school1 = create(:school, :free_school)
-    free_school2 = create(:school, :free_school)
+    academy2 = create(:academy, geopoint: "POINT(-0.1673 51.8)")
+    free_school1 = create(:school, :free_school, geopoint: "POINT(-0.12 52.3)")
+    free_school2 = create(:school, :free_school, geopoint: "POINT(-0.4 51.2)")
     school = create(:school, name: "School", geopoint: "POINT(-0.019501 51.504949)")
     school2 = create(:school, geopoint: "POINT(-1.8964 52.4820)")
     create(:vacancy, :secondary, :past_publish, :apply_via_website, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1",
@@ -240,8 +240,10 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect(page).to have_content "Jobs in or near Birmingham"
 
         expect(page).to have_select("sort_by", selected: "Distance")
-        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text)).to eq(["PE Teacher", "Chemistry Teacher", "Geography Teacher", "Physics Teacher", "Maths 1", "Maths Teacher 2"])
-        expect(page.all(".search-results__item dd.distance-from").map(&:text)).to eq(["42.0 miles", "42.0 miles", "42.0 miles", "76.6 miles", "81.2 miles", "90.1 miles"])
+        expect(page.all(".search-results__item a.view-vacancy-link").map(&:text))
+          .to eq(["Geography Teacher", "Physics Teacher", "Maths 1", "PE Teacher", "Maths Teacher 2", "Chemistry Teacher"])
+        expect(page.all(".search-results__item dd.distance-from").map(&:text))
+          .to eq(["61.8 miles", "76.6 miles", "81.2 miles", "83.3 miles", "90.1 miles", "106.4 miles"])
 
         select "Ending soon", from: "sort-by-field"
         expect(page).to have_select("sort_by", selected: "Ending soon")

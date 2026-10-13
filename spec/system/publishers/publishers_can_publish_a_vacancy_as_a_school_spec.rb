@@ -37,7 +37,7 @@ RSpec.describe "Creating a vacancy" do
                       :secondary,
                       :apply_via_website,
                       working_patterns: %w[full_time term_time],
-              publish_on: Date.current)
+                      publish_on: Date.current)
       end
 
       it "follows the non-TVS flow" do
