@@ -25,7 +25,11 @@
         = govuk_button_link_to t("jobseekers.job_applications.banner_links.apply"), new_jobseekers_job_job_application_path(vacancy.id)
   - elsif vacancy.live? && vacancy.website?
     .govuk-grid-column-one-third
-      = apply_link vacancy, text: t("jobseekers.job_applications.banner_links.apply")
+      - ab_test = current_jobseeker.present? ? field_test(:trn_on_apply, participant: current_jobseeker) : "apply"
+      - if ab_test == "apply"
+        = apply_link vacancy, text: t("jobseekers.job_applications.banner_links.apply")
+      - else
+        = govuk_button_link_to t("jobseekers.job_applications.banner_links.apply"), trn_interstitial_job_path(vacancy.id)
 
   .govuk-grid-column-one-third
     = button_to t("jobs.alert.similar.terse"), new_subscription_path, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, method: :get, class: "banner-button-component__button banner-button-component__button--no-wrap icon icon--left icon--alert-blue"
