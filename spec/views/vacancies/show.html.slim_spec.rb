@@ -158,6 +158,7 @@ RSpec.describe "vacancies/show" do
           expect(rendered).to have_link(
             I18n.t("jobseekers.job_applications.banner_links.apply"),
             href: apply_job_path(vacancy),
+            class: "govuk-button",
           )
         end
       end
