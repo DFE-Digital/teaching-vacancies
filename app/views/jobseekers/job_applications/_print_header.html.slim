@@ -5,5 +5,5 @@ header.print-header
       - if applicant_name.present?
         = applicant_name
       - else
-        span.govuk-visually-hidden = title
+        span.govuk-visually-hidden = blank_applicant_name
   = image_tag "TVS-logo.png", class: "print-header__logo", alt: t("app.title")

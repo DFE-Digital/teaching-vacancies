@@ -135,8 +135,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def print
-    raise ActionController::RoutingError, "Cannot print draft application" if job_application.draft?
-
     return download if vacancy.uploaded_form?
 
     @job_application_pdf = JobApplicationPdf.new(job_application)

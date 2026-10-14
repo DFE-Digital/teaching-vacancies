@@ -6,8 +6,8 @@ p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
 
 = render "print_header",
   applicant_name: @job_application_pdf.applicant_name,
-  caption: @job_application_pdf.header_text,
-  title: t(".page_title")
+  blank_applicant_name: t(".page_title"),
+  caption: @job_application_pdf.header_text
 
 p.print-introduction = t("jobseekers.job_applications.show.consent_text")
 

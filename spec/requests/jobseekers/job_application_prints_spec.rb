@@ -293,9 +293,10 @@ RSpec.describe "Job application prints" do
   context "when the application is a draft" do
     let(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
 
-    it "raises a routing error" do
-      expect { get jobseekers_job_application_print_path(job_application) }
-        .to raise_error(ActionController::RoutingError, /draft/)
+    it "renders the draft application" do
+      get jobseekers_job_application_print_path(job_application)
+
+      expect(response).to have_http_status(:ok)
     end
   end
 

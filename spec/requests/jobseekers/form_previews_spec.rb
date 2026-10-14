@@ -26,6 +26,11 @@ RSpec.describe "Jobseekers::FormPreviewController" do
       expect(response.media_type).to eq("text/html")
       expect(response).to render_template(layout: "print")
       expect(page).to have_title("Blank application form - Teaching Vacancies - GOV.UK")
+      expect(page).to have_css(
+        ".print-header__applicant-name--blank",
+        text: "Blank application form",
+        visible: :all,
+      )
     end
 
     it "does not generate a server-side PDF" do
