@@ -146,6 +146,13 @@ RSpec.describe "vacancies/show" do
         it "has an application link" do
           expect(rendered).to have_link(expected_link)
         end
+
+        it "has an application link in the banner" do
+          expect(rendered).to have_link(
+            I18n.t("jobseekers.job_applications.banner_links.apply"),
+            href: apply_job_path(vacancy),
+          )
+        end
       end
 
       context "with a college vacancy" do
@@ -168,6 +175,10 @@ RSpec.describe "vacancies/show" do
 
         it "does not have an application link" do
           expect(rendered).to have_no_link(expected_link)
+          expect(rendered).to have_no_link(
+            I18n.t("jobseekers.job_applications.banner_links.apply"),
+            href: apply_job_path(vacancy),
+          )
         end
       end
     end
