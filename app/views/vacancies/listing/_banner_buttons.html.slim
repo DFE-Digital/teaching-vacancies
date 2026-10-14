@@ -16,19 +16,19 @@
           - if vacancy.uploaded_form?
             = button_to t("jobseekers.job_applications.banner_links.apply"), jobseekers_job_job_application_path(vacancy.id), class: "banner-button-component__button icon icon--left icon--apply"
           - else
-            = button_to t("jobseekers.job_applications.banner_links.apply"), new_jobseekers_job_job_application_path(vacancy.id), method: :get, class: "banner-button-component__button icon icon--left icon--apply"
+            = govuk_button_link_to t("jobseekers.job_applications.banner_links.apply"), new_jobseekers_job_job_application_path(vacancy.id)
         - else
-          = button_to t("jobseekers.job_applications.banner_links.apply"), trn_interstitial_job_path(vacancy.id), method: :get, class: "banner-button-component__button icon icon--left icon--apply"
+          = govuk_button_link_to t("jobseekers.job_applications.banner_links.apply"), trn_interstitial_job_path(vacancy.id)
       - elsif vacancy.uploaded_form?
         = button_to t("jobseekers.job_applications.banner_links.apply"), jobseekers_job_job_application_path(vacancy.id), class: "banner-button-component__button icon icon--left icon--apply"
       - else
-        = button_to t("jobseekers.job_applications.banner_links.apply"), new_jobseekers_job_job_application_path(vacancy.id), method: :get, class: "banner-button-component__button icon icon--left icon--apply"
+        = govuk_button_link_to t("jobseekers.job_applications.banner_links.apply"), new_jobseekers_job_job_application_path(vacancy.id)
   - elsif vacancy.live? && vacancy.website?
     .govuk-grid-column-one-third
       = apply_link vacancy, text: t("jobseekers.job_applications.banner_links.apply")
 
   .govuk-grid-column-one-third
-    = button_to t("jobs.alert.similar.terse"), new_subscription_path, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, method: :get, class: "banner-button-component__button icon icon--left icon--alert-blue"
+    = button_to t("jobs.alert.similar.terse"), new_subscription_path, params: { search_criteria: invented_job_alert_search_criteria, vacancy_id: vacancy.id }, method: :get, class: "banner-button-component__button banner-button-component__button--no-wrap icon icon--left icon--alert-blue"
 
   - if job_application.nil?
     .govuk-grid-column-one-third
