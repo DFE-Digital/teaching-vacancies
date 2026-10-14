@@ -78,9 +78,9 @@ module LinksHelper
     )
   end
 
-  def apply_link(vacancy, **)
+  def apply_link(vacancy, text: t("jobs.view_advert.#{school_or_college_type(vacancy.organisation)}"), **)
     tracked_open_in_new_tab_button_link_to(
-      t("jobs.view_advert.#{school_or_college_type(vacancy.organisation)}"),
+      text,
       apply_job_path(vacancy),
       "aria-label": t("jobs.aria_labels.apply_link"),
       link_type: :get_more_information,
