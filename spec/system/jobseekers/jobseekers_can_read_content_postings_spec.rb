@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can read content postings", :a11y do
     expect(page).to be_axe_clean
   end
 
-  context "get help applying pages" do
+  describe "get help applying pages" do
     let(:post_names) do
       %w[
         prepare-for-a-teaching-job-interview-lesson
@@ -40,7 +40,7 @@ RSpec.describe "Jobseekers can read content postings", :a11y do
     end
   end
 
-  context "return-to-teaching-in-england" do
+  describe "return-to-teaching-in-england" do
     let(:post_names) do
       %w[
         return-to-teaching
