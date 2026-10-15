@@ -6,11 +6,10 @@ To help hiring staff understand how much traffic their vacancies receive, and wh
 
 When a user views a vacancy:
 
-1. We queue a job (TrackVacancyViewJob) which records the view, and the referrer, in Redis.
-2. Every 15 minutes, a scheduled job (AggregateVacancyReferrerStatsJob) aggregates the data from Redis and stores it in the vacancy_analytics table.
-3. Once aggregated, the corresponding keys are deleted from Redis.
+1. `VacanciesController#show` calls `VacancyAnalyticsService.track_visit`, which normalises the referrer (for example `google`, `direct`, `internal`, or `jobalert` for email links).
+2. The service upserts directly into the vacancy_analytics table, incrementing that referrer's count in the vacancy's single row with one atomic SQL statement.
 
-This approach reduces load on Postgres by using Redis as a short-term buffer. While this introduces a 15 minute delay in the data being available, we don't expect this to be much of an issue as we don't believe hiring staff have a need for real time data.
+There is no Redis buffer, background job or aggregation step, so the data is available immediately. The upsert is one small write per view, on a table with one row per vacancy.
 
 ## The vacancy_analytics table
 
