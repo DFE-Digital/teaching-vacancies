@@ -93,7 +93,7 @@ debugging browser-based tests (with the JS flag set true)
      to run JavaScript specs without opening browser windows. The shared Claude Code settings in
      `.claude/settings.json` already set `HEADLESS=1`.
   6. In a new git worktree (for example one created by Claude Code), run `bin/setup-worktree`. It symlinks the
-     git-ignored `.env`, `.env.development.local` and `.env.test.local` files from the main checkout and installs
+     git-ignored `.env`, `.env.development.local`, `.env.test.local` and `mise.local.toml` files from the main checkout and installs
      the JavaScript and Ruby dependencies. Without it `bin/dev` fails on the missing `node_modules` and environment variables.
 </details>
 

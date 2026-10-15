@@ -13,7 +13,7 @@ if [ "$main_checkout" = "$(pwd)" ]; then
 fi
 
 # Git-ignored files that a worktree doesn't get. Contents are never read or printed.
-for file in .env .env.development.local .env.test.local; do
+for file in .env .env.development.local .env.test.local mise.local.toml; do
   if [ -e "$main_checkout/$file" ] && [ ! -e "$file" ] && [ ! -L "$file" ]; then
     ln -s "$main_checkout/$file" "$file"
     echo "Linked $file"
