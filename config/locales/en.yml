@@ -273,7 +273,7 @@ en:
 
   scheduled_maintenance_banner_component:
     tag: Scheduled maintenance
-    text: There will be a maintenance update on %{date} between %{start_time} and %{end_time}.
+    text: There will be a maintenance update on %{date} between %{start_time} and %{end_time}. Teaching Vacancies will be unavailable during this time.
 
   shared:
     filter_group:
