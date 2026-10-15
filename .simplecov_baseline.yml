@@ -640,11 +640,11 @@ app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb:
     missed: 0
 app/controllers/jobseekers/job_applications_controller.rb:
   lines:
-    percent: 97.7
-    missed: 3
+    percent: 99.22
+    missed: 1
   branches:
-    percent: 95.23
-    missed: 2
+    percent: 97.36
+    missed: 1
 app/controllers/jobseekers/login_keys_controller.rb:
   lines:
     percent: 88.88
@@ -5043,11 +5043,11 @@ app/views/jobseekers/job_applications/jobseeker_messages/_jobseeker_message.html
     missed: 0
 app/views/jobseekers/job_applications/new.html.slim:
   lines:
-    percent: 80.76
-    missed: 5
+    percent: 100.0
+    missed: 0
   branches:
     percent: 75.0
-    missed: 2
+    missed: 1
 app/views/jobseekers/job_applications/post_submit.html.slim:
   lines:
     percent: 100.0
