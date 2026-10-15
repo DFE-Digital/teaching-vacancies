@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Prepares a fresh git worktree so that bin/dev and the specs work: symlinks the git-ignored
+# env files from the main checkout and installs dependencies. Safe to re-run.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+main_checkout="$(cd "$(git rev-parse --git-common-dir)/.." && pwd)"
+
+if [ "$main_checkout" = "$(pwd)" ]; then
+  echo "This is the main checkout, nothing to do."
+  exit 0
+fi
+
+# Git-ignored files that a worktree doesn't get. Contents are never read or printed.
+for file in .env .env.development.local .env.test.local; do
+  if [ -e "$main_checkout/$file" ] && [ ! -e "$file" ] && [ ! -L "$file" ]; then
+    ln -s "$main_checkout/$file" "$file"
+    echo "Linked $file"
+  fi
+done
+
+corepack enable
+yarn install
+bundle check > /dev/null || bundle install
