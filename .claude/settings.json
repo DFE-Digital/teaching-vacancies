@@ -30,7 +30,11 @@
       "Bash(git diff)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git show *)"
+      "Bash(git show *)",
+      "Bash(git worktree list)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)"
     ],
     "deny": [
       "Read(**/.env)",
