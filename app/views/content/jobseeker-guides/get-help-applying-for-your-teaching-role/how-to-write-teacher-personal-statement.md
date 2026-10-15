@@ -127,5 +127,9 @@ If you’re interested in teaching in further education, an adviser can help you
 * create a strong application and improve your chances of securing an interview
 * prepare for interview
 
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
+<form class="button_to" method="get" action="/jobs">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Search for roles
+    </button>
+</form>
 
