@@ -11,7 +11,9 @@ class ScheduledMaintenanceBannerComponent < ApplicationComponent
 
   def render?
     return false unless @date.present? && @start_time.present? && @end_time.present?
-    return false unless Rails.configuration.app_role.production?
+
+    # TEMPORARY: production-only check disabled to test the banner in the review app. Revert before merging.
+    # return false unless Rails.configuration.app_role.production?
 
     true
   end
