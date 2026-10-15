@@ -10,10 +10,27 @@
   padding: govuk-spacing(2);
   color: govuk-colour('white');
 
+  &__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: govuk-spacing(2);
+
+    @include govuk-media-query($until: tablet) {
+      flex-direction: column;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    color: inherit;
+  }
+
   .govuk-tag {
     background-color: govuk-colour('white');
     color: govuk-colour('blue', $variant: 'shade-25');
 
-    margin-right: govuk-spacing(2);
+    flex-shrink: 0;
+    max-width: none;
+    white-space: nowrap;
   }
 }
