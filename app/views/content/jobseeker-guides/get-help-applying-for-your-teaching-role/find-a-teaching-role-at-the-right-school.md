@@ -62,6 +62,9 @@ Have a look at the [Education staff wellbeing charter](https://www.gov.uk/guidan
 The charter is a shared commitment to protect, promote and enhance the wellbeing of school and college staff. 
 Schools and colleges will approach wellbeing differently, so even if they aren’t signed up to the charter, it’s a good idea to ask how staff are supported.
 
-
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
+<form class="button_to" method="get" action="/jobs">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Search for roles
+    </button>
+</form>
 

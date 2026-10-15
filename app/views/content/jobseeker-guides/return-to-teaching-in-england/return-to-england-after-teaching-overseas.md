@@ -44,5 +44,9 @@ Get ready to apply by:
 * [researching family visas for non-UK spouses and children](https://www.gov.uk/uk-family-visa)
 
 
+<form class="button_to" method="get" action="/jobs">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Search for roles
+    </button>
+</form>
 
-<a href="/jobs?keyword=&location=" class="govuk-button">Search for roles</a>

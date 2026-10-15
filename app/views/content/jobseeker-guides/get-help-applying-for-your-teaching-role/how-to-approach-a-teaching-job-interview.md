@@ -109,4 +109,8 @@ If you are offered the role:
 * confirm your decision in writing if you decide to accept 
 * expect to receive a written contract within 2 months of starting your new role — this should be signed by both parties as a formality 
 
-<a href="https://teaching-vacancies.service.gov.uk/subscriptions/new" class="govuk-button">Get jobs sent to you</a>
+<form class="button_to" method="get" action="/subscriptions/new">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Get jobs sent to you
+    </button>
+</form>
