@@ -1,4 +1,4 @@
-# Ship: from reviewed change to a green PR ready for review
+# Ship: from reviewed change to a draft PR
 
 Run from the ticket's worktree, after the developer has reviewed the diff.
 
@@ -69,40 +69,36 @@ user data. If no browser tool is available, ask the developer to add screenshots
 - `git push -u origin HEAD` (after a rebase on an already-pushed branch:
   `git push --force-with-lease`).
 
-## 7. Open a draft PR
+## 7. Agree the description, then open a draft PR
 
-Fill in `.github/pull_request_template.md` exactly as it is laid out:
+The template invites implementation detail, which then has to be edited out by hand. Write the
+description with the developer instead, in two agreements.
 
-- **Trello card URL** — the card URL.
-- **Changes in this PR** — a short summary written from the diff, not copied from the card, plus
-  any review findings the developer chose to leave and any deploy notes from step 3.
-- **Screenshots** — the images from step 5 under Before and After, or "N/A" if no UI changed.
-- **Data & Schema Changes** — tick each box honestly from the diff: validations added or removed,
-  migrations (`db/migrate/`, `db/schema.rb`), and changes to Vacancy array enums. If any box is
-  ticked, list which integration and user-experience items you checked and what you found.
+1. **Quick summary.** Propose 2–4 sentences for a reviewer: what problem this solves and what
+   changes for users or behaviour. Not a file-by-file account of the implementation. Use plain
+   English, with no class, method or file names unless the reviewer needs them to find something.
+   Add at most one short note on anything non-obvious the reviewer should look at (this fills the
+   template's "Is there anything specific you want feedback on?"). Print the text in your reply,
+   then ask with AskUserQuestion whether to accept it; they can give their own wording through
+   "Other". Apply their edits.
+2. **Full description.** Build the body from `.github/pull_request_template.md`, laid out as it is:
+   - **Trello card URL** — the card URL.
+   - **Changes in this PR** — the agreed summary, plus any review findings the developer chose to
+     leave and any deploy notes from step 3.
+   - **Screenshots** — the images from step 5 under Before and After, or "N/A" if no UI changed.
+   - **Data & Schema Changes** — tick each box honestly from the diff: validations added or
+     removed, migrations (`db/migrate/`, `db/schema.rb`), and changes to Vacancy array enums. If
+     any box is ticked, list which integration and user-experience items you checked and what you
+     found.
 
-Write the body to a temporary file and run
-`gh pr create --draft --base main --body-file <file>` (fallback: the GitHub MCP
-`create_pull_request` tool with `draft: true`). Give the developer the PR link.
+   Print the whole body as markdown in your reply (it is too long for a question box), then ask
+   with AskUserQuestion: "Open draft PR" or "I'll give edits". Apply any edits, print it again and
+   repeat until they choose to open it. Do not create the PR before then.
+3. Write the agreed body to a temporary file and run
+   `gh pr create --draft --base main --body-file <file>` (fallback: the GitHub MCP
+   `create_pull_request` tool with `draft: true`). Give the developer the PR link.
 
-## 8. Finish the PR
+## 8. Stop
 
-[address.md](address.md) ends with this step too.
-
-- **Wait for CI without blocking the developer.** Start
-  `gh pr checks <number> --watch --fail-fast` as a background command, then give the developer
-  the PR link and tell them they can keep working; you will pick up when CI finishes. Do not poll
-  its output: the session is notified when the command exits, and you continue from here.
-  - If the developer is about to close the session, offer to use the `loop` skill instead, so
-    that it checks the PR every 10–15 minutes and finishes these steps (or reports a failure)
-    when CI completes, then stops.
-  - Fallback without `gh`: check the PR's check runs with the GitHub MCP `pull_request_read`
-    tool every few minutes until none are pending.
-- **Any failure:** do not continue. Report which job failed with the relevant log lines and offer
-  to fix it; after a fix, push and restart this step.
-- **All green:**
-  1. If the PR is a draft, `gh pr ready <number>`.
-  2. `gh pr edit <number> --add-label "Waiting for dev review"` (fallback: the GitHub MCP
-     `issue_write` tool, keeping any labels already on the PR — it replaces the whole set).
-  3. Comment the PR link on the Trello card (first time only).
-  4. Move the card to the **For Review** list.
+The PR stays a draft. Do not wait for CI, mark it ready, add labels, comment on it or touch the
+Trello card. What happens next is the developer's.

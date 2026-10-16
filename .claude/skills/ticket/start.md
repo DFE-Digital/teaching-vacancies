@@ -1,7 +1,7 @@
 # Start: from Trello card to approved plan
 
-Turns a Trello card into a planned change on its own branch and worktree. Ends at an approved
-plan; implementation follows on plan approval.
+Turns a Trello card (read-only context) into a planned change on its own branch and worktree.
+Ends at an approved plan; implementation follows on plan approval.
 
 If no card was given, ask the developer for the card URL and stop until they give one.
 
@@ -14,8 +14,8 @@ there are none.
 ## 2. Read the card
 
 Fetch the card's name, short number (`idShort`), URL, description, checklists (often the
-acceptance criteria) and comments from the Trello MCP server. Without one, ask the developer to
-paste the title, URL and description.
+acceptance criteria) and comments from the Trello MCP server. Read only; do not change the card.
+Without one, ask the developer to paste the title, URL and description.
 
 ## 3. Ask for extra context
 
@@ -31,12 +31,7 @@ would improve the plan, for example:
 
 An empty answer is fine — carry on with the card alone.
 
-## 4. Assign the card and move it to In Progress
-
-1. Assign the current Trello member to the card (identify them with the Trello "get me" call).
-2. Move the card to the **In Progress** list on its board.
-
-## 5. Create the worktree and branch
+## 4. Create the worktree and branch
 
 Branch names follow `<card number>-<kebab-case title slug>`, as existing branches do (for example
 `1866-job-offered-status`). Keep the slug to four or five words.
@@ -52,7 +47,7 @@ Branch names follow `<card number>-<kebab-case title slug>`, as existing branche
 Worktrees share the local databases. Warn the developer not to run specs in two worktrees at the
 same time unless they use separate `TEST_ENV_NUMBER`s.
 
-## 6. Plan
+## 5. Plan
 
 This workflow expects the `opusplan` model (Opus plans, Sonnet implements). If the session is on a
 different model, suggest `/model opusplan` before planning.
