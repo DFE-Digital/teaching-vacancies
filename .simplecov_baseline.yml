@@ -1389,7 +1389,7 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 95.87
+    percent: 94.87
     missed: 4
   branches:
     percent: 88.23
@@ -2481,7 +2481,7 @@ app/helpers/status_tag_helper.rb:
     missed: 0
 app/helpers/vacancies_helper.rb:
   lines:
-    percent: 94.32
+    percent: 94.24
     missed: 8
   branches:
     percent: 91.89
@@ -2894,7 +2894,7 @@ app/mailers/jobseekers/account_mailer.rb:
     missed: 0
 app/mailers/jobseekers/alert_mailer.rb:
   lines:
-    percent: 94.0
+    percent: 94.11
     missed: 2
   branches:
     percent: 75.0
@@ -3573,8 +3573,8 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 100.0
-    missed: 0
+    percent: 99.45
+    missed: 1
   branches:
     percent: 98.0
     missed: 1
@@ -5911,10 +5911,10 @@ app/views/layouts/action_text/contents/_content.html.slim:
     missed: 0
 app/views/layouts/application.html.slim:
   lines:
-    percent: 77.5
+    percent: 76.31
     missed: 9
   branches:
-    percent: 66.66
+    percent: 60.0
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
@@ -6182,7 +6182,21 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
 app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
   lines:
     percent: 100.0
     missed: 0
@@ -7909,7 +7923,7 @@ app/views/vacancies/search/_filters.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 53.33
+    percent: 50.0
     missed: 7
 app/views/vacancies/search/_job_roles_filters.html.slim:
   lines:
@@ -7976,7 +7990,7 @@ app/views/vacancies/search/_radius.html.slim:
     missed: 0
 app/views/vacancies/search/_results.html.slim:
   lines:
-    percent: 93.18
+    percent: 82.35
     missed: 3
   branches:
     percent: 83.33
