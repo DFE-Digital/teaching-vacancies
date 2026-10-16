@@ -67,4 +67,5 @@ README.md
 .dockerignore
 Dockerfile
 docker-compose*
+compose.y*ml
 testspec.yml

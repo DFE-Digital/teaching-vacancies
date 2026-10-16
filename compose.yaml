@@ -1,0 +1,37 @@
+# Dependencies for running Rails natively on your machine. For LOCAL DEVELOPMENT ONLY.
+#
+#   docker compose up -d --wait
+#
+# This is separate from the devcontainer (.devcontainer/docker-compose.yml) and has its own
+# project name and data volume, so the two never share containers or data.
+#
+# Only PostgreSQL with PostGIS is needed. Redis is not: it is only the production cache store.
+#
+# Trust authentication is deliberately enabled so Rails' default DATABASE_URL
+# (see config/database.yml) works with no configuration. This is safe only because the port is
+# bound to 127.0.0.1. Never reuse these settings anywhere else.
+
+name: teaching-vacancies-dev
+
+services:
+  db:
+    # Same image as the devcontainer; matches production PostgreSQL 14
+    image: postgis/postgis:14-3.5-alpine
+    # No restart policy: bin/dev and bin/setup start it on demand, and an automatic restart could
+    # race the devcontainer's database for port 5432 after a reboot.
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  postgres_data:
