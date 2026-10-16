@@ -29,7 +29,7 @@ RSpec.describe JobRoleLocationLandingPage do
     end
 
     it "returns false for a valid location not in the targeted list" do
-      expect(described_class.exists?("teaching-assistant", "barnsley")).to be(false)
+      expect(described_class.exists?("teaching-assistant", "bedford")).to be(false)
     end
 
     it "returns false for a combo that does not exist in the targeted list" do

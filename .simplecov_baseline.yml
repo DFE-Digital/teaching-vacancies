@@ -5925,7 +5925,7 @@ app/views/layouts/application.html.slim:
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
-    percent: 73.52
+    percent: 74.28
     missed: 9
   branches:
     percent: 50.0
