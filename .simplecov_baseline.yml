@@ -1389,10 +1389,10 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
+    percent: 95.0
     missed: 4
   branches:
-    percent: 88.23
+    percent: 88.88
     missed: 4
 app/controllers/warden_controller.rb:
   lines:
@@ -3292,6 +3292,13 @@ app/models/jobseeker_profile_excluded_organisation.rb:
     percent: 100.0
     missed: 0
 app/models/jobseekers/message_received_notifier.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/models/keyword_location_landing_page.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -5918,7 +5925,7 @@ app/views/layouts/application.html.slim:
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
-    percent: 73.52
+    percent: 74.28
     missed: 9
   branches:
     percent: 50.0
