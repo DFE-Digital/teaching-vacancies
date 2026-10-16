@@ -1389,7 +1389,7 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
+    percent: 95.87
     missed: 4
   branches:
     percent: 88.23
@@ -3573,8 +3573,8 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.45
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 98.0
     missed: 1

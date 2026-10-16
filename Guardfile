@@ -223,10 +223,10 @@ MASTER_MAPPINGS = {
 }.freeze
 
 SIMPLE_MAPPINGS = {
+  authentication: [:publishers, %w[]],
   warden: [:jobseekers, %w[]],
   application: [:jobseekers, %w[]],
   subscriptions: [:jobseekers, %w[]],
-  authentication: [:publishers, %w[]],
   cookies_preferences: [:jobseekers, %w[]],
   general_feedbacks: [:jobseekers, %w[]],
   omniauth_callbacks: [:jobseekers, %w[]],
@@ -235,6 +235,7 @@ SIMPLE_MAPPINGS = {
   vacancies: [:jobseekers, %w[]],
   organisations: [:jobseekers, %w[]],
   colleges: [:jobseekers, %w[]],
+  layouts: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
