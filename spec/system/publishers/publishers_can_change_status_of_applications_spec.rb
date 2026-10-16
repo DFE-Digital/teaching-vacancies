@@ -48,176 +48,167 @@ RSpec.describe "check job application after status transition" do
       end
     end
 
-    describe "transition: submitted to unsuccessful" do
-      let(:status) { "submitted" }
-
+    # JS needed so that all tabs are not visible
+    context "when logged in as a publisher", :js do
       before { login_publisher(publisher: publisher) }
       after { logout }
 
-      # JS needed so that all tabs are not visible
-      it "allows the publisher to reject a submitted job application", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
+      describe "transition: submitted to unsuccessful" do
+        let(:status) { "submitted" }
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+        it "allows the publisher to reject a submitted job application" do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
 
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("unread")
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
-        publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("unsuccessful")
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("unread")
+
+          publisher_ats_applications_page.update_status(job_application) do |tag_page|
+            tag_page.select_and_submit("unsuccessful")
+          end
+
+          expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
+
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("not progressing")
         end
-
-        expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
-
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :unsuccessful)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("not progressing")
-      end
-    end
-
-    describe "transition: submitted to shortlisted" do
-      let(:status) { "submitted" }
-
-      before { login_publisher(publisher: publisher) }
-      after { logout }
-
-      # JS needed so that all tabs are not visible
-      it "allows the publisher to shortlist a submitted job application", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
-
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("unread")
-
-        publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("shortlisted")
-        end
-
-        expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
-
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("shortlisted")
-      end
-    end
-
-    describe "transition: shortlisted to interviewing" do
-      let(:status) { "shortlisted" }
-
-      before { login_publisher(publisher: publisher) }
-      after { logout }
-
-      # JS needed so that all tabs are not visible
-      it "allows the publisher to set a shortlisted job application as interviewing", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
-
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("shortlisted")
-
-        publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("interviewing")
-        end
-
-        #
-        # without ATS references and self-disclosure collection through TV service
-        #
-        expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
-        publisher_ats_collect_references_page.answer_no
-        find("label[for='publishers-job-application-collect-self-disclosure-form-collect-self-disclosure-false-field']").click
-        click_on "Save and continue"
-        #
-        # display interviewing tab
-        #
-        expect(publisher_ats_applications_page).to be_displayed
-        expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("interviewing")
-
-        #
-        # view job application
-        #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
-        expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
-      end
-    end
-
-    context "when interviewing" do
-      let(:status) { "interviewing" }
-
-      before { login_publisher(publisher: publisher) }
-      after { logout }
-
-      # JS needed so that all tabs are not visible
-      scenario "transition: interviewing to offered", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
-
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("interviewing")
-
-        publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("offered", &:one_day_ago)
-        end
-
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
-        expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
-
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
-
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("offered")
-
-        #
-        # view job application
-        #
-        publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
-        expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
       end
 
-      # JS needed so that all tabs are not visible
-      scenario "transition: interviewing to unsuccessful_interview", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+      describe "transition: submitted to shortlisted" do
+        let(:status) { "submitted" }
 
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("interviewing")
+        it "allows the publisher to shortlist a submitted job application" do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :submitted)
 
-        publisher_ats_applications_page.update_status(job_application) do |tag_page|
-          tag_page.select_and_submit("unsuccessful_interview", &:today)
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("unread")
+
+          publisher_ats_applications_page.update_status(job_application) do |tag_page|
+            tag_page.select_and_submit("shortlisted")
+          end
+
+          expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
+
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("shortlisted")
+        end
+      end
+
+      describe "transition: shortlisted to interviewing" do
+        let(:status) { "shortlisted" }
+
+        # JS needed so that all tabs are not visible
+        it "allows the publisher to set a shortlisted job application as interviewing" do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :shortlisted)
+
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("shortlisted")
+
+          publisher_ats_applications_page.update_status(job_application) do |tag_page|
+            tag_page.select_and_submit("interviewing")
+          end
+
+          #
+          # without ATS references and self-disclosure collection through TV service
+          #
+          expect(publisher_ats_collect_references_page).to be_displayed(vacancy_id: vacancy.id)
+          publisher_ats_collect_references_page.answer_no
+          find("label[for='publishers-job-application-collect-self-disclosure-form-collect-self-disclosure-false-field']").click
+          click_on "Save and continue"
+          #
+          # display interviewing tab
+          #
+          expect(publisher_ats_applications_page).to be_displayed
+          expect(publisher_ats_applications_page.selected_tab).to have_text("Interviewing")
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("interviewing")
+
+          #
+          # view job application
+          #
+          publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
+          expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
+        end
+      end
+
+      context "when interviewing" do
+        let(:status) { "interviewing" }
+
+        scenario "transition: interviewing to offered" do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("interviewing")
+
+          publisher_ats_applications_page.update_status(job_application) do |tag_page|
+            tag_page.select_and_submit("offered", &:one_day_ago)
+          end
+
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+          expect(publisher_ats_applications_page.tab_panel.job_applications).to be_empty
+
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
+
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("offered")
+
+          #
+          # view job application
+          #
+          publisher_ats_applications_page.tab_panel.job_applications.first.name_link.click
+          expect(publisher_application_page).to be_displayed(vacancy_id: vacancy.id, job_application_id: job_application.id)
         end
 
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+        # JS needed so that all tabs are not visible
+        scenario "transition: interviewing to unsuccessful_interview", :js do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
-        expect(job_application.reload.status).to eq("unsuccessful_interview")
-        expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(job_application.name)
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("interviewing")
+
+          publisher_ats_applications_page.update_status(job_application) do |tag_page|
+            tag_page.select_and_submit("unsuccessful_interview", &:today)
+          end
+
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :interviewing)
+
+          expect(job_application.reload.status).to eq("unsuccessful_interview")
+          expect(publisher_ats_applications_page.tab_panel.job_applications.first.name).to have_text(job_application.name)
+        end
       end
-    end
 
-    describe "transition: offered to declined", :versioning do
-      let(:status) { "offered" }
+      describe "transition: offered to declined", :versioning do
+        let(:status) { "offered" }
 
-      before { login_publisher(publisher: publisher) }
-      after { logout }
+        before { login_publisher(publisher: publisher) }
+        after { logout }
 
-      # JS needed so that all tabs are not visible
-      scenario "publisher marks offer as declined", :js do
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
+        # JS needed so that all tabs are not visible
+        scenario "publisher marks offer as declined", :js do
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
 
-        expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
+          expect(publisher_ats_applications_page.tab_panel.job_applications.count).to eq(1)
 
-        display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
-        expect(display_status).to have_text("job offered")
+          display_status = publisher_ats_applications_page.tab_panel.job_applications.first.status
+          expect(display_status).to have_text("job offered")
 
-        publisher_ats_applications_page.decline_offer(job_application, &:today)
+          publisher_ats_applications_page.decline_offer(job_application, &:today)
 
-        publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
-        expect(publisher_ats_applications_page.tab_panel.declined_job_applications.count).to eq(1)
+          publisher_ats_applications_page.load(vacancy_id: vacancy.id, anchor: :offered)
+          expect(publisher_ats_applications_page.tab_panel.declined_job_applications.count).to eq(1)
+        end
       end
     end
   end
