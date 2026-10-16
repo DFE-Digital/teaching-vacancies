@@ -5,6 +5,20 @@ $print-white: #fff;
 @page {
   margin: 10mm;
   size: A4;
+
+  @bottom-center {
+    color: $print-dark-grey;
+    content: var(--print-footer-text);
+    font-family: arial, sans-serif;
+    font-size: 8pt;
+  }
+
+  @bottom-right {
+    color: $print-dark-grey;
+    content: counter(page) ' of ' counter(pages);
+    font-family: arial, sans-serif;
+    font-size: 8pt;
+  }
 }
 
 .print-layout {

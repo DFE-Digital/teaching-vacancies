@@ -118,6 +118,10 @@ RSpec.describe "Job application prints" do
       expect(JobApplicationPdfGenerator).not_to have_received(:new)
       expect(page).to have_text("#{vacancy.job_title} at #{organisation.name}")
       expect(page).to have_css(".print-header__applicant-name", text: job_application.name)
+      footer_text = "#{job_application.name} | #{organisation.name}"
+      expect(page.find("html", visible: :all)[:style]).to eq(
+        "--print-footer-text: #{footer_text.to_json}",
+      )
       expect(page).to have_text("Use your browser's print option to print this application or save it as a PDF.")
       expect(page).to have_no_css("[data-print-button], script[src*='print']", visible: :all)
     end
