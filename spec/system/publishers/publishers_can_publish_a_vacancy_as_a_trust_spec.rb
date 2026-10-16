@@ -60,7 +60,8 @@ RSpec.describe "Creating a vacancy" do
       I18n.t("contract_information_errors.working_patterns.inclusion"),
       I18n.t("contract_information_errors.is_job_share.inclusion"),
     )
-    publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+    publisher_contract_information_page.fill_in_and_submit_form(working_patterns: vacancy.working_patterns,
+                                                                is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details)
 
     expect(publisher_start_date_page).to be_displayed
     submit_empty_form

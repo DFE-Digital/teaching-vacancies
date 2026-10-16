@@ -10,12 +10,29 @@ RSpec.describe "publishers/vacancies/job_applications/show" do
                   working_patterns: %w[full_time part_time])
   end
   let(:status) { "submitted" }
+  let(:page) { Capybara.string(rendered) }
 
   before do
     assign :vacancy, vacancy
     assign :job_application, job_application.decorate
     assign :note, build_stubbed(:note)
     render
+  end
+
+  describe "viewing a job application with an education gap" do
+    let(:job_application) do
+      build_stubbed(:job_application, :status_submitted,
+                    employments: [education_gap])
+    end
+    let(:education_gap) { build_stubbed(:education_gap) }
+
+    it "displays the education gap in the work history section" do
+      work_history = page.find(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
+      expect(work_history).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.education_gap"))
+      expect(work_history).to have_content(education_gap.reason_for_break)
+      expect(work_history).to have_content(education_gap.started_on.to_fs(:month_year))
+      expect(work_history).to have_content(education_gap.ended_on.to_fs(:month_year))
+    end
   end
 
   describe "navigation quick links" do

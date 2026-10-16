@@ -349,6 +349,46 @@ FactoryBot.define do
            anonymise_applications]
       end
 
+      trait :with_no_initial_data do
+        actual_salary { nil }
+        enable_job_applications { nil }
+        anonymise_applications { nil }
+        benefits { nil }
+        benefits_details { nil }
+        completed_steps { [] }
+        contact_email { nil }
+        contact_number_provided { nil }
+        contact_number { nil }
+        contract_type { nil }
+        further_details_provided { nil }
+        further_details { nil }
+        expires_at { nil }
+        hired_status { nil }
+        include_additional_documents { nil }
+        job_title { nil }
+        listed_elsewhere { nil }
+        job_roles { nil }
+        ect_status { nil }
+        pay_scale { nil }
+        publish_on { nil }
+        salary { nil }
+        hourly_rate { nil }
+        school_offer { nil }
+        school_visits { nil }
+        skills_and_experience { nil }
+        start_date_type { nil }
+        starts_on { nil }
+        subjects { nil }
+        key_stages { nil }
+        working_patterns_details { nil }
+        working_patterns { nil }
+        visa_sponsorship_available { nil }
+        organisations { nil }
+        is_job_share { nil }
+        flexi_working_details_provided { nil }
+        flexi_working { nil }
+      end
+
       trait :with_contract_details do
         completed_steps do
           %w[job_location job_role job_title education_phases key_stages subjects contract_information pay_package start_date]

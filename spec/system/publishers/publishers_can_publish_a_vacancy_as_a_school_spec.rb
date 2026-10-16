@@ -32,12 +32,12 @@ RSpec.describe "Creating a vacancy" do
       let(:school) { create(:school, :not_applicable) }
 
       let(:vacancy) do
-        build(:vacancy,
-              :ect_suitable,
-              :secondary,
-              :apply_via_website,
-              working_patterns: %w[full_time term_time],
-              publish_on: Date.current)
+        build_stubbed(:vacancy,
+                      :ect_suitable,
+                      :secondary,
+                      :apply_via_website,
+                      working_patterns: %w[full_time term_time],
+                      publish_on: Date.current)
       end
 
       it "follows the non-TVS flow" do
@@ -79,7 +79,8 @@ RSpec.describe "Creating a vacancy" do
           I18n.t("contract_information_errors.working_patterns.inclusion"),
           I18n.t("contract_information_errors.is_job_share.inclusion"),
         )
-        publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+        publisher_contract_information_page.fill_in_and_submit_form(working_patterns: vacancy.working_patterns,
+                                                                    is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details)
 
         expect(publisher_start_date_page).to be_displayed
         submit_empty_form
@@ -206,7 +207,8 @@ RSpec.describe "Creating a vacancy" do
           publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
           publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
           publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
-          publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+          publisher_contract_information_page.fill_in_and_submit_form(working_patterns: vacancy.working_patterns,
+                                                                      is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details)
           publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
           publisher_pay_package_page.fill_in_and_submit_form(vacancy)
           publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
@@ -237,7 +239,8 @@ RSpec.describe "Creating a vacancy" do
         publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
         expect(publisher_contract_information_page).to be_displayed
-        publisher_contract_information_page.fill_in_and_submit_form(vacancy)
+        publisher_contract_information_page.fill_in_and_submit_form(working_patterns: vacancy.working_patterns,
+                                                                    is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details)
 
         expect(publisher_start_date_page).to be_displayed
         publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
@@ -302,6 +305,7 @@ RSpec.describe "Creating a vacancy" do
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
         let(:trust) { create(:trust, schools: [school]) }
         let(:vacancy) { create(:draft_vacancy, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
+        let(:published) { PublishedVacancy.find(vacancy.id) }
 
         before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
 
@@ -312,8 +316,8 @@ RSpec.describe "Creating a vacancy" do
 
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
-          expect(PublishedVacancy.find(vacancy.id).publisher).to eq(publisher_that_publishes_vacancy)
-          expect(PublishedVacancy.find(vacancy.id).publisher_organisation).to eq(school)
+          expect(published.publisher).to eq(publisher_that_publishes_vacancy)
+          expect(published.publisher_organisation).to eq(school)
         end
       end
 
@@ -374,18 +378,41 @@ RSpec.describe "Creating a vacancy" do
   context "with a catholic school" do
     let(:school) { create(:school, :catholic) }
     let(:vacancy) do
-      build(:vacancy,
-            :secondary,
-            :apply_via_website,
-            publish_on: Date.current)
+      build_stubbed(:vacancy,
+                    :apply_via_website,
+                    publish_on: Date.current)
+    end
+    let(:new_draft_vacancy) do
+      create(:draft_vacancy, :with_no_initial_data,
+             organisations: [school],
+             job_title: vacancy.job_title, job_roles: vacancy.job_roles,
+             working_patterns: vacancy.working_patterns,
+             contract_type: vacancy.contract_type, fixed_term_contract_duration: vacancy.fixed_term_contract_duration,
+             is_job_share: vacancy.is_job_share, working_patterns_details: vacancy.working_patterns_details,
+             start_date_type: vacancy.start_date_type,
+             starts_on: vacancy.starts_on,
+             hourly_rate: vacancy.hourly_rate,
+             salary: vacancy.salary,
+             actual_salary: vacancy.actual_salary,
+             pay_scale: vacancy.pay_scale,
+             benefits: true,
+             benefits_details: Faker::Lorem.sentence,
+             ect_status: vacancy.ect_status,
+             skills_and_experience: vacancy.skills_and_experience,
+             school_offer: vacancy.school_offer,
+             flexi_working_details_provided: vacancy.flexi_working_details_provided,
+             flexi_working: vacancy.flexi_working,
+             further_details_provided: vacancy.further_details_provided,
+             further_details: vacancy.further_details,
+             school_visits: vacancy.school_visits,
+             visa_sponsorship_available: vacancy.visa_sponsorship_available)
     end
 
     before do
-      visit organisation_jobs_with_type_path
-      click_on I18n.t("buttons.create_job")
-      click_on I18n.t("buttons.create_job")
+      publisher_important_dates_page.load(vacancy_id: new_draft_vacancy.id)
 
-      fill_in_forms_until_applying_for(vacancy, created_vacancy.id)
+      fill_in_important_dates_form_fields(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
+      click_on I18n.t("buttons.save_and_continue")
     end
 
     context "when using the web form" do
@@ -394,7 +421,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_anonymise_to_review(vacancy)
-        expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
+        expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_catholic
       end
 
@@ -403,7 +430,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_anonymise_to_review(vacancy)
-        expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
+        expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_other_religion
       end
 
@@ -412,7 +439,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_anonymise_to_review(vacancy)
-        expect(page).to have_current_path(organisation_job_review_path(created_vacancy.id), ignore_query: true)
+        expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
         expect(DraftVacancy.find(created_vacancy.id)).to be_no_religion
       end
     end
@@ -424,8 +451,8 @@ RSpec.describe "Creating a vacancy" do
       end
 
       it "doesnt ask religion questions" do
-        expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications), ignore_query: true)
-        expect(DraftVacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
+        expect(page).to have_current_path(organisation_job_build_path(new_draft_vacancy.id, :how_to_receive_applications), ignore_query: true)
+        expect(DraftVacancy.find(new_draft_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
       end
     end
   end
@@ -451,55 +478,5 @@ RSpec.describe "Creating a vacancy" do
 
   def submit_empty_form
     click_on I18n.t("buttons.save_and_continue")
-  end
-
-  def fill_in_forms_until_applying_for(vacancy, created_vacancy_id)
-    expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_title), ignore_query: true)
-
-    fill_in_job_title_form_fields(vacancy.job_title)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :job_role), ignore_query: true)
-
-    fill_in_job_role_form_fields(vacancy.job_roles.first)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :key_stages), ignore_query: true)
-
-    fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :subjects), ignore_query: true)
-
-    fill_in_subjects_form_fields(vacancy.subjects)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :contract_information), ignore_query: true)
-
-    publisher_contract_information_page.fill_in_and_submit_form(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :start_date), ignore_query: true)
-    fill_in_start_date_form_fields(vacancy.starts_on)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :pay_package), ignore_query: true)
-    fill_in_pay_package_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :about_the_role), ignore_query: true)
-    fill_in_about_the_role_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :school_visits), ignore_query: true)
-    fill_in_school_visits_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :visa_sponsorship), ignore_query: true)
-    fill_in_visa_sponsorship_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :important_dates), ignore_query: true)
-    fill_in_important_dates_form_fields(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
-    click_on I18n.t("buttons.save_and_continue")
-
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy_id, :applying_for_the_job), ignore_query: true)
   end
 end
