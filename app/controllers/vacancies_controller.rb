@@ -99,7 +99,7 @@ class VacanciesController < ApplicationController
     %w[teaching_job_roles support_job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
+    params.permit(:keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -139,10 +139,9 @@ class VacanciesController < ApplicationController
           total_count: @vacancies_search.total_count,
           vacancies_on_page: @vacancies.map(&:id),
           landing_page: params[:landing_page_slug],
-          filters_set_from_keywords: form.filters_from_keyword.present?,
         },
         hidden_data: {
-          location_polygon_used: @vacancies_search&.polygon&.id,
+          location_polygon_used: @vacancies_search.polygon&.id,
         },
       }
 
