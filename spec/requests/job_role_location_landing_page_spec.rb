@@ -13,7 +13,7 @@ RSpec.describe "Job role + location landing pages" do
     end
 
     it "returns 404 for a valid location not in the targeted list" do
-      get "/teaching-assistant-jobs-in-nottingham"
+      get "/teaching-assistant-jobs-in-barnsley"
       expect(response).to have_http_status(:not_found)
     end
 

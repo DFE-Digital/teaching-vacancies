@@ -35,7 +35,7 @@ class KeywordLocationLandingPage
   def initialize(keyword, location)
     @keyword = keyword.tr("-", " ")
 
-    @location_name = CITIES_AND_REGIONS.fetch(location)
+    @location_name = CITIES_AND_REGIONS.fetch(location.downcase)
   end
 
   def criteria
