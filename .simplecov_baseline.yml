@@ -7923,7 +7923,7 @@ app/views/vacancies/search/_filters.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
+    percent: 53.33
     missed: 7
 app/views/vacancies/search/_job_roles_filters.html.slim:
   lines:
