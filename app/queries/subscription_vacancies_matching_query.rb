@@ -32,7 +32,7 @@ class SubscriptionVacanciesMatchingQuery
       if filters.any?
         scope = scope.search_by_filter(filters)
       end
-      scope.distinct(:id)
+      scope.distinct
     end
 
     private
