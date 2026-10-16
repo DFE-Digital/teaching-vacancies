@@ -61,6 +61,50 @@ RSpec.describe "Jobseekers can start or continue a job application" do
     end
   end
 
+  context "when the job has an uploaded application form" do
+    let!(:jobseeker) { create(:jobseeker) }
+    let(:vacancy) { create(:vacancy, :with_uploaded_application_form, organisations: [school]) }
+
+    context "when the jobseeker is signed in and clicks 'apply' on the job page" do
+      before do
+        login_as(jobseeker, scope: :jobseeker)
+        visit job_path(vacancy)
+      end
+
+      after { logout }
+
+      it "starts a job application without an extra page" do
+        expect {
+          within ".banner-buttons" do
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
+        }.to change { JobApplication.count }.by(1)
+
+        expect(current_path).to eq(jobseekers_job_application_apply_path(created_job_application))
+      end
+    end
+
+    context "when the jobseeker is not signed in and clicks 'apply' on the job page" do
+      before do
+        visit job_path(vacancy)
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+        end
+      end
+
+      it "returns to the job application after signing in" do
+        sign_in_jobseeker_govuk_one_login(jobseeker)
+
+        expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+        expect(page).to have_content(I18n.t("jobseekers.job_applications.requires_application_form_download"))
+
+        expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
+
+        expect(current_path).to eq(jobseekers_job_application_apply_path(created_job_application))
+      end
+    end
+  end
+
   context "when the jobseeker has a draft application for the job" do
     let!(:jobseeker) { create(:jobseeker) }
     let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
