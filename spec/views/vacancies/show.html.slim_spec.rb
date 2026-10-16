@@ -157,7 +157,7 @@ RSpec.describe "vacancies/show" do
 
         it "has an application link in the banner" do
           expect(rendered).to have_link(
-            I18n.t("jobseekers.job_applications.banner_links.apply"),
+            I18n.t("jobs.view_advert.banner"),
             href: apply_job_path(vacancy),
             class: "govuk-button",
           )
