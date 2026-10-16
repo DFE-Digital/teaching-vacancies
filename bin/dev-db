@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Starts the local development database from compose.yaml. Called by bin/dev and bin/setup.
+# Does nothing inside a container (the devcontainer has its own database), without Docker, or
+# when SKIP_DEV_DB is set (for example if you run your own PostGIS).
+
+if [ -n "$SKIP_DEV_DB" ] || [ -f /.dockerenv ] || [ -f /run/.containerenv ] || [ -n "$REMOTE_CONTAINERS" ] || [ -n "$CODESPACES" ]; then
+  exit 0
+fi
+
+command -v docker &> /dev/null || exit 0
+
+cd "$(dirname "$0")/.." || exit 1
+
+if ! docker info &> /dev/null; then
+  echo "Docker is installed but not running, so the development database was not started." >&2
+  echo "Start Docker, or set SKIP_DEV_DB=1 to skip this step." >&2
+  exit 1
+fi
+
+if ! docker compose up -d --wait db; then
+  echo "Could not start the development database with 'docker compose up'." >&2
+  echo "If the error above mentions port 5432, a local PostgreSQL or the devcontainer database is using it." >&2
+  echo "Set SKIP_DEV_DB=1 to skip this step." >&2
+  exit 1
+fi
