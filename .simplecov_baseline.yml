@@ -2484,7 +2484,7 @@ app/helpers/vacancies_helper.rb:
     percent: 94.32
     missed: 8
   branches:
-    percent: 91.66
+    percent: 91.89
     missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
@@ -2894,7 +2894,7 @@ app/mailers/jobseekers/account_mailer.rb:
     missed: 0
 app/mailers/jobseekers/alert_mailer.rb:
   lines:
-    percent: 93.93
+    percent: 94.0
     missed: 2
   branches:
     percent: 75.0
@@ -4742,7 +4742,7 @@ app/views/jobseekers/accounts/show.html.slim:
     missed: 0
 app/views/jobseekers/alert_mailer/alert.text.erb:
   lines:
-    percent: 94.73
+    percent: 95.0
     missed: 1
   branches:
     percent: 50.0
