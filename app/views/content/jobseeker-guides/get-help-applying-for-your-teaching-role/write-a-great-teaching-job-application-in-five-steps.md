@@ -31,4 +31,8 @@ At the heart of your application form is your personal statement. [Find out how 
 
 If you get an interview, read [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
 
-<a href="https://teaching-vacancies.service.gov.uk/jobs" class="govuk-button">Search for a job </a>
+<form class="button_to" method="get" action="/jobs">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Search for a job
+    </button>
+</form>
