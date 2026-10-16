@@ -55,6 +55,10 @@ class JobApplicationPdf
     end
   end
 
+  def personal_statement_richtext
+    job_application.personal_statement_richtext.presence || I18n.t("jobseekers.job_applications.review.personal_statement.blank")
+  end
+
   def professional_status # rubocop:disable Metrics/AbcSize
     return @professional_status if @professional_status.present?
 

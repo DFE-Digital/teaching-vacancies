@@ -1,5 +1,5 @@
 doctype html
-html.govuk-template.app-html-class lang="en"
+html.govuk-template.app-html-class lang="en" style="--print-footer-text: #{content_for(:print_footer_text).to_s.to_json}"
   head
     = render "layouts/head_meta"
     = render "layouts/head_links"

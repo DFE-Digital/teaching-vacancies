@@ -5,6 +5,20 @@ $print-white: #fff;
 @page {
   margin: 10mm;
   size: A4;
+
+  @bottom-center {
+    color: $print-dark-grey;
+    content: var(--print-footer-text);
+    font-family: arial, sans-serif;
+    font-size: 8pt;
+  }
+
+  @bottom-right {
+    color: $print-dark-grey;
+    content: counter(page) ' of ' counter(pages);
+    font-family: arial, sans-serif;
+    font-size: 8pt;
+  }
 }
 
 .print-layout {
@@ -36,9 +50,14 @@ $print-white: #fff;
   }
 
   &__applicant-name {
+    font-size: 22pt;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  &__applicant-name--blank {
     border-bottom: 2px solid $print-dark-grey;
     height: 8mm;
-    margin: 0;
     width: 70mm;
   }
 
@@ -74,6 +93,11 @@ $print-white: #fff;
     margin: 0;
     padding: 0 5mm;
   }
+
+  &__empty {
+    font-size: 12pt;
+    margin: 3mm 2mm;
+  }
 }
 
 .print-table {
@@ -102,9 +126,11 @@ $print-white: #fff;
   &__value {
     align-self: center;
     font-size: 12pt;
-    line-height: 1.05;
+    line-height: 1.3;
     margin: 0;
+    overflow-wrap: anywhere;
     padding: 2mm;
+    white-space: pre-line;
   }
 }
 
@@ -140,6 +166,27 @@ $print-white: #fff;
   page-break-after: always;
   page-break-before: always;
   page-break-inside: avoid;
+
+  &--completed {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  &__content {
+    color: $print-dark-grey;
+    font-family: arial, sans-serif;
+    font-size: 12pt;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    padding: 3mm 2mm;
+
+    p,
+    ol,
+    ul {
+      font-family: inherit;
+      font-size: inherit;
+    }
+  }
 
   &__writing-space {
     min-height: 190mm;

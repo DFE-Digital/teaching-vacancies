@@ -1,0 +1,330 @@
+require "rails_helper"
+
+RSpec.describe "Job application prints" do
+  let(:jobseeker) { create(:jobseeker) }
+  let(:organisation) { create(:school) }
+  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+  let(:religious_attributes) { {} }
+  let(:job_application) do
+    create(
+      :job_application,
+      :status_submitted,
+      **religious_attributes,
+      close_relationships_details: "My sibling works at the school",
+      has_close_relationships: true,
+      has_safeguarding_issue: true,
+      is_support_needed: true,
+      jobseeker:,
+      personal_statement_richtext: "<p>I am committed to helping <strong>every pupil</strong> succeed.</p>",
+      safeguarding_issue_details: "Safeguarding declaration details",
+      support_needed_details: "Step-free interview access",
+      vacancy:,
+    )
+  end
+
+  before do
+    sign_in(jobseeker, scope: :jobseeker)
+    allow(JobApplicationPdfGenerator).to receive(:new).and_call_original
+  end
+
+  after { sign_out(jobseeker) }
+
+  describe "GET #print" do
+    subject(:page) { Capybara.string(response.body) }
+
+    let(:qualification) do
+      create(
+        :qualification,
+        category: :undergraduate,
+        grade: "First class honours",
+        institution: "Example University",
+        job_application:,
+        month: 6,
+        subject: "Mathematics",
+        year: 2020,
+      )
+    end
+    let(:training_and_cpd) do
+      create(
+        :training_and_cpd,
+        course_length: "2 days",
+        grade: "Pass",
+        job_application:,
+        name: "Safeguarding training",
+        provider: "Example Training Provider",
+        year_awarded: "2024",
+      )
+    end
+    let(:professional_body_membership) do
+      create(
+        :professional_body_membership,
+        job_application:,
+        membership_number: "MEM-123",
+        membership_type: "Full member",
+        name: "Example Teaching Association",
+        year_membership_obtained: "2022",
+      )
+    end
+    let(:employment) do
+      create(
+        :employment,
+        :current_role,
+        job_application:,
+        job_title: "Mathematics teacher",
+        main_duties: "Teaching mathematics across key stages 3 and 4",
+        organisation: "Example Secondary School",
+        started_on: Date.new(2022, 9, 1),
+        subjects: "Mathematics",
+      )
+    end
+    let(:employment_break) do
+      create(
+        :employment_break,
+        ended_on: Date.new(2022, 8, 31),
+        job_application:,
+        reason_for_break: "Caring responsibilities",
+        started_on: Date.new(2021, 9, 1),
+      )
+    end
+    let(:referee) do
+      create(
+        :referee,
+        email: "referee@contoso.com",
+        is_most_recent_employer: true,
+        job_application:,
+        job_title: "Headteacher",
+        name: "Morgan Example",
+        organisation: "Example Secondary School",
+        phone_number: "01234 987654",
+        relationship: "Line manager",
+      )
+    end
+
+    before do
+      qualification
+      training_and_cpd
+      professional_body_membership
+      employment
+      employment_break
+      referee
+      get jobseekers_job_application_print_path(job_application)
+    end
+
+    it "renders the application as printable HTML without generating a server-side PDF", :aggregate_failures do
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq("text/html")
+      expect(response).to render_template(layout: "print")
+      expect(page).to have_title("Print application - Teaching Vacancies - GOV.UK")
+      expect(JobApplicationPdfGenerator).not_to have_received(:new)
+      expect(page).to have_text("#{vacancy.job_title} at #{organisation.name}")
+      expect(page).to have_css(".print-header__applicant-name", text: job_application.name)
+      footer_text = "#{job_application.name} | #{organisation.name}"
+      expect(page.find("html", visible: :all)[:style]).to eq(
+        "--print-footer-text: #{footer_text.to_json}",
+      )
+      expect(page).to have_text("Use your browser's print option to print this application or save it as a PDF.")
+      expect(page).to have_no_css("[data-print-button], script[src*='print']", visible: :all)
+    end
+
+    it "does not render analytics or application chrome" do
+      expect(page).to have_css("meta[name='robots'][content='noindex,nofollow']", visible: :all)
+      expect(page).to have_no_css("#vwoCode, #clarityCode, #googleTagManagerCode, #facebookCode, #linkedinTrackingCode, #redditCode", visible: :all)
+      expect(page).to have_no_css(".govuk-cookie-banner, .govuk-skip-link, .environment-banner-component", visible: :all)
+      expect(page).to have_no_css(".govuk-header, .govuk-phase-banner, .govuk-breadcrumbs, .govuk-footer", visible: :all)
+    end
+
+    it "renders the complete application", :aggregate_failures do
+      expect(page).to have_css(".print-introduction", text: I18n.t("jobseekers.job_applications.show.consent_text"))
+      expect(page).to have_css(".print-section__heading", text: "Personal details")
+      expect(page).to have_css(".print-table__row", text: /First name#{Regexp.escape(job_application.first_name)}/)
+      expect(page).to have_css(".print-table__row", text: /Last name#{Regexp.escape(job_application.last_name)}/)
+      expect(page).to have_css(".print-table__row", text: /Email address#{Regexp.escape(job_application.email_address)}/)
+      expect(page).to have_css(".print-table__row", text: /National Insurance number#{Regexp.escape(job_application.national_insurance_number)}/)
+      expect(page).to have_css(".print-section__heading", text: "Professional status")
+      expect(page).to have_css(".print-table__row", text: /Do you have qualified teacher status \(QTS\)\?Yes, gained in 1990/)
+      expect(page).to have_css(".print-table__row", text: /Teacher reference number \(TRN\)#{job_application.teacher_reference_number}/)
+      expect(page).to have_css(".print-table__row", text: /Have you completed your induction period\?Yes/)
+      expect(page).to have_css(".print-section__heading", text: "Qualifications")
+      expect(page).to have_css(".print-subsection__heading", text: "Undergraduate degree")
+      expect(page).to have_css(".print-table__row", text: /Subject:Mathematics/)
+      expect(page).to have_css(".print-table__row", text: /Institution:Example University/)
+      expect(page).to have_css(".print-table__row", text: /Grade:First class honours/)
+      expect(page).to have_css(".print-table__row", text: /Date completed:June 2020/)
+      expect(page).to have_css(
+        ".print-section__heading",
+        text: "Training and continuing professional development (CPD)",
+      )
+      expect(page).to have_css(".print-table__row", text: /NameSafeguarding training/)
+      expect(page).to have_css(".print-table__row", text: /ProviderExample Training Provider/)
+      expect(page).to have_css(".print-table__row", text: /Course length2 days/)
+      expect(page).to have_css(".print-table__row", text: /Awarded Year2024/)
+      expect(page).to have_css(".print-section__heading", text: "Professional body memberships")
+      expect(page).to have_css(".print-table__row", text: /Name of professional body:Example Teaching Association/)
+      expect(page).to have_css(".print-table__row", text: /Membership type or level:Full member/)
+      expect(page).to have_css(".print-table__row", text: /Membership or registration number:MEM-123/)
+      expect(page).to have_css(".print-table__row", text: /Date obtained:2022/)
+      expect(page).to have_css(".print-section__heading", text: "Work history")
+      expect(page).to have_css(".print-record", minimum: 2)
+      expect(page).to have_css(".print-table__row", text: /Job Title:Mathematics teacher/)
+      expect(page).to have_css(".print-table__row", text: /School or other:Example Secondary School/)
+      expect(page).to have_css(".print-table__row", text: /Employment currently held:Yes/)
+      expect(page).to have_css(".print-table__row", text: /End date:present/)
+      expect(page).to have_css(".print-table__row", text: /Reason:Caring responsibilities/)
+
+      personal_statement = page.find("section.print-personal-statement.print-personal-statement--completed")
+
+      expect(personal_statement).to have_css(".print-section__heading", text: "Personal statement")
+      expect(personal_statement).to have_text("I am committed to helping every pupil succeed.")
+      expect(personal_statement).to have_css("strong", text: "every pupil")
+      expect(page).to have_css(".print-section__heading", text: "References")
+      expect(page).to have_css(".print-table__row", text: /Name:Morgan Example/)
+      expect(page).to have_css(".print-table__row", text: /Job Title:Headteacher/)
+      expect(page).to have_css(".print-table__row", text: /Organisation:Example Secondary School/)
+      expect(page).to have_css(".print-table__row", text: /Relationship:Line manager/)
+      expect(page).to have_css(".print-table__row", text: /Email:referee@contoso\.com/)
+      expect(page).to have_css(".print-table__row", text: /Phone Number:01234 987654/)
+      expect(page).to have_css(".print-table__row", text: /Current or most recent employer:Yes/)
+      expect(page).to have_css(
+        ".print-section__heading",
+        text: "Do you need support or adjustments for your interview?",
+      )
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Step-free interview access/)
+      expect(page).to have_css(".print-section__heading", text: "Declarations")
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: Safeguarding declaration details/)
+      expect(page).to have_css(".print-table__row", text: /Yes\s*Details: My sibling works at the school/)
+    end
+
+    context "without qualifications" do
+      let(:qualification) { nil }
+
+      it "renders the no-qualifications message" do
+        expect(page).to have_css(
+          ".print-section__empty",
+          text: I18n.t("jobseekers.job_applications.show.qualifications.none"),
+        )
+      end
+    end
+
+    context "without a personal statement" do
+      let(:job_application) do
+        create(
+          :job_application,
+          :status_submitted,
+          jobseeker:,
+          personal_statement_richtext: nil,
+          vacancy:,
+        )
+      end
+
+      it "renders the existing blank message" do
+        expect(page).to have_css(
+          ".print-personal-statement__content",
+          text: I18n.t("jobseekers.job_applications.review.personal_statement.blank"),
+        )
+      end
+    end
+
+    context "when the vacancy is Catholic" do
+      let(:vacancy) { create(:vacancy, :catholic, organisations: [organisation]) }
+      let(:religious_attributes) do
+        {
+          faith: "Catholic",
+          following_religion: true,
+          place_of_worship: "Example Catholic Church",
+          religious_reference_type: :religious_referee,
+          religious_referee_address: "1 Example Street, London",
+          religious_referee_email: "priest@contoso.com",
+          religious_referee_name: "Father Example",
+          religious_referee_phone: "01234 111222",
+          religious_referee_role: "Parish priest",
+        }
+      end
+
+      it "renders Catholic religious information" do
+        expect(page).to have_css(".print-section__heading", text: "Religious information")
+        expect(page).to have_css(".print-table__row", text: /Catholic/)
+        expect(page).to have_css(".print-table__row", text: /Example Catholic Church/)
+        expect(page).to have_css(".print-table__row", text: /Father Example/)
+        expect(page).to have_css(".print-table__row", text: /priest@contoso\.com/)
+      end
+
+      it "renders every section in the same order as the existing PDF" do
+        expect(page.all(".print-section__heading").map(&:text)).to eq(
+          [
+            "Personal details",
+            "Professional status",
+            "Qualifications",
+            "Training and continuing professional development (CPD)",
+            "Professional body memberships",
+            "Work history",
+            "Personal statement",
+            "Religious information",
+            "References",
+            "Do you need support or adjustments for your interview?",
+            "Declarations",
+          ],
+        )
+      end
+    end
+
+    context "when the vacancy has another religious character" do
+      let(:vacancy) { create(:vacancy, :other_religion, organisations: [organisation]) }
+      let(:religious_attributes) do
+        {
+          ethos_and_aims: "I support the school's inclusive religious ethos.",
+          faith: "Methodist",
+          following_religion: true,
+          place_of_worship: "Example Methodist Church",
+          religious_reference_type: nil,
+        }
+      end
+
+      it "renders the other-religion information" do
+        expect(page).to have_css(".print-section__heading", text: "Religious information")
+        expect(page).to have_css(".print-table__row", text: /I support the school's inclusive religious ethos\./)
+        expect(page).to have_css(".print-table__row", text: /Methodist/)
+        expect(page).to have_css(".print-table__row", text: /Example Methodist Church/)
+      end
+    end
+
+    context "when the vacancy has no religious character" do
+      it "does not render religious information" do
+        expect(page).to have_no_css(".print-section__heading", text: "Religious information")
+      end
+    end
+  end
+
+  context "when the application is a draft" do
+    let(:job_application) { create(:job_application, :status_draft, jobseeker:, vacancy:) }
+
+    it "renders the draft application" do
+      get jobseekers_job_application_print_path(job_application)
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context "when the application belongs to another jobseeker" do
+    let(:job_application) { create(:job_application, :status_submitted, vacancy:) }
+
+    it "does not find the application" do
+      expect { get jobseekers_job_application_print_path(job_application) }
+        .to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  context "when the application was uploaded" do
+    let(:job_application) do
+      create(:uploaded_job_application, :status_submitted, :with_uploaded_application_form, jobseeker:)
+    end
+
+    it "serves the uploaded application form" do
+      get jobseekers_job_application_print_path(job_application)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.media_type).to eq("application/pdf")
+      expect(response.headers["Content-Disposition"]).to include("application_form.pdf")
+      expect(JobApplicationPdfGenerator).not_to have_received(:new)
+    end
+  end
+end

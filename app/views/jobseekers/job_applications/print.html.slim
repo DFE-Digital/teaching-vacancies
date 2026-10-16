@@ -1,0 +1,58 @@
+- content_for :page_title_prefix, t(".page_title")
+- content_for :print_footer_text, @job_application_pdf.footer_text
+- content_for :meta_no_index do
+  meta name="robots" content="noindex,nofollow"
+
+p.govuk-body class="govuk-!-display-none-print" = t(".print_instructions")
+
+= render "print_header",
+  applicant_name: @job_application_pdf.applicant_name,
+  blank_applicant_name: t(".page_title"),
+  caption: @job_application_pdf.header_text
+
+p.print-introduction = t("jobseekers.job_applications.show.consent_text")
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.personal_details.heading"),
+  rows: @job_application_pdf.personal_details
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.professional_status.heading"),
+  rows: @job_application_pdf.professional_status
+
+= render "print_nested_section",
+  groups: @job_application_pdf.qualifications,
+  heading: t("jobseekers.job_applications.show.qualifications.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.training_and_cpds,
+  heading: t("jobseekers.job_applications.show.training_and_cpds.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.professional_body_memberships,
+  heading: t("jobseekers.job_applications.show.professional_body_memberships.heading")
+
+= render "print_nested_section",
+  groups: @job_application_pdf.employment_history,
+  heading: t("jobseekers.job_applications.show.employment_history.heading")
+
+section.print-section.print-personal-statement.print-personal-statement--completed
+  h2.print-section__heading = t("jobseekers.job_applications.show.personal_statement.heading")
+  .print-personal-statement__content = @job_application_pdf.personal_statement_richtext
+
+- if @job_application_pdf.religious_application?
+  = render "print_table_section",
+    heading: t("jobseekers.job_applications.show.religious_information.heading"),
+    rows: @job_application_pdf.religious_information
+
+= render "print_nested_section",
+  groups: @job_application_pdf.referees,
+  heading: t("jobseekers.job_applications.show.referees.heading")
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.ask_for_support.heading"),
+  rows: @job_application_pdf.ask_for_support
+
+= render "print_table_section",
+  heading: t("jobseekers.job_applications.show.declarations.heading"),
+  rows: @job_application_pdf.declarations

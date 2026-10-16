@@ -176,6 +176,22 @@ RSpec.describe JobApplicationPdf do
       end
     end
 
+    describe "#personal_statement_richtext" do
+      subject(:personal_statement_richtext) { datasource.personal_statement_richtext }
+
+      context "when present" do
+        before { job_application.personal_statement_richtext = "<p>My <strong>formatted</strong> personal statement</p>" }
+
+        it { is_expected.to eq(job_application.personal_statement_richtext) }
+      end
+
+      context "when blank" do
+        before { job_application.personal_statement_richtext = nil }
+
+        it { is_expected.to eq(I18n.t("jobseekers.job_applications.review.personal_statement.blank")) }
+      end
+    end
+
     describe "#professional_status" do
       subject(:professional_status) { datasource.professional_status }
 
