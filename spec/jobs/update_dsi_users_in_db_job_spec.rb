@@ -1,37 +1,38 @@
 require "rails_helper"
 
 RSpec.describe UpdateDSIUsersInDbJob do
-  let(:page_1_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_1.json") }
-  let(:page_2_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_2.json") }
-  let(:page_1_users) { JSON.parse(File.read(page_1_path)).fetch("users") }
-  let(:page_2_users) { JSON.parse(File.read(page_2_path)).fetch("users") }
-
-  let(:fetch_dsi_users) do
-    instance_double(Publishers::DfeSignIn::FetchDSIUsers, dsi_users_page_count: 2)
+  # DSI returns one record per user per organisation, so a user in two organisations
+  # appears twice with the same userId.
+  let(:multi_organisation_user_id) { SecureRandom.uuid.upcase }
+  let(:first_page_users) do
+    [
+      build(:dsi_user),
+      build(:dsi_user, user_id: multi_organisation_user_id, school_urn: "100001"),
+    ]
+  end
+  let(:second_page_users) do
+    [
+      build(:dsi_user, user_id: multi_organisation_user_id, school_urn: "100002"),
+      build(:dsi_user, :trust),
+    ]
   end
 
   before do
-    allow(Publishers::DfeSignIn::FetchDSIUsers).to receive(:new).and_return(fetch_dsi_users)
-    allow(fetch_dsi_users).to receive(:dsi_users_page).with(1).and_return(page_1_users)
-    allow(fetch_dsi_users).to receive(:dsi_users_page).with(2).and_return(page_2_users)
+    # DfeSignIn::API.users already hides pagination, so this job's own spec doesn't need to
+    # know about pages either — it stubs the enumerator directly, same as the job consumes it.
+    allow(DfeSignIn::API).to receive(:users).and_return((first_page_users + second_page_users).each)
   end
 
-  it "fetches every page and creates a publisher for each distinct user across them", :perform_enqueued do
-    # page_2's fixture repeats "CCC-333" for multiple organisations, so the distinct users
-    # across both pages (AAA-111, CCC-333, DEF-456) is fewer than the raw record count.
+  it "creates a publisher for each distinct user across the source", :perform_enqueued do
+    # multi_organisation_user_id appears twice, so there are 3 distinct users across 4 records.
     expect { described_class.perform_later }.to change(Publisher, :count).by(3)
   end
 
-  it "resumes from the next page instead of refetching an already-processed one" do
-    described_class.perform_later
-
-    interrupt_job_during_step(described_class, :sync_users, cursor: 2) { perform_enqueued_jobs }
-
-    expect(fetch_dsi_users).to have_received(:dsi_users_page).with(1)
-    expect(fetch_dsi_users).not_to have_received(:dsi_users_page).with(2)
-
-    perform_enqueued_jobs
-
-    expect(fetch_dsi_users).to have_received(:dsi_users_page).with(2)
+  it "enqueues one UpdateSingleDSIUserInDbJob per user DfeSignIn::API.users yields" do
+    # perform_now rather than perform_later + perform_enqueued_jobs: this only needs to run
+    # UpdateDSIUsersInDbJob itself and check what it enqueues, not cascade into actually
+    # performing every UpdateSingleDSIUserInDbJob too (the first example already covers that).
+    expect { described_class.new.perform_now }
+      .to have_enqueued_job(UpdateSingleDSIUserInDbJob).exactly(first_page_users.size + second_page_users.size).times
   end
 end
