@@ -1,7 +1,7 @@
 # Data: Seeds and external
 
-If you use the devcontainer, the database will be created and seeded on first run using standard
-`rails db:prepare`. The seeds generate a number of fake vacancies, job applications, and users,
+The database is created and seeded using standard `rails db:prepare`, which the devcontainer runs
+on first start and which you run yourself in the native setup. The seeds generate a number of fake vacancies, job applications, and users,
 as well as importing required data from a number of external services.
 
 You shouldn't have to refresh the external data, but if you do need to, you can with the following tasks:

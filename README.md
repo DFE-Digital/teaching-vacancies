@@ -27,7 +27,6 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 
 #### Setup
 * [Developers quick start](/documentation/development/setup/quick_start.md)
-* [Legacy Setup](/documentation/development/setup/legacy-setup.md)
 
 #### Tooling
 * [Tests and linting](/documentation/development/tooling/testing.md)

@@ -4,7 +4,8 @@
 
 ## Status
 
-**Decided**
+**Decided**, amended by [ADR 0016](0016_native_rails_with_dockerised_database_for_local_development.md):
+the devcontainer is a supported alternative, not the primary local setup.
 
 ## Context and Problem Statement
 
