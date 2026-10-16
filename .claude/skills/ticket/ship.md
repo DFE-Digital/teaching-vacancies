@@ -78,9 +78,8 @@ description with the developer instead, in two agreements.
    changes for users or behaviour. Not a file-by-file account of the implementation. Use plain
    English, with no class, method or file names unless the reviewer needs them to find something.
    Add at most one short note on anything non-obvious the reviewer should look at (this fills the
-   template's "Is there anything specific you want feedback on?"). Print the text in your reply,
-   then ask with AskUserQuestion whether to accept it; they can give their own wording through
-   "Other". Apply their edits.
+   template's "Is there anything specific you want feedback on?"). Print the text and ask in plain
+   text whether to accept it or what to change, then end your turn and wait. Apply their edits.
 2. **Full description.** Build the body from `.github/pull_request_template.md`, laid out as it is:
    - **Trello card URL** — the card URL.
    - **Changes in this PR** — the agreed summary, plus any review findings the developer chose to
@@ -91,9 +90,12 @@ description with the developer instead, in two agreements.
      any box is ticked, list which integration and user-experience items you checked and what you
      found.
 
-   Print the whole body as markdown in your reply (it is too long for a question box), then ask
-   with AskUserQuestion: "Open draft PR" or "I'll give edits". Apply any edits, print it again and
-   repeat until they choose to open it. Do not create the PR before then.
+   Print the whole body as markdown and ask in plain text whether to open the draft PR or what to
+   change, then end your turn and wait. Apply any edits, print it again and repeat until they
+   agree. Do not create the PR before then.
+
+   Never put text the developer must read in the same turn as an AskUserQuestion call: the
+   question replaces it on screen, so they see a question about text they cannot see.
 3. Write the agreed body to a temporary file and run
    `gh pr create --draft --base main --body-file <file>` (fallback: the GitHub MCP
    `create_pull_request` tool with `draft: true`). Give the developer the PR link.

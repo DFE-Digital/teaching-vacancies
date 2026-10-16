@@ -20,8 +20,9 @@ Without one, ask the developer to paste the title, URL and description.
 ## 3. Ask for extra context
 
 Tickets are often thin. Summarise the card back to the developer in a few lines (goal, acceptance
-criteria, anything ambiguous you noticed), then ask in one AskUserQuestion round for anything that
-would improve the plan, for example:
+criteria, anything ambiguous you noticed) and end your turn with a plain-text question. Do not
+use AskUserQuestion in the same turn: it hides the summary on screen. Ask for anything that would
+improve the plan, for example:
 
 - areas, files or models they expect to be involved;
 - constraints or approaches to prefer or avoid;
