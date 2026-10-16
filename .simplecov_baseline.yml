@@ -2481,11 +2481,11 @@ app/helpers/status_tag_helper.rb:
     missed: 0
 app/helpers/vacancies_helper.rb:
   lines:
-    percent: 94.32
+    percent: 94.24
     missed: 8
   branches:
-    percent: 90.78
-    missed: 7
+    percent: 91.89
+    missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
     percent: 100.0
@@ -2894,7 +2894,7 @@ app/mailers/jobseekers/account_mailer.rb:
     missed: 0
 app/mailers/jobseekers/alert_mailer.rb:
   lines:
-    percent: 93.93
+    percent: 94.11
     missed: 2
   branches:
     percent: 75.0
@@ -4742,7 +4742,7 @@ app/views/jobseekers/accounts/show.html.slim:
     missed: 0
 app/views/jobseekers/alert_mailer/alert.text.erb:
   lines:
-    percent: 94.73
+    percent: 95.0
     missed: 1
   branches:
     percent: 50.0
@@ -5911,14 +5911,14 @@ app/views/layouts/action_text/contents/_content.html.slim:
     missed: 0
 app/views/layouts/application.html.slim:
   lines:
-    percent: 77.5
+    percent: 76.31
     missed: 9
   branches:
-    percent: 66.66
+    percent: 60.0
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
-    percent: 73.52
+    percent: 74.28
     missed: 9
   branches:
     percent: 50.0
@@ -7923,7 +7923,7 @@ app/views/vacancies/search/_filters.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 53.33
+    percent: 50.0
     missed: 7
 app/views/vacancies/search/_job_roles_filters.html.slim:
   lines:
@@ -7990,11 +7990,11 @@ app/views/vacancies/search/_radius.html.slim:
     missed: 0
 app/views/vacancies/search/_results.html.slim:
   lines:
-    percent: 93.02
+    percent: 82.35
     missed: 3
   branches:
-    percent: 75.0
-    missed: 4
+    percent: 83.33
+    missed: 1
 app/views/vacancies/search/_sort.html.slim:
   lines:
     percent: 100.0

@@ -11,7 +11,7 @@ RSpec.describe "vacancies/index" do
   let(:landing_page_slug) { "part-time-potions-and-sorcery-teacher-jobs" }
   let(:school) { build_stubbed(:school) }
   let(:vacancy) { build_stubbed(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
-  let(:vacancies) { [vacancy] }
+  let(:vacancies) { [vacancy].map(&:decorate) }
   let(:search_criteria) { {} }
   let(:sort) { form.sort }
   let(:pagy) { pagy_array(build_stubbed_list(:vacancy, 2)).first }

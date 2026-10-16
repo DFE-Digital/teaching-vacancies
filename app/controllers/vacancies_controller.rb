@@ -11,7 +11,7 @@ class VacanciesController < ApplicationController
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies.decorate, count: @vacancies_search.total_count)
 
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event

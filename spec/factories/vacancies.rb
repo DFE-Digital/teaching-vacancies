@@ -149,6 +149,30 @@ FactoryBot.define do
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
 
+      salary_type = %i[salary actual_salary hourly_rate pay_scale].sample
+      case salary_type
+      when :salary
+        hourly_rate { nil }
+        pay_scale { nil }
+        actual_salary { nil }
+        salary { factory_sample(salaries) }
+      when :actual_salary
+        salary { nil }
+        hourly_rate { nil }
+        pay_scale { nil }
+        actual_salary { factory_rand(20_000..100_000) }
+      when :hourly_rate
+        salary { nil }
+        pay_scale { nil }
+        actual_salary { nil }
+        hourly_rate { "£25 per hour" }
+      else
+        salary { nil }
+        hourly_rate { nil }
+        actual_salary { nil }
+        pay_scale { factory_sample(salaries) }
+      end
+
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
       subjects { factory_sample(VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first), 3).sort }
