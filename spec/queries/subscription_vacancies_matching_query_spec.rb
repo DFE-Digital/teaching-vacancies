@@ -511,7 +511,6 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       Subscription.destroy_all
       LocationPolygon.destroy_all
     end
-    # rubocop:enable RSpec/BeforeAfterAll
 
     context "with a subscription containing a nationwide location" do
       let(:subscription) { create(:daily_subscription, location: "england") }
