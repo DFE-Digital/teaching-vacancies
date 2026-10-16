@@ -99,6 +99,7 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
       Publisher.destroy_all
       Subscription.destroy_all
     end
+    # rubocop:enable RSpec/BeforeAfterAll
 
     describe "job roles matching" do
       let(:subscription) { build_stubbed(:daily_subscription, teaching_job_roles: subscription_teaching_job_roles) }
