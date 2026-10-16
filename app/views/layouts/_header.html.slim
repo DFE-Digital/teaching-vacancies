@@ -1,4 +1,4 @@
-= govuk_header(full_width_border: true, homepage_url: root_path) do
+= govuk_header(full_width_border: true, homepage_url: "https://www.gov.uk") do
   .govuk-header__content
     nav.govuk-header__navigation aria-label="Top Menu"
       ul.govuk-header__navigation-list
@@ -31,7 +31,7 @@
             = link_to t("nav.sign_in"), page_path("sign-in"),
                       class: "govuk-header__link"
 
-= govuk_service_navigation(service_name: t("app.title"), navigation_id: "tv-service-navigation") do |navigation|
+= govuk_service_navigation(service_name: t("app.title"), service_url: root_path, navigation_id: "tv-service-navigation") do |navigation|
   - if publisher_signed_in?
     - navigation.with_navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
     - navigation.with_navigation_item text: t("nav.messages"), href: publishers_candidate_messages_path, active: messages_active?

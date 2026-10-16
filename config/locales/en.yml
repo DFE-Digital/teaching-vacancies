@@ -19,6 +19,9 @@ en:
     govuk: GOV.UK
     menu: Menu
     opens_in_new_tab: "%{link_text} (opens in new tab)"
+    phase_banner:
+      aria_label: Beta notification
+      label: Beta
     pagy_stats_html: >-
       Showing <span class='govuk-!-font-weight-bold'>%{from}</span>
       to <span class='govuk-!-font-weight-bold'>%{to}</span>
