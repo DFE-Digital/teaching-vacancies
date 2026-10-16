@@ -24,7 +24,7 @@ Teaching Vacancies is a free job-listing service from the Department for Educati
 Teachers search and apply for jobs at schools, trusts and colleges in England; hiring staff
 list and manage those vacancies.
 
-Ruby 4.0.7, Rails 8.x, PostgreSQL with PostGIS, Redis, Solid Queue.
+Ruby 4.0.7, Rails 8.x, PostgreSQL with PostGIS, Solid Queue, Redis (production cache only).
 
 Two things shape every rule below:
 
@@ -81,8 +81,8 @@ bin/jobs    # Solid Queue worker on its own
 
 The app is tied to port 3000; no other port works. Outside the devcontainer, run
 `corepack enable` first for Yarn 4, and see "Running natively" in the quick start guide to use
-the devcontainer's Postgres and Redis from your machine. Ports in use: 3000 (Rails), 3035
-(assets), 5432 (Postgres), 6379 (Redis).
+the devcontainer's Postgres from your machine (Redis is not needed outside production, where it is the cache store).
+Ports in use: 3000 (Rails), 3035 (assets), 5432 (Postgres), 6379 (Redis, devcontainer only).
 
 ## Commands
 
@@ -246,7 +246,7 @@ the DfE API catalogue the ATS API's OpenAPI document is published to by a daily 
 
 ### Coverage gates
 
-`.simplecov` sets `minimum_coverage line: 96.36, branch: 84.11`, and CI additionally runs
+`.simplecov` sets `minimum_coverage line: 96.34, branch: 84.30`, and CI additionally runs
 `undercover` against `origin/main` (`.undercover`) to catch new or changed code without tests.
 When raising the threshold, set it 0.02 below the reported figure to absorb rounding. Known
 causes of coverage fluctuation: random values in factories, and Ruby logic inside Slim
@@ -279,7 +279,7 @@ templates. Adding `#nocov` to pre-existing uncovered code you had to touch is ac
   `HEADLESS` or the devcontainer, headed otherwise); `a11y: true`
   uses Chrome with axe. `CAPYBARA_DRIVER=chrome` gives a headed browser for debugging.
 - Page objects use `site_prism`, under `spec/page_objects/`. Also available:
-  `shoulda-matchers`, `webmock`, `vcr`, `mock_redis`, `climate_control`, `rspec-rebound`.
+  `shoulda-matchers`, `webmock`, `vcr`, `climate_control`, `rspec-rebound`.
 - System spec naming: `spec/system/<actor>/<actor>s_can_<action>_spec.rb`.
 
 See [tests and linting](documentation/development/tooling/testing.md) for more.

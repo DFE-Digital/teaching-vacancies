@@ -27,10 +27,10 @@ Perform the following to trigger a deployment a review app
 - attach a `deploy` label
 - Docker image and tag used to deploy the `review app` is based on the review app's `branch` and `sha` e.g teva-1234:commit_sha
 
-#### Review app databases and cache/queues
+#### Review app databases and cache
 By default, review apps differ from the rest on environments on:
 - PostgreSQL DB: uses a postgis docker container deployed to AKS, instead of real Azure database flexible servers
-- Redis Cache and Queue: uses a redis docker container deployed to AKS, instead of real Azure Redis Cache servers.
+- Redis Cache: uses a redis docker container deployed to AKS, instead of real Azure Redis Cache servers.
 
 These AKS containers are cheaper and much faster to deploy, what is convenient for our ephemereal Review Apps.
 

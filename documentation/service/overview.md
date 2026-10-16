@@ -93,7 +93,7 @@ Container_Boundary(auth_notify, "User authentication and notification<br>service
 %% -------------------------------------------------------------------------
 Container_Boundary(tv, "Teaching Vacancies service") {
   Container(web_app, "Web Application", "Ruby on Rails MVC", "Contains all the business logic.<br>Lists Vacancies.<br>Manages/progresses<br>Job Applications.")
-  ContainerQueue(queue, "Jobs Queue", "Redis Queue", "Background Jobs<br>queue")
+  ContainerQueue(queue, "Jobs Queue", "Solid Queue (PostgreSQL)", "Background jobs queue.<br>Stored in tables in<br>the main database")
   Container(worker, "Worker", "Solid Queue worker", "Runs service background jobs.")
   ContainerQueue(cache, "Cache", "Redis Cache", "Web Application cache<br>memory")
   ContainerDb(db, "Database", "PostgreSQL (PostGis)", "Relational DB containing<br>all the service information")
@@ -154,14 +154,17 @@ UpdateRelStyle(ats, web_app, $textColor="orange", $lineColor="orange", $offsetX=
 BiRel(web_app, db, "Stores/Retrieves info<br>Computes searches")
 UpdateRelStyle(web_app, db, $textColor="red", $lineColor="red", $offsetX="-70", $offsetY="100")
 
-Rel(web_app, queue, "Sends<br>async<br>jobs<br>and<br>emails")
+Rel(web_app, queue, "Enqueues<br>async<br>jobs<br>and<br>emails")
 UpdateRelStyle(web_app, queue, $textColor="purple", $lineColor="purple", $offsetX="5", $offsetY="0")
 
 BiRel(web_app, cache, "Stores temp & fast<br>access data")
 UpdateRelStyle(web_app, cache, $textColor="red", $lineColor="red", $offsetX="-110", $offsetY="100")
 
-Rel(queue, worker, "Consumes and<br>Executes<br>the job<br>queue jobs")
+Rel(queue, worker, "Consumes and<br>executes<br>queued jobs")
 UpdateRelStyle(queue, worker, $textColor="purple", $lineColor="purple", $offsetX="-30", $offsetY="-40")
+
+Rel(queue, db, "Lives in")
+UpdateRelStyle(queue, db, $textColor="purple", $lineColor="purple", $offsetX="50", $offsetY="60")
 
 BiRel(worker, db, "Stores/Retrieves<br>info")
 UpdateRelStyle(worker, db, $textColor="red", $lineColor="red", $offsetX="-100", $offsetY="-20")
@@ -198,9 +201,8 @@ architecture-beta
   group azurestorage(disk)[Azure Storage accounts] in azurerg
 
   %% Services are the 'leafs' living in eah group
-  service db(database)[Backend DB] in azuredb
+  service db(database)[Backend DB and Solid Queue jobs] in azuredb
   service rediscache(database)[Cache] in azureredis
-  service redisqueue(database)[Background Jobs Queue] in azureredis
   service storage(disk)[File blobs Storage] in azurestorage
 
   group azureks(cloud)[Azure Kubernetes] in azure
@@ -218,7 +220,6 @@ architecture-beta
 
   workerpod{group}:R -- L:junctionAzureKubernetes
   rails{group}:L -- R:junctionAzureKubernetes
-  redisqueue:R -- L:junctionAzureRedis
   rediscache:L -- R:junctionAzureRedis
 
   junctionAzureResources:T -- B:junctionAzureRedis

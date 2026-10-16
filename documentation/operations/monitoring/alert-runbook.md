@@ -37,7 +37,7 @@ Most AKS settings are in [production.tfvars.json](/terraform/workspace-variables
 ```
 postgres_flexible_server_sku      = "GP_Standard_D4ds_v5"
 postgres_enable_high_availability = true
-redis_queue_sku_name              = "Premium"
+redis_cache_sku_name              = "Premium"
 aks_web_app_instances             = 8
 worker_app_instances              = 4
 aks_worker_app_memory             = "2Gi"
@@ -66,4 +66,4 @@ From [Azure Cache for Redis documentation](https://learn.microsoft.com/en-us/azu
 
 You can list the different Redis Cache tiers in [this page](https://azure.microsoft.com/en-us/pricing/details/cache/)
 
-Change the value for `redis_queue_sku_name`, `redis_queue_family` and `redis_queue_capacity`. Same for `redis_cache_` values.
+Change the value for `redis_cache_sku_name`, `redis_cache_family` and `redis_cache_capacity`.
