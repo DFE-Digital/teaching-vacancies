@@ -32,8 +32,6 @@ RSpec.describe "jobseekers/job_applications/index" do
     end
 
     describe "job applications listing" do
-      # before { login_as(jobseeker, scope: :jobseeker) }
-      # after { logout }
       let(:job_applications) do
         JobApplication.statuses.transform_keys(&:to_sym).except(:reviewed).keys.map do |application_status|
           build_stubbed(:job_application, :"status_#{application_status}", jobseeker:)
