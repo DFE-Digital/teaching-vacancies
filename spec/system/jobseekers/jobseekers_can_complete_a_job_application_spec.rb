@@ -232,7 +232,9 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       scenario "with a TRN" do
         expect(page).to have_no_link(href: vacancy.application_link)
-        find("a.govuk-button").click
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+        end
         expect(page).to have_content("What is your teacher reference number")
         fill_in "job-application-teacher-reference-number-field", with: Faker::Number.number(digits: 7)
         click_on "Continue"
@@ -240,7 +242,9 @@ RSpec.describe "Jobseekers can complete a job application" do
       end
 
       scenario "without a TRN" do
-        find("a.govuk-button").click
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+        end
         expect(page).to have_content("What is your teacher reference number")
         click_on "Skip"
         expect(page).to have_current_path(vacancy.application_link)
