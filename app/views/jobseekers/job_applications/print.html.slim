@@ -21,6 +21,7 @@ p.print-introduction = t("jobseekers.job_applications.show.consent_text")
   rows: @job_application_pdf.professional_status
 
 = render "print_nested_section",
+  classes: "print-section--new-page",
   groups: @job_application_pdf.qualifications,
   heading: t("jobseekers.job_applications.show.qualifications.heading")
 

@@ -81,6 +81,11 @@ $print-white: #fff;
   font-family: arial, sans-serif;
   margin-bottom: 10mm;
 
+  &--new-page {
+    break-before: page;
+    page-break-before: always;
+  }
+
   &__heading {
     align-items: center;
     background: #ddd;
