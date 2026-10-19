@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :professional_body_memberships), ignore_query: true)
       expect(page).to have_content(I18n.t("buttons.add_another_professional_body_membership"))
-      expect(page).to have_css("h3", text: "Teachers Union")
+      expect(page).to have_css(".govuk-summary-card__title", text: "Teachers Union")
 
       within(".govuk-summary-list") do
         rows = [
