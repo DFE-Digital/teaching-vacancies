@@ -59,7 +59,7 @@ en:
     delete_subject: Delete subject
     dismiss: Dismiss
     download_application: Download application
-    download_your_application: Download your completed application
+    print_or_save_application: Print or save your application
     download_blank_application: Download a blank application form
     download_application_form: Download an application form - %{size}
     download_submitted_application_form: Download submitted application form - %{size}
