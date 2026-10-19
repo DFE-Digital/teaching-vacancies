@@ -2,7 +2,6 @@ module ComponentsHelper
   {
     tvs_card: "CardComponent",
     dashboard: "DashboardComponent",
-    tvs_summary_card: "DetailComponent",
     empty_section: "EmptySectionComponent",
     filters: "FiltersComponent",
     job_application_notes: "PublisherNotesOnJobApplicationComponent",

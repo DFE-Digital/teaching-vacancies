@@ -122,7 +122,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
         visit current_path
 
-        expect(page).to have_css(".detail-component", count: 1)
+        expect(page).to have_css(".govuk-summary-list", count: 1)
         subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
         expect(subject_list).to have_css(".govuk-body", count: 1)
 
@@ -131,7 +131,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
         fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
         click_on "Save qualifications"
 
-        expect(page).to have_css(".detail-component", count: 1)
+        expect(page).to have_css(".govuk-summary-list", count: 1)
         subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
         expect(subject_list).to have_css(".govuk-body", count: 2)
       end

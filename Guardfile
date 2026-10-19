@@ -67,6 +67,9 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
   login_keys: %w[],
   account_transfers: %w[can_transfer_data_from_old_account],
   account_feedbacks: %w[can_give_account_feedback],
+  qualifications: %w[can_add_qualifications_to_their_job_application],
+  professional_body_memberships: %w[can_add_professional_body_membership_to_job_application],
+  employments: %w[can_add_employments_to_their_job_application],
 }.freeze
 
 VACANCY_MAPPINGS = {
@@ -81,11 +84,12 @@ JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS = {
                       can_manage_job_preferences],
   qualifications: %w[can_add_qualifications],
   hide_profile: %w[can_manage_a_profile],
+  employments: %w[],
 }.freeze
 
 JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS = {
   employments: %w[can_add_employments_to_their_job_application],
-  professional_body_memberships: %w[can_add_professional_body_membership_to_their_job_application],
+  professional_body_memberships: %w[can_add_professional_body_membership_to_job_application],
   qualifications: %w[can_add_qualifications_to_their_job_application],
   referees: %w[can_add_references_to_their_job_application],
   training_and_cpds: %w[can_add_training_and_cpds_to_their_job_application],
@@ -204,6 +208,10 @@ PUBLISHER_SHARED_MAPPINGS = {}.freeze
 
 ORGANISATION_MAPPINGS = {}.freeze
 
+JOBSEEKER_QUALI_MAPPINGS = {
+  qualifications: %w[],
+}.freeze
+
 MASTER_MAPPINGS = {
   %w[jobseekers job_applications] => [:jobseekers, JOBSEEKER_JOB_APPLICATION_SYSTEM_SPEC_MAPPINGS],
   %w[jobseekers profiles] => [:jobseekers, JOBSEEKER_PROFILE_SYSTEM_SPEC_MAPPINGS],
@@ -220,6 +228,7 @@ MASTER_MAPPINGS = {
   %w[api] => [:publishers, API_MAPPINGS],
   %w[shared] => [:publishers, PUBLISHER_SHARED_MAPPINGS],
   %w[organisations] => [:jobseekers, ORGANISATION_MAPPINGS],
+  %w[qualifications] => [:jobseekers, JOBSEEKER_QUALI_MAPPINGS],
 }.freeze
 
 SIMPLE_MAPPINGS = {
@@ -257,8 +266,12 @@ def system_specs_to_run(controller_name)
                   else
                     [controller_name.first]
                   end
+    # enable when debugging Guardfile
+    # puts "#{mapping_key.inspect}, #{controller_name.last}"
     type, mapping_hash = MASTER_MAPPINGS.fetch(mapping_key)
-    mapping_hash.fetch(controller_name.last.to_sym).map { |system_spec| map_type_to_spec(type, system_spec) }
+    mapping_hash.fetch(controller_name.last.to_sym).map do |system_spec|
+      map_type_to_spec(type, system_spec)
+    end
   else
     type, spec_list = SIMPLE_MAPPINGS.fetch(controller_name.first.to_sym)
     spec_list.map { |system_spec| map_type_to_spec(type, system_spec) }

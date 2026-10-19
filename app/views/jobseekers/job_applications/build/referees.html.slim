@@ -8,23 +8,21 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
 
 - if job_application.referees.any?
   - job_application.referees.each do |referee|
-    = tvs_summary_card title: referee.name do |detail|
-      - detail.with_body do
-        = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-          - attributes = %w[job_title organisation relationship email phone_number]
-          - attributes.each do |attribute|
-            - if referee[attribute].present?
-              - summary_list.with_row do |row|
-                - row.with_key text: t("jobseekers.job_applications.referees.#{attribute}")
-                - row.with_value text: referee[attribute]
+    - change_action = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_referee_path(job_application, referee), class: "govuk-link--no-visited-state"
+    - delete_action = govuk_link_to t("buttons.delete"), jobseekers_job_application_referee_path(job_application, referee), method: :delete
 
-          - unless referee["is_most_recent_employer"].nil?
-            - summary_list.with_row do |row|
-              - row.with_key text: t("jobseekers.job_applications.referees.is_most_recent_employer")
-              - row.with_value text: t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee['is_most_recent_employer']}")
+    = govuk_summary_list card: { title: referee.name, actions: [change_action, delete_action] }, classes: "govuk-!-margin-bottom-0" do |summary_list|
+      - attributes = %w[job_title organisation relationship email phone_number]
+      - attributes.each do |attribute|
+        - if referee[attribute].present?
+          - summary_list.with_row do |row|
+            - row.with_key text: t("jobseekers.job_applications.referees.#{attribute}")
+            - row.with_value text: referee[attribute]
 
-      - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_referee_path(job_application, referee), class: "govuk-link--no-visited-state"
-      - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_referee_path(job_application, referee), method: :delete
+      - unless referee["is_most_recent_employer"].nil?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("jobseekers.job_applications.referees.is_most_recent_employer")
+          - row.with_value text: t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee['is_most_recent_employer']}")
 
   = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_referee_path(job_application)
 - else
