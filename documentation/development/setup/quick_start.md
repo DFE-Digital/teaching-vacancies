@@ -47,7 +47,6 @@ The application is tied to port 3000; no other port will work.
    ```bash
    RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
    ```
-
 5. Run the application with `bin/dev`. It makes sure the database is running first (so this is
    all you need from now on), then starts:
    - The Rails application on http://localhost:3000

@@ -12,7 +12,8 @@ Amends [ADR 0011](0011_use_devcontainers.md).
 
 [ADR 0011](0011_use_devcontainers.md) added devcontainers as an option, with a view to making them
 the "official" default way of running the service. In practice many developers run Rails natively
-on their own machine and only run PostgreSQL with PostGIS in Docker. They kept doing so because the app is fast and simple to run natively.
+on their own machine and only run PostgreSQL with PostGIS in Docker. They kept doing so because the
+app is fast and simple to run natively.
 
 The documentation did not reflect this. It called the devcontainer the "gold standard", described
 the native route only in collapsed sections that borrowed the devcontainer's compose file, and

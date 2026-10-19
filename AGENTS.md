@@ -74,7 +74,7 @@ Two things shape every rule below:
 Two setups are supported, both described in
 [the quick start guide](documentation/development/setup/quick_start.md):
 
-- **Native Rails with a dockerised database** (primary, used by most of the team): Rails runs on
+- **Native Rails with a dockerised database** (primary): Rails runs on
   your machine and PostgreSQL/PostGIS runs from `compose.yaml`. `bin/setup` and `bin/dev` start
   the database through `bin/dev-db` (skipped inside a container or with `SKIP_DEV_DB=1`).
 - **The devcontainer** in `.devcontainer/`.
