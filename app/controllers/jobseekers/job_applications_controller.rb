@@ -2,11 +2,14 @@
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
   include JobApplicationsPdfHelper
+  include TrnOnApplyAbTest
 
   before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw download print]
 
-  before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create]
-  before_action :redirect_if_job_application_exists, only: %i[new create]
+  skip_before_action :authenticate_scope!, only: %i[start]
+
+  before_action :raise_cannot_apply, unless: -> { vacancy.allow_job_applications? }, only: %i[new create start]
+  before_action :redirect_if_job_application_exists, only: %i[new create start], if: :jobseeker_signed_in?
   before_action :redirect_unless_draft_job_application, only: %i[review]
 
   helper_method :employments, :job_application, :qualification_form_param_key, :vacancy
@@ -38,9 +41,22 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
   # rubocop:enable Metrics/AbcSize
 
+  # The single entry point for every "Apply" button, whatever kind of application the vacancy takes.
+  # Signed-out jobseekers are sent to #new, as sign in can only return them to a GET request.
+  def start
+    if trn_prompt_required?(vacancy)
+      redirect_to trn_interstitial_job_path(vacancy.id)
+    elsif vacancy.uploaded_form? && jobseeker_signed_in?
+      redirect_to jobseekers_job_application_apply_path(vacancy.create_job_application_for(current_jobseeker))
+    else
+      redirect_to new_jobseekers_job_job_application_path(vacancy.id)
+    end
+  end
+
   def new
     send_dfe_analytics_event
     set_one_login_banners
+    return render("new_uploaded_form") if vacancy.uploaded_form?
 
     @has_previous_application = nil
     if quick_apply?
@@ -56,14 +72,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
-    if quick_apply?
-      new_job_application = prefill_job_application_with_available_data
+    new_job_application = Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+    notice = t("jobseekers.job_applications.new.import_from_previous_application") if quick_apply? && !vacancy.uploaded_form?
 
-      redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
-    else
-      new_job_application = vacancy.create_job_application_for(current_jobseeker)
-      redirect_to jobseekers_job_application_apply_path(new_job_application)
-    end
+    redirect_to jobseekers_job_application_apply_path(new_job_application), notice:
   end
 
   def pre_submit
@@ -168,10 +180,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   private
 
   attr_reader :job_application
-
-  def prefill_job_application_with_available_data
-    Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
-  end
 
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
