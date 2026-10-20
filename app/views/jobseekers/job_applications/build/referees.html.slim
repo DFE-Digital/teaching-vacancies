@@ -13,11 +13,10 @@ p.govuk-body = t(".description_html", link: govuk_link_to(t(".kcsie"), "https://
 
     = govuk_summary_list card: { title: referee.name, actions: [change_action, delete_action] }, classes: "govuk-!-margin-bottom-0" do |summary_list|
       - attributes = %w[job_title organisation relationship email phone_number]
-      - attributes.each do |attribute|
-        - if referee[attribute].present?
-          - summary_list.with_row do |row|
-            - row.with_key text: t("jobseekers.job_applications.referees.#{attribute}")
-            - row.with_value text: referee[attribute]
+      - attributes.select { |attr| referee[attr].present? }.each do |attribute|
+        - summary_list.with_row do |row|
+          - row.with_key text: t("jobseekers.job_applications.referees.#{attribute}")
+          - row.with_value text: referee[attribute]
 
       - unless referee["is_most_recent_employer"].nil?
         - summary_list.with_row do |row|
