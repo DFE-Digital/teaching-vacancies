@@ -235,6 +235,7 @@ SIMPLE_MAPPINGS = {
   vacancies: [:jobseekers, %w[]],
   organisations: [:jobseekers, %w[]],
   colleges: [:jobseekers, %w[]],
+  sitemap: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
