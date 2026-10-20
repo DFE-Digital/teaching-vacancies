@@ -463,6 +463,13 @@ app/controllers/concerns/support_users/satisfaction_rating_types.rb:
   branches:
     percent: 100.0
     missed: 0
+app/controllers/concerns/trn_on_apply_ab_test.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/controllers/cookies_preferences_controller.rb:
   lines:
     percent: 94.73
@@ -640,10 +647,10 @@ app/controllers/jobseekers/job_applications/training_and_cpds_controller.rb:
     missed: 0
 app/controllers/jobseekers/job_applications_controller.rb:
   lines:
-    percent: 99.22
+    percent: 99.28
     missed: 1
   branches:
-    percent: 97.36
+    percent: 97.91
     missed: 1
 app/controllers/jobseekers/login_keys_controller.rb:
   lines:
@@ -1389,10 +1396,10 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 94.87
+    percent: 95.06
     missed: 4
   branches:
-    percent: 88.23
+    percent: 88.88
     missed: 4
 app/controllers/warden_controller.rb:
   lines:
@@ -3223,11 +3230,11 @@ app/models/job_application_batch.rb:
     missed: 0
 app/models/job_application_pdf.rb:
   lines:
-    percent: 99.49
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 93.67
-    missed: 5
+    percent: 94.93
+    missed: 4
 app/models/job_preferences.rb:
   lines:
     percent: 91.66
@@ -4138,28 +4145,7 @@ app/services/publishers/dfe_sign_in/authorisation.rb:
   branches:
     percent: 100.0
     missed: 0
-app/services/publishers/dfe_sign_in/big_query_export/approvers.rb:
-  lines:
-    percent: 64.0
-    missed: 9
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/publishers/dfe_sign_in/big_query_export/base.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 75.0
-    missed: 1
-app/services/publishers/dfe_sign_in/big_query_export/users.rb:
-  lines:
-    percent: 61.53
-    missed: 10
-  branches:
-    percent: 100.0
-    missed: 0
-app/services/publishers/dfe_sign_in/fetch_dsi_users.rb:
+app/services/publishers/dfe_sign_in/big_query_export.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -4803,6 +4789,34 @@ app/views/jobseekers/job_applications/_one_login_banners.html.slim:
   branches:
     percent: 75.0
     missed: 1
+app/views/jobseekers/job_applications/_print_header.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 75.0
+    missed: 2
+app/views/jobseekers/job_applications/_print_nested_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 66.66
+    missed: 4
+app/views/jobseekers/job_applications/_print_table.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/_print_table_section.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/_show.html.slim:
   lines:
     percent: 93.47
@@ -5041,7 +5055,21 @@ app/views/jobseekers/job_applications/new.html.slim:
   branches:
     percent: 75.0
     missed: 1
+app/views/jobseekers/job_applications/new_uploaded_form.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/post_submit.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/views/jobseekers/job_applications/print.html.slim:
   lines:
     percent: 100.0
     missed: 0
@@ -7829,11 +7857,11 @@ app/views/vacancies/listing/_banner.html.slim:
     missed: 1
 app/views/vacancies/listing/_banner_buttons.html.slim:
   lines:
-    percent: 84.61
-    missed: 4
+    percent: 94.11
+    missed: 1
   branches:
-    percent: 81.81
-    missed: 4
+    percent: 91.66
+    missed: 1
 app/views/vacancies/listing/_contact_details.html.slim:
   lines:
     percent: 100.0
@@ -7843,10 +7871,10 @@ app/views/vacancies/listing/_contact_details.html.slim:
     missed: 2
 app/views/vacancies/listing/_job_details.html.slim:
   lines:
-    percent: 93.33
+    percent: 93.16
     missed: 8
   branches:
-    percent: 83.92
+    percent: 82.69
     missed: 9
 app/views/vacancies/listing/_key_dates_sidebar.html.slim:
   lines:
@@ -8023,21 +8051,14 @@ app/views/vacancies/trn_interstitial.html.slim:
   branches:
     percent: 100.0
     missed: 0
+lib/big_query/table.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 lib/dfe_sign_in/api.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/dfe_sign_in/api/request.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/dfe_sign_in/api/response.rb:
   lines:
     percent: 100.0
     missed: 0
