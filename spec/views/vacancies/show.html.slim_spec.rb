@@ -44,6 +44,13 @@ RSpec.describe "vacancies/show" do
       it "has a tag on jobs that allow to apply through Teaching Vacancies" do
         expect(rendered).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
       end
+
+      it "has an application button in the banner" do
+        expect(rendered).to have_css(
+          "form[action='#{start_jobseekers_job_job_application_path(vacancy.id)}'] button.govuk-button",
+          text: I18n.t("jobseekers.job_applications.banner_links.apply"),
+        )
+      end
     end
 
     context "with a website vacancy" do
@@ -146,6 +153,14 @@ RSpec.describe "vacancies/show" do
         it "has an application link" do
           expect(rendered).to have_link(expected_link)
         end
+
+        it "has an application link in the banner" do
+          expect(rendered).to have_link(
+            I18n.t("jobs.view_advert.banner"),
+            href: apply_job_path(vacancy),
+            class: "govuk-button",
+          )
+        end
       end
 
       context "with a college vacancy" do
@@ -168,6 +183,10 @@ RSpec.describe "vacancies/show" do
 
         it "does not have an application link" do
           expect(rendered).to have_no_link(expected_link)
+          expect(rendered).to have_no_link(
+            I18n.t("jobseekers.job_applications.banner_links.apply"),
+            href: apply_job_path(vacancy),
+          )
         end
       end
     end

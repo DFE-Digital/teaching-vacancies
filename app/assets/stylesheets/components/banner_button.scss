@@ -34,10 +34,20 @@
       color: govuk-functional-colour(focus-text);
       outline: 3px solid transparent;
     }
+
+    &--no-wrap {
+      @media only screen and (min-width: 1021px) {
+        white-space: nowrap;
+      }
+    }
   }
 }
 
 .banner-buttons {
+  .govuk-button {
+    margin-top: govuk-spacing(3);
+  }
+
   .govuk-grid-column-one-third {
     @media only screen and (max-width: 1020px) {
       width: 100%;
