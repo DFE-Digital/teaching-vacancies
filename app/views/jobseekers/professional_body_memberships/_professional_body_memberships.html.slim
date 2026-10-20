@@ -2,19 +2,4 @@
   - change_action = govuk_link_to(safe_join([t("buttons.change"), tag.span(professional_body_membership.name, class: "govuk-visually-hidden")]), edit_jobseekers_profile_professional_body_membership_path(professional_body_membership), class: "govuk-link--no-visited-state")
   - delete_action = govuk_link_to(safe_join([t("buttons.delete"), tag.span(professional_body_membership.name, class: "govuk-visually-hidden")]), jobseekers_profile_professional_body_membership_confirm_destroy_path(professional_body_membership))
 
-  - rows = [{ key: { text: t("helpers.label.jobseekers_professional_body_membership_form.name") }, value: { text: professional_body_membership.name } }]
-
-  - if professional_body_membership.membership_type.present?
-    - rows << { key: { text: t("helpers.label.jobseekers_professional_body_membership_form.membership_type") }, value: { text: professional_body_membership.membership_type } }
-
-  - if professional_body_membership.membership_number.present?
-    - rows << { key: { text: t("helpers.label.jobseekers_professional_body_membership_form.membership_number") }, value: { text: professional_body_membership.membership_number } }
-
-  - if professional_body_membership.year_membership_obtained.present?
-    - rows << { key: { text: t("helpers.label.jobseekers_professional_body_membership_form.year_membership_obtained") }, value: { text: professional_body_membership.year_membership_obtained } }
-
-  - if professional_body_membership.exam_taken.present?
-    - rows << { key: { text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken") },
-                value: { text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken_options.#{professional_body_membership.exam_taken}") } }
-
-  = govuk_summary_list(card: { title: professional_body_membership.name, actions: [change_action, delete_action] }, rows: rows, classes: "govuk-!-margin-bottom-0")
+  = render "jobseekers/shared/professional_body_membership", professional_body_membership: professional_body_membership, actions: [change_action, delete_action]

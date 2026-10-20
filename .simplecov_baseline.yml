@@ -4920,8 +4920,8 @@ app/views/jobseekers/job_applications/build/professional_body_memberships.html.s
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/professional_status.html.slim:
   lines:
     percent: 100.0
