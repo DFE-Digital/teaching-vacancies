@@ -43,4 +43,8 @@ On the day of the interview lesson or micro-teach, take three copies of your les
 ## 5. Stay positive
 Ultimately, feel good about yourself and try and relax. You won’t be able to plan for every eventuality, but the panel wants to see how you cope in a teaching environment and how you adapt to changing situations. 
 
-<a href="https://teaching-vacancies.service.gov.uk/subscriptions/new" class="govuk-button">Get jobs sent to you</a>
+<form class="button_to" method="get" action="/subscriptions/new">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Get jobs sent to you
+    </button>
+</form>

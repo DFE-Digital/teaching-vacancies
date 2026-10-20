@@ -33,4 +33,8 @@ We'll save your details so you won’t have to spend time filling in new applica
 
 If you’re invited to interview, read [how to approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview?) to help you prepare. 
 
-<a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign-in" class="govuk-button">Create a Teaching Vacancies account now</a>
+<form class="button_to" method="get" action="/jobseekers/sign-in">
+    <button class="govuk-button" data-module="govuk-button" new_tab="false" type="submit">
+        Create a Teaching Vacancies account now
+    </button>
+</form>
