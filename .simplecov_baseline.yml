@@ -57,20 +57,6 @@ app/components/dashboard_component/dashboard_component.html.slim:
   branches:
     percent: 87.23
     missed: 6
-app/components/detail_component.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/components/detail_component/detail_component.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 75.0
-    missed: 1
 app/components/editor_component.rb:
   lines:
     percent: 100.0
@@ -4948,8 +4934,8 @@ app/views/jobseekers/job_applications/build/professional_body_memberships.html.s
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/professional_status.html.slim:
   lines:
     percent: 100.0
@@ -5370,13 +5356,6 @@ app/views/jobseekers/peak_times_mailer/reminder.text.erb:
   branches:
     percent: 100.0
     missed: 0
-app/views/jobseekers/professional_body_memberships/_professional_body_memberships.html.slim:
-  lines:
-    percent: 0.0
-    missed: 25
-  branches:
-    percent: 0.0
-    missed: 8
 app/views/jobseekers/profiles/_summary.html.slim:
   lines:
     percent: 100.0

@@ -6,18 +6,16 @@ h2.govuk-heading-l = t(".heading")
 
 - if job_application.training_and_cpds.any?
   - job_application.training_and_cpds.each do |training|
-    = tvs_summary_card title: training.name do |detail|
-      - detail.with_body do
-        = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-          - attributes = %w[name provider grade year_awarded course_length]
-          - attributes.each do |attribute|
-            - if training[attribute].present?
-              - summary_list.with_row do |row|
-                - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.#{attribute}")
-                - row.with_value text: training[attribute]
+    - change_action = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_training_and_cpd_path(job_application, training), class: "govuk-link--no-visited-state"
+    - delete_action = govuk_link_to t("buttons.delete"), jobseekers_job_application_training_and_cpd_path(job_application, training), method: :delete
 
-      - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_training_and_cpd_path(job_application, training), class: "govuk-link--no-visited-state"
-      - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_training_and_cpd_path(job_application, training), method: :delete
+    = govuk_summary_list card: { title: training.name, actions: [change_action, delete_action] }, classes: "govuk-!-margin-bottom-0" do |summary_list|
+      - attributes = %w[name provider grade year_awarded course_length]
+      - attributes.each do |attribute|
+        - if training[attribute].present?
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.#{attribute}")
+            - row.with_value text: training[attribute]
 
   = govuk_button_link_to t("buttons.add_another_training"), new_jobseekers_job_application_training_and_cpd_path(job_application)
 - else
