@@ -141,6 +141,8 @@ gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "solid_queue"
+gem "solid_cache"
+gem "solid_cache_dashboard"
 # Skylight performance monitoring https://www.skylight.io/login
 gem "skylight"
 gem "slim-rails"

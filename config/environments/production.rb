@@ -50,7 +50,7 @@ Rails.application.configure do
   config.force_ssl = true
   config.ssl_options = { redirect: { exclude: ->(request) { request.path.include?("check") } } }
 
-  config.cache_store = :redis_cache_store, { url: config.redis_cache_url, pool_size: ENV.fetch("RAILS_MAX_THREADS", 5) }
+  config.cache_store = :solid_cache_store
 
   # Use a real queuing backend for Active Job
   # (and separate queues per environment)

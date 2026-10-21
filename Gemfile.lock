@@ -869,6 +869,15 @@ GEM
       yard (~> 0.9, >= 0.9.24)
       yard-activesupport-concern (~> 0.0)
       yard-solargraph (~> 0.1)
+    solid_cache (1.0.10)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
+    solid_cache_dashboard (0.2.0)
+      chartkick (>= 5.0)
+      groupdate (>= 6.5)
+      pagy (>= 6.0)
+      solid_cache (>= 0.2.0)
     solid_queue (1.7.0)
       activejob (>= 7.1)
       activerecord (>= 7.1)
@@ -1104,6 +1113,8 @@ DEPENDENCIES
   slim-rails
   slim_lint
   solargraph
+  solid_cache
+  solid_cache_dashboard
   solid_queue
   turbo-rails
   tzinfo-data
@@ -1429,6 +1440,8 @@ CHECKSUMS
   slim-rails (4.0.1) sha256=bd8f21eec413738ae65d7732926e65be15061dae17cc85f80e37301916a5a0f4
   slim_lint (0.37.0) sha256=b26b0534f816a19225a0027f897c952c6631817d4169bdf5e59595ffd6d25097
   solargraph (0.61.0) sha256=7fcc98d75bf5483b09ea07c86ba695486b9859c557574f7a6d26ec3009c9f138
+  solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
+  solid_cache_dashboard (0.2.0) sha256=b59d4145d80c0989c4958125052a3edec709d066b1f4297a5b7d85ddce4bd994
   solid_queue (1.7.0) sha256=6566b70b801d1c317c81bba7bcdd5677c019afac584a30374b4164002ca356d3
   sorbet-runtime (0.6.13573) sha256=7a96a9699c4aa6987e915ff7ca166ae79056efc3714ef4f3719d672fb3222afb
   sord (7.1.0) sha256=e02fd59294da520e50cea80a07fb9bc93db709c552d055871379ae8d8e87601f
