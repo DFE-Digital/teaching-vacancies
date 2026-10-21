@@ -4,8 +4,8 @@ default: &default
     max_age: <%= 180.days.to_i %>
     max_size: <%= 2.gigabytes %>
     namespace: <%= Rails.env %>
-    expiry_method: <%= :job %>
-    expiry_queue: <%= :low %>
+    expiry_method: :job
+    expiry_queue: :low
 
 development:
   <<: *default
