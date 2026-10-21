@@ -6,8 +6,9 @@
                                form:,
                                candidates: candidates.fetch("offered"),
                                displayed_fields: %i[name email_address offered_at status],
-                               button_group: %i[export declined])
+                               button_group: %i[export declined],
+                               sort_by: :offered_at)
 
 = govuk_section_break(visible: true, size: "xl")
 
-= render TabPanelComponent.new(vacancy:, candidates: candidates.fetch("declined"), tab_name: "declined", displayed_fields: %i[name email_address declined_at])
+= render TabPanelComponent.new(vacancy:, candidates: candidates.fetch("declined"), tab_name: "declined", sort_by: :declined_at, displayed_fields: %i[name email_address declined_at])

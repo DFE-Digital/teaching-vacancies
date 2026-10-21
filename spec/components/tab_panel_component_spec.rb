@@ -150,60 +150,31 @@ RSpec.describe TabPanelComponent, type: :component do
     end
   end
 
-  describe "#sort_candidates" do
-    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates: [], form:) }
-    let(:vacancy) { build_stubbed(:vacancy) }
-    let(:form) { nil }
+  describe "sorting" do
+    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates:, sort_by:) }
+    let(:candidates) do
+      [
+        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 3)),
+        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: nil),
+        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 1)),
+      ]
+    end
 
-    context "when tab_name is 'interviewing'" do
-      it "sorts candidates with nil interviewing_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
-        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
+    context "when sort_by is given" do
+      let(:sort_by) { :offered_at }
 
-        result = component.sort_candidates(candidates, "interviewing")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
+      it "sorts candidates with a nil value first, then by that field" do
+        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
+          .to eq(candidates.values_at(1, 2, 0).map(&:email_address))
       end
     end
 
-    context "when tab_name is 'offered'" do
-      it "sorts candidates with nil offered_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, offered_at: nil)
-        candidate3 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
+    context "when sort_by is not given" do
+      let(:sort_by) { nil }
 
-        result = component.sort_candidates(candidates, "offered")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
-      end
-    end
-
-    context "when tab_name is 'declined'" do
-      it "sorts candidates with nil declined_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, declined_at: nil)
-        candidate3 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "declined")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
-      end
-    end
-
-    context "when tab_name is something else" do
-      it "returns candidates in original order" do
-        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
-        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "submitted")
-
-        expect(result).to eq([candidate1, candidate2, candidate3])
+      it "keeps candidates in their original order" do
+        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
+          .to eq(candidates.map(&:email_address))
       end
     end
   end
