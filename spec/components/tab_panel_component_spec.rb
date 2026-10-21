@@ -82,6 +82,12 @@ RSpec.describe TabPanelComponent, type: :component do
     end
   end
 
+  context "with an unknown field" do
+    it "raises an error" do
+      expect { component.displayed_value(candidates.first, :first_name) }.to raise_error(ArgumentError)
+    end
+  end
+
   context "when candidates empty" do
     let(:candidates) { [] }
 
@@ -96,7 +102,7 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.offered_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".offered_at")).to have_text(expected_date) }
-    it { expect(component.candidate_offered_at(candidates.first)).to eq(expected_date) }
+    it { expect(component.displayed_value(candidates.first, :offered_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: nil) }
@@ -111,7 +117,7 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.declined_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".declined_at")).to have_text(expected_date) }
-    it { expect(component.candidate_declined_at(candidates.first)).to eq(expected_date) }
+    it { expect(component.displayed_value(candidates.first, :declined_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: nil) }
@@ -126,7 +132,7 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interview_feedback_received_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".interview_feedback_received_at")).to have_text(expected_date) }
-    it { expect(component.candidate_interview_feedback_received_at(candidates.first)).to eq(expected_date) }
+    it { expect(component.displayed_value(candidates.first, :interview_feedback_received_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
@@ -141,7 +147,7 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interviewing_at.to_fs }
 
     it { expect(tab_panel.find(".interviewing_at")).to have_text(expected_date) }
-    it { expect(component.candidate_interviewing_at(candidates.first)).to eq(expected_date) }
+    it { expect(component.displayed_value(candidates.first, :interviewing_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: nil) }
