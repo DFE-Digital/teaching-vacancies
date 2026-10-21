@@ -118,6 +118,28 @@ RSpec.describe JobApplicationsHelper do
       expect(tabs_data["offered"].values.sum(&:count)).to eq(4)
       expect(tabs_data["offered"].values.flatten.map(&:status).uniq).to match_array(%w[offered declined])
     end
+
+    context "with a status sorted by date" do
+      let(:job_applications) do
+        [
+          build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 3)),
+          build_stubbed(:job_application, :status_offered, offered_at: nil),
+          build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 1)),
+        ]
+      end
+
+      it "lists applications without the date first, then by date" do
+        expect(tabs_data["offered"]["offered"]).to eq(job_applications.values_at(1, 2, 0))
+      end
+    end
+
+    context "with a status that isn't sorted" do
+      let(:job_applications) { build_stubbed_list(:job_application, 3, :status_shortlisted) }
+
+      it "keeps applications in the order given" do
+        expect(tabs_data["shortlisted"]["shortlisted"]).to eq(job_applications)
+      end
+    end
   end
 
   describe "#tag_status_options" do

@@ -1,0 +1,11 @@
+= govuk_table(**table_args) do |table|
+  - table.with_head do |head|
+    - head.with_row do |row|
+      - header_cells.each do |cell_args|
+        - row.with_cell(**cell_args)
+
+  - table.with_body do |body|
+    - @candidates.each_with_index do |job_application, index|
+      - body.with_row(html_attributes: { class: "application-#{job_application.status}" }) do |row|
+        - row_cells(job_application, index).each do |cell_args|
+          - row.with_cell(**cell_args)

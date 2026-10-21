@@ -18,6 +18,12 @@ class JobApplicationDecorator < Draper::Decorator
     "TVS-#{vacancy_numbers}-#{id_numbers}"
   end
 
+  # Once personal details are visible on an anonymised vacancy, the reference publishers knew the
+  # candidate by is shown alongside their name
+  def show_anonymised_reference?
+    vacancy.anonymise_applications? && !hide_personal_details?
+  end
+
   def address
     if hide_personal_details?
       [I18n.t("app.anonymous_applications.not_shown")]

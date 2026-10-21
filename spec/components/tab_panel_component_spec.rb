@@ -1,187 +1,92 @@
 require "rails_helper"
 
+# These examples read the panel the way a publisher does. The table itself is covered by
+# candidates_table_component_spec.rb. Use `page`, not `Capybara.string(render_inline(...))`:
+# render_inline returns a Nokogiri fragment, which Capybara can't match fields against by label.
 RSpec.describe TabPanelComponent, type: :component do
-  subject!(:tab_panel) { Capybara.string(render_component) }
+  include Rails.application.routes.url_helpers
 
-  let(:component) { described_class.new(tab_name:, vacancy:, candidates:, form:, displayed_fields:) }
-  let(:render_component) { render_inline(component) }
-  let(:displayed_fields) { %i[name email_address status] }
-  let(:form) { nil }
+  let(:component) { described_class.new(tab_name:, vacancy:, candidates:, form:, button_group:, displayed_fields:) }
   let(:tab_name) { "submitted" }
   let(:vacancy) { build_stubbed(:vacancy) }
-  let(:candidates) { build_stubbed_list(:job_application, 2, :status_submitted, vacancy:) }
+  let(:form) { Publishers::JobApplication::TagForm.new }
+  let(:button_group) { %i[update_status download] }
+  let(:displayed_fields) { %i[name email_address status] }
+  let(:candidates) { [build_stubbed(:job_application, :status_submitted, first_name: "Alice", last_name: "Archer", vacancy:)] }
 
-  context "when form present" do
-    let(:form) { Publishers::JobApplication::TagForm.new }
+  let(:flash_messages) { {} }
 
-    it "job application can be selected" do
-      expect(tab_panel.all('input[type="checkbox"]')).not_to be_empty
-    end
+  before do
+    flash_messages.each { |tab, message| vc_test_request.flash[tab] = message }
+    render_inline(component)
+  end
 
-    it "form points to url" do
-      expected_url = Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id)
-      expect(tab_panel.find("form")["action"]).to eq(expected_url)
-      expect(tab_panel.find("form")["method"]).to eq("get")
-    end
+  it "groups the candidates under the tab's heading" do
+    expect(page).to have_selector(:fieldset, "New applications")
+  end
 
-    it "table has multi select attributes" do
-      expect(tab_panel.find("table")["data-controller"]).to eq("multi-select")
-    end
+  context "when the tab has a hint" do
+    let(:tab_name) { "interviewing" }
+    let(:candidates) { [build_stubbed(:job_application, :status_interviewing, first_name: "Cara", last_name: "Clark", vacancy:)] }
 
-    it "has buttons" do
-      expect(tab_panel.all(".govuk-button-group")).not_to be_empty
-    end
-
-    describe "#candidate_name" do
-      let(:vacancy) { build_stubbed(:vacancy, anonymise_applications: true) }
-      let(:candidates) { [candidate] }
-      let(:first_name) { Faker::Name.first_name }
-      let(:last_name) { Faker::Name.last_name }
-
-      context "with a submitted candidate" do
-        let(:candidate) { build_stubbed(:job_application, :status_submitted, first_name: first_name, last_name: last_name, vacancy:).decorate }
-
-        it "has a link to the candidate in code" do
-          expect(tab_panel.find("a").text).to include("TVS-")
-        end
-      end
-
-      context "with a withdrawn candidate" do
-        let(:candidate) { build_stubbed(:job_application, :status_withdrawn, first_name: first_name, last_name: last_name, vacancy:) }
-
-        it "does not link to the candidate" do
-          expect(tab_panel.all("a").map(&:text)).to be_empty
-        end
-      end
-
-      context "with a shortlisted candidate" do
-        let(:candidate) { build_stubbed(:job_application, :status_shortlisted, first_name: first_name, last_name: last_name, vacancy:).decorate }
-
-        it "has a link to the candidate" do
-          expect(tab_panel.find("a").text).to include(first_name)
-        end
-      end
+    it "shows the hint" do
+      expect(page).to have_text("Adding or changing the interview date and time on this page is for internal reference only.")
     end
   end
 
-  context "when form is nil" do
-    it "job application cannot be selected" do
-      expect(tab_panel.all('input[type="checkbox"]')).to be_empty
+  it "lists the candidates for publishers to select" do
+    expect(page).to have_field("Select Alice Archer", type: :checkbox)
+  end
+
+  describe "actions" do
+    let(:button_group) { %i[update_status download message_shortlisted] }
+
+    it "has a button for each action, in order" do
+      expect(page.all("button").map(&:text)).to eq(["Update application status", "Download selected", "Send a message"])
     end
 
-    it "form points to no url" do
-      expect(tab_panel.find("form")["action"]).to eq("")
-    end
-
-    it "table has moj multi select attributes" do
-      expect(tab_panel.find("table")["data-module"]).to be_nil
-    end
-
-    it "has no buttons" do
-      expect(tab_panel.all(".govuk-button-group")).to be_empty
+    # Styling, not behaviour, but it is the only signal of which action is the main one
+    it "styles only the first action as the primary button" do
+      expect(page).to have_no_button("Update application status", class: "govuk-button--secondary")
+      expect(page).to have_button("Download selected", class: "govuk-button--secondary")
+      expect(page).to have_button("Send a message", class: "govuk-button--secondary")
     end
   end
 
-  context "with an unknown field" do
-    it "raises an error" do
-      expect { component.displayed_value(candidates.first, :first_name) }.to raise_error(ArgumentError)
+  # Publishers can't see this, but the tag action uses it to send them back to the right
+  # tab. The form's URL and each button's tag_action are covered by the system specs that
+  # press those buttons.
+  describe "what the form submits" do
+    it "says which tab it came from" do
+      expect(page).to have_field("publishers_job_application_tag_form[origin]", type: :hidden, with: tab_name)
     end
   end
 
-  context "when candidates empty" do
+  context "when the form has errors" do
+    let(:form) { Publishers::JobApplication::TagForm.new.tap(&:validate) }
+
+    it "shows the error summary" do
+      expect(page).to have_text("There is a problem")
+      expect(page).to have_link(form.errors.messages_for(:job_applications).first)
+    end
+  end
+
+  context "when there are error messages for more than one tab" do
+    let(:flash_messages) { { "submitted" => "Select a new application", "offered" => "Select an offered application" } }
+
+    # role="region" is how screen readers find the banner
+    it "shows only this tab's message in the error banner" do
+      expect(page).to have_css("[role='region']", exact_text: "Error Select a new application", normalize_ws: true)
+    end
+  end
+
+  context "when there are no candidates" do
     let(:candidates) { [] }
 
-    it "renders empty section" do
-      expect(tab_panel.find(".empty-section-component")).to be_present
-    end
-  end
-
-  context "when rendering candidate's offered_at date" do
-    let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: Time.zone.now) }
-    let(:displayed_fields) { %i[name email_address offered_at] }
-    let(:expected_date) { candidates.first.offered_at.to_fs(:day_month_year) }
-
-    it { expect(tab_panel.find(".offered_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :offered_at)).to eq(expected_date) }
-
-    context "when date nil" do
-      let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: nil) }
-
-      it { expect(tab_panel.find(".offered_at")).to have_link("Add job offer date", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [candidates.first] }, tag_action: "offered" })) }
-    end
-  end
-
-  context "when rendering candidate's declined_at date" do
-    let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: Time.zone.now) }
-    let(:displayed_fields) { %i[name email_address declined_at] }
-    let(:expected_date) { candidates.first.declined_at.to_fs(:day_month_year) }
-
-    it { expect(tab_panel.find(".declined_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :declined_at)).to eq(expected_date) }
-
-    context "when date nil" do
-      let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: nil) }
-
-      it { expect(tab_panel.find(".declined_at")).to have_link("Add decline date", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :offered, job_applications: [candidates.first] }, tag_action: "declined" })) }
-    end
-  end
-
-  context "when rendering candidate's feedback date" do
-    let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: Time.zone.now) }
-    let(:displayed_fields) { %i[name email_address interview_feedback_received_at] }
-    let(:expected_date) { candidates.first.interview_feedback_received_at.to_fs(:day_month_year) }
-
-    it { expect(tab_panel.find(".interview_feedback_received_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :interview_feedback_received_at)).to eq(expected_date) }
-
-    context "when date nil" do
-      let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
-
-      it { expect(tab_panel.find(".interview_feedback_received_at")).to have_link("Add feedback date", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "unsuccessful_interview" })) }
-    end
-  end
-
-  context "when rendering candidate's interview datetime" do
-    let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: Time.zone.now) }
-    let(:displayed_fields) { %i[name email_address interviewing_at] }
-    let(:expected_date) { candidates.first.interviewing_at.to_fs }
-
-    it { expect(tab_panel.find(".interviewing_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :interviewing_at)).to eq(expected_date) }
-
-    context "when date nil" do
-      let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: nil) }
-
-      it { expect(tab_panel.find(".interviewing_at")).to have_link("Add interview date and time", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "interview_datetime" })) }
-    end
-  end
-
-  describe "sorting" do
-    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates:, sort_by:) }
-    let(:candidates) do
-      [
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 3)),
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: nil),
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 1)),
-      ]
-    end
-
-    context "when sort_by is given" do
-      let(:sort_by) { :offered_at }
-
-      it "sorts candidates with a nil value first, then by that field" do
-        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
-          .to eq(candidates.values_at(1, 2, 0).map(&:email_address))
-      end
-    end
-
-    context "when sort_by is not given" do
-      let(:sort_by) { nil }
-
-      it "keeps candidates in their original order" do
-        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
-          .to eq(candidates.map(&:email_address))
-      end
+    it "says so, instead of showing a table and actions" do
+      expect(page).to have_text("There are no pending applications")
+      expect(page).to have_no_table
+      expect(page).to have_no_button
     end
   end
 end
