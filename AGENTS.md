@@ -71,17 +71,21 @@ Two things shape every rule below:
 
 ## Setup and running
 
-The supported setup is the devcontainer in `.devcontainer/`. See
-[the quick start guide](documentation/development/setup/quick_start.md).
+Two setups are supported, both described in
+[the quick start guide](documentation/development/setup/quick_start.md):
+
+- **Native Rails with a dockerised database** (primary): Rails runs on
+  your machine and PostgreSQL/PostGIS runs from `compose.yaml`. `bin/setup` and `bin/dev` start
+  the database through `bin/dev-db` (skipped inside a container or with `SKIP_DEV_DB=1`).
+- **The devcontainer** in `.devcontainer/`.
 
 ```bash
-bin/dev     # web on :3000, JS watcher, CSS watcher, Solid Queue worker (see Procfile.dev)
+bin/dev     # starts the database on the host, then web on :3000, JS watcher, CSS watcher, Solid Queue worker (see Procfile.dev)
 bin/jobs    # Solid Queue worker on its own
 ```
 
 The app is tied to port 3000; no other port works. Outside the devcontainer, run
-`corepack enable` first for Yarn 4, and see "Running natively" in the quick start guide to use
-the devcontainer's Postgres from your machine (Redis is not needed outside production, where it is the cache store).
+`corepack enable` first for Yarn 4. Redis is not needed outside production, where it is the cache store.
 Ports in use: 3000 (Rails), 3035 (assets), 5432 (Postgres), 6379 (Redis, devcontainer only).
 
 ## Commands
@@ -307,7 +311,7 @@ too:
 | A flag in `config/initializers/flags.rb`, or an experiment in `config/field_test.yml` | **Feature flags and A/B tests** |
 | An authentication flow | `documentation/service/users/` |
 | An external integration | `documentation/service/integrations/` |
-| Setup steps, ports, or the devcontainer | `documentation/development/setup/quick_start.md` |
+| Setup steps, ports, the devcontainer, or `compose.yaml` | `documentation/development/setup/quick_start.md` |
 | A practice the team has agreed | `documentation/development/agreed-practices.md` |
 
 Also:

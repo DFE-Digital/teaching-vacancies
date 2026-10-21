@@ -1,101 +1,149 @@
 # Developers quick start
 
+There are two supported ways to run the application locally. Pick one:
+
+| Setup | What runs where | Good for |
+| --- | --- | --- |
+| [**Local, with a dockerised database**](#option-1-local-with-a-dockerised-database-recommended) (recommended) | Rails, Node.js and Chrome run on your machine; PostgreSQL/PostGIS runs in Docker | Most developers |
+| [**Devcontainer**](#option-2-devcontainer) | Everything runs inside a container, normally opened from VS Code | Onboarding with nothing to install but Docker and VS Code, and non-developers |
+
+Whichever you choose, you will need a `.env` file: ask another developer for one and place it in the
+root of the repository (you can set up your AWS access to generate it yourself later, see
+[Additional setup](#additional-setup)).
+
+The application is tied to port 3000; no other port will work.
+
+## Option 1: Local, with a dockerised database (recommended)
+
+### Prerequisites
+
+- [Git](https://github.com/git-guides/install-git) and [git-secrets](/documentation/development/tooling/secrets-detection.md)
+- [Docker](https://www.docker.com/get-started), with the Compose plugin
+- The Ruby and Node.js versions in [.tool-versions](/.tool-versions), for example with
+  [mise](https://mise.jdx.dev) (`mise install`) or [asdf](https://asdf-vm.com) (`asdf install`)
+- Chrome or Chromium, for the JavaScript specs
+- System libraries used by gems: `shared-mime-info`, the PostgreSQL client libraries (`libpq`),
+  `libproj` and ImageMagick/libvips (see [the devcontainer Dockerfile](/.devcontainer/Dockerfile)
+  for the Debian package names)
+
+### Setup
+
+1. Clone the repository and add your `.env` file.
+2. Install the dependencies:
+   ```bash
+   corepack enable   # Yarn 4
+   bundle install
+   yarn install
+   ```
+3. Run `bin/setup --skip-server`. It starts the database and creates and seeds it. (Without
+   `--skip-server` it would go on to run `bin/dev`, which keeps running and blocks the terminal.)
+   The database is PostgreSQL with PostGIS, started by `docker compose up -d --wait` from
+   [`compose.yaml`](/compose.yaml). That file is for local development only. It has its
+   own project name and data volume, so it never clashes with the devcontainer. The database
+   listens on `127.0.0.1:5432` with user `postgres` and no password, which matches Rails'
+   default `DATABASE_URL` in `config/database.yml`, so there is nothing to configure.
+   Redis is not needed: it is only the production cache store.
+4. Prepare the test databases:
+   ```bash
+   RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
+   ```
+5. Run the application with `bin/dev`. It makes sure the database is running first (so this is
+   all you need from now on), then starts:
+   - The Rails application on http://localhost:3000
+   - An asset build task each for JavaScript and CSS
+   - Solid Queue for processing background jobs
+
+`bin/dev` and `bin/setup` skip starting the database inside a container, when Docker is not
+installed, or when `SKIP_DEV_DB=1` is set (for example if you run your own PostGIS).
+
+### Running the tests
+
+The service uses the `parallel_tests` gem:
+
+```bash
+CI=1 bundle exec rake parallel:spec
+```
+
+Without `CI=1` (or `HEADLESS=1`) the JavaScript specs open a visible browser, which helps when
+debugging. Set `PARALLEL_TEST_PROCESSORS` in your shell to control how many processes run. See
+[tests and linting](/documentation/development/tooling/testing.md) for more.
+
+### Working in git worktrees
+
+In a new git worktree, run `bin/setup-worktree`. It symlinks the git-ignored `.env`,
+`.env.development.local`, `.env.test.local` and `mise.local.toml` files from the main checkout and
+installs the JavaScript and Ruby dependencies. Without it `bin/dev` fails on the missing
+`node_modules` and environment variables.
+
+All worktrees share the one database container from `compose.yaml` (it has a fixed project name),
+so `bin/dev` finds it already running. Don't run specs in two worktrees at the same time unless
+each uses its own `TEST_ENV_NUMBER`.
+
+### Managing the database
+
+```bash
+docker compose stop      # stop it, keeping the data
+docker compose start     # start it again
+docker compose down -v   # delete it, including all data
+docker compose exec db psql -U postgres tvs_development
+```
+
+Only one thing can listen on port 5432. If startup fails with "port is already allocated", stop
+the local PostgreSQL service or the devcontainer's database.
+
+### Moving over from the old "Running natively" steps
+
+Previously these docs told you to start the devcontainer's database container. That container keeps
+its data in a different volume, so the new database starts empty. Stop the old one first, because
+both use port 5432:
+
+```bash
+docker compose -p teaching-vacancies_devcontainer -f .devcontainer/docker-compose.yml stop db
+```
+
+Then either re-seed by running `bin/setup --skip-server` (step 3 above), or bring your data across.
+To do that, dump the old database before stopping it, and restore it into the new one (the
+`template0` option gives `pg_restore` an empty database to install PostGIS into):
+
+```bash
+docker compose -p teaching-vacancies_devcontainer -f .devcontainer/docker-compose.yml exec -T db \
+  pg_dump -U postgres -Fc tvs_development > tvs_development.dump
+# stop the old container and start the new one (bin/dev-db), then:
+docker compose exec -T db createdb -U postgres -T template0 tvs_development
+docker compose exec -T db \
+  pg_restore -U postgres -d tvs_development --no-owner < tvs_development.dump \
+  && rm tvs_development.dump   # only after a successful restore; the dump may hold personal data
+```
+
+If you set `DATABASE_URL` in `.env.development.local` or `.env.test.local` for the old setup, it
+keeps working.
+
+## Option 2: Devcontainer
+
 This project uses [devcontainers](https://code.visualstudio.com/docs/remote/create-dev-container)
-to provide a seamless onboarding experience for developers and other team members.
+to provide a self-contained environment. See [the devcontainer documentation](/documentation/development/tooling/devcontainer.md)
+for how it works and how to customise it.
 
-You will need the following software installed on your system:
-- [Git](https://github.com/git-guides/install-git)
+You will need [Git](https://github.com/git-guides/install-git),
+[Docker Desktop](https://www.docker.com/get-started) (started before you begin) and
+[Visual Studio Code](https://code.visualstudio.com).
 
-Optional:
-- [Docker Desktop](https://www.docker.com/get-started)
-  - You will need to start Docker before the process will work.
-- [Visual Studio Code](https://code.visualstudio.com)
+1. Clone the repository and add your `.env` file.
+2. Open the folder in VS Code and, when prompted, choose "Reopen in container".
+3. The container builds and runs first-run tasks, which takes between 5 and 10 minutes depending on
+   your computer. Wait for the terminal to display "`Done. Press any key to close the terminal.`"
+4. Run the application by clicking "▶️ Start app" in the status bar, using the VS Code "Run task"
+   option, or `bin/dev`.
 
-For non-visual studio code setups, there is a docker-compose.yml file in .devcontainers.
-This can be used to just start the DB (needed as the postgres database has postgis extensions).
-Redis is not needed to develop or run tests: it is only used as the production cache store.
+Run the tests with `CI=1 bundle exec rake parallel:spec`. The devcontainer has its own database
+container, and does not use `compose.yaml`.
 
-Note that the postgres db runs on the default port 5432, so any local postgres service on your development
-machine has to be shutdown in order to run the service (or the tests)
+## Troubleshooting
 
-docker-compose -f .devcontainer/docker-compose.yml start db
-
-To get the application running:
-- Clone the repository to a folder of your choice
-- Ask another developer for a `.env` file, and place it in the root of the application folder
-  (you can set up your AWS access to be able to do this yourself later)
-- Open the folder in VS Code, and when prompted, choose "Reopen in container"
-- The container will now build and execute first run tasks - this will take between 5 and 10 minutes
-  depending on the performance of your computer. Wait for the terminal showing build tasks to
-  display "`Done. Press any key to close the terminal.`"
-
-When the build has finished, you can run the application by clicking on "▶️ Start app" in the status
-bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` script. This will start:
-- The Rails application running on http://localhost:3000
-- An asset build task each for Javascript and CSS
-- Solid Queue for processing background jobs
-
-Currently the application is tied to port 3000 - no other port will work 
-
-The service uses the parallel_tests gem, so the tests can be run by using 
-CI=1 rake parallel:spec
-
-without the CI=1, some tests will spawn a browser, which the prject does by default to aid 
-debugging browser-based tests (with the JS flag set true)
-
-<details>
-  <summary>Optional: Advanced custom setup (for developers)</summary>
-
-  > The Docker-based devcontainer setup (see [configuration](.devcontainer)) is our "gold standard"
-  > reference implementation of a local development environment. We highly recommend you use it, but
-  > you're of course free to work in whatever way makes you the most happy and productive.
-  >
-  > This might involve running a container-based workflow using vanilla `docker-compose` (working
-  > inside the container using a command-line text editor, or outside the container in a GUI editor
-  > or IDE), running a Linux VM with a container engine for that extra bit of performance, or just
-  > using the container definitions as a guide to setting the app up locally without any Docker
-  > involvement at all.
-  >
-  > Following convention, a `bin/dev` script is provided that uses Foreman to run all the tasks
-  > needed for the application.
-  >
-  > **Note:** If working outside the devcontainer, you'll need to enable Corepack for Yarn 4:
-  > ```bash
-  > corepack enable
-  > ```
-</details>
-
-<details>
-  <summary>Optional: Running natively on your machine (e.g. for coding agents like Claude Code)</summary>
-
-  You can run the app, tests and linters directly on your machine while still using the devcontainer's
-  database container. This is handy for tools that run in a host terminal, such as Claude Code.
-
-  1. Install the Ruby and Node.js versions from [.tool-versions](/.tool-versions) (for example with
-     `mise install` or `asdf install`), Chrome or Chromium, and [git-secrets](/documentation/development/tooling/secrets-detection.md).
-     Then run `corepack enable`, `bundle install` and `yarn install`.
-  2. Start only the database. Using the devcontainer's project name reuses its data volumes,
-     so both setups share the same databases (don't run the devcontainer's app and `bin/dev` at the same time, as both need port 3000):
-     ```bash
-     docker compose -p teaching-vacancies_devcontainer -f .devcontainer/docker-compose.yml up -d db
-     ```
-  3. Point Rails at the container. Put this line in both `.env.development.local` and `.env.test.local`
-     (they are git-ignored, and the devcontainer ignores them because it sets `DATABASE_URL` itself):
-     ```
-     DATABASE_URL=postgis://postgres:postgres@localhost:5432
-     ```
-  4. Prepare the databases (skip if the devcontainer has already created them):
-     ```bash
-     bin/rails db:prepare
-     RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
-     ```
-  5. Set `PARALLEL_TEST_PROCESSORS` in your shell to control the number of parallel test processes. Set `HEADLESS=1`
-     to run JavaScript specs without opening browser windows. The shared Claude Code settings in
-     `.claude/settings.json` already set `HEADLESS=1`.
-  6. In a new git worktree (for example one created by Claude Code), run `bin/setup-worktree`. It symlinks the
-     git-ignored `.env`, `.env.development.local`, `.env.test.local` and `mise.local.toml` files from the main checkout and installs
-     the JavaScript and Ruby dependencies. Without it `bin/dev` fails on the missing `node_modules` and environment variables.
-</details>
+- **I see "Page Not Found" when I log in and try to create a job listing.** Try
+  [seeding the database](/documentation/development/tooling/data.md) (quick) or importing the
+  school data (slow) if you have not already. When your sign-in account was created, it was
+  assigned to a school via a URN, and you may not have a school in your database with the same URN.
 
 ---
 
