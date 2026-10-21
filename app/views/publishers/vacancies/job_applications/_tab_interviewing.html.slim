@@ -1,7 +1,12 @@
 = render TabPanelComponent.new(tab_name:, vacancy:, form:, candidates: candidates.fetch("interviewing"),
-  button_group: %i[update_status download message_interviewing], sort_by: :interviewing_at, displayed_fields: %i[name email_address interviewing_at status])
+  button_group: %i[update_status download message_interviewing], displayed_fields: %i[name email_address interviewing_at status])
 
 - if candidates.fetch("unsuccessful_interview").any?
   = govuk_section_break(visible: true, size: "xl")
 
-  = render TabPanelComponent.new(vacancy:, candidates: candidates.fetch("unsuccessful_interview"), tab_name: "unsuccessful_interview", displayed_fields: %i[name email_address interview_feedback_received_at])
+  .tab-unsuccessful_interview
+    h2.govuk-heading-m = t("tabs.unsuccessful_interview.heading")
+
+    = render CandidatesTableComponent.new(vacancy:,
+                                          candidates: candidates.fetch("unsuccessful_interview"),
+                                          displayed_fields: %i[name email_address interview_feedback_received_at])
