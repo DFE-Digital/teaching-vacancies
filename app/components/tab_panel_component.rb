@@ -6,12 +6,13 @@ class TabPanelComponent < ApplicationComponent
                  candidates:,
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
-                 form: nil)
+                 form: nil,
+                 sort_by: nil)
     super(html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form
-    @candidates = sort_candidates(candidates, tab_name)
+    @candidates = sort_by ? sort_candidates(candidates, sort_by) : candidates
     @displayed_fields = displayed_fields
     @button_group = button_group
   end
@@ -121,16 +122,8 @@ class TabPanelComponent < ApplicationComponent
     end
   end
 
-  def sort_candidates(candidates, tab_name) # rubocop:disable Metrics/CyclomaticComplexity
-    case tab_name
-    when "interviewing"
-      candidates.sort_by { |candidate| [candidate.interviewing_at.nil? ? 0 : 1, candidate.interviewing_at] }
-    when "offered"
-      candidates.sort_by { |candidate| [candidate.offered_at.nil? ? 0 : 1, candidate.offered_at] }
-    when "declined"
-      candidates.sort_by { |candidate| [candidate.declined_at.nil? ? 0 : 1, candidate.declined_at] }
-    else
-      candidates
-    end
+  # candidates without a value come first, as they need action from the publisher
+  def sort_candidates(candidates, field)
+    candidates.sort_by { |candidate| [candidate.public_send(field).nil? ? 0 : 1, candidate.public_send(field)] }
   end
 end
