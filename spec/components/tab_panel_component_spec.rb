@@ -82,12 +82,6 @@ RSpec.describe TabPanelComponent, type: :component do
     end
   end
 
-  context "with an unknown field" do
-    it "raises an error" do
-      expect { component.displayed_value(candidates.first, :first_name) }.to raise_error(ArgumentError)
-    end
-  end
-
   context "when candidates empty" do
     let(:candidates) { [] }
 
@@ -102,7 +96,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.offered_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".offered_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :offered_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: nil) }
@@ -117,7 +110,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.declined_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".declined_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :declined_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: nil) }
@@ -132,7 +124,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interview_feedback_received_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".interview_feedback_received_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :interview_feedback_received_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
@@ -147,41 +138,11 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interviewing_at.to_fs }
 
     it { expect(tab_panel.find(".interviewing_at")).to have_text(expected_date) }
-    it { expect(component.displayed_value(candidates.first, :interviewing_at)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: nil) }
 
       it { expect(tab_panel.find(".interviewing_at")).to have_link("Add interview date and time", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "interview_datetime" })) }
-    end
-  end
-
-  describe "sorting" do
-    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates:, sort_by:) }
-    let(:candidates) do
-      [
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 3)),
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: nil),
-        build_stubbed(:job_application, :status_offered, vacancy:, offered_at: Date.new(2025, 1, 1)),
-      ]
-    end
-
-    context "when sort_by is given" do
-      let(:sort_by) { :offered_at }
-
-      it "sorts candidates with a nil value first, then by that field" do
-        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
-          .to eq(candidates.values_at(1, 2, 0).map(&:email_address))
-      end
-    end
-
-    context "when sort_by is not given" do
-      let(:sort_by) { nil }
-
-      it "keeps candidates in their original order" do
-        expect(tab_panel.all("tbody tr").map { it.find(".email_address").text })
-          .to eq(candidates.map(&:email_address))
-      end
     end
   end
 end

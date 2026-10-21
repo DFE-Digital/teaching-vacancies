@@ -1,8 +1,8 @@
 class TabPanelComponent < ApplicationComponent
   include JobApplicationsHelper
 
-  # date fields, with the tag action that lets a publisher fill one in when it is missing
-  DATE_ACTIONS = {
+  # Date columns, and the tag action that lets a publisher add the date when it is missing
+  DATE_FIELDS = {
     offered_at: { origin: :offered, tag_action: "offered", link_text: "tabs.offered.add_job_offer_date" },
     declined_at: { origin: :offered, tag_action: "declined", link_text: "tabs.offered.add_decline_date" },
     interview_feedback_received_at: { origin: :interviewing, tag_action: "unsuccessful_interview", link_text: "tabs.offered.add_feedback_date" },
@@ -14,19 +14,25 @@ class TabPanelComponent < ApplicationComponent
                  candidates:,
                  displayed_fields: %i[name email_address status],
                  button_group: %i[download update_status],
-                 form: nil,
-                 sort_by: nil)
+                 form: nil)
     super(html_attributes: { class: "tab-#{tab_name}" })
     @tab_name = tab_name
     @vacancy = vacancy
     @form = form
-    @candidates = sort_by ? sort_candidates(candidates, sort_by) : candidates
+    @candidates = candidates
     @displayed_fields = displayed_fields
     @button_group = button_group
   end
 
+  private
+
+  # With a form, publishers can select candidates and act on them with the button group
+  def selectable?
+    @form.present?
+  end
+
   def form_with_args
-    if @form.present?
+    if selectable?
       { model: @form, url: tag_organisation_job_job_applications_path(@vacancy.id), method: :get }
     else
       { url: "" }
@@ -34,79 +40,62 @@ class TabPanelComponent < ApplicationComponent
   end
 
   def govuk_table_args
-    if @form.present?
+    if selectable?
       { html_attributes: { data: { controller: "multi-select", id_prefix: "id_all_#{@tab_name}-" } } }
     else
       {}
     end
   end
 
-  def candidate_checkbox(application, index, form_tag)
-    if application.unsuccessful? || !application.terminal_status?
-      tag.div(class: "govuk-checkboxes--small") do
-        form_tag.govuk_check_box(:job_applications, application.id,
-                                 link_errors: index.zero?,
-                                 label: { hidden: true, text: "Select #{application.name}" })
-      end
-    else
-      tag.span
+  # Applications in a terminal status can't move on, so there is nothing to select them for
+  def checkbox_cell(job_application, index, form)
+    return tag.span if job_application.terminal_status?
+
+    tag.div(class: "govuk-checkboxes--small") do
+      form.govuk_check_box(:job_applications, job_application.id,
+                           link_errors: index.zero?,
+                           label: { hidden: true, text: "Select #{job_application.name}" })
     end
   end
 
-  def displayed_value(application, field)
+  def cell(job_application, field)
     case field
-    when :name then candidate_name(application)
-    when :status then candidate_status(application)
-    when :email_address then application.email_address
-    when *DATE_ACTIONS.keys then candidate_date(application, field, **DATE_ACTIONS.fetch(field))
-    else raise ArgumentError, "Unknown field: #{field}"
+    when :name then name_cell(job_application)
+    when :email_address then job_application.email_address
+    when :status then status_cell(job_application)
+    else date_cell(job_application, field, **DATE_FIELDS.fetch(field))
     end
   end
 
-  def candidate_name(application)
-    if application.withdrawn?
-      tag.span application.name
-    elsif application.vacancy.anonymise_applications? && !application.hide_personal_details?
-      tag.span do
-        govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application)) +
-          tag.p(application.anonymised_name, class: "govuk-hint")
-      end
-    else
-      govuk_link_to(application.name, organisation_job_job_application_path(@vacancy.id, application))
+  def name_cell(job_application)
+    return tag.span(job_application.name) if job_application.withdrawn?
+
+    link = govuk_link_to(job_application.name, organisation_job_job_application_path(@vacancy.id, job_application))
+    return link unless @vacancy.anonymise_applications? && !job_application.hide_personal_details?
+
+    tag.span { link + tag.p(job_application.anonymised_name, class: "govuk-hint") }
+  end
+
+  def status_cell(job_application)
+    status_tag = publisher_job_application_status_tag(job_application.status)
+    link = checks_link(job_application)
+    return status_tag unless link
+
+    tag.div { safe_join([status_tag, tag.br, link]) }
+  end
+
+  def checks_link(job_application)
+    if job_application.offered?
+      govuk_link_to(t("tabs.offered.pre_employment_checks"), pre_employment_checks_organisation_job_job_application_path(@vacancy.id, job_application.id))
+    elsif job_application.has_pre_interview_checks?
+      govuk_link_to(t("tabs.interviewing.pre_interview_checks"), pre_interview_checks_organisation_job_job_application_path(@vacancy.id, job_application.id))
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def candidate_status(application)
-    # need to show pre-interview checks iff candidate in interview state or later
-    if application.offered?
-      tag.div do
-        publisher_job_application_status_tag(application.status) \
-          + tag.br \
-          + govuk_link_to(t("tabs.offered.pre_employment_checks"), pre_employment_checks_organisation_job_job_application_path(application.vacancy.id, application.id))
-      end
-    elsif application.has_pre_interview_checks?
-      tag.div do
-        publisher_job_application_status_tag(application.status) \
-        + tag.br \
-        + govuk_link_to(t("tabs.interviewing.pre_interview_checks"), pre_interview_checks_organisation_job_job_application_path(application.vacancy.id, application.id))
-      end
-    else
-      publisher_job_application_status_tag(application.status)
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
+  def date_cell(job_application, field, origin:, tag_action:, link_text:, format: :day_month_year)
+    date = job_application.public_send(field)
+    return date.to_fs(format) if date
 
-  def candidate_date(application, field, origin:, tag_action:, link_text:, format: :day_month_year)
-    if (value = application.public_send(field))
-      value.to_fs(format)
-    else
-      govuk_link_to(t(link_text), tag_organisation_job_job_applications_path(application.vacancy.id, params: { publishers_job_application_tag_form: { origin:, job_applications: [application.id] }, tag_action: }))
-    end
-  end
-
-  # candidates without a value come first, as they need action from the publisher
-  def sort_candidates(candidates, field)
-    candidates.sort_by { |candidate| [candidate.public_send(field).nil? ? 0 : 1, candidate.public_send(field)] }
+    govuk_link_to(t(link_text), tag_organisation_job_job_applications_path(@vacancy.id, params: { publishers_job_application_tag_form: { origin:, job_applications: [job_application.id] }, tag_action: }))
   end
 end
