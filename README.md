@@ -76,6 +76,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 
 #### Users management
 * [Publishers - DSI Integration](/documentation/service/users/dsi-integration.md)
+* [Support users - Supportal access and DSI fallback](/documentation/service/users/supportal-access.md)
 * [Jobseekers - GOV.UK One Login Integration](/documentation/service/users/govuk-one-login.md)
 
 #### Integrations

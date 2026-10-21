@@ -157,7 +157,8 @@ Two easy mistakes:
   `config/routes/legacy_redirects.rb`. These URLs are indexed by search engines.
 
 Engines mounted behind `authenticate :support_user` outside development: `/solid_queue_jobs`
-(Mission Control), `/field_test`, `/ats-api-docs` (RSwag).
+(Mission Control) and `/field_test`. The RSwag docs at `/ats-api-docs` are public; ATS API client
+management is in Supportal.
 
 ### Domain model
 
@@ -182,7 +183,8 @@ Engines mounted behind `authenticate :support_user` outside development: `/solid
 - **Publishers and support users**: DfE Sign In (DSI) via OmniAuth/OIDC.
 - **Jobseekers**: GOV.UK One Login via Devise + OmniAuth.
 
-See [DSI integration](documentation/service/users/dsi-integration.md) and
+See [DSI integration](documentation/service/users/dsi-integration.md),
+[Supportal access and fallback](documentation/service/users/supportal-access.md) and
 [GOV.UK One Login](documentation/service/users/govuk-one-login.md).
 
 ### Background jobs
