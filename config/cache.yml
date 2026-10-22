@@ -1,0 +1,17 @@
+default: &default
+  store_options:
+    # Cap age of oldest cache entry to fulfill retention policies
+    max_age: <%= 180.days.to_i %>
+    max_size: <%= 2.gigabytes %>
+    namespace: <%= Rails.env %>
+    expiry_method: :job
+    expiry_queue: :low
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
