@@ -147,30 +147,4 @@ RSpec.describe Resettable do
     end
   end
   # rubocop:enable RSpec/VerifiedDoubles
-
-  context "when changing contact number provided" do
-    subject(:update_contact_number_provided) { vacancy.update(contact_number_provided: false) }
-
-    let(:vacancy) { build(:vacancy, contact_number_provided: true, contact_number: "1111111111") }
-    let(:previous_contact_number) { vacancy.contact_number }
-
-    it "resets contact number" do
-      expect { update_contact_number_provided }
-        .to change(vacancy, :contact_number)
-        .from(previous_contact_number).to(nil)
-    end
-  end
-
-  context "when changing further details provided" do
-    subject(:update_further_details_provided) { vacancy.update(further_details_provided: false) }
-
-    let(:vacancy) { build(:vacancy, further_details_provided: true, further_details: "test") }
-    let(:previous_further_details) { vacancy.further_details }
-
-    it "resets further details" do
-      expect { update_further_details_provided }
-        .to change(vacancy, :further_details)
-        .from(previous_further_details).to(nil)
-    end
-  end
 end

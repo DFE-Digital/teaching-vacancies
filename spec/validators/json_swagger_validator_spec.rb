@@ -7,7 +7,7 @@ RSpec.describe "JsonSwaggerValidator" do
   let(:vacancy) do
     attributes_for(:vacancy, :external)
                                .compact
-                               .except(:enable_job_applications, :contact_number_provided,
+                               .except(:enable_job_applications,
                                        :contact_number, :fixed_term_contract_duration, :further_details_provided,
                                        :hired_status, :include_additional_documents,
                                        :listed_elsewhere, :ect_status, :school_visits,
