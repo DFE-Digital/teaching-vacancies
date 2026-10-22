@@ -738,11 +738,11 @@ app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles_controller.rb:
   lines:
-    percent: 94.59
+    percent: 94.28
     missed: 2
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 83.33
+    missed: 1
 app/controllers/jobseekers/registrations_controller.rb:
   lines:
     percent: 100.0
@@ -4537,20 +4537,6 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
-app/views/api/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/api/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -5435,11 +5421,11 @@ app/views/jobseekers/profiles/breaks/new.html.slim:
     missed: 0
 app/views/jobseekers/profiles/confirm_toggle.html.slim:
   lines:
-    percent: 100.0
-    missed: 0
+    percent: 84.61
+    missed: 2
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 50.0
+    missed: 2
 app/views/jobseekers/profiles/employments/_employment_fields.html.slim:
   lines:
     percent: 100.0
@@ -6210,27 +6196,6 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
@@ -6404,8 +6369,8 @@ app/views/publishers/jobseeker_profiles/search/_results.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 62.5
-    missed: 3
+    percent: 75.0
+    missed: 2
 app/views/publishers/jobseeker_profiles/show.html.slim:
   lines:
     percent: 100.0

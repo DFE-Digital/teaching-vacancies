@@ -1,10 +1,7 @@
 FactoryBot.define do
   factory :qualification do
-    after(:create) do |qualification, evaluator|
-      next unless qualification.secondary?
-
-      create_list(:qualification_result, evaluator.results_count, qualification: qualification)
-      qualification.reload
+    after(:build) do |qualification, evaluator|
+      qualification.qualification_results = build_list(:qualification_result, evaluator.results_count) if qualification.secondary?
     end
 
     transient do
@@ -48,6 +45,10 @@ FactoryBot.define do
       end
       year { finished_studying == false ? nil : factory_rand(1970..2020) }
       month { finished_studying == false ? nil : factory_rand(1..12) }
+    end
+
+    factory :profile_qualification do
+      job_application { nil }
     end
   end
 end

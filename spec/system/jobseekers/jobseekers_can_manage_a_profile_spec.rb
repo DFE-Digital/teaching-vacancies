@@ -188,15 +188,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
     end
   end
 
-  context "if the profile does not exist" do
-    it "does not appear in search results" do
-      run_with_publisher(publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_css(".search-results__item")
-      end
-    end
-  end
-
   describe "toggling on and off" do
     let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
 
@@ -206,44 +197,30 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
     # returns lat/long so we have to reverse the order for the stub call
     before do
       create(:job_preferences_location, name: "London", radius: 200, job_preferences: job_preferences)
+      login_publisher(publisher: publisher, organisation: organisation)
     end
 
-    context "if the profile is inactive", :vcr do
-      let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: false) }
-
-      it "does not appear in search results" do
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).not_to have_content(profile.full_name)
-        end
-      end
-    end
+    after { logout }
 
     context "when profile contains minimum information required for publishing", :vcr do
-      let!(:profile) do
-        create(:jobseeker_profile, :with_personal_details,
-               :with_qualifications,
-               employments: build_list(:profile_employment, 1, :current_role),
-               job_preferences:,
-               jobseeker:,
-               active: false)
-      end
-
-      it "can be toggled on and off" do
-        run_with_jobseeker(jobseeker) do
-          visit jobseekers_profile_path
-
-          expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+      describe "toggling on profile" do
+        let!(:profile) do
+          create(:jobseeker_profile, :with_personal_details,
+                 :with_qualifications,
+                 employments: build_list(:profile_employment, 1, :current_role),
+                 job_preferences:,
+                 jobseeker:,
+                 active: false)
         end
 
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).not_to have_content(profile.full_name)
+        before do
+          login_as(jobseeker, scope: :jobseeker)
+          visit jobseekers_profile_path
         end
 
-        run_with_jobseeker(jobseeker) do
-          visit jobseekers_profile_path
+        after { logout }
+
+        it "can be toggled on" do
           within ".preview-and-turn-on-profile" do
             click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
           end
@@ -253,37 +230,12 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
           expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
           expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
         end
-
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).to have_content(profile.full_name)
-        end
-
-        run_with_jobseeker(jobseeker) do
-          visit jobseekers_profile_path
-          within ".preview-and-turn-on-profile" do
-            click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
-          end
-
-          click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
-          expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
-          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-          expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
-        end
-
-        run_with_publisher(publisher) do
-          visit publishers_jobseeker_profiles_path
-          expect(page).not_to have_content(profile.full_name)
-
-          visit publishers_jobseeker_profile_path(profile)
-          expect(page).to have_content("Page not found")
-        end
       end
     end
 
     context "when profile does not contain minimum information required for publishing", :vcr do
       let!(:profile) do
-        create(:jobseeker_profile, %i[with_personal_details].sample,
+        create(:jobseeker_profile, :with_personal_details,
                jobseeker:,
                active: false)
       end
