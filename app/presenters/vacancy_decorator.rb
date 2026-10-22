@@ -23,7 +23,8 @@ class VacancyDecorator < Draper::Decorator
            :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
            :teaching_or_middle_leader_role?, :email?, :ect_suitable?, :ect_status,
            :key_stages, :subjects,
-           :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary
+           :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary,
+           :geolocation, :distance_in_miles_to
 
   include ActionView::Helpers::TextHelper
 

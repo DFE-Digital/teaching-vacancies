@@ -10,9 +10,10 @@ class VacanciesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
-    @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
+    @form = Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))
+    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
     @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies.decorate, count: @vacancies_search.total_count)
 
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event
@@ -51,23 +52,21 @@ class VacanciesController < ApplicationController
     redirect_to vacancy.application_link, allow_other_host: true
   end
 
-  # simplecov:disable
   def campaign_landing_page # rubocop:disable Metrics/AbcSize
     @campaign_page = CampaignPage[params[:utm_content]]
     campaign_params = CampaignSearchParamsMerger.new(campaign_search_params, @campaign_page).merged_params
-    @form ||= Jobseekers::SearchForm.new(campaign_params.merge(landing_page: @campaign_page))
+    @form = Jobseekers::SearchForm.new(campaign_params.merge(landing_page: @campaign_page))
     @jobseeker_name = params[:email_name] || "Jobseeker"
     @subject = params[:email_subject] || ""
 
     @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
     @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
 
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies.decorate, count: @vacancies_search.total_count)
 
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event
   end
-  # simplecov:enable
 
   def trn_interstitial
     @vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
@@ -89,10 +88,6 @@ class VacanciesController < ApplicationController
 
   def after_trn_path(vacancy)
     vacancy.website? ? apply_job_path(vacancy, trn_prompted: true) : new_jobseekers_job_job_application_path(vacancy.id)
-  end
-
-  def form
-    @form ||= Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))
   end
 
   def search_params
@@ -136,8 +131,8 @@ class VacanciesController < ApplicationController
     fail_safe do
       event_data = {
         data: {
-          search_criteria: form.to_hash,
-          sort_by: form.sort.by,
+          search_criteria: @form.to_hash,
+          sort_by: @form.sort.by,
           page: @pagy.page,
           total_count: @vacancies_search.total_count,
           vacancies_on_page: @vacancies.map(&:id),
@@ -164,14 +159,14 @@ class VacanciesController < ApplicationController
   end
 
   def set_search_coordinates
-    @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
+    @search_coordinates = Geocoding.new(@form.to_hash[:location]).coordinates
   end
 
   def do_not_show_distance?
     # We don't want to show distance if the user searches for a nationwide location such as "England" or if they search for a location we have a polygon for.
     # This is because the coordinates Google (or other providers) use for London (for example) could be miles away from the location of the school, even if the school is
     # actually in London which could potentially confuse jobseekers.
-    normalised_query = form.to_hash[:location]&.strip&.downcase
+    normalised_query = @form.to_hash[:location]&.strip&.downcase
     normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || @vacancies_search.polygon.present?
   end
 
