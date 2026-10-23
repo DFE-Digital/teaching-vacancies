@@ -11,79 +11,76 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
 
   after { logout }
 
-  describe "changing personal details" do
-    context "adding a qualification" do
-      let(:qualifications) { [] }
+  context "without qualifications" do
+    let(:qualifications) { [] }
 
-      before { click_on "Add qualifications" }
+    before { visit select_category_jobseekers_profile_qualifications_path(profile) }
 
-      it "passes a11y", :a11y do
-        expect(page).to be_axe_clean
-      end
+    it "passes a11y", :a11y do
+      expect(page).to be_axe_clean
+    end
 
-      it "allows jobseekers to add a graduate degree" do
-        select_qualification_category("Undergraduate degree")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.undergraduate"))
-        validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
-        fill_in_undergraduate_degree
-        click_on I18n.t("buttons.save_qualification.one")
-        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
-        expect(page).to have_content("Undergraduate degree")
-        expect(page).to have_content("University of Life")
-        expect(page).not_to have_content("Subjects and grades")
-        expect(page).not_to have_content("School, college, or other organisation")
-      end
+    it "allows jobseekers to add a graduate degree" do
+      select_qualification_category("Undergraduate degree")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.undergraduate"))
+      validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
+      fill_in_undergraduate_degree
+      click_on I18n.t("buttons.save_qualification.one")
+      expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
+      expect(page).to have_content("Undergraduate degree")
+      expect(page).to have_content("University of Life")
+      expect(page).not_to have_content("Subjects and grades")
+      expect(page).not_to have_content("School, college, or other organisation")
+    end
 
-      it "allows jobseekers to add a custom qualification or course (category 'other')" do
-        select_qualification_category("Other qualification")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.other"))
-        validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
-        fill_in_other_qualification
-        click_on I18n.t("buttons.save_qualification.one")
-        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
-        expect(page).to have_content("Superteacher Certificate")
-        expect(page).to have_content("Teachers Academy")
-        expect(page).to have_content("I expect to finish next year")
-        expect(page).to have_content("No, I have not completed it yet")
-        expect(page).to have_content("Superteaching")
-        expect(page).to have_content("AXA")
-        expect(page).not_to have_content("Grade")
-        expect(page).not_to have_content("Year")
-      end
+    it "allows jobseekers to add a custom qualification or course (category 'other')" do
+      select_qualification_category("Other qualification")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.other"))
+      validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
+      fill_in_other_qualification
+      click_on I18n.t("buttons.save_qualification.one")
+      expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
+      expect(page).to have_content("Superteacher Certificate")
+      expect(page).to have_content("Teachers Academy")
+      expect(page).to have_content("I expect to finish next year")
+      expect(page).to have_content("No, I have not completed it yet")
+      expect(page).to have_content("Superteaching")
+      expect(page).to have_content("AXA")
+      expect(page).not_to have_content("Grade")
+      expect(page).not_to have_content("Year")
+    end
 
-      it "allows jobseekers to add a common secondary qualification" do
-        select_qualification_category("GCSEs")
-        expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_profile_path)
-        expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.gcse"))
-        validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-        fill_in_gcses
-        click_on I18n.t("buttons.save_qualification.other")
-        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
-        expect(page).to have_content("GCSEs")
-        expect(page).to have_content("Churchill School for Gifted Macaques")
-        expect(page).to have_content("Maths – 110%")
-        expect(page).to have_content("PE – 90%")
-        expect(page).to have_content("2020")
-        expect(page).not_to have_content("No, I have not completed it yet")
-        expect(page).not_to have_content("Yes")
-      end
+    it "allows jobseekers to add a common secondary qualification" do
+      select_qualification_category("GCSEs")
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_profile_path)
+      expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.gcse"))
+      validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
+      fill_in_gcses
+      click_on I18n.t("buttons.save_qualification.other")
+      expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
+      expect(page).to have_content("GCSEs")
+      expect(page).to have_content("Churchill School for Gifted Macaques")
+      expect(page).to have_content("Maths – 110%")
+      expect(page).to have_content("PE – 90%")
+      expect(page).to have_content("2020")
+      expect(page).not_to have_content("No, I have not completed it yet")
+      expect(page).not_to have_content("Yes")
     end
   end
 
-  context "when editing a qualification" do
+  context "with a single qualification" do
+    before { visit review_jobseekers_profile_qualifications_path }
+
+    let(:qualifications) { [qualification] }
+
     context "when the qualification does not have qualification results" do
-      before do
-        create(:qualification,
-               category: "undergraduate",
-               institution: "Life University",
-               job_application: nil,
-               jobseeker_profile: profile)
+      let(:qualification) do
+        build(:profile_qualification,
+              category: "undergraduate",
+              institution: "Life University")
       end
 
-      let(:qualifications) { [] }
-
       it "allows jobseekers to edit the qualification" do
-        visit review_jobseekers_profile_qualifications_path
         click_on "Change"
         fill_in "University or college", with: "University of Life"
         click_on I18n.t("buttons.save_and_continue")
@@ -92,29 +89,24 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       end
 
       it "can be deleted" do
-        visit review_jobseekers_profile_qualifications_path
         click_on "Delete"
         click_on "Delete Qualification"
         within ".govuk-notification-banner" do
           expect(page).to have_content "Qualification deleted"
         end
-        expect(profile.qualifications).to eq([])
+        expect(profile.reload.qualifications).to eq([])
       end
     end
 
     context "when the qualification has qualification results" do
-      let!(:qualification) do
-        create(:qualification,
-               category: "a_level",
-               institution: "John Mason School",
-               grade: "",
-               job_application: nil,
-               jobseeker_profile: profile)
+      let(:qualification) do
+        build(:profile_qualification,
+              category: "a_level",
+              institution: "John Mason School",
+              grade: "")
       end
-      let(:qualifications) { [] }
 
       it "allows jobseekers to edit the qualification and its results" do
-        visit review_jobseekers_profile_qualifications_path
         click_on "Change"
         fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
@@ -127,18 +119,14 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
     end
 
     context "with a GCSE" do
-      let(:qualifications) { [] }
+      let(:qualification) do
+        build(:profile_qualification,
+              category: "gcse",
+              grade: "",
+              results_count: 1)
+      end
 
       it "has an 'add another subject' link" do
-        create(:qualification,
-               category: "gcse",
-               grade: "",
-               results_count: 1,
-               job_application: nil,
-               jobseeker_profile_id: profile.id)
-
-        visit review_jobseekers_profile_qualifications_path
-
         click_on "Add another subject"
         fill_in "Subject 2", with: "A second subject"
         fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"

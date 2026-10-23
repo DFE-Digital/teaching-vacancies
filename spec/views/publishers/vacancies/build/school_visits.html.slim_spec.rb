@@ -11,11 +11,8 @@ RSpec.describe "publishers/vacancies/build/school_visits" do
     allow(view).to receive_messages(current_organisation: local_authority, vacancy: vacancy,
                                     back_path: "",
                                     step_process: step_process, form: form, wizard_path: "")
-    sign_in(publisher, scope: :publisher)
     render
   end
-
-  after { sign_out publisher }
 
   context "with a college" do
     let(:organisation) { build_stubbed(:college) }
@@ -29,7 +26,7 @@ RSpec.describe "publishers/vacancies/build/school_visits" do
   context "with a school" do
     let(:organisation) { build_stubbed(:school) }
 
-    it "offers college visits" do
+    it "offers school visits" do
       expect(rendered).to have_content("school visits")
     end
   end

@@ -6404,8 +6404,8 @@ app/views/publishers/jobseeker_profiles/search/_results.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 68.75
-    missed: 3
+    percent: 75.0
+    missed: 2
 app/views/publishers/jobseeker_profiles/show.html.slim:
   lines:
     percent: 100.0
@@ -7841,6 +7841,13 @@ app/views/vacancies/_vacancy_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/vacancies/campaign_landing_page.html.slim:
+  lines:
+    percent: 82.92
+    missed: 7
+  branches:
+    percent: 40.0
+    missed: 12
 app/views/vacancies/index.html.slim:
   lines:
     percent: 97.5
