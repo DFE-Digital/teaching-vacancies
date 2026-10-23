@@ -1396,8 +1396,8 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 95.06
-    missed: 4
+    percent: 96.62
+    missed: 3
   branches:
     percent: 88.88
     missed: 4
@@ -6404,7 +6404,7 @@ app/views/publishers/jobseeker_profiles/search/_results.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 62.5
+    percent: 68.75
     missed: 3
 app/views/publishers/jobseeker_profiles/show.html.slim:
   lines:
@@ -7841,6 +7841,13 @@ app/views/vacancies/_vacancy_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/vacancies/campaign_landing_page.html.slim:
+  lines:
+    percent: 82.92
+    missed: 7
+  branches:
+    percent: 40.0
+    missed: 12
 app/views/vacancies/index.html.slim:
   lines:
     percent: 97.5
@@ -7857,10 +7864,10 @@ app/views/vacancies/listing/_banner.html.slim:
     missed: 1
 app/views/vacancies/listing/_banner_buttons.html.slim:
   lines:
-    percent: 94.11
+    percent: 95.65
     missed: 1
   branches:
-    percent: 91.66
+    percent: 94.44
     missed: 1
 app/views/vacancies/listing/_contact_details.html.slim:
   lines:
