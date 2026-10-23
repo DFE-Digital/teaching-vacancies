@@ -33,6 +33,7 @@ FactoryBot.define do
 
     transient do
       expiry_date { 6.months.from_now }
+      salary_type { factory_sample(%i[salary actual_salary hourly_rate pay_scale]) }
     end
 
     actual_salary { factory_rand(20_000..100_000) }
@@ -146,8 +147,14 @@ FactoryBot.define do
       is_job_share { [true, false].sample }
       visa_sponsorship_available { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
-      working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
+      working_patterns_details { Faker::Educator.campus }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
+
+
+      salary { factory_sample(salaries) if salary_type == :salary }
+      actual_salary { factory_rand(20_000..100_000) if salary_type == :actual_salary }
+      hourly_rate { "£25 per hour" if salary_type == :hourly_rate }
+      pay_scale { factory_sample(salaries) if salary_type == :pay_scale }
 
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
