@@ -111,9 +111,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/views/posts/show.html.slim"
     skip "app/views/posts/subcategory.html.slim"
 
-    # This whole page (and controller action) is untested
-    skip "app/views/vacancies/campaign_landing_page.html.slim"
-
     # Each group will be displayed in the report as its own Tab.
     group "Components", "app/components"
     group "Queries", "app/queries"
@@ -132,7 +129,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # the line coverage needs to be set 0.02 below the reported value.
     # Normally this value needs to be 0.01 below the reported value due to rounding issues.
     # This is somewhat superceded by the simplecov ratchet baseline configured below
-    minimum_coverage line: 96.79, branch: 84.89
+    minimum_coverage line: 96.77, branch: 84.72
     # Values from CI run 30th September 2026
     # Line Coverage: 96.49% (20362 / 21101) -> 638 + 101 = 739 lines uncovered
     # Branch Coverage: 84.17% (4134 / 4906) -> 772 branches uncovered
