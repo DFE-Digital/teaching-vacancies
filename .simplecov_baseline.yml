@@ -1396,8 +1396,8 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 95.06
-    missed: 4
+    percent: 96.7
+    missed: 3
   branches:
     percent: 88.88
     missed: 4
@@ -7857,10 +7857,10 @@ app/views/vacancies/listing/_banner.html.slim:
     missed: 1
 app/views/vacancies/listing/_banner_buttons.html.slim:
   lines:
-    percent: 94.11
+    percent: 95.65
     missed: 1
   branches:
-    percent: 91.66
+    percent: 94.44
     missed: 1
 app/views/vacancies/listing/_contact_details.html.slim:
   lines:
