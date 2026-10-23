@@ -11,12 +11,7 @@ class VacanciesController < ApplicationController
 
   def index
     @form = Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))
-    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
-    @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
-
-    set_search_coordinates unless do_not_show_distance?
-    trigger_search_performed_event
+    set_vacancies_after_search
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -59,13 +54,7 @@ class VacanciesController < ApplicationController
     @jobseeker_name = params[:email_name] || "Jobseeker"
     @subject = params[:email_subject] || ""
 
-    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
-    @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
-
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
-
-    set_search_coordinates unless do_not_show_distance?
-    trigger_search_performed_event
+    set_vacancies_after_search
   end
 
   def trn_interstitial
@@ -85,6 +74,15 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def set_vacancies_after_search
+    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
+    @wider_search_suggestions = Search::WiderSuggestionsBuilder.call(@vacancies_search)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+
+    set_search_coordinates unless do_not_show_distance?
+    trigger_search_performed_event
+  end
 
   def after_trn_path(vacancy)
     vacancy.website? ? apply_job_path(vacancy, trn_prompted: true) : new_jobseekers_job_job_application_path(vacancy.id)
