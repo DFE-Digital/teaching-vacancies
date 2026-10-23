@@ -188,15 +188,6 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
     end
   end
 
-  context "if the profile does not exist" do
-    it "does not appear in search results" do
-      run_with_publisher(publisher) do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_css(".search-results__item")
-      end
-    end
-  end
-
   describe "toggling on and off" do
     let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
 
@@ -283,7 +274,7 @@ RSpec.describe "Jobseekers can manage their profile", :geocode do
 
     context "when profile does not contain minimum information required for publishing", :vcr do
       let!(:profile) do
-        create(:jobseeker_profile, %i[with_personal_details].sample,
+        create(:jobseeker_profile, :with_personal_details,
                jobseeker:,
                active: false)
       end

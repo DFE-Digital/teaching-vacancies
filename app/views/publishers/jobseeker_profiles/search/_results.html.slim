@@ -1,33 +1,32 @@
-.search-results
-  - jobseeker_profiles.each do |jobseeker_profile|
+- jobseeker_profiles.each do |jobseeker_profile|
 
-    .search-results__item
-      h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-        = govuk_link_to jobseeker_profile.full_name, publishers_jobseeker_profile_path(jobseeker_profile)
+  .search-results__item
+    h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+      = govuk_link_to jobseeker_profile.full_name, publishers_jobseeker_profile_path(jobseeker_profile)
 
-      = govuk_summary_list(actions: false, classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
-        - if (employment = jobseeker_profile.current_or_most_recent_employment).present?
-          - summary_list.with_row do |row|
-            - row.with_key text: employment.is_current_role? ? t("publishers.jobseeker_profiles.current_role") : t("publishers.jobseeker_profiles.latest_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: employment.job_title, classes: "govuk-body-s govuk-!-padding-bottom-0"
+    = govuk_summary_list(actions: false, classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
+      - if (employment = jobseeker_profile.current_or_most_recent_employment).present?
+        - summary_list.with_row do |row|
+          - row.with_key text: employment.is_current_role? ? t("publishers.jobseeker_profiles.current_role") : t("publishers.jobseeker_profiles.latest_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+          - row.with_value text: employment.job_title, classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+      - summary_list.with_row do |row|
+        - row.with_value text: jobseeker_profile.qts_status, classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+      - if (preferences = jobseeker_profile.job_preferences).present?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("publishers.jobseeker_profiles.preferred_roles", count: preferences.roles.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+          - row.with_value text: preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
         - summary_list.with_row do |row|
-          - row.with_value text: jobseeker_profile.qts_status, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - row.with_key text: t("publishers.jobseeker_profiles.preferred_key_stages", count: preferences.key_stages.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+          - row.with_value text: preferences.key_stages.map(&:humanize).join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-        - if (preferences = jobseeker_profile.job_preferences).present?
+        - summary_list.with_row do |row|
+          - row.with_key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+          - row.with_value text: preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+        - if preferences.subjects.present?
           - summary_list.with_row do |row|
-            - row.with_key text: t("publishers.jobseeker_profiles.preferred_roles", count: preferences.roles.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
-
-          - summary_list.with_row do |row|
-            - row.with_key text: t("publishers.jobseeker_profiles.preferred_key_stages", count: preferences.key_stages.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: preferences.key_stages.map(&:humanize).join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
-
-          - summary_list.with_row do |row|
-            - row.with_key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
-
-          - if preferences.subjects.present?
-            - summary_list.with_row do |row|
-              - row.with_key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-              - row.with_value text: humanize_subjects(preferences.subjects), classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: humanize_subjects(preferences.subjects), classes: "govuk-body-s govuk-!-padding-bottom-0"

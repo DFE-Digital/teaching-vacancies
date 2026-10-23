@@ -25,8 +25,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     context "when starting from religious information" do
       before do
-        visit jobseekers_job_application_apply_path(job_application)
-        click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+        visit jobseekers_job_application_build_path(job_application, :catholic)
         choose "Yes, I've completed this section"
       end
 
@@ -44,7 +43,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
       context "when choosing a religion" do
         before do
           find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
-          choose "Yes, I've completed this section"
         end
 
         it "produces the correct errors" do
@@ -80,7 +78,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
                 fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), with: referee_email
                 fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), with: referee_phone
 
-                choose "Yes, I've completed this section"
                 click_on I18n.t("buttons.save_and_continue")
                 complete_from_references_page
               end
