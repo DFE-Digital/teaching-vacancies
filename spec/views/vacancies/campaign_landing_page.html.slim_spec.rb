@@ -39,7 +39,7 @@ RSpec.describe "vacancies/campaign_landing_page" do
       expires_at: Date.current + 3,
     )
   end
-  let(:vacancies) { [recent_part_time_maths_job, older_part_time_maths_job] }
+  let(:vacancies) { [recent_part_time_maths_job, older_part_time_maths_job].map(&:decorate) }
   let(:campaign_page) { CampaignPage["FAKE1+CAMPAIGN"] }
   let(:campaign_params) { CampaignSearchParamsMerger.new({}, campaign_page).merged_params }
   let(:form) { Jobseekers::SearchForm.new(campaign_params.merge(landing_page: campaign_page)) }

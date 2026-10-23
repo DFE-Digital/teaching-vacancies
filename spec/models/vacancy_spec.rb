@@ -991,7 +991,7 @@ RSpec.describe Vacancy do
       it "is valid without job address fields present" do
         vacancy = build(:vacancy, organisations: [college])
         vacancy.valid?
-        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+        expect(vacancy.errors[:job_address_line1]).not_to include(I18n.t("activerecord.errors.models.vacancy.attributes.job_address_line1.present"))
       end
     end
 
@@ -999,13 +999,13 @@ RSpec.describe Vacancy do
       it "is invalid with job address fields present" do
         vacancy = build(:vacancy, organisations: [school], **job_address_attrs)
         expect(vacancy).not_to be_valid
-        expect(vacancy.errors[:base]).to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+        expect(vacancy.errors[:job_address_line1]).to include(I18n.t("activerecord.errors.models.vacancy.attributes.job_address_line1.present"))
       end
 
       it "is valid when no job address fields are present" do
         vacancy = build(:vacancy, organisations: [school])
         vacancy.valid?
-        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
+        expect(vacancy.errors[:job_address_line1]).not_to include(I18n.t("activerecord.errors.models.vacancy.attributes.job_address_line1.present"))
       end
     end
 
@@ -1013,27 +1013,7 @@ RSpec.describe Vacancy do
       it "does not raise a validation error for job address fields" do
         vacancy = build(:vacancy, organisations: [], **job_address_attrs)
         vacancy.valid?
-        expect(vacancy.errors[:base]).not_to include(I18n.t("activerecord.errors.models.vacancy.job_address_only_for_fe_colleges"))
-      end
-    end
-  end
-
-  describe "#vacancy_address" do
-    let(:college) { create(:college) }
-
-    context "when a custom job address has been entered" do
-      subject { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
-
-      it "returns the custom address" do
-        expect(subject.vacancy_address).to eq("10 Campus Road, Brighton, BN1 1AA")
-      end
-    end
-
-    context "when no custom job address has been entered" do
-      subject { build(:vacancy, organisations: [college]) }
-
-      it "falls back to the organisation address" do
-        expect(subject.vacancy_address).to eq([college.address, college.town, college.county, college.postcode].compact_blank.join(", "))
+        expect(vacancy.errors[:job_address_line1]).not_to include(I18n.t("activerecord.errors.models.vacancy.attributes.job_address_line1.present"))
       end
     end
   end

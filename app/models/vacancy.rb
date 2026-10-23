@@ -166,7 +166,9 @@ class Vacancy < ApplicationRecord
   # An FE college may want to post a vacancy at a campus in a completely different location from the
   # college's main address. These fields are exclusively reserved for storing that campus-specific
   # address and are only applicable to FE college vacancies.
-  validate :job_address_only_for_fe_colleges, if: -> { organisations.any? && job_address_fields.any?(&:present?) }
+  %i[job_address_line1 job_address_line2 job_address_town job_address_county job_address_postcode].each do |address_field|
+    validates address_field, absence: true, if: -> { organisations.any? && !for_an_fe_college? }
+  end
 
   has_noticed_notifications
   has_paper_trail on: [:update],
@@ -180,6 +182,8 @@ class Vacancy < ApplicationRecord
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
+
+  SALARY_TYPES = %i[salary actual_salary pay_scale hourly_rate].freeze
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -307,15 +311,6 @@ class Vacancy < ApplicationRecord
     blobs.reject(&:malware_scan_clean?)
   end
 
-  def vacancy_address
-    job_specific_address = job_address_fields.reject(&:blank?)
-    return job_specific_address.join(", ") if job_specific_address.any?
-
-    # simplecov:disable
-    [organisation&.address, organisation&.town, organisation&.county, organisation&.postcode].reject(&:blank?).join(", ")
-    # simplecov:enable
-  end
-
   def geocode_job_address
     address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
 
@@ -334,17 +329,11 @@ class Vacancy < ApplicationRecord
     self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
-  private
-
   def job_address_fields
     [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
   end
 
-  def job_address_only_for_fe_colleges
-    return if for_an_fe_college?
-
-    errors.add(:base, :job_address_only_for_fe_colleges)
-  end
+  private
 
   def update_conversation_searchable_content
     Conversation.joins(job_application: :vacancy)
