@@ -38,7 +38,7 @@ FactoryBot.define do
 
     trait :with_some_criteria do
       keyword { Faker::Lorem.word }
-      location { Faker::Address.postcode }
+      location { FFaker::AddressUK.postcode }
       radius { "10" }
       working_patterns { %w[full_time part_time] }
       teaching_job_roles { %w[teacher] }
