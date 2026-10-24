@@ -186,6 +186,10 @@ PUBLISHER_API_MAPPINGS = {
   vacancies: %w[],
 }.freeze
 
+PUBLISHER_PROFILE_MAPPINGS = {
+  search: %w[can_search_for_jobseeker_profiles],
+}.freeze
+
 SUPPORT_MAPPINGS = {
   sessions: %w[],
   publisher_ats_api_clients: %w[can_manage_api_clients],
@@ -210,6 +214,7 @@ MASTER_MAPPINGS = {
   %w[publishers vacancies job_applications] => [:publishers, PUBLISHER_JOB_APPLICATION_MAPPINGS],
   %w[publishers vacancies] => [:publishers, PUBLISHER_VACANCY_MAPPINGS],
   %w[publishers ats_api v1] => [:publishers, PUBLISHER_API_MAPPINGS],
+  %w[publishers jobseeker_profiles] => [:publishers, PUBLISHER_PROFILE_MAPPINGS],
   %w[jobseekers subscriptions feedbacks] => [:jobseekers, JOBSEEKER_SUB_FEEDBACK_MAPPINGS],
   %w[jobseekers] => [:jobseekers, JOBSEEKER_SYSTEM_SPEC_MAPPINGS],
   %w[publishers] => [:publishers, PUBLISHER_MAPPINGS],
@@ -223,10 +228,10 @@ MASTER_MAPPINGS = {
 }.freeze
 
 SIMPLE_MAPPINGS = {
+  authentication: [:publishers, %w[]],
   warden: [:jobseekers, %w[]],
   application: [:jobseekers, %w[]],
   subscriptions: [:jobseekers, %w[]],
-  authentication: [:publishers, %w[]],
   cookies_preferences: [:jobseekers, %w[]],
   general_feedbacks: [:jobseekers, %w[]],
   omniauth_callbacks: [:jobseekers, %w[]],
@@ -235,6 +240,7 @@ SIMPLE_MAPPINGS = {
   vacancies: [:jobseekers, %w[]],
   organisations: [:jobseekers, %w[]],
   colleges: [:jobseekers, %w[]],
+  layouts: [:jobseekers, %w[]],
 }.freeze
 
 def map_type_to_spec(type, system_spec)
@@ -258,6 +264,8 @@ def system_specs_to_run(controller_name)
                     [controller_name.first]
                   end
     type, mapping_hash = MASTER_MAPPINGS.fetch(mapping_key)
+    # Guardfile debugging
+    # puts "#{controller_name.inspect}"
     mapping_hash.fetch(controller_name.last.to_sym).map { |system_spec| map_type_to_spec(type, system_spec) }
   else
     type, spec_list = SIMPLE_MAPPINGS.fetch(controller_name.first.to_sym)

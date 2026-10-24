@@ -7,16 +7,15 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    visit jobseekers_job_application_build_path(job_application, :qualifications)
   end
 
   after { logout }
 
-  context "adding a qualification" do
+  context "without qualifications" do
     let(:qualifications) { [] }
 
     before do
-      click_on I18n.t("buttons.add_qualification")
+      visit select_category_jobseekers_job_application_qualifications_path(job_application)
     end
 
     it "has a cancel link" do
@@ -59,7 +58,9 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
   end
 
-  context "when editing a qualification" do
+  context "with a single qualification" do
+    before { visit jobseekers_job_application_build_path(job_application, :qualifications) }
+
     context "when the qualification does not have qualification results" do
       let(:qualifications) do
         build_list(:qualification, 1,
@@ -86,16 +87,13 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
 
     context "when the qualification has qualification results" do
-      let!(:qualification) do
-        create(:qualification,
-               category: "a_level",
-               grade: "",
-               institution: "John Mason School",
-               job_application: job_application)
+      let(:qualifications) do
+        build_list(:qualification, 1,
+                   category: "a_level",
+                   grade: "",
+                   institution: "John Mason School")
       end
-      let(:qualifications) { [] }
-
-      before { visit current_path }
+      let(:qualification) { job_application.qualifications.first }
 
       it "allows jobseekers to edit the qualification and its results" do
         click_on I18n.t("buttons.change")
@@ -111,17 +109,14 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
 
     context "with a GCSE" do
-      let(:qualifications) { [] }
+      let(:qualifications) do
+        build_list(:qualification, 1,
+                   category: "gcse",
+                   grade: "",
+                   results_count: 1)
+      end
 
       it "has an 'add another subject' link" do
-        create(:qualification,
-               category: "gcse",
-               grade: "",
-               results_count: 1,
-               job_application: job_application)
-
-        visit current_path
-
         expect(page).to have_css(".detail-component", count: 1)
         subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
         expect(subject_list).to have_css(".govuk-body", count: 1)

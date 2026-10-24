@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add references to their job application" do
+RSpec.describe "Jobseekers can add referees to their job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, referees: referees) }
@@ -56,7 +56,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :referees), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.referees.destroy.success"))
-      expect(page).not_to have_content("John")
+      expect(page).to have_no_content("John")
     end
 
     it "allows jobseekers to edit references" do
@@ -72,8 +72,8 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
       expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :referees), ignore_query: true)
       within ".govuk-summary-card" do
-        expect(page).not_to have_content("John")
-        expect(page).not_to have_content("Yes")
+        expect(page).to have_no_content("John")
+        expect(page).to have_no_content("Yes")
         expect(page).to have_content("Jason")
         expect(page).to have_content("No")
       end
