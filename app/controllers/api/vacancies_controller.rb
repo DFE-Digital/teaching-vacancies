@@ -12,14 +12,14 @@ class Api::VacanciesController < Api::ApplicationController
   end
 
   def show
-    vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    vacancy = Vacancy.kept.listed.friendly.find(params[:id])
     @vacancy = vacancy.decorate
   end
 
   private
 
   def vacancies
-    PublishedVacancy.includes(:organisations).live.order(publish_on: :desc)
+    Vacancy.includes(:organisations).live.order(publish_on: :desc)
   end
 
   def trigger_api_queried_event(event_data = {})

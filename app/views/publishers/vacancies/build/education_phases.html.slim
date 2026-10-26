@@ -2,7 +2,7 @@
 
 = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false, sub_caption: { text: "Select all that apply", class: "govuk-!-margin-top-4 govuk-!-margin-bottom-4" })
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_with model: @vacancy, scope: :publishers_job_listing_education_phases_form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s, legend: { hidden: true }

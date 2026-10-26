@@ -33,7 +33,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
     end
 
     it "yields vacancies with correct attributes" do
-      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(PublishedVacancy))
+      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(ExternalVacancy))
     end
 
     it "yield a newly built vacancy the correct vacancy information" do
@@ -309,8 +309,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
-          :vacancy,
-          :external,
+          :external_vacancy,
           phases: %w[primary],
           external_source: "vacancy_poster",
           external_reference: "TEST002",

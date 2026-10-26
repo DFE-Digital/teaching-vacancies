@@ -20,7 +20,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
     let(:published_internal_updated_vacancy) { create(:vacancy, publish_on: "2024-04-30", expires_at: "2024-05-12", created_at: 1.week.ago, updated_at: Time.zone.now) }
     let(:unpublished_internal_vacancy) { create(:vacancy, publish_on: "2024-05-03", expires_at: "2024-05-12", created_at: 1.week.ago, updated_at: 1.week.ago) }
     let(:publised_external_vacancy) do
-      build(:vacancy, :external, publish_on: "2024-05-02", expires_at: "2024-05-12", organisations: [school], created_at: 1.week.ago, updated_at: 1.week.ago).tap do |v|
+      build(:external_vacancy, publish_on: "2024-05-02", expires_at: "2024-05-12", organisations: [school], created_at: 1.week.ago, updated_at: 1.week.ago).tap do |v|
         v.save(validate: false)
       end
     end

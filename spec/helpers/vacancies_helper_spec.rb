@@ -566,14 +566,14 @@ RSpec.describe VacanciesHelper do
     context "when the job is a draft" do
       context "when the draft has been completed" do
         let(:status) { "complete_draft" }
-        let(:vacancy) { create(:draft_vacancy) }
+        let(:vacancy) { build_stubbed(:draft_vacancy) }
 
         it "returns the correct text" do
           expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
         end
 
         context "when the publish on date is in the future" do
-          let(:vacancy) { create(:draft_vacancy, publish_on: Date.tomorrow) }
+          let(:vacancy) { build_stubbed(:draft_vacancy, publish_on: Date.tomorrow) }
 
           it "returns the correct text" do
             expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))

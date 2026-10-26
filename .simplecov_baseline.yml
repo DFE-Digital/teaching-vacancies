@@ -1217,7 +1217,7 @@ app/controllers/publishers/vacancies/publish_controller.rb:
     percent: 88.23
     missed: 2
   branches:
-    percent: 83.33
+    percent: 85.71
     missed: 2
 app/controllers/publishers/vacancies/references_and_self_disclosure_base_controller.rb:
   lines:
@@ -2047,11 +2047,11 @@ app/form_models/publishers/job_listing/job_role_form.rb:
     missed: 0
 app/form_models/publishers/job_listing/job_title_form.rb:
   lines:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/key_stages_form.rb:
   lines:
     percent: 100.0
@@ -2491,8 +2491,8 @@ app/helpers/vacancies_helper.rb:
     percent: 94.32
     missed: 8
   branches:
-    percent: 90.78
-    missed: 7
+    percent: 92.1
+    missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
     percent: 100.0
@@ -3137,13 +3137,6 @@ app/models/conversation.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/draft_vacancy.rb:
-  lines:
-    percent: 88.88
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/education_gap.rb:
   lines:
     percent: 100.0
@@ -3193,6 +3186,13 @@ app/models/event_context.rb:
   branches:
     percent: 100.0
     missed: 0
+app/models/external_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/models/failed_imported_vacancy.rb:
   lines:
     percent: 100.0
@@ -3214,6 +3214,13 @@ app/models/feedback_reporting_period.rb:
   branches:
     percent: 83.33
     missed: 1
+app/models/internal_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/models/job_application.rb:
   lines:
     percent: 100.0
@@ -3438,13 +3445,6 @@ app/models/profile_employment_gap.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/published_vacancy.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/publisher.rb:
   lines:
     percent: 100.0
@@ -3580,11 +3580,11 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.45
+    percent: 99.47
     missed: 1
   branches:
-    percent: 98.0
-    missed: 1
+    percent: 96.42
+    missed: 2
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0
@@ -6210,21 +6210,7 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
 app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
   lines:
     percent: 100.0
     missed: 0
@@ -6635,15 +6621,15 @@ app/views/publishers/vacancies/_important_dates.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 83.33
+    missed: 1
 app/views/publishers/vacancies/_job_details.html.slim:
   lines:
     percent: 97.8
     missed: 2
   branches:
-    percent: 82.92
-    missed: 7
+    percent: 87.8
+    missed: 5
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
     percent: 100.0
@@ -7195,8 +7181,8 @@ app/views/publishers/vacancies/review.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 64.28
-    missed: 5
+    percent: 100.0
+    missed: 0
 app/views/publishers/vacancies/review_banners/_closed.html.slim:
   lines:
     percent: 100.0

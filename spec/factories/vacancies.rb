@@ -18,7 +18,7 @@ FactoryBot.define do
 
   sequence :seed_job_title_number
 
-  factory :vacancy, class: "PublishedVacancy" do
+  factory :vacancy, class: "InternalVacancy" do
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
       "£6,084 to £6,084 per year (full time equivalent)",
@@ -81,13 +81,15 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     subjects { [] }
     key_stages { %w[ks1] }
+    phases { %w[primary] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
-    working_patterns { %w[full_time] }
+    working_patterns { %w[part_time] }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
     is_job_share { false }
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(5..10)) }
+    draft { false }
 
     after(:create) do |vacancy, _evaluator|
       if vacancy.publisher.present?
@@ -314,7 +316,7 @@ FactoryBot.define do
       end
     end
 
-    trait :external do
+    factory :external_vacancy, class: "ExternalVacancy" do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
@@ -329,7 +331,10 @@ FactoryBot.define do
       sequence(:external_reference) { |n| "J3D1-#{n}" }
     end
 
-    factory :draft_vacancy, class: "DraftVacancy" do
+    factory :draft_vacancy, class: "InternalVacancy" do
+      draft { true }
+      # publish_on { nil }
+
       completed_steps do
         %w[job_location
            job_role

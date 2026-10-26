@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_with model: @vacancy, scope: :publishers_job_listing_confirm_job_address_form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)

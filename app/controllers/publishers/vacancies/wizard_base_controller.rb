@@ -14,14 +14,14 @@ module Publishers
       def step_process
         Publishers::Vacancies::VacancyStepProcess.new(
           current_step || :review,
-          vacancy: vacancy,
+          vacancy: @vacancy,
           organisation: current_organisation,
         )
       end
 
       def form_sequence
         @form_sequence ||= Publishers::VacancyFormSequence.new(
-          vacancy: vacancy,
+          vacancy: @vacancy,
           step_names: step_process.steps,
         )
       end
@@ -43,8 +43,8 @@ module Publishers
       def back_path
         if params[:back_to_show] == "true"
           organisation_job_path(vacancy.id)
-        elsif step_process.previous_step
-          organisation_job_build_path(vacancy.id, step_process.previous_step)
+        elsif previous_step
+          organisation_job_build_path(vacancy.id, previous_step)
         else
           organisation_jobs_with_type_path(:live)
         end

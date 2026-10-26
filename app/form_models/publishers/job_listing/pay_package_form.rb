@@ -3,31 +3,15 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   include ActionView::Helpers::SanitizeHelper
 
-  SALARIES = {
-    salary: "full_time",
-    actual_salary: "part_time",
-    pay_scale: "pay_scale",
-    hourly_rate: "hourly_rate",
-  }.freeze
-
-  validate :salary_presence
-  SALARIES.each do |key, value|
-    validates key, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { params[:salary_types]&.include?(value) }
-  end
-  validates :benefits, inclusion: { in: [true, false] }
-  validates :benefits_details, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { benefits }
-
   FIELDS = %i[actual_salary salary pay_scale benefits_details salary_types hourly_rate].freeze
 
   class << self
-    # rubocop:disable Lint/UnusedMethodArgument
-    def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*FIELDS + %i[benefits]))
-    end
-    # rubocop:enable Lint/UnusedMethodArgument
-
     def fields
       [:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, { salary_types: [] }]
+    end
+
+    def field_list
+      FIELDS + %i[benefits]
     end
   end
   attr_accessor(*FIELDS)
@@ -35,18 +19,12 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   attribute :benefits, :boolean
 
   def params_to_save
-    salaries = slice(*SALARIES.select { |_salary, salary_type| salary_types.include? salary_type }.map(&:first))
+    salaries = slice(*InternalVacancy::SALARIES.select { |_salary, salary_type| salary_types.include? salary_type }.map(&:first))
     benefits_values = if benefits
                         slice(:benefits, :benefits_details)
                       else
                         slice(:benefits).merge(benefits_details: nil)
                       end
     salaries.merge(benefits_values)
-  end
-
-  private
-
-  def salary_presence
-    errors.add(:salary_types) if salary_types.blank? || salary_types.none?
   end
 end

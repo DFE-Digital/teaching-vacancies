@@ -14,24 +14,40 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   helper_method :current_publisher_preference
 
+  NON_VALIDATING_FORMS = %i[job_location
+                            job_title
+                            confirm_job_address
+                            job_role
+                            education_phases
+                            key_stages
+                            contract_information
+                            start_date
+                            pay_package].freeze
+
   def show
-    @form = form_class.load_from_model(vacancy, current_publisher: current_publisher)
-    case current_step
+    @form = form_class.load_from_model(@vacancy, current_publisher: current_publisher)
+    case step
     when :documents
-      return redirect_to(new_organisation_job_document_path(vacancy.id,
+      return redirect_to(new_organisation_job_document_path(@vacancy.id,
                                                             back_to_review: params[:back_to_review],
                                                             back_to_show: params[:back_to_show]))
     end
 
+    skip_step unless step_process.steps.fetch(step)
     render_wizard
   end
 
   def update
-    @form = form_class.load_from_params(form_params, vacancy, current_publisher: current_publisher)
+    @form = form_class.load_from_params(form_params, @vacancy, current_publisher: current_publisher)
+    @vacancy.assign_attributes(@form.params_to_save)
 
-    if @form.valid?
+    if step.in? NON_VALIDATING_FORMS
+      validate_model_and_redirect
+    elsif @form.valid?
       update_vacancy
-      redirect_to_next_step
+      @vacancy.save!(validate: false)
+
+      redirect_to_next_wizard_step []
     else
       render_wizard
     end
@@ -39,12 +55,81 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   private
 
+  def validate_model_and_redirect
+    @vacancy.validate
+    error_keys = @vacancy.errors.attribute_names
+    # Only show errors relevant to this form
+    (error_keys - form_class.field_list).each do |error_key|
+      @vacancy.errors.delete(error_key)
+    end
+    if @vacancy.errors.any?
+      render_wizard
+    else
+      update_vacancy
+      @vacancy.geocode_job_address if step == :confirm_job_address
+      @vacancy.save!(validate: false)
+
+      redirect_to_next_wizard_step error_keys
+    end
+  end
+
+  def redirect_to_next_wizard_step(error_keys) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    next_wizard_step = if next_incomplete_step_confirm_job_address?
+                         :confirm_job_address
+                       elsif next_incomplete_step_subjects?
+                         :subjects
+                       elsif next_step.in? NON_VALIDATING_FORMS
+                         steps.detect { |step| form_class_for_step(step).field_list.intersect?(error_keys) } || next_step
+                       else
+                         next_invalid_step
+                       end
+
+    if save_and_finish_later?
+      redirect_to organisation_job_path(@vacancy.id), success: t("publishers.vacancies.show.success")
+    elsif @vacancy.valid?
+      if @vacancy.published?
+        redirect_to organisation_job_path(@vacancy.id), success: t("publishers.vacancies.show.success")
+      elsif next_step.present? && next_wizard_step.present?
+        redirect_to organisation_job_build_path(@vacancy.id, next_wizard_step)
+      else
+        redirect_to organisation_job_review_path(@vacancy.id)
+      end
+    else
+      redirect_to organisation_job_build_path(@vacancy.id, next_wizard_step)
+    end
+  end
+
+  def update_vacancy
+    updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
+    @vacancy.assign_attributes(completed_steps: updated_completed_steps)
+    @vacancy.refresh_slug
+    update_google_index(@vacancy) if @vacancy.live?
+  end
+
+  def next_incomplete_step_confirm_job_address?
+    return false unless steps.include?(:confirm_job_address)
+    return false if @vacancy.completed_steps.include?("confirm_job_address")
+
+    @vacancy.completed_steps.last == "job_title"
+  end
+
+  def next_incomplete_step_subjects?
+    return false unless @vacancy.allow_subjects?
+    return false if @vacancy.completed_steps.include?("subjects")
+
+    @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
+                                       "key_stages"
+                                     else
+                                       "job_role"
+                                     end
+  end
+
   attr_reader :form
 
   def form_params
-    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+    if step == :important_dates && @vacancy.disable_editing_publish_on?
       expiry_date_time_params(params)
-    elsif current_step == :about_the_role
+    elsif step == :about_the_role
       params.fetch(form_key, {}).permit(form_class.fields)
     else
       super
@@ -52,10 +137,14 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def form_class
-    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+    form_class_for_step(step)
+  end
+
+  def form_class_for_step(step_name)
+    if step_name == :important_dates && @vacancy.disable_editing_publish_on?
       Publishers::JobListing::ExpiryDateTimeForm
     else
-      "publishers/job_listing/#{step}_form".camelize.constantize
+      "publishers/job_listing/#{step_name}_form".camelize.constantize
     end
   end
 
@@ -88,17 +177,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     strip_empty_checkboxes(STRIP_CHECKBOXES[step], :"publishers_job_listing_#{step}_form")
   end
 
-  def update_vacancy
-    updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
-    vacancy.assign_attributes(@form.params_to_save.merge(completed_steps: updated_completed_steps))
-    vacancy.geocode_job_address if current_step == :confirm_job_address
-    vacancy.refresh_slug
-    update_google_index(vacancy) if vacancy.live?
-
-    vacancy.save!
-  end
-
   def set_steps
-    self.steps = step_process.steps - [:review]
+    self.steps = step_process.all_steps.keys - [:review]
   end
 end

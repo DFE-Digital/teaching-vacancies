@@ -26,6 +26,10 @@ module Publishers
         def load_from_model(vacancy, current_publisher:) # rubocop:disable Lint/UnusedMethodArgument
           new(args_from_vacancy(vacancy))
         end
+
+        def field_list
+          %i[expiry_time publish_on expires_at]
+        end
       end
 
       def params_to_save

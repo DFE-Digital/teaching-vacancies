@@ -29,7 +29,7 @@ module ReadableVacancy
   end
 
   def readable_subjects
-    model.subjects.join(", ")
+    model.subjects&.join(", ")
   end
 
   # simplecov:disable

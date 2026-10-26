@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_26_112251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -1039,6 +1039,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
     t.boolean "visa_sponsorship_available"
     t.integer "working_patterns", array: true
     t.text "working_patterns_details"
+    t.boolean "draft", default: true, null: false
     t.index ["contact_email"], name: "index_vacancies_on_contact_email"
     t.index ["discarded_at"], name: "index_vacancies_on_discarded_at"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"

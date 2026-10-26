@@ -2,7 +2,7 @@
 
 =  vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false, sub_caption: { text: "Select all that apply", class: "govuk-!-margin-top-4 govuk-!-margin-bottom-4" })
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+=  form_with model: @vacancy, scope: :publishers_job_listing_job_role_form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   - if vacancy.for_an_fe_college?

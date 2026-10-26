@@ -6,10 +6,8 @@ module PageObjects
 
         def fill_in_and_submit_form(vacancy)
           if vacancy.for_an_fe_college?
-            # The ID of the 'true' option can change when there is a field error
-            within "#needs_qts_status_radios" do
-              true_box_id = find(".govuk-radios__input[value='true']")["id"]
-              find("label[for='#{true_box_id}']").click
+            within ".needs_qts_status_radios" do
+              choose "Yes"
             end
           end
           within ".ect-status-radios" do

@@ -130,7 +130,7 @@ en:
       inclusion: Select a job role
       blank: Select a job role
   job_location_errors: &job_location_errors
-    organisation_ids:
+    organisations:
       blank: Select the locations where the job is based
   education_phases_errors: &education_phases_errors
     phases:
@@ -375,24 +375,9 @@ en:
         publishers/job_listing/job_role_form:
           attributes:
             <<: *job_roles_errors
-        publishers/job_listing/job_location_form:
-          attributes:
-            <<: *job_location_errors
-        publishers/job_listing/education_phases_form:
-          attributes:
-            <<: *education_phases_errors
         publishers/job_listing/confirm_job_address_form:
           attributes:
             <<: *confirm_job_address_errors
-        publishers/job_listing/job_title_form:
-          attributes:
-            <<: *job_title_errors
-        publishers/job_listing/key_stages_form:
-          attributes:
-            <<: *key_stages_errors
-        publishers/job_listing/contract_information_form:
-          attributes:
-            <<: *contract_information_errors
         publishers/job_listing/pay_package_form:
           attributes:
             <<: *pay_package_errors
@@ -725,8 +710,11 @@ en:
           attributes:
             job_advert:
               blank: Enter a job advert
-            <<: *job_roles_errors
             <<: *job_location_errors
+            <<: *job_title_errors
+            <<: *job_roles_errors
+            <<: *education_phases_errors
+            <<: *key_stages_errors
             <<: *contract_information_errors
             <<: *pay_package_errors
             <<: *important_dates_errors

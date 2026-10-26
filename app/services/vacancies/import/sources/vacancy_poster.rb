@@ -28,7 +28,8 @@ class Vacancies::Import::Sources::VacancyPoster
       next if invalid_school?(schools, item["trustUID"])
 
       # An external vacancy is by definition always published
-      v = PublishedVacancy.find_or_initialize_by(
+      v = ExternalVacancy.find_or_initialize_by(
+        draft: false,
         external_source: SOURCE_NAME,
         external_reference: item["reference"]&.strip,
       )

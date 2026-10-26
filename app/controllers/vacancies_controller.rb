@@ -25,7 +25,7 @@ class VacanciesController < ApplicationController
       session.delete(:newly_created_user)
     end
 
-    vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    vacancy = Vacancy.kept.listed.friendly.find(params[:id])
     # Only track views which have a referrer or our own utm_campaign tracker - this should reduce bots while in practice not affecting user tracking
     # Referrer is an 'optional, not to be trusted' header, but every browser sends it correctly at the time of writing (Aug 2026)
     if request.referer.present? || params.key?(:utm_campaign)
@@ -43,7 +43,7 @@ class VacanciesController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def apply
-    vacancy = PublishedVacancy.live.friendly.find(params[:id])
+    vacancy = Vacancy.live.friendly.find(params[:id])
     raise ActiveRecord::RecordNotFound if vacancy.application_link.blank?
     return redirect_to(trn_interstitial_job_path(vacancy.id)) if vacancy.website? && !params[:trn_prompted] && trn_prompt_required?(vacancy)
 
@@ -70,13 +70,13 @@ class VacanciesController < ApplicationController
   # simplecov:enable
 
   def trn_interstitial
-    @vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    @vacancy = Vacancy.kept.listed.friendly.find(params[:id])
     @job_application = @vacancy.job_applications.build
     @skip_trn_path = after_trn_path(@vacancy)
   end
 
   def send_trn
-    vacancy = PublishedVacancy.kept.listed.friendly.find(params[:id])
+    vacancy = Vacancy.kept.listed.friendly.find(params[:id])
     trn = params.expect(job_application: [:teacher_reference_number])[:teacher_reference_number]
 
     if trn.present?

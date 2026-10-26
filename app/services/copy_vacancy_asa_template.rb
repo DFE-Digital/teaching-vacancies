@@ -6,7 +6,7 @@ class CopyVacancyAsaTemplate
     # rubocop:disable Metrics/MethodLength
     def call(vacancy)
       new_vacancy = vacancy.dup
-      new_vacancy.type = "DraftVacancy"
+      new_vacancy.draft = true
       new_vacancy.application_form.attach(vacancy.application_form.blob) if vacancy.application_form.attachments&.any?
 
       if vacancy.supporting_documents.attachments.any?

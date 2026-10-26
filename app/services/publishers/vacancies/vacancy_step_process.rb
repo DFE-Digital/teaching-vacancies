@@ -1,16 +1,18 @@
 class Publishers::Vacancies::VacancyStepProcess < StepProcess
   attr_reader :vacancy, :organisation
 
+  # StepProcess now takes a hash of hashes, with true if the step is valid and false otherwise
+  # This allows the controller to skip non-relevant steps whilst understanding the full step sequence
   def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
     @organisation = organisation
 
     super(current_step, {
       job_details: job_details_steps,
-      about_the_role: about_the_role_steps,
-      important_dates: %i[important_dates],
+      about_the_role: %i[about_the_role school_visits visa_sponsorship].index_with { true },
+      important_dates: %i[important_dates].index_with { true },
       application_process: application_process_steps,
-      review: %i[review],
+      review: %i[review].index_with { true },
     })
   end
 
@@ -23,47 +25,59 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   private
 
   def job_details_steps
-    steps = %i[job_location job_title confirm_job_address job_role education_phases key_stages subjects contract_information start_date pay_package]
-    steps.delete(:job_location) if @organisation.school?
-    steps.delete(:confirm_job_address) unless vacancy.for_an_fe_college?
-    steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
-    steps.delete(:key_stages) unless vacancy.allow_key_stages?
-    steps.delete(:subjects) unless vacancy.allow_subjects?
-
-    steps
-  end
-
-  def application_process_steps
-    steps = if vacancy.published? || vacancy.for_an_fe_college?
-              []
-            else
-              %i[applying_for_the_job]
-            end
-
-    if vacancy.enable_job_applications
-      steps += %i[anonymise_applications]
-    else
-      steps += %i[how_to_receive_applications]
-      # receive_applications may not be present (yet) as it is asked in how_to_receive_applications
-      if vacancy.receive_applications.present?
-        steps += [APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym)]
-        steps += %i[anonymise_applications] if vacancy.uploaded_form?
+    %i[job_location job_title confirm_job_address job_role education_phases key_stages subjects contract_information start_date pay_package].index_with do |step|
+      case step
+      when :job_location
+        @organisation.school_group?
+      when :confirm_job_address
+        vacancy.for_an_fe_college?
+      when :education_phases
+        vacancy.allow_phase_to_be_set?
+      when :key_stages
+        vacancy.allow_key_stages?
+      when :subjects
+        vacancy.allow_subjects?
+      else
+        true
       end
     end
-
-    steps += additional_documents_steps
-    steps + %i[contact_details confirm_contact_details]
   end
 
-  def about_the_role_steps
-    %i[about_the_role school_visits visa_sponsorship]
+  def application_process_steps # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    initial_step = {
+      applying_for_the_job: !(vacancy.published? || vacancy.for_an_fe_college?),
+    }
+    steps = if vacancy.enable_job_applications
+              {
+                how_to_receive_applications: false,
+                application_form: false,
+                application_link: false,
+                anonymise_applications: true,
+              }
+            elsif vacancy.receive_applications.present?
+              {
+                how_to_receive_applications: true,
+                application_form: APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_form,
+                application_link: APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_link,
+                anonymise_applications: vacancy.uploaded_form?,
+              }
+            else
+              {
+                how_to_receive_applications: true,
+                application_form: false,
+                application_link: false,
+                anonymise_applications: vacancy.uploaded_form?,
+              }
+            end
+    initial_step.merge(steps).merge(additional_documents_steps)
   end
 
   def additional_documents_steps
-    if vacancy.include_additional_documents
-      %i[include_additional_documents documents]
-    else
-      %i[include_additional_documents]
-    end
+    {
+      include_additional_documents: true,
+      documents: vacancy.include_additional_documents,
+      contact_details: true,
+      confirm_contact_details: true,
+    }
   end
 end

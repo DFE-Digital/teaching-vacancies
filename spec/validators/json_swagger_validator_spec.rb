@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "JsonSwaggerValidator" do
   let(:validator) { JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post") }
   let(:vacancy) do
-    attributes_for(:vacancy, :external)
+    attributes_for(:external_vacancy)
                                .compact
                                .except(:enable_job_applications, :contact_number_provided,
                                        :contact_number, :fixed_term_contract_duration, :further_details_provided,
@@ -16,7 +16,7 @@ RSpec.describe "JsonSwaggerValidator" do
                                        :further_details, :hourly_rate, :pay_scale,
                                        :flexi_working_details_provided, :flexi_working, :about_school, :how_to_apply,
                                        :personal_statement_guidance, :external_source,
-                                       :expires_at, :publish_on, :starts_on,
+                                       :expires_at, :publish_on, :starts_on, :draft,
                                        :benefits, :completed_steps, :contact_email)
                                .merge(expires_at: "xx", schools: { trust_uid: "27" })
   end

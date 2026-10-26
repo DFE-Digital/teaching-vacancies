@@ -20,7 +20,7 @@ class SendExpiredVacancyFeedbackPromptJob < ApplicationJob
   private
 
   def vacancies_requiring_expiry_email_prompt
-    PublishedVacancy.kept
+    Vacancy.kept
                     .listed
                     .where(expires_at: CUTOFF_DATE..2.weeks.ago.beginning_of_day,
                            hired_status: nil,

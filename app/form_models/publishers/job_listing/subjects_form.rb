@@ -11,6 +11,10 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::JobListingF
     def fields
       [:subject_search, { subjects: [] }]
     end
+
+    def field_list
+      FIELDS
+    end
   end
   attr_accessor(*FIELDS)
 
