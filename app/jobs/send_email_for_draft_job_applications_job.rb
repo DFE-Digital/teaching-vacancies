@@ -4,7 +4,7 @@ class SendEmailForDraftJobApplicationsJob < ApplicationJob
   def perform
     threshold = Date.today + 10.days
 
-    PublishedVacancy.includes({ job_applications: :jobseeker })
+    Vacancy.includes({ job_applications: :jobseeker })
       .where("expires_at between ? and ?", threshold, threshold + 1.day)
       .find_each do |vacancy|
         vacancy.job_applications.draft.each do |job_application|

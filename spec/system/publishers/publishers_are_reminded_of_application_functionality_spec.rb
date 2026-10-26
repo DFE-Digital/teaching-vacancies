@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:last_vacancy) { DraftVacancy.order(:created_at).last }
+  let(:last_vacancy) { InternalVacancy.draft.order(:created_at).last }
 
   context "when at least one vacancy has been published that accepts applications through TV" do
     before do
@@ -55,7 +55,7 @@ RSpec.describe "Application feature reminder" do
       end
 
       context "when editing a job" do
-        let(:last_vacancy) { PublishedVacancy.order(:created_at).last }
+        let(:last_vacancy) { InternalVacancy.order(:created_at).last }
 
         it "does not show reminder page" do
           expect(current_path).to eq(organisation_jobs_start_path)

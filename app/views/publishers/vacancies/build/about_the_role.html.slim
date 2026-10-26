@@ -1,27 +1,27 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
-- org_type = vacancy_organisation_type(vacancy)
+- org_type = vacancy_organisation_type(@vacancy)
 
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = vacancy_form_page_heading(@vacancy, step_process, back_path: back_path, fieldset: false)
 
-  - if vacancy.organisation&.description.present?
+  - if @vacancy.organisation&.description.present?
     p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description", organisation: org_type)
     = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description_summary_text", organisation: org_type)) do
-      = simple_format(vacancy.organisation.description)
+      = simple_format(@vacancy.organisation.description)
   - else
     p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description", organisation: org_type)
-    p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description_link.#{org_type}"), edit_publishers_organisation_description_path(vacancy.organisation, vacancy_id: vacancy.id)
+    p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description_link.#{org_type}"), edit_publishers_organisation_description_path(@vacancy.organisation, vacancy_id: vacancy.id)
 
-  - if vacancy.organisation&.safeguarding_information.present?
+  - if @vacancy.organisation&.safeguarding_information.present?
     p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information", organisation: org_type)
     = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information_summary_text")) do
       = simple_format(vacancy.organisation&.safeguarding_information)
   - else
     p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information", organisation: org_type)
-    p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation, vacancy_id: vacancy.id)
+    p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation, vacancy_id: @vacancy.id)
 
-  = render "shared/publishers/about_the_role", vacancy: vacancy, f: f
+  = render "shared/publishers/about_the_role", vacancy: @vacancy, f: f
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

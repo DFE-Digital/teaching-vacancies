@@ -119,7 +119,7 @@ FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 emails_with_fewer_applications = ["jobseeker@contoso.com"] + active_publishers.map(&:email)
 # Job Applications
 statuses = JobApplication.statuses.keys
-PublishedVacancy.kept.listed.first(50).each do |vacancy|
+Vacancy.kept.listed.first(50).each do |vacancy|
   Jobseeker.where.not(email: emails_with_fewer_applications).each do |jobseeker|
     application_status = JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}",

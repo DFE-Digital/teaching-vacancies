@@ -21,7 +21,9 @@ class Vacancies::Import::Sources::Fusion
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       # An external vacancy is by definition always published
-      v = PublishedVacancy.find_or_initialize_by(
+      v = ExternalVacancy.find_or_initialize_by(
+        draft: false,
+
         external_source: SOURCE_NAME,
         external_reference: result["reference"]&.strip,
       )

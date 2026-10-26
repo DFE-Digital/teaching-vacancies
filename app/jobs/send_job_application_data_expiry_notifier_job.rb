@@ -4,7 +4,7 @@ class SendJobApplicationDataExpiryNotifierJob < ApplicationJob
   def perform
     return if DisableEmailNotifications.enabled?
 
-    PublishedVacancy.includes(organisations: :publishers).where("DATE(expires_at) = ?", 351.days.ago.to_date).each do |vacancy|
+    InternalVacancy.includes(organisations: :publishers).where("DATE(expires_at) = ?", 351.days.ago.to_date).each do |vacancy|
       next unless vacancy.job_applications.any?
 
       vacancy.organisation.publishers.each do |publisher|

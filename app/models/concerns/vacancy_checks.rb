@@ -23,7 +23,7 @@ module VacancyChecks
                        head_of_department_or_curriculum
                        teaching_assistant]
 
-    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
+    phases.blank? || (phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles))
   end
 
   def allow_subjects?

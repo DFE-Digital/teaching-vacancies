@@ -1,6 +1,4 @@
 class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::JobListingForm
-  validates :phases, presence: true, inclusion: { in: Vacancy.phases.keys }
-
   FIELDS = %i[phases].freeze
 
   class << self
@@ -12,6 +10,10 @@ class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::JobL
 
     def fields
       { phases: [] }
+    end
+
+    def field_list
+      %i[phases]
     end
   end
 

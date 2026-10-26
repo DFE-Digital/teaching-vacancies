@@ -17,10 +17,10 @@ RSpec.describe StepProcess do
   describe "#step_groups" do
     it "excludes step groups without steps" do
       expect(subject.step_groups).to eq({
-        alpha: %i[one],
-        beta: %i[two three],
-        delta: %i[four five six],
-      })
+                                          alpha: %i[one],
+                                          beta: %i[two three],
+                                          delta: %i[four five six],
+                                        })
     end
   end
 
