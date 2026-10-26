@@ -65,7 +65,7 @@ staging: test-cluster ## staging
 
 .PHONY: production
 production: production-cluster ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
-		@if [[ "$(CONFIRM_PRODUCTION)" != YES ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; exit 1; fi
+	$(if $(or ${SKIP_CONFIRM}, ${CONFIRM_PRODUCTION}), , $(error Missing CONFIRM_PRODUCTION=YES))
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
@@ -121,6 +121,7 @@ check-terraform-variables:
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
+	$(eval SKIP_CONFIRM=true)
 
 .PHONY: terraform-app-init
 terraform-app-init: set-azure-account
@@ -159,7 +160,7 @@ terraform-common-plan: terraform-common-init ## make terraform-common-plan
 
 .PHONY: terraform-common-apply
 terraform-common-apply: terraform-common-init ## make terraform-common-apply
-		terraform -chdir=terraform/common apply
+		terraform -chdir=terraform/common applyf
 
 ##@ install konduit
 bin/konduit.sh:
