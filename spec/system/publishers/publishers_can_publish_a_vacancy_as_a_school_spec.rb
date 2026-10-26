@@ -305,7 +305,7 @@ RSpec.describe "Creating a vacancy" do
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
         let(:trust) { create(:trust, schools: [school]) }
         let(:vacancy) { create(:draft_vacancy, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
-        let(:published) { PublishedVacancy.find(vacancy.id) }
+        let(:published) { InternalVacancy.find(vacancy.id) }
 
         before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
 
@@ -422,7 +422,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
-        expect(DraftVacancy.find(created_vacancy.id)).to be_catholic
+        expect(InternalVacancy.draft.find(created_vacancy.id)).to be_catholic
       end
 
       scenario "Church of England" do
@@ -431,7 +431,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
-        expect(DraftVacancy.find(created_vacancy.id)).to be_other_religion
+        expect(InternalVacancy.draft.find(created_vacancy.id)).to be_other_religion
       end
 
       scenario "No religion questions" do
@@ -440,7 +440,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_anonymise_to_review(vacancy)
         expect(page).to have_current_path(organisation_job_review_path(new_draft_vacancy.id), ignore_query: true)
-        expect(DraftVacancy.find(created_vacancy.id)).to be_no_religion
+        expect(InternalVacancy.draft.find(created_vacancy.id)).to be_no_religion
       end
     end
 
@@ -452,7 +452,7 @@ RSpec.describe "Creating a vacancy" do
 
       it "doesnt ask religion questions" do
         expect(page).to have_current_path(organisation_job_build_path(new_draft_vacancy.id, :how_to_receive_applications), ignore_query: true)
-        expect(DraftVacancy.find(new_draft_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
+        expect(InternalVacancy.draft.find(new_draft_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
       end
     end
   end

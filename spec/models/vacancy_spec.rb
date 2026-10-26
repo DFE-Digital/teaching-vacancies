@@ -47,13 +47,13 @@ RSpec.describe Vacancy do
 
     it "publish_on is not removed when converting a draft to a published vacancy" do
       vacancy = create(:draft_vacancy, publish_on: Date.current)
-      vacancy.update!(type: "PublishedVacancy")
+      vacancy.update!(draft: false)
       expect(vacancy.publish_on).to be_present
     end
 
     it "publish_on is removed when converting a published vacancy back into a draft" do
       vacancy = create(:vacancy, publish_on: Date.current)
-      expect { vacancy.update(type: "DraftVacancy") }.to change { vacancy.publish_on }.from(Date.current).to(nil)
+      expect { vacancy.update(draft: true) }.to change { vacancy.publish_on }.from(Date.current).to(nil)
     end
   end
 
@@ -93,7 +93,8 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
+        # expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
+        expect(build(:draft_vacancy, organisations: [invalid_school], publisher: publisher)).to be_valid
       end
     end
 
@@ -326,7 +327,7 @@ RSpec.describe Vacancy do
         expired.send :set_slug
         expired.save(validate: false)
 
-        expect(PublishedVacancy.expired.count).to eq(1)
+        expect(described_class.expired.count).to eq(1)
       end
     end
 
@@ -337,7 +338,7 @@ RSpec.describe Vacancy do
 
       let!(:yesterday) { create(:vacancy, :expired_yesterday) }
       it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
-        expect(PublishedVacancy.expired_yesterday).to eq([yesterday])
+        expect(described_class.expired_yesterday).to eq([yesterday])
       end
     end
 
@@ -350,7 +351,7 @@ RSpec.describe Vacancy do
           expired_earlier_today.send :set_slug
           expired_earlier_today.save(validate: false)
 
-          results = PublishedVacancy.applicable
+          results = described_class.applicable
           expect(results).to include(expires_later_today)
           expect(results).to_not include(expired_earlier_today)
         end
@@ -360,15 +361,15 @@ RSpec.describe Vacancy do
         let!(:expired_years_ago) { create(:vacancy, expires_at: 2.years.ago) }
 
         it "retrieves vacancies that expired not more than one year ago" do
-          expect(PublishedVacancy.expires_within_data_access_period).to_not include(expired_years_ago)
-          expect(PublishedVacancy.expires_within_data_access_period).to include(expired_earlier_today)
+          expect(described_class.expires_within_data_access_period).to_not include(expired_years_ago)
+          expect(described_class.expires_within_data_access_period).to include(expired_earlier_today)
         end
       end
 
       describe "#live" do
         it "includes vacancies till expiry time" do
-          expect(PublishedVacancy.live).to include(expires_later_today)
-          expect(PublishedVacancy.live).to_not include(expired_earlier_today)
+          expect(described_class.live).to include(expires_later_today)
+          expect(described_class.live).to_not include(expired_earlier_today)
         end
       end
     end
@@ -379,7 +380,7 @@ RSpec.describe Vacancy do
         published.first.discard
         create_list(:vacancy, 3, :future_publish)
 
-        expect(PublishedVacancy.listed.count).to eq(published.count)
+        expect(described_class.listed.count).to eq(published.count)
       end
     end
 
@@ -390,7 +391,7 @@ RSpec.describe Vacancy do
       end
 
       it "retrieves vacancies that have a status of :published, a future publish_on date & a future expires_at date" do
-        expect(PublishedVacancy.pending.count).to eq(3)
+        expect(InternalVacancy.pending.count).to eq(3)
       end
     end
 
@@ -400,7 +401,7 @@ RSpec.describe Vacancy do
         old_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 3.months.ago)
         recent_expired_and_not_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago, listed_elsewhere: :listed_paid)
 
-        results = PublishedVacancy.awaiting_feedback_recently_expired
+        results = InternalVacancy.awaiting_feedback_recently_expired
 
         expect(results).to include(recent_expired_and_awaiting_feedback)
         expect(results).not_to include(old_expired_and_awaiting_feedback)
@@ -513,7 +514,7 @@ RSpec.describe Vacancy do
 
   context "stats updated at" do
     let(:expired_job) { create(:vacancy, :expired) }
-    let(:stats_updated_at) { PublishedVacancy.find(expired_job.id).stats_updated_at }
+    let(:stats_updated_at) { expired_job.reload.stats_updated_at }
 
     it { expect(stats_updated_at).to be_nil }
 
@@ -630,8 +631,8 @@ RSpec.describe Vacancy do
   end
 
   describe "#external?" do
-    let!(:ats_api_client_vacancy) { create(:vacancy, :external, job_title: "v1", external_source: nil) }
-    let!(:external_source_vacancy) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
+    let!(:ats_api_client_vacancy) { create(:external_vacancy, job_title: "v1", external_source: nil) }
+    let!(:external_source_vacancy) { create(:external_vacancy, job_title: "v2", publisher_ats_api_client: nil) }
     let!(:internal_vacancy) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil) }
 
     it "is external when external_source is present" do
@@ -647,11 +648,11 @@ RSpec.describe Vacancy do
     end
 
     it "matches external scopes" do
-      expect(PublishedVacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
+      expect(ExternalVacancy.all).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
     end
 
     it "matches internal scopes" do
-      expect(PublishedVacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
+      expect(InternalVacancy.all.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
     end
   end
 
@@ -741,7 +742,7 @@ RSpec.describe Vacancy do
   describe "draft!" do
     subject { create(:vacancy, :future_publish) }
 
-    before { subject.update!(type: "DraftVacancy") }
+    before { subject.update!(draft: true) }
 
     it "resets the publish_on date" do
       expect(subject.publish_on).to eq(nil)
@@ -796,7 +797,7 @@ RSpec.describe Vacancy do
     let(:school) { create(:school) }
     let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
     let(:vacancy) do
-      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      build(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
     end
 
     it "returns nil when no conflicting vacancy exists" do
@@ -805,7 +806,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same ATS client ID and external reference" do
       let!(:conflicting_vacancy) do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
       end
 
       it "returns the conflicting vacancy" do
@@ -815,7 +816,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same ATS client ID but different external reference" do
       before do
-        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
       end
 
       it "returns nil" do
@@ -825,7 +826,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same external reference but different ATS client ID" do
       before do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
       end
 
       it "returns nil" do
@@ -852,7 +853,7 @@ RSpec.describe Vacancy do
 
     context "when there are two conflicting vacancies one with the same reference and one with the same information" do
       let!(:conflicting_vacancy_with_same_reference) do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
       end
 
       before do

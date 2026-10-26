@@ -112,12 +112,12 @@ class School < Organisation
   def live_group_vacancies
     if part_of_a_trust?
       org_ids = [trust.id] + trust.schools.pluck(:id)
-      PublishedVacancy.joins(:organisation_vacancies)
+      Vacancy.joins(:organisation_vacancies)
                       .where(organisation_vacancies: { organisation_id: org_ids })
-                      .merge(PublishedVacancy.live)
+                      .merge(Vacancy.live)
                       .distinct
     else
-      PublishedVacancy.none
+      Vacancy.none
     end
   end
 

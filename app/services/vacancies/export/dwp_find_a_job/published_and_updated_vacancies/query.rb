@@ -18,11 +18,11 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     private
 
     def vacancies_published_after_date
-      PublishedVacancy.live.internal.where("publish_on > ?", from_date)
+      InternalVacancy.live.where("publish_on > ?", from_date)
     end
 
     def vacancies_published_before_date
-      PublishedVacancy.live.internal.where("publish_on <= ?", from_date)
+      InternalVacancy.live.where("publish_on <= ?", from_date)
     end
 
     def vacancies_updated_after_date

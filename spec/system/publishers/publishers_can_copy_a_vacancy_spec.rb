@@ -17,7 +17,7 @@ RSpec.describe "Copying a vacancy" do
       end
 
       let(:new_template) { VacancyTemplate.order(:created_at).last }
-      let(:new_draft_vacancy) { DraftVacancy.order(:created_at).last }
+      let(:new_draft_vacancy) { InternalVacancy.draft.order(:created_at).last }
 
       it "bounces when the name is not entered" do
         # acts as a page wait

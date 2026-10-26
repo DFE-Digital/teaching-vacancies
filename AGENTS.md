@@ -166,7 +166,7 @@ management is in Supportal.
 
 ### Domain model
 
-- **`Vacancy`** — single-table inheritance: `DraftVacancy` and `PublishedVacancy`. There is
+- **`Vacancy`** — single-table inheritance: `InternalVacancy` and `ExternalVacancy`. There is
   **no `status` enum**; status is derived (`draft?`, `scheduled?`, `live?`, `expired?`). Uses a
   custom `ArrayEnum` extension for `phases`, `job_roles`, `key_stages` and `working_patterns`,
   plus regular enums for `contract_type`, `receive_applications`, `start_date_type` and others.
@@ -264,7 +264,7 @@ templates. Adding `#nocov` to pre-existing uncovered code you had to touch is ac
 - **Use `factory_rand`, `factory_sample` and `factory_rand_sample`**
   (`spec/factories/support/random_helpers.rb`) instead of `rand` and `sample`. They return the
   minimum or first value under `Rails.env.test?`, which is what keeps coverage stable.
-- Factories build STI subclasses: `:vacancy` produces a `PublishedVacancy`, `:job_application`
+- Factories build STI subclasses: `:vacancy` produces a `InternalVacancy`, `:job_application`
   a `NativeJobApplication`. Organisation factories are `:school`, `:academy`, `:college`,
   `:school_group`, `:trust`, `:local_authority`.
 - Factories are **not test-only** — review-app seeding uses them via `:for_seed_data` traits,

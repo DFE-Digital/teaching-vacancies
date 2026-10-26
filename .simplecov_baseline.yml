@@ -3137,13 +3137,6 @@ app/models/conversation.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/draft_vacancy.rb:
-  lines:
-    percent: 88.88
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/education_gap.rb:
   lines:
     percent: 100.0
@@ -3193,6 +3186,13 @@ app/models/event_context.rb:
   branches:
     percent: 100.0
     missed: 0
+app/models/external_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/models/failed_imported_vacancy.rb:
   lines:
     percent: 100.0
@@ -3214,6 +3214,13 @@ app/models/feedback_reporting_period.rb:
   branches:
     percent: 83.33
     missed: 1
+app/models/internal_vacancy.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/models/job_application.rb:
   lines:
     percent: 100.0
@@ -3438,13 +3445,6 @@ app/models/profile_employment_gap.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/published_vacancy.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/publisher.rb:
   lines:
     percent: 100.0
@@ -3580,11 +3580,11 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.45
-    missed: 1
+    percent: 99.02
+    missed: 2
   branches:
-    percent: 98.0
-    missed: 1
+    percent: 96.42
+    missed: 2
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0

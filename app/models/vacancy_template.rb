@@ -47,6 +47,7 @@ class VacancyTemplate < ApplicationRecord
     contact_number
     parental_leave_cover_contract_duration
     include_additional_documents
+    draft
   ].freeze
 
   extend ArrayEnum

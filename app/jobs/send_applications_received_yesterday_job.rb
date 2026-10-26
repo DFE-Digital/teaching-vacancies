@@ -13,7 +13,7 @@ class SendApplicationsReceivedYesterdayJob < ApplicationJob
   private
 
   def contact_emails_with_applications_submitted_yesterday
-    PublishedVacancy.distinct
+    InternalVacancy.distinct
                     .joins(:job_applications)
                     .merge(JobApplication.submitted_yesterday)
                     .pluck(:contact_email)

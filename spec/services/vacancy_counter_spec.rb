@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe VacancyCounter do
   let(:college) { create(:college) }
-  let(:school_scope) { PublishedVacancy.live.in_organisation_ids(Organisation.in_scope_schools.pluck(:id)) }
-  let(:fe_scope) { PublishedVacancy.live.in_organisation_ids(Organisation.colleges.pluck(:id)) }
+  let(:school_scope) { Vacancy.live.in_organisation_ids(Organisation.in_scope_schools.pluck(:id)) }
+  let(:fe_scope) { Vacancy.live.in_organisation_ids(Organisation.colleges.pluck(:id)) }
 
   describe "role_counts" do
     before do
