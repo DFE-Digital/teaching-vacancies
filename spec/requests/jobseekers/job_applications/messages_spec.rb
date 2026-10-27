@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
           post jobseekers_job_application_messages_path(job_application), params: message_params
         }.to change(Message, :count).by(1)
 
-        message = Message.last
+        message = conversation.jobseeker_messages.sole
         expect(message.content.to_plain_text).to eq("Test message content")
         expect(message.sender).to eq(jobseeker)
         expect(message.conversation).to eq(conversation)
@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
           expect(response).to have_http_status(:unprocessable_content)
           expect(response).to render_template("jobseekers/job_applications/show")
           expect(assigns(:message).errors[:content]).to include("Please enter your message")
-          expect(assigns(:messages)).to eq([])
+          expect(assigns(:messages)).to eq(conversation.messages.to_a)
         end
 
         context "when conversation has existing messages" do
@@ -64,6 +64,35 @@ RSpec.describe "Jobseekers::JobApplications::Messages" do
             expect(assigns(:message).errors[:content]).to include("Please enter your message")
             expect(assigns(:messages)).to include(existing_message)
           end
+        end
+      end
+    end
+
+    context "when no conversation exists" do
+      it "creates a conversation with the message" do
+        expect {
+          post jobseekers_job_application_messages_path(job_application), params: message_params
+        }.to change(Conversation, :count).by(1).and change(Message, :count).by(1)
+
+        expect(job_application.reload.conversations.sole.last_message_at).to be_present
+        expect(response).to redirect_to(jobseekers_job_application_path(job_application, tab: "messages"))
+      end
+
+      context "with blank message content" do
+        let(:message_params) do
+          {
+            jobseeker_message: { content: "" },
+          }
+        end
+
+        it "does not create a conversation and renders show with validation errors" do
+          expect {
+            post jobseekers_job_application_messages_path(job_application), params: message_params
+          }.not_to(change { [Conversation.count, Message.count] })
+
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(assigns(:message).errors[:content]).to include("Please enter your message")
+          expect(assigns(:messages)).to eq([])
         end
       end
     end
