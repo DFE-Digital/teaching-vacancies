@@ -87,10 +87,9 @@ module Publishers
       def messages
         @show_form = params[:show_form]
         @message = PublisherMessage.new
-        @messages = Message.joins(:conversation)
+        @messages = Message.for_job_application(@job_application)
                            .includes(conversation: :job_application)
                            .with_rich_text_content_and_embeds
-                           .merge(Conversation.where(job_application: @job_application))
                            .order(created_at: :desc)
         @back_link = params.fetch(:back_link, publishers_candidate_messages_path)
 
@@ -100,7 +99,7 @@ module Publishers
       end
 
       def download_messages
-        messages = Message.joins(:conversation).where(conversations: { job_application: @job_application }).order(created_at: :desc)
+        messages = Message.for_job_application(@job_application).order(created_at: :desc)
 
         generator = MessagesPdfGenerator.new(@job_application, messages)
         document = generator.generate
