@@ -100,6 +100,7 @@ RAILS_ENV=test bin/rails parallel:create          # one-off parallel DB setup (t
 COVERAGE=1 bundle exec rspec                      # writes coverage/ and the undercover lcov report
 bundle exec undercover                            # fails on new/changed code without coverage
 bundle exec rspec --tag a11y                      # accessibility specs (excluded by default)
+bundle exec rake rswag:specs:swaggerize           # once on a fresh clone, and after ATS API changes: specs read the git-ignored swagger/v1/swagger.yaml
 yarn run js:test                                  # Jest
 ```
 

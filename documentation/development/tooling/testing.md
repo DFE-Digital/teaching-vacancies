@@ -48,6 +48,15 @@ To set it up:
 RAILS_ENV=test rails parallel:create
 ```
 
+Some specs read the generated ATS API OpenAPI document, `swagger/v1/swagger.yaml`. It is git-ignored,
+and CI generates it before running the specs, so generate it once on a fresh clone and whenever the
+ATS API specs or controllers change. Without it about 45 specs fail with `No OpenAPI document` or
+`No such file or directory @ rb_sysopen - .../swagger/v1/swagger.yaml`:
+
+```
+bundle exec rake rswag:specs:swaggerize
+```
+
 To run the test suite in parallel:
 
 ```

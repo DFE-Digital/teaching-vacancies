@@ -47,7 +47,14 @@ The application is tied to port 3000; no other port will work.
    ```bash
    RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
    ```
-5. Run the application with `bin/dev`. It makes sure the database is running first (so this is
+5. Generate the ATS API OpenAPI document, which some specs read. It is git-ignored, so a fresh clone
+   doesn't have it, and without it about 45 specs fail with `No such file or directory @ rb_sysopen -
+   .../swagger/v1/swagger.yaml`. It needs the test database from the previous step:
+   ```bash
+   bundle exec rake rswag:specs:swaggerize
+   ```
+   Run it again after changing the ATS API specs or controllers.
+6. Run the application with `bin/dev`. It makes sure the database is running first (so this is
    all you need from now on), then starts:
    - The Rails application on http://localhost:3000
    - An asset build task each for JavaScript and CSS
