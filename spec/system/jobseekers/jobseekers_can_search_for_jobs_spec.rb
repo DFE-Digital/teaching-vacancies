@@ -312,17 +312,17 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   end
 
   context "when filtering by school type" do
-    let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:faith_school) { create(:school, name: "Religious", religious_character: "Christian", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:faith_school2) { create(:school, name: "ABCDEF", religious_character: "Christian", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school1) { create(:school, name: "nonfaith1", religious_character: "None", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school2) { create(:school, name: "nonfaith2", religious_character: "Does not apply", geopoint: "POINT(-0.019501 51.504949)") }
-    let(:non_faith_school3) { create(:school, name: "nonfaith3", religious_character: "None", geopoint: "POINT(-0.019501 51.504949)") }
+    let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
+    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
+    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
+    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
+    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
+    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
+    let(:faith_school) { create(:school, name: "Religious", religious_character: "Christian") }
+    let(:faith_school2) { create(:school, name: "ABCDEF", religious_character: "Christian") }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", religious_character: "None") }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", religious_character: "Does not apply") }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", religious_character: "None") }
 
     let!(:special_job1) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "AAAA", subjects: [], organisations: [special_school1]) }
     let!(:special_job2) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "BBBB", subjects: [], organisations: [special_school2]) }
