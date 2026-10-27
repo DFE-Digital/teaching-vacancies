@@ -49,7 +49,7 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.find_and_verify_by_token(token)
 
     if updating_frequency?
-      subscription.update(frequency: params.dig(:subscription, :frequency))
+      subscription.update(frequency: params.dig(:subscription, :frequency), deletion_warning_email_sent_at: nil)
       @subscription = subscription.decorate
       notify_and_redirect subscription
     else
@@ -57,7 +57,8 @@ class SubscriptionsController < ApplicationController
       @subscription = subscription.decorate
 
       if @form.valid?
-        subscription.update_with_search_criteria(@form.job_alert_params)
+        # Editing the alert confirms the jobseeker still wants it, so it shouldn't be deleted by DeleteUnconfirmedSubscriptionsJob.
+        subscription.update_with_search_criteria(@form.job_alert_params.merge(deletion_warning_email_sent_at: nil))
         notify_and_redirect subscription
       else
         render :edit
