@@ -18,6 +18,20 @@ if ! docker info &> /dev/null; then
   exit 1
 fi
 
+# Port 5432 must be free unless our own container already holds it. Another PostgreSQL (for
+# example from Homebrew or Postgres.app) would otherwise answer Rails with "role postgres does
+# not exist". lsof only lists processes of the current user, which covers those cases.
+if ! docker compose ps --status running --services 2> /dev/null | grep -qx db \
+  && command -v lsof &> /dev/null \
+  && lsof -nP -iTCP:5432 -sTCP:LISTEN &> /dev/null; then
+  echo "Something is already listening on port 5432:" >&2
+  lsof -nP -iTCP:5432 -sTCP:LISTEN >&2
+  echo "Stop it (a Homebrew PostgreSQL: brew services list, then brew services stop <name>;" >&2
+  echo "the devcontainer database: stop its db container)." >&2
+  echo "Or set SKIP_DEV_DB=1 to use that PostgreSQL instead (it needs PostGIS and a 'postgres' role)." >&2
+  exit 1
+fi
+
 if ! docker compose up -d --wait db; then
   echo "Could not start the development database with 'docker compose up'." >&2
   echo "If the error above mentions port 5432, a local PostgreSQL or the devcontainer database is using it." >&2
