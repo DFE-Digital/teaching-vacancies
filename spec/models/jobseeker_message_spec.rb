@@ -31,7 +31,9 @@ RSpec.describe JobseekerMessage do
 
         context "when application is subsequently withdrawn" do
           before do
-            message.save!
+            # A conversation is saved along with its first message
+            conversation.messages << message
+            conversation.save!
             job_application.assign_attributes(status: "withdrawn")
             job_application.save!(validate: false)
           end
