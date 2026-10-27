@@ -15,8 +15,8 @@ name: teaching-vacancies-dev
 
 services:
   db:
-    # Same image as the devcontainer; matches production PostgreSQL 14
-    image: postgis/postgis:14-3.5-alpine
+    # Same image as the devcontainer and CI; matches production PostgreSQL 17
+    image: postgis/postgis:17-3.5-alpine
     # No restart policy: bin/dev and bin/setup start it on demand, and an automatic restart could
     # race the devcontainer's database for port 5432 after a reboot.
     environment:
