@@ -2491,8 +2491,8 @@ app/helpers/vacancies_helper.rb:
     percent: 94.32
     missed: 8
   branches:
-    percent: 90.78
-    missed: 7
+    percent: 92.1
+    missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
     percent: 100.0
@@ -6635,8 +6635,8 @@ app/views/publishers/vacancies/_important_dates.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 2
+    percent: 83.33
+    missed: 1
 app/views/publishers/vacancies/_job_details.html.slim:
   lines:
     percent: 97.8
@@ -7195,8 +7195,8 @@ app/views/publishers/vacancies/review.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 64.28
-    missed: 5
+    percent: 78.57
+    missed: 3
 app/views/publishers/vacancies/review_banners/_closed.html.slim:
   lines:
     percent: 100.0
