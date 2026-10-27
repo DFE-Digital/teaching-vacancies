@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ExternalVacancyValidator, type: :model do
-  subject(:vacancy) { build(:vacancy, :external) }
+  subject(:vacancy) { build(:external_vacancy) }
 
   before { vacancy.validate }
 
@@ -162,13 +162,13 @@ RSpec.describe ExternalVacancyValidator, type: :model do
   end
 
   describe "external reference conflict validation" do
-    subject(:vacancy) { build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:) }
+    subject(:vacancy) { build(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:) }
 
     let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
 
     context "when there a vacancy with the same ATS client ID but with different external reference" do
       before do
-        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:)
+        create(:external_vacancy, external_reference: "REF456", publisher_ats_api_client:)
       end
 
       it "the new vacancy is valid" do
@@ -178,7 +178,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
 
     context "when there is a vacancy with the same ATS client ID and external reference" do
       before do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:)
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:)
       end
 
       it "the new vacancy is invalid" do
@@ -190,7 +190,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
 
     context "when there is a deleted vacancy with the same ATS client ID and external reference" do
       before do
-        create(:vacancy, :external, :trashed, external_reference: "REF123", publisher_ats_api_client:)
+        create(:external_vacancy, :trashed, external_reference: "REF123", publisher_ats_api_client:)
       end
 
       it "the new vacancy is valid" do
@@ -201,7 +201,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
 
   describe "duplicate validation" do
     subject(:vacancy) do
-      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      build(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
     end
 
     let(:school) { create(:school) }
@@ -234,7 +234,7 @@ RSpec.describe ExternalVacancyValidator, type: :model do
         }
       end
 
-      let(:existing_vacancy) { create(:vacancy, **dup_fields) }
+      let(:existing_vacancy) { create(:external_vacancy, **dup_fields) }
 
       before { existing_vacancy }
 

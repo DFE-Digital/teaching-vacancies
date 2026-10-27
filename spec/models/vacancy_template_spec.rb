@@ -45,6 +45,7 @@ RSpec.describe VacancyTemplate do
                            latest_start_date
                            listed_elsewhere
                            publisher_id
+                           draft
                            other_extension_reason_details])
     end
   end

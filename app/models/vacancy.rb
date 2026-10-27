@@ -132,9 +132,9 @@ class Vacancy < ApplicationRecord
   scope :quick_apply, -> { where(enable_job_applications: true) }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
-  scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
+  # scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
   # Not called from the code but frequently used for filtering during manual debugging sessions
-  scope :external, -> { where.not(external_source: nil).or(where.not(publisher_ats_api_client_id: nil)) }
+  # scope :external, -> { where.not(external_source: nil).or(where.not(publisher_ats_api_client_id: nil)) }
 
   scope :search_by_filter, ->(filters) { VacancyFilterQuery.call(all, filters) }
 
@@ -168,13 +168,24 @@ class Vacancy < ApplicationRecord
   # address and are only applicable to FE college vacancies.
   validate :job_address_only_for_fe_colleges, if: -> { organisations.any? && job_address_fields.any?(&:present?) }
 
+  validates :draft, inclusion: [true, false], strict: true
+  validates :organisations, presence: true, if: -> { published? }
+  validates :publish_on, presence: true, if: -> { published? }
+
+  scope :applicable, -> { where(expires_at: Time.current..) }
+  scope :listed, -> { where(draft: false, publish_on: ..Date.current) }
+  scope :live, -> { kept.listed.applicable }
+  scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
+  scope :expired, -> { kept.where(expires_at: ...Time.current) }
+  scope :expires_within_data_access_period, -> { where(expires_at: (Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)..) }
+
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
                   if: proc(&:live?)
 
   # Publisher will need to set a new publish date if wanting to re-publish an scheduled vacancy turned back to a draft.
-  before_save -> { self.publish_on = nil if type_changed?(from: "PublishedVacancy", to: "DraftVacancy") }
+  before_save -> { self.publish_on = nil if draft_changed?(from: false, to: true) }
 
   after_save :update_conversation_searchable_content, if: -> { saved_change_to_job_title? }
 
@@ -189,6 +200,25 @@ class Vacancy < ApplicationRecord
       key_stages: key_stages,
       working_patterns: working_patterns,
     }
+  end
+
+  def expired?
+    expires_at&.past?
+  end
+
+  def published?
+    !draft? && discarded_at.nil?
+  end
+
+  # soft delete so that all the stats etc are kept even after the vacancy no longer exists
+  def trash!
+    if draft?
+      destroy!
+    elsif !discarded?
+      supporting_documents.purge_later
+      discard!
+      remove_google_index
+    end
   end
 
   def external?
@@ -334,6 +364,12 @@ class Vacancy < ApplicationRecord
     self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
+  def find_publisher_by_contact_email
+    Publisher.joins(:organisations)
+             .where(organisations: { id: organisation_ids })
+             .find_by(email: contact_email)
+  end
+
   private
 
   def job_address_fields
@@ -387,6 +423,11 @@ class Vacancy < ApplicationRecord
 
   def resettable?
     (published? && !expired?) || draft?
+  end
+
+  def remove_google_index
+    url = Rails.application.routes.url_helpers.job_url(self)
+    RemoveGoogleIndexQueueJob.perform_later(url)
   end
 end
 # rubocop:enable Metrics/ClassLength

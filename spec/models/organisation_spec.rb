@@ -46,11 +46,11 @@ RSpec.describe Organisation do
       let(:vacancy) { create(:vacancy, organisations: [school1]) }
 
       it "returns all vacancies from the school" do
-        expect(school1.all_vacancies).to eq [vacancy]
+        expect(school1.all_internal_vacancies).to eq [vacancy]
       end
 
       it "returns no vacancies when there are none" do
-        expect(school2.all_vacancies).to be_none
+        expect(school2.all_internal_vacancies).to be_none
       end
     end
 
@@ -63,8 +63,8 @@ RSpec.describe Organisation do
       let(:vacancy3) { create(:vacancy, organisations: [school2]) }
 
       it "returns all vacancies from the trust and the schools of the trust" do
-        expect(trust.all_vacancies).to include(vacancy1, vacancy2)
-        expect(trust.all_vacancies).not_to include(vacancy3)
+        expect(trust.all_internal_vacancies).to include(vacancy1, vacancy2)
+        expect(trust.all_internal_vacancies).not_to include(vacancy3)
       end
     end
 
@@ -83,9 +83,9 @@ RSpec.describe Organisation do
       before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
 
       it "returns all vacancies from the schools inside and outside of the local authority" do
-        expect(local_authority.all_vacancies).to include(vacancy1, vacancy3)
-        expect(local_authority.all_vacancies).not_to include(vacancy2)
-        expect(local_authority.all_vacancies).not_to include(vacancy4)
+        expect(local_authority.all_internal_vacancies).to include(vacancy1, vacancy3)
+        expect(local_authority.all_internal_vacancies).not_to include(vacancy2)
+        expect(local_authority.all_internal_vacancies).not_to include(vacancy4)
       end
     end
   end

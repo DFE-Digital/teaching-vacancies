@@ -3,7 +3,7 @@ module Publishers
     include VacanciesHelper
 
     def applications_received(contact_email)
-      @vacancies_submitted_yesterday = PublishedVacancy.distinct
+      @vacancies_submitted_yesterday = Vacancy.distinct
                                                        .joins(:job_applications)
                                                        .where(contact_email: contact_email)
                                                        .merge(::JobApplication.submitted_yesterday)

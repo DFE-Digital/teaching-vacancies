@@ -51,8 +51,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def create
     # anonymise_applications defaults to false for past applications, so we have to explicitly set nil here
-    vacancy = DraftVacancy.create!(publisher: current_publisher, anonymise_applications: nil,
-                                   publisher_organisation: current_organisation, organisations: [current_organisation])
+    vacancy = InternalVacancy.create!(publisher: current_publisher, anonymise_applications: nil, draft: true,
+                                      publisher_organisation: current_organisation, organisations: [current_organisation])
 
     if current_organisation.school? && current_organisation.phase.in?(Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
       vacancy.update!(phases: [current_organisation.phase])
@@ -73,7 +73,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
            else
              {}
            end
-    @vacancy = DraftVacancy.create!(template.vacancy_attributes.merge(orgs))
+    @vacancy = InternalVacancy.create!(template.vacancy_attributes.merge(orgs).merge(draft: true))
     redirect_to organisation_job_build_path(@vacancy.id, next_invalid_step)
   end
 
@@ -91,7 +91,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   # simplecov:enable
 
   def convert_to_draft
-    vacancy.update!(type: "DraftVacancy")
+    vacancy.update!(draft: true)
     redirect_to organisation_job_path(vacancy.id)
   end
 
@@ -115,7 +115,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   def show_application_feature_reminder_page?
     return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
 
-    PublishedVacancy.kept.where(
+    InternalVacancy.kept.where(
       publisher_id: current_publisher.id,
       enable_job_applications: true,
       created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..,
@@ -124,9 +124,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
 
   def apply_vacancy_filters # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     scope = if @selected_type == :draft
-              DraftVacancy.kept.where.not(job_title: nil)
+              InternalVacancy.draft.where.not(job_title: nil)
             else
-              PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
+              InternalVacancy.kept.published.public_send(VACANCY_TYPES.fetch(@selected_type))
             end
 
     accessible_org_ids = current_publisher.accessible_organisations(current_organisation).map(&:id)

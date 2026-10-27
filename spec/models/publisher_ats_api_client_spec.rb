@@ -45,10 +45,10 @@ RSpec.describe PublisherAtsApiClient do
     let(:third_organisation) { create(:school) }
 
     before do
-      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation])
-      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation])
-      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [first_organisation, third_organisation])
-      create(:vacancy, :external, publisher_ats_api_client: api_client, organisations: [second_organisation])
+      create(:external_vacancy, publisher_ats_api_client: api_client, organisations: [first_organisation])
+      create(:external_vacancy, publisher_ats_api_client: api_client, organisations: [first_organisation])
+      create(:external_vacancy, publisher_ats_api_client: api_client, organisations: [first_organisation, third_organisation])
+      create(:external_vacancy, publisher_ats_api_client: api_client, organisations: [second_organisation])
     end
 
     it "returns the count of unique organisations associated with the vacancies" do

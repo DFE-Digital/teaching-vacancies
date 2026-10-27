@@ -12,7 +12,7 @@ RSpec.describe PublishVacancy do
     end
 
     it "updates the vacancy's status to published" do
-      expect(vacancy.type).to eq("PublishedVacancy")
+      expect(vacancy.draft).to be(false)
     end
 
     it "updates the id of the user who confirmed the publishing of a vacancy" do

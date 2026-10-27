@@ -27,7 +27,7 @@ RSpec.describe CopyVacancyAsaTemplate do
     it "creates a new vacancy as draft" do
       expect(result).to be_a(Vacancy)
       expect(Vacancy.count).to eq(2)
-      expect(result.type).to eq("DraftVacancy")
+      expect(result.draft?).to be(true)
       expect(result.organisations).to eq [school]
     end
 
