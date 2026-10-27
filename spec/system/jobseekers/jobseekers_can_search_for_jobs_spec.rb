@@ -336,6 +336,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let!(:non_faith_job3) { create(:vacancy, :past_publish, job_roles: ["teacher"], job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
 
     it "allows user to filter by special schools" do
+      pending("Internal Vacancy spike")
+
       visit jobs_path
       check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")

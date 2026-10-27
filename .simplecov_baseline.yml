@@ -3580,8 +3580,8 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.02
-    missed: 2
+    percent: 99.47
+    missed: 1
   branches:
     percent: 96.42
     missed: 2
