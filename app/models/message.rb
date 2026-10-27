@@ -8,6 +8,7 @@ class Message < ApplicationRecord
 
   scope :unread, -> { where(read: false) }
   scope :read, -> { where(read: true) }
+  scope :for_job_application, ->(job_application) { joins(:conversation).merge(Conversation.where(job_application: job_application)) }
 
   after_create :update_conversation
   after_save :update_conversation_searchable_content
