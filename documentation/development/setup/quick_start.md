@@ -47,7 +47,14 @@ The application is tied to port 3000; no other port will work.
    ```bash
    RAILS_ENV=test bin/rails db:create parallel:create parallel:load_schema
    ```
-5. Run the application with `bin/dev`. It makes sure the database is running first (so this is
+5. Generate the ATS API OpenAPI document, which some specs read. It is git-ignored, so a fresh clone
+   doesn't have it, and without it about 45 specs fail with `No such file or directory @ rb_sysopen -
+   .../swagger/v1/swagger.yaml`. It needs the test database from the previous step:
+   ```bash
+   bundle exec rake rswag:specs:swaggerize
+   ```
+   Run it again after changing the ATS API specs or controllers.
+6. Run the application with `bin/dev`. It makes sure the database is running first (so this is
    all you need from now on), then starts:
    - The Rails application on http://localhost:3000
    - An asset build task each for JavaScript and CSS
@@ -88,8 +95,9 @@ docker compose down -v   # delete it, including all data
 docker compose exec db psql -U postgres tvs_development
 ```
 
-Only one thing can listen on port 5432. If startup fails with "port is already allocated", stop
-the local PostgreSQL service or the devcontainer's database.
+Only one thing can listen on port 5432. `bin/dev-db` checks this and, if something else holds the
+port, prints what it is and stops. Stop that service (or the devcontainer's database) and run it
+again. See [Troubleshooting](#troubleshooting).
 
 ### Moving over from the old "Running natively" steps
 
@@ -140,6 +148,17 @@ container, and does not use `compose.yaml`.
 
 ## Troubleshooting
 
+- **`bin/setup` fails with `role "postgres" does not exist`, or `bin/dev-db` says something is
+  already listening on port 5432.** Another PostgreSQL is using the port, most often one installed
+  with Homebrew (`brew install postgresql`) or Postgres.app. Rails connects to it instead of the
+  Docker database, and it has no `postgres` user. Check with `lsof -nP -iTCP:5432 -sTCP:LISTEN`,
+  stop it (for Homebrew, find its name with `brew services list` and run
+  `brew services stop <name>`), and run `bin/setup --skip-server` again. You don't need a local
+  PostgreSQL server for this project. Keep the `libpq` formula, which provides the client libraries
+  the `pg` gem builds against.
+- **`bin/setup` stops with "The development database did not start".** That is deliberate: the
+  later steps can't work without the database. Read the error above the message, fix it and rerun.
+  If you run your own PostGIS, set `SKIP_DEV_DB=1` so `bin/setup` doesn't try to start Docker.
 - **I see "Page Not Found" when I log in and try to create a job listing.** Try
   [seeding the database](/documentation/development/tooling/data.md) (quick) or importing the
   school data (slow) if you have not already. When your sign-in account was created, it was

@@ -15,8 +15,13 @@ name: teaching-vacancies-dev
 
 services:
   db:
-    # Same image as the devcontainer and CI; matches production PostgreSQL 17
-    image: postgis/postgis:17-3.5-alpine
+    # PostgreSQL 17 with PostGIS 3.5: the same versions as the devcontainer, CI and production, but
+    # not the same image. The official postgis/postgis image is amd64-only, so it fails on Apple
+    # Silicon Macs with "no matching manifest for linux/arm64/v8". imresamu/postgis is the community
+    # multi-arch rebuild (amd64 and arm64) that the PostGIS docker project points arm64 users to.
+    # It is pinned by digest because it is a third-party image: to upgrade, pick a new tag, check
+    # it with `docker buildx imagetools inspect <image>:<tag>` and replace the digest.
+    image: imresamu/postgis:17-3.5-alpine@sha256:c24f99339ca46a13100b7f7b7ccc41c416ebf6c4cbb916a20569e519fb144cf1
     # No restart policy: bin/dev and bin/setup start it on demand, and an automatic restart could
     # race the devcontainer's database for port 5432 after a reboot.
     environment:

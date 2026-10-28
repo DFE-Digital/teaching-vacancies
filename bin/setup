@@ -21,7 +21,7 @@ FileUtils.chdir APP_ROOT do
   # end
 
   puts "\n== Starting the development database =="
-  system("bin/dev-db")
+  system("bin/dev-db") || abort("\nThe development database did not start, so setup stopped. Fix the problem above and run bin/setup again.")
 
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare"
