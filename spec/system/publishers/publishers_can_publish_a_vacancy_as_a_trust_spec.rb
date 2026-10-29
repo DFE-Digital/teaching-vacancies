@@ -134,7 +134,7 @@ RSpec.describe "Creating a vacancy" do
     expect(publisher_include_additional_documents_page).to be_displayed
     submit_empty_form
     expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
-    publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
+    publisher_include_additional_documents_page.fill_in_and_submit_form(false)
 
     expect(publisher_contact_details_page).to be_displayed
     submit_empty_form
