@@ -1396,10 +1396,10 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 95.06
+    percent: 95.18
     missed: 4
   branches:
-    percent: 88.88
+    percent: 89.47
     missed: 4
 app/controllers/warden_controller.rb:
   lines:

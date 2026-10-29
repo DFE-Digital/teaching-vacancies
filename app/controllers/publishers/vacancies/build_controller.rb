@@ -16,14 +16,17 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
 
   def show
     @form = form_class.load_from_model(vacancy, current_publisher: current_publisher)
-    case step
-    when :documents
-      return redirect_to(new_organisation_job_document_path(@vacancy.id,
-                                                            back_to_review: params[:back_to_review],
-                                                            back_to_show: params[:back_to_show]))
+    if step_process.all_steps.fetch(step)
+      case step
+      when :documents
+        return redirect_to(new_organisation_job_document_path(@vacancy.id,
+                                                              back_to_review: params[:back_to_review],
+                                                              back_to_show: params[:back_to_show]))
+      end
+    else
+      skip_step
     end
 
-    skip_step unless step_process.all_steps.fetch(step)
     render_wizard
   end
 
