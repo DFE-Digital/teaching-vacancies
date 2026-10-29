@@ -6,10 +6,10 @@ RSpec.describe StepProcess do
   let(:current_step) { :two }
   let(:step_groups) do
     {
-      alpha: %i[one],
-      beta: %i[two three],
+      alpha: %i[one].index_with { true },
+      beta: %i[two three seven eight].index_with { |item| item.in? %i[two three] },
       gamma: nil,
-      delta: %i[four five six],
+      delta: %i[four five six nine ten].index_with { |item| item.in? %i[four five six] },
       epsilon: [],
     }
   end
@@ -20,6 +20,14 @@ RSpec.describe StepProcess do
         alpha: %i[one],
         beta: %i[two three],
         delta: %i[four five six],
+      })
+    end
+  end
+
+  describe "#all_steps" do
+    it "returns a hash of all steps with values to show usage" do
+      expect(subject.all_steps).to eq({
+        one: true, two: true, three: true, seven: false, eight: false, four: true, five: true, six: true, nine: false, ten: false
       })
     end
   end
