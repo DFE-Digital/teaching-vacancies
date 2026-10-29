@@ -6,11 +6,11 @@ RSpec.describe StepProcess do
   let(:current_step) { :two }
   let(:step_groups) do
     {
-      alpha: %i[one],
-      beta: %i[two three],
+      alpha: { one: true },
+      beta: { two: true, three: true, seven: false, eight: false },
       gamma: nil,
-      delta: %i[four five six],
-      epsilon: [],
+      delta: { four: true, nine: false, five: true, six: true, ten: false },
+      epsilon: {},
     }
   end
 
@@ -21,6 +21,15 @@ RSpec.describe StepProcess do
         beta: %i[two three],
         delta: %i[four five six],
       })
+    end
+  end
+
+  describe "#all_steps" do
+    it "returns a hash of all steps with values, preserving key order" do
+      expect(subject.all_steps).to eq({
+        one: true, two: true, three: true, seven: false, eight: false, four: true, nine: false, five: true, six: true, ten: false
+      })
+      expect(subject.all_steps.keys).to eq(%i[one two three seven eight four nine five six ten])
     end
   end
 

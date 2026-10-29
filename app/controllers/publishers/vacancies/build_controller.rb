@@ -15,19 +15,24 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   helper_method :current_publisher_preference
 
   def show
-    @form = form_class.load_from_model(vacancy, current_publisher: current_publisher)
-    case step
-    when :documents
-      return redirect_to(new_organisation_job_document_path(vacancy.id,
-                                                            back_to_review: params[:back_to_review],
-                                                            back_to_show: params[:back_to_show]))
+    if step_process.all_steps.fetch(step)
+      case step
+      when :documents
+        return redirect_to(new_organisation_job_document_path(@vacancy.id,
+                                                              back_to_review: params[:back_to_review],
+                                                              back_to_show: params[:back_to_show]))
+      else
+        @form = form_class.load_from_model(@vacancy, current_publisher: current_publisher)
+      end
+    else
+      skip_step
     end
 
     render_wizard
   end
 
   def update
-    @form = form_class.load_from_params(form_params, vacancy, current_publisher: current_publisher)
+    @form = form_class.load_from_params(form_params, @vacancy, current_publisher: current_publisher)
 
     if @form.valid?
       updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
@@ -64,7 +69,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def form_class
-    if step == :important_dates && vacancy.disable_editing_publish_on?
+    if step == :important_dates && @vacancy.disable_editing_publish_on?
       Publishers::JobListing::ExpiryDateTimeForm
     else
       "publishers/job_listing/#{step}_form".camelize.constantize
@@ -101,6 +106,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def set_steps
-    self.steps = step_process.steps - [:review]
+    self.steps = step_process.all_steps.keys - [:review]
   end
 end
