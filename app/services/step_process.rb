@@ -1,11 +1,12 @@
 class StepProcess
-  attr_reader :current_step, :step_groups
+  attr_reader :current_step, :step_groups, :all_steps
 
   class MissingStepError < ArgumentError; end
 
   def initialize(current_step, step_groups = {})
     @current_step = current_step.to_sym
-    @step_groups = step_groups.compact_blank
+    @step_groups = step_groups.compact_blank.transform_values { |hash| hash.select { |_k, v| v }.keys }
+    @all_steps = step_groups.compact_blank.values.reduce({}) { |collection, hash| collection.merge(hash) }
   end
 
   # Returns the keys of all individual steps in order

@@ -5939,14 +5939,14 @@ app/views/layouts/action_text/contents/_content.html.slim:
     missed: 0
 app/views/layouts/application.html.slim:
   lines:
-    percent: 76.31
+    percent: 75.67
     missed: 9
   branches:
     percent: 60.0
     missed: 4
 app/views/layouts/application_intermediary.html.slim:
   lines:
-    percent: 74.28
+    percent: 73.52
     missed: 9
   branches:
     percent: 50.0
@@ -7857,10 +7857,10 @@ app/views/vacancies/listing/_banner.html.slim:
     missed: 1
 app/views/vacancies/listing/_banner_buttons.html.slim:
   lines:
-    percent: 94.11
+    percent: 95.65
     missed: 1
   branches:
-    percent: 91.66
+    percent: 94.44
     missed: 1
 app/views/vacancies/listing/_contact_details.html.slim:
   lines:
