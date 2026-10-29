@@ -54,24 +54,30 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
                 application_link: false,
                 anonymise_applications: true,
               }
+            elsif vacancy.receive_applications.present?
+              {
+                how_to_receive_applications: true,
+                application_form: APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_form,
+                application_link: APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_link,
+                anonymise_applications: vacancy.uploaded_form?,
+              }
             else
               {
                 how_to_receive_applications: true,
-                application_form: vacancy.receive_applications.present? && APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_form,
-                application_link: vacancy.receive_applications.present? && APPLICATION_METHOD_TO_STEP.fetch(vacancy.receive_applications.to_sym) == :application_link,
+                application_form: false,
+                application_link: false,
                 anonymise_applications: vacancy.uploaded_form?,
               }
             end
-
-    initial_step.merge(steps)
-                .merge(additional_documents_steps)
-         .merge(contact_details: true, confirm_contact_details: true)
+    initial_step.merge(steps).merge(additional_documents_steps)
   end
 
   def additional_documents_steps
     {
       include_additional_documents: true,
       documents: vacancy.include_additional_documents,
+      contact_details: true,
+      confirm_contact_details: true,
     }
   end
 end
