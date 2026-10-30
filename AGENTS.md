@@ -12,7 +12,11 @@ Different tools look for different filenames. Keep this file authoritative and t
 | OpenAI Codex / ChatGPT | `AGENTS.md` | Reads this file directly — nothing else needed |
 | Claude Code | `CLAUDE.md` | Imports it with `@AGENTS.md` (content is inlined at load time), then adds notes on Claude Code's own configuration |
 | Gemini CLI | `GEMINI.md` | Imports it with `@./AGENTS.md`; content is inlined at load time |
-| GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The Copilot coding agent also reads a root `AGENTS.md` directly, and VS Code will too with `chat.useAgentsMdFile` enabled |
+| GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The Copilot coding agent also reads a root `AGENTS.md` directly, and VS Code will too with `chat.useAgentsMdFile` enabled. Hooks are configured in `.github/hooks/agent-hooks.json`, and the cloud agent's environment in `.github/workflows/copilot-setup-steps.yml` |
+
+**Agent hooks.** The rules the hooks enforce live once in `.agents/hooks/lib/`. Each harness has a
+thin adapter that only translates its own input and output format (`.claude/hooks/` for Claude
+Code, `.github/hooks/` for Copilot). Change a rule in the core, never in an adapter.
 
 **Project rules are never duplicated in those files** — this file is the only copy to keep
 current. Add rules here. A tool's own file may describe that tool's configuration (for example
