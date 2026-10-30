@@ -361,6 +361,9 @@ current** above out of date? If so, update it in this PR.
   event schemas, legacy import mappings, the DWP Find a Job export, the Publisher ATS API
   (which may need versioning), existing subscription alert filters, vacancy copying, and
   in-progress drafts. Surface that impact in the PR rather than changing an enum quietly.
+- Create pull requests as drafts (`gh pr create --draft`). Only the developer marks them ready.
+- Keep PR descriptions to a short what/why, not a list of every code change. Still complete the
+  template's data and schema checklist.
 - Avoid Friday deploys where possible.
 
 ## Further reading
