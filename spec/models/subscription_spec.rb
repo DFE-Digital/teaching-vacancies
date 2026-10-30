@@ -114,7 +114,7 @@ RSpec.describe Subscription do
     subject(:vacancies) { subscription.vacancies_matching(scope).map(&:job_title) }
 
     let(:subscription) { build_stubbed(:subscription) }
-    let(:scope) { PublishedVacancy.all }
+    let(:scope) { Vacancy.all }
 
     context "when multiple vacancies match the subscription criteria" do
       let!(:first_vacancy) { create(:vacancy, job_title: "Maths Teacher") }

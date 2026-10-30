@@ -34,14 +34,15 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
   describe "#call" do
     context "when the vacancy is successfully created" do
+      let(:new_vacancy) { PublishedVacancy.last }
+
       it "returns a success response" do
         expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.last.id })
       end
 
       it "creates a published vacancy with the correct external reference" do
         expect { create_vacancy_service }.to change(PublishedVacancy, :count).by(1)
-        vacancy = PublishedVacancy.last
-        expect(vacancy.external_reference).to eq("new-ref")
+        expect(new_vacancy.external_reference).to eq("new-ref")
       end
 
       describe "'publish_on'" do
@@ -54,118 +55,118 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           publish_on = Time.zone.today + 1
           params[:publish_on] = publish_on
           create_vacancy_service
-          expect(PublishedVacancy.last.publish_on).to eq(publish_on)
+          expect(new_vacancy.publish_on).to eq(publish_on)
         end
       end
 
       describe "'is_job_share'" do
         it "defaults to false when not provided" do
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(false)
+          expect(new_vacancy.is_job_share).to be(false)
         end
 
         it "gets set as 'true' when provided as a boolean" do
           params[:is_job_share] = true
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(true)
+          expect(new_vacancy.is_job_share).to be(true)
         end
 
         it "gets set as 'true' when provided as a string" do
           params[:is_job_share] = "true"
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(true)
+          expect(new_vacancy.is_job_share).to be(true)
         end
 
         it "gets set as 'false' when provided as a boolean" do
           params[:is_job_share] = false
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(false)
+          expect(new_vacancy.is_job_share).to be(false)
         end
 
         it "gets set as 'false' when provided as a string" do
           params[:is_job_share] = "false"
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(false)
+          expect(new_vacancy.is_job_share).to be(false)
         end
 
         it "gets set as 'false' when any other string come" do
           params[:is_job_share] = "foobar"
           create_vacancy_service
-          expect(PublishedVacancy.last.is_job_share).to be(false)
+          expect(new_vacancy.is_job_share).to be(false)
         end
       end
 
       describe "'visa_sponsorship_available'" do
         it "defaults to false when not provided" do
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(false)
+          expect(new_vacancy.visa_sponsorship_available).to be(false)
         end
 
         it "gets set as 'true' when provided as a boolean" do
           params[:visa_sponsorship_available] = true
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(true)
+          expect(new_vacancy.visa_sponsorship_available).to be(true)
         end
 
         it "gets set as 'true' when provided as a string" do
           params[:visa_sponsorship_available] = "true"
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(true)
+          expect(new_vacancy.visa_sponsorship_available).to be(true)
         end
 
         it "gets set as 'false' when provided as a boolean" do
           params[:visa_sponsorship_available] = false
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(false)
+          expect(new_vacancy.visa_sponsorship_available).to be(false)
         end
 
         it "gets set as 'false' when provided as a string" do
           params[:visa_sponsorship_available] = "false"
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(false)
+          expect(new_vacancy.visa_sponsorship_available).to be(false)
         end
 
         it "gets set as 'false' when any other string come" do
           params[:visa_sponsorship_available] = "foobar"
           create_vacancy_service
-          expect(PublishedVacancy.last.visa_sponsorship_available).to be(false)
+          expect(new_vacancy.visa_sponsorship_available).to be(false)
         end
       end
 
       describe "'ect_suitable'" do
         it "defaults ect_status to 'ect_unsuitable when 'ect_suitable' is not provided" do
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_unsuitable")
+          expect(new_vacancy.ect_status).to eq("ect_unsuitable")
         end
 
         it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is true (boolean)" do
           params[:ect_suitable] = true
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_suitable")
+          expect(new_vacancy.ect_status).to eq("ect_suitable")
         end
 
         it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is 'true' (string)" do
           params[:ect_suitable] = "true"
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_suitable")
+          expect(new_vacancy.ect_status).to eq("ect_suitable")
         end
 
         it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is false (boolean)" do
           params[:ect_suitable] = false
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_unsuitable")
+          expect(new_vacancy.ect_status).to eq("ect_unsuitable")
         end
 
         it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is 'false' (string)" do
           params[:ect_suitable] = "false"
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_unsuitable")
+          expect(new_vacancy.ect_status).to eq("ect_unsuitable")
         end
 
         it "sets 'ect_status' to 'ect_unsuitable' when any other string come" do
           params[:ect_suitable] = "foobar"
           create_vacancy_service
-          expect(PublishedVacancy.last.ect_status).to eq("ect_unsuitable")
+          expect(new_vacancy.ect_status).to eq("ect_unsuitable")
         end
       end
 
@@ -173,9 +174,9 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         context "when starts_on is not provided" do
           it "does not set any start date fields" do
             create_vacancy_service
-            expect(PublishedVacancy.last).to have_attributes(starts_on: nil,
-                                                             start_date_type: nil,
-                                                             other_start_date_details: nil)
+            expect(new_vacancy).to have_attributes(starts_on: nil,
+                                                   start_date_type: nil,
+                                                   other_start_date_details: nil)
           end
         end
 
@@ -185,9 +186,9 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
           it "sets the specific start date to the provided date" do
             create_vacancy_service
-            expect(PublishedVacancy.last).to have_attributes(starts_on: Time.zone.tomorrow,
-                                                             start_date_type: "specific_date",
-                                                             other_start_date_details: nil)
+            expect(new_vacancy).to have_attributes(starts_on: Time.zone.tomorrow,
+                                                   start_date_type: "specific_date",
+                                                   other_start_date_details: nil)
           end
         end
 
@@ -197,9 +198,9 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
           it "sets the other start date details to the provided date" do
             create_vacancy_service
-            expect(PublishedVacancy.last).to have_attributes(starts_on: nil,
-                                                             start_date_type: "other",
-                                                             other_start_date_details: starts_on)
+            expect(new_vacancy).to have_attributes(starts_on: nil,
+                                                   start_date_type: "other",
+                                                   other_start_date_details: starts_on)
           end
         end
       end
@@ -389,7 +390,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
     context "when a non-deleted vacancy with the same external reference exists" do
       let(:external_reference) { "existing-ref" }
       let!(:existing_vacancy) do
-        create(:vacancy, :external, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
+        create(:external_vacancy, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
       end
 
       it "does not create a new vacancy" do
@@ -412,7 +413,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
     context "when a deleted vacancy with the same external reference exists" do
       let(:external_reference) { "existing-ref" }
       let!(:existing_vacancy) do
-        create(:vacancy, :external, :trashed, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
+        create(:external_vacancy, :trashed, external_reference:, publisher_ats_api_client_id: publisher_ats_api_client_id)
       end
 
       it "creates a new published vacancy with the same external reference" do
