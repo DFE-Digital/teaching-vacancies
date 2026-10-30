@@ -18,6 +18,16 @@ RSpec.describe "Vacancies" do
     end
   end
 
+  describe "GET #campaign_landing_page" do
+    before { create(:vacancy, :secondary, subjects: %w[Languages]) }
+
+    it "gets the landing page" do
+      get campaign_landing_page_path, params: { utm_content: "languagesbespoke" }
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "GET #show" do
     let(:vacancy) { create(:vacancy) }
 
