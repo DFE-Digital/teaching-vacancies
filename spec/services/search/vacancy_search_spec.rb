@@ -39,6 +39,7 @@ RSpec.describe Search::VacancySearch do
   let(:school_types) { nil }
   let(:visa_sponsorship_availability) { nil }
   let(:school) { create(:school) }
+  let(:trust) { create(:trust, schools: [school]) }
 
   context "when clearing filters" do
     let(:teaching_job_roles) { ["teacher"] }
@@ -64,8 +65,20 @@ RSpec.describe Search::VacancySearch do
 
     before { create(:vacancy, job_title: "Random") }
 
-    it "finds vacancies for the school only" do
-      expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
+    context "when searching by school" do
+      let(:organisation_slug) { school.slug }
+
+      it "finds vacancies for the school only" do
+        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
+      end
+    end
+
+    context "when searching by trust" do
+      let(:organisation_slug) { trust.slug }
+
+      it "finds vacancies for the school only" do
+        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
+      end
     end
   end
 end

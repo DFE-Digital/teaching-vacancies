@@ -47,7 +47,7 @@ class Search::VacancySearch
 
   def scope_without_location
     scope = @scope.includes(:organisations)
-    scope = scope.where(organisation_id: organisation.all_organisation_ids) if organisation
+    scope = scope.in_organisation_ids(organisation.all_organisation_ids) if organisation
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope
