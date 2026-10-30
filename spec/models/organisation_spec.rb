@@ -39,18 +39,18 @@ RSpec.describe Organisation do
     end
   end
 
-  describe "#all_vacancies" do
+  describe "#all_internal_vacancies" do
     context "when the organisation is a school" do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }
       let(:vacancy) { create(:vacancy, organisations: [school1]) }
 
       it "returns all vacancies from the school" do
-        expect(school1.all_vacancies).to eq [vacancy]
+        expect(school1.all_internal_vacancies).to eq [vacancy]
       end
 
       it "returns no vacancies when there are none" do
-        expect(school2.all_vacancies).to be_none
+        expect(school2.all_internal_vacancies).to be_none
       end
     end
 
@@ -60,32 +60,32 @@ RSpec.describe Organisation do
       let!(:trust) { create(:trust, schools: [school1]) }
       let(:vacancy1) { create(:vacancy, organisations: [school1]) }
       let(:vacancy2) { create(:vacancy, organisations: [trust]) }
-      let(:vacancy3) { create(:vacancy, organisations: [school2]) }
+
+      before { create(:vacancy, organisations: [school2]) }
 
       it "returns all vacancies from the trust and the schools of the trust" do
-        expect(trust.all_vacancies).to include(vacancy1, vacancy2)
-        expect(trust.all_vacancies).not_to include(vacancy3)
+        expect(trust.all_internal_vacancies).to contain_exactly(vacancy1, vacancy2)
       end
     end
 
     context "when the organisation is a local authority" do
       let!(:local_authority) { create(:local_authority, local_authority_code: "111", schools: [school3]) }
+      let!(:vacancy3) { create(:vacancy, organisations: [school3]) }
+      let(:local_authorities_extra_schools) { { 111 => [123] } }
       let(:school1) { create(:school, urn: "123") }
       let(:school2) { create(:school, urn: "654") }
       let(:school3) { create(:school) }
       let(:school4) { create(:school) }
       let!(:vacancy1) { create(:vacancy, organisations: [school1]) }
-      let!(:vacancy2) { create(:vacancy, organisations: [school2]) }
-      let!(:vacancy3) { create(:vacancy, organisations: [school3]) }
-      let!(:vacancy4) { create(:vacancy, organisations: [school4]) }
-      let(:local_authorities_extra_schools) { { 111 => [123] } }
 
-      before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
+      before do
+        create(:vacancy, organisations: [school2])
+        create(:vacancy, organisations: [school4])
+        allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools)
+      end
 
       it "returns all vacancies from the schools inside and outside of the local authority" do
-        expect(local_authority.all_vacancies).to include(vacancy1, vacancy3)
-        expect(local_authority.all_vacancies).not_to include(vacancy2)
-        expect(local_authority.all_vacancies).not_to include(vacancy4)
+        expect(local_authority.all_internal_vacancies).to contain_exactly(vacancy1, vacancy3)
       end
     end
   end
