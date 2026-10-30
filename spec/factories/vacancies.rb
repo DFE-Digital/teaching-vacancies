@@ -314,7 +314,7 @@ FactoryBot.define do
       end
     end
 
-    trait :external do
+    factory :external_vacancy, class: "PublishedVacancy" do
       enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }

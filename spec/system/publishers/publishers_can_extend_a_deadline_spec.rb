@@ -6,7 +6,7 @@ RSpec.describe "Publishers can extend a deadline" do
   let(:publisher) { create(:publisher) }
   let(:expires_at) { vacancy.expires_at + 2.months }
   let(:extension_reason) { Faker::Lorem.paragraph }
-  let(:vacancy) { PublishedVacancy.last }
+  let!(:vacancy) { create(:vacancy, vacancy_type, organisations: [organisation], created_at: Date.yesterday) }
 
   around do |example|
     # Travel to mid-day to avoid any timezone issues
@@ -16,7 +16,6 @@ RSpec.describe "Publishers can extend a deadline" do
   end
 
   before do
-    create(:vacancy, vacancy_type, organisations: [organisation], created_at: Date.yesterday)
     login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_jobs_with_type_path(vacancy_type)
     click_on vacancy.job_title
