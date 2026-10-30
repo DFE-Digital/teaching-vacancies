@@ -40,6 +40,8 @@ RSpec.describe Organisation do
   end
 
   describe "#all_internal_vacancies" do
+    before { create(:external_vacancy, organisations: [school1]) }
+
     context "when the organisation is a school" do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }

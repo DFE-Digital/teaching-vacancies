@@ -60,6 +60,7 @@ RSpec.describe Search::VacancySearch do
 
   context "with 2 vacancies" do
     let!(:school_vacancy) { create(:vacancy, job_title: "At School", organisations: [school]) }
+    let!(:external_school_vacancy) { create(:external_vacancy, job_title: "ATS At School", organisations: [school]) }
     let(:location) { nil }
     let(:keyword) { nil }
 
@@ -69,7 +70,7 @@ RSpec.describe Search::VacancySearch do
       let(:organisation_slug) { school.slug }
 
       it "finds vacancies for the school only" do
-        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
+        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title, external_school_vacancy.job_title)
       end
     end
 
@@ -77,7 +78,7 @@ RSpec.describe Search::VacancySearch do
       let(:organisation_slug) { trust.slug }
 
       it "finds vacancies for the school only" do
-        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
+        expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title, external_school_vacancy.job_title)
       end
     end
   end
