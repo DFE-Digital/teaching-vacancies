@@ -13,8 +13,9 @@ This section describes Claude Code's own configuration only. Project rules belon
 - **`.claude/settings.json`** is committed and shared. It sets `HEADLESS=1` (so JavaScript specs
   never open browser windows), allows running specs, linters and read-only git commands without a
   prompt, and denies reading `.env` files, keys, certificates and database dumps.
-- **`.claude/hooks/`** holds the hooks that `settings.json` runs:
-  - `lint-edited-file.sh` autocorrects each Ruby or Slim file after an edit and sends any
+- **`.claude/hooks/`** holds the hooks that `settings.json` runs. Both are thin adapters over the
+  shared rules in `.agents/hooks/lib/`, which GitHub Copilot uses too:
+  - `lint-edited-file.rb` autocorrects each Ruby or Slim file after an edit and sends any
     remaining RuboCop or slim-lint offences back to Claude to fix.
   - `guard-bash.rb` blocks `git add -f` and `git commit --no-verify`, which enforce the
     non-negotiables in AGENTS.md rather than adding new rules.

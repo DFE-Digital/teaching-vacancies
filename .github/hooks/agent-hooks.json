@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      { "type": "command", "bash": ".github/hooks/guard-bash.rb", "timeoutSec": 10 }
+    ],
+    "postToolUse": [
+      { "type": "command", "bash": ".github/hooks/lint-edited-file.rb", "timeoutSec": 120 }
+    ]
+  }
+}
