@@ -63,12 +63,9 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
 
   def show
     @sections = SECTIONS
-    @off_on = (@profile.active? ? "off" : "on")
   end
 
-  def confirm_toggle
-    @off_on = (@profile.active? ? "off" : "on")
-  end
+  def confirm_toggle; end
 
   def toggle
     @profile.update!(active: !@profile.active?)

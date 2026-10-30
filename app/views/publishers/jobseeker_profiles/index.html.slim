@@ -9,7 +9,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 .govuk-grid-row
   .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
     = form_for @form, as: "", url: url_for, method: "get", html: { data: { controller: "form" }, role: "search" } do |f|
-      = render "publishers/jobseeker_profiles/search/filters", f: f, form: @form, jobseeker_profile_search: @jobseeker_profile_search
+      = render "publishers/jobseeker_profiles/search/filters", f: f, jobseeker_profile_search: @jobseeker_profile_search
 
   .govuk-grid-column-two-thirds-at-desktop
     - if current_organisation.trust?
@@ -25,7 +25,8 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
-        = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
+        .search-results
+          = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
       = govuk_pagination(pagy: @pagy)
     - else
       h2.govuk-heading-m = t(".no_results.heading")
