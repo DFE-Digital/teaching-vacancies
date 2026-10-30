@@ -40,5 +40,11 @@ jobs:
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load
 
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      - name: Generate Swagger (OpenAPI) docs
+        run: bundle exec rake rswag:specs:swaggerize
+
       - name: Run JavaScript specs headless
         run: echo "HEADLESS=1" >> "$GITHUB_ENV"
