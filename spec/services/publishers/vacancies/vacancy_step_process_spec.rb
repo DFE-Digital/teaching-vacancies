@@ -111,10 +111,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:vacancy_organisation) { build(:college) }
         let(:vacancy) { build_stubbed(:draft_vacancy, job_roles: ["teacher"], enable_job_applications: nil, organisations: [vacancy_organisation]) }
 
-        it "does not include applying_for_the_job" do
-          expect(subject.steps).not_to include(:applying_for_the_job)
-        end
-
         it "includes how_to_receive_applications" do
           expect(subject.steps).to include(:how_to_receive_applications)
         end

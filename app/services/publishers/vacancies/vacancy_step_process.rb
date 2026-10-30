@@ -34,7 +34,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    steps = if vacancy.published? || vacancy.for_an_fe_college?
+    steps = if vacancy.published?
               []
             else
               %i[applying_for_the_job]
