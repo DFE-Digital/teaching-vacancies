@@ -22,6 +22,32 @@ RSpec.describe Subscription do
         expect(Subscription.weekly.count).to eq(5)
       end
     end
+
+    describe "#needing_governance_email" do
+      let!(:old_subscription) { create(:subscription, updated_at: 13.months.ago) }
+
+      before do
+        create(:subscription, updated_at: 13.months.ago, deletion_warning_email_sent_at: 2.weeks.ago)
+        create(:subscription, :inactive, updated_at: 13.months.ago)
+      end
+
+      it "retrieves kept subscriptions not updated for a year and not yet warned" do
+        expect(Subscription.needing_governance_email).to contain_exactly(old_subscription)
+      end
+    end
+
+    describe "#unconfirmed_after_governance_email" do
+      let!(:warned_subscription) { create(:subscription, deletion_warning_email_sent_at: 2.months.ago) }
+
+      before do
+        create(:subscription, deletion_warning_email_sent_at: 2.weeks.ago)
+        create(:subscription, :inactive, deletion_warning_email_sent_at: 2.months.ago)
+      end
+
+      it "retrieves kept subscriptions warned over a month ago" do
+        expect(Subscription.unconfirmed_after_governance_email).to contain_exactly(warned_subscription)
+      end
+    end
   end
 
   context "with a feedback" do

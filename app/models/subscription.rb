@@ -17,6 +17,10 @@ class Subscription < ApplicationRecord
 
   validates :email, email_address: true
 
+  # Job alerts that haven't been updated for a year are warned they will be deleted, and deleted a month later unless kept.
+  scope :needing_governance_email, -> { kept.where(updated_at: ...12.months.ago, deletion_warning_email_sent_at: nil) }
+  scope :unconfirmed_after_governance_email, -> { kept.where(deletion_warning_email_sent_at: ...1.month.ago) }
+
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 

@@ -234,6 +234,17 @@ RSpec.describe "Subscriptions" do
       )
     end
 
+    context "when a deletion warning email has been sent" do
+      before { subscription.update_column(:deletion_warning_email_sent_at, 2.weeks.ago) }
+
+      it "clears deletion_warning_email_sent_at so the subscription is not deleted" do
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.deletion_warning_email_sent_at }.to(nil)
+      end
+    end
+
     context "with unsafe params" do
       let(:params) do
         {
@@ -257,6 +268,15 @@ RSpec.describe "Subscriptions" do
           subject
           subscription.reload
         }.to change { subscription.frequency }.from("daily").to("weekly")
+      end
+
+      it "clears deletion_warning_email_sent_at so the subscription is not deleted" do
+        subscription.update_column(:deletion_warning_email_sent_at, 2.weeks.ago)
+
+        expect {
+          subject
+          subscription.reload
+        }.to change { subscription.deletion_warning_email_sent_at }.to(nil)
       end
 
       it "does not update the search criteria" do
