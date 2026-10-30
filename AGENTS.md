@@ -12,7 +12,11 @@ Different tools look for different filenames. Keep this file authoritative and t
 | OpenAI Codex / ChatGPT | `AGENTS.md` | Reads this file directly — nothing else needed |
 | Claude Code | `CLAUDE.md` | Imports it with `@AGENTS.md` (content is inlined at load time), then adds notes on Claude Code's own configuration |
 | Gemini CLI | `GEMINI.md` | Imports it with `@./AGENTS.md`; content is inlined at load time |
-| GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The Copilot coding agent also reads a root `AGENTS.md` directly, and VS Code will too with `chat.useAgentsMdFile` enabled |
+| GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The cloud agent, Copilot CLI and code review on GitHub.com also read a root `AGENTS.md` directly. IDE code review reads only `copilot-instructions.md`. See that file for Copilot's hooks and cloud agent setup |
+
+**Agent hooks.** The rules the hooks enforce live once in `.agents/hooks/lib/`. Each harness has a
+thin adapter that only translates its own input and output format (`.claude/hooks/` for Claude
+Code, `.github/hooks/` for Copilot). Change a rule in the core, never in an adapter.
 
 **Project rules are never duplicated in those files** — this file is the only copy to keep
 current. Add rules here. A tool's own file may describe that tool's configuration (for example
@@ -64,8 +68,9 @@ Two things shape every rule below:
 - **Never record a VCR cassette against a real environment.** Cassettes live in
   `spec/fixtures/vcr`; WebMock runs with `disable_net_connect!`. Check any new cassette for
   personal data and API keys before committing it.
-- **Disclose AI assistance.** When an AI coding agent contributes to a commit, record it with a
-  `Co-Authored-By:` trailer naming the tool and model, for example
+- **Disclose AI assistance.** When an AI coding agent contributes to a commit, record it. A tool's
+  own automatic co-author trailer, such as Copilot's `Co-authored-by: Copilot`, satisfies this.
+  Otherwise, add a `Co-Authored-By:` trailer naming the tool and model, for example
   `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`. This is a public sector project and
   we disclose the tools used to build it.
 
@@ -356,6 +361,9 @@ current** above out of date? If so, update it in this PR.
   event schemas, legacy import mappings, the DWP Find a Job export, the Publisher ATS API
   (which may need versioning), existing subscription alert filters, vacancy copying, and
   in-progress drafts. Surface that impact in the PR rather than changing an enum quietly.
+- Create pull requests as drafts (`gh pr create --draft`). Only the developer marks them ready.
+- Keep PR descriptions to a short what/why, not a list of every code change. Still complete the
+  template's data and schema checklist.
 - Avoid Friday deploys where possible.
 
 ## Further reading
