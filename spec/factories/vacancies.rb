@@ -150,7 +150,6 @@ FactoryBot.define do
       working_patterns_details { Faker::Educator.campus }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
 
-
       salary { factory_sample(salaries) if salary_type == :salary }
       actual_salary { factory_rand(20_000..100_000) if salary_type == :actual_salary }
       hourly_rate { "£25 per hour" if salary_type == :hourly_rate }

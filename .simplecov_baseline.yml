@@ -6404,7 +6404,7 @@ app/views/publishers/jobseeker_profiles/search/_results.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 62.5
+    percent: 68.75
     missed: 3
 app/views/publishers/jobseeker_profiles/show.html.slim:
   lines:
