@@ -68,8 +68,9 @@ Two things shape every rule below:
 - **Never record a VCR cassette against a real environment.** Cassettes live in
   `spec/fixtures/vcr`; WebMock runs with `disable_net_connect!`. Check any new cassette for
   personal data and API keys before committing it.
-- **Disclose AI assistance.** When an AI coding agent contributes to a commit, record it with a
-  `Co-Authored-By:` trailer naming the tool and model, for example
+- **Disclose AI assistance.** When an AI coding agent contributes to a commit, record it. A tool's
+  own automatic co-author trailer, such as Copilot's `Co-authored-by: Copilot`, satisfies this.
+  Otherwise, add a `Co-Authored-By:` trailer naming the tool and model, for example
   `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`. This is a public sector project and
   we disclose the tools used to build it.
 
