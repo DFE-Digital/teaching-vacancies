@@ -6,6 +6,8 @@ class Conversation < ApplicationRecord
   has_many :jobseeker_messages, dependent: :destroy
   has_many :publisher_messages, dependent: :destroy
 
+  validate :must_have_a_message, on: :create
+
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
   scope :for_organisations, lambda { |org_ids|
@@ -59,5 +61,14 @@ class Conversation < ApplicationRecord
       b: [job_application.name],                    # Candidate name (mid weight)
       d: message_content,                           # Message content (lower weight)
     ).tsvector
+  end
+
+  private
+
+  # A conversation is only ever started by sending a message, so it must not be saved without one
+  def must_have_a_message
+    return if [messages, jobseeker_messages, publisher_messages].any?(&:any?)
+
+    errors.add(:messages, :blank)
   end
 end

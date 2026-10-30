@@ -29,6 +29,8 @@ RSpec.describe PublisherMessage do
 
       context "when publisher cannot send message" do
         let(:job_application) { create(:job_application, :status_withdrawn) }
+        # A conversation can't be saved for a withdrawn application, so only build it
+        let(:conversation) { build(:conversation, job_application: job_application) }
         let(:message) { build(:publisher_message, conversation: conversation, sender: publisher) }
 
         it "prevents message creation with validation error" do

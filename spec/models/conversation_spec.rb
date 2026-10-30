@@ -11,12 +11,44 @@ RSpec.describe Conversation do
     it { is_expected.to have_many(:publisher_messages).dependent(:destroy) }
   end
 
+  describe "validations" do
+    let(:publisher) { create(:publisher) }
+
+    it "is invalid without a message" do
+      conversation = build(:conversation, job_application: job_application, publisher_messages: [])
+
+      expect(conversation).not_to be_valid
+      expect(conversation.errors).to be_added(:messages, :blank)
+    end
+
+    it "is invalid when its message is invalid" do
+      conversation = job_application.conversations.build
+      conversation.publisher_messages.build(sender: publisher, content: "")
+
+      expect { conversation.save }.not_to change(described_class, :count)
+    end
+
+    it "is saved along with a valid message" do
+      conversation = job_application.conversations.build
+      conversation.publisher_messages.build(sender: publisher, content: "Hello")
+
+      expect { conversation.save! }.to change(Message, :count).by(1)
+      expect(conversation.reload.last_message_at).to be_present
+    end
+
+    it "does not require a new message once saved" do
+      conversation = create(:conversation, job_application: job_application)
+
+      expect(conversation.update(archived: true)).to be true
+    end
+  end
+
   describe "#last_message_at" do
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
-    context "when conversation has no messages" do
-      it "returns nil" do
-        expect(conversation.last_message_at).to be_nil
+    context "when conversation is created" do
+      it "is set from the message it was started with" do
+        expect(conversation.last_message_at).to eq(conversation.messages.sole.created_at)
       end
     end
 
@@ -38,7 +70,7 @@ RSpec.describe Conversation do
   describe "#has_unread_jobseeker_messages" do
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
-    context "when conversation has no messages" do
+    context "when conversation only has the publisher message it was started with" do
       it "returns false" do
         expect(conversation.has_unread_jobseeker_messages).to be false
       end

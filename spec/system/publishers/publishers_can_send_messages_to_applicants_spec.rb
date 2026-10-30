@@ -16,10 +16,12 @@ RSpec.describe "Publishers can send messages to job applicants" do
 
     context "with messages from 2 different publishers" do
       let(:another_publisher) { create(:publisher) }
-      let!(:conversation) { create(:conversation, job_application: job_application) }
+      let!(:conversation) do
+        create(:conversation, job_application: job_application,
+                              publisher_messages: [build(:publisher_message, conversation: nil, sender: publisher)])
+      end
 
       before do
-        create(:publisher_message, conversation: conversation, sender: publisher)
         create(:publisher_message, conversation: conversation, sender: another_publisher)
         create(:jobseeker_message, conversation: conversation, sender: jobseeker)
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
@@ -87,8 +89,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
     end
 
     context "when messages already exist" do
-      let!(:conversation) { create(:conversation, job_application: job_application) }
-      let!(:message) { create(:publisher_message, conversation: conversation, sender: publisher, content: "Previous message content") }
+      let!(:message) { build(:publisher_message, conversation: nil, sender: publisher, content: "Previous message content") }
+      let!(:conversation) { create(:conversation, job_application: job_application, publisher_messages: [message]) }
 
       before do
         visit messages_organisation_job_job_application_path(vacancy.id, job_application.id)
@@ -136,8 +138,8 @@ RSpec.describe "Publishers can send messages to job applicants" do
   end
 
   context "with messages" do
-    let!(:conversation) { create(:conversation, job_application: job_application) }
-    let!(:publisher_message) { create(:publisher_message, conversation: conversation, sender: publisher, content: "Hello from publisher") }
+    let!(:publisher_message) { build(:publisher_message, conversation: nil, sender: publisher, content: "Hello from publisher") }
+    let!(:conversation) { create(:conversation, job_application: job_application, publisher_messages: [publisher_message]) }
 
     context "with a jobseeker" do
       before do
