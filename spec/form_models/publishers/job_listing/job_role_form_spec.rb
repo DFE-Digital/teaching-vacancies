@@ -6,7 +6,7 @@ RSpec.describe Publishers::JobListing::JobRoleForm, type: :model do
   describe "job_roles validation" do
     subject(:form) { described_class.new(job_roles:) }
 
-    DraftVacancy.job_roles.each_key do |role|
+    Vacancy.job_roles.each_key do |role|
       context "when job_roles contains #{role}" do
         let(:job_roles) { [role] }
 

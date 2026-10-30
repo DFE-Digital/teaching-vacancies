@@ -93,7 +93,7 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
+        expect(build(:draft_vacancy, organisations: [invalid_school], publisher: publisher)).to be_valid
       end
     end
 
@@ -513,7 +513,7 @@ RSpec.describe Vacancy do
 
   context "stats updated at" do
     let(:expired_job) { create(:vacancy, :expired) }
-    let(:stats_updated_at) { PublishedVacancy.find(expired_job.id).stats_updated_at }
+    let(:stats_updated_at) { expired_job.reload.stats_updated_at }
 
     it { expect(stats_updated_at).to be_nil }
 
@@ -630,8 +630,8 @@ RSpec.describe Vacancy do
   end
 
   describe "#external?" do
-    let!(:ats_api_client_vacancy) { create(:vacancy, :external, job_title: "v1", external_source: nil) }
-    let!(:external_source_vacancy) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
+    let!(:ats_api_client_vacancy) { create(:external_vacancy, job_title: "v1", external_source: nil) }
+    let!(:external_source_vacancy) { create(:external_vacancy, job_title: "v2", publisher_ats_api_client: nil) }
     let!(:internal_vacancy) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil) }
 
     it "is external when external_source is present" do
@@ -796,7 +796,7 @@ RSpec.describe Vacancy do
     let(:school) { create(:school) }
     let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
     let(:vacancy) do
-      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      build(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
     end
 
     it "returns nil when no conflicting vacancy exists" do
@@ -805,7 +805,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same ATS client ID and external reference" do
       let!(:conflicting_vacancy) do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
       end
 
       it "returns the conflicting vacancy" do
@@ -815,7 +815,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same ATS client ID but different external reference" do
       before do
-        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
       end
 
       it "returns nil" do
@@ -825,7 +825,7 @@ RSpec.describe Vacancy do
 
     context "when there is a vacancy with the same external reference but different ATS client ID" do
       before do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
       end
 
       it "returns nil" do
@@ -852,7 +852,7 @@ RSpec.describe Vacancy do
 
     context "when there are two conflicting vacancies one with the same reference and one with the same information" do
       let!(:conflicting_vacancy_with_same_reference) do
-        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+        create(:external_vacancy, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
       end
 
       before do

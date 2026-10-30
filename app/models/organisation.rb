@@ -121,8 +121,8 @@ class Organisation < ApplicationRecord
     Vacancy.in_organisation_ids(all_organisation_ids)
   end
 
-  def all_listed_vacancies
-    PublishedVacancy.in_organisation_ids(all_organisation_ids).listed
+  def all_listed_internal_vacancies
+    PublishedVacancy.internal.in_organisation_ids(all_organisation_ids).listed
   end
 
   def all_live_vacancies

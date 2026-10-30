@@ -40,10 +40,6 @@ RSpec.describe Search::VacancySearch do
   let(:visa_sponsorship_availability) { nil }
   let(:school) { create(:school) }
 
-  before do
-    allow(subject).to receive(:organisation).and_return(school)
-  end
-
   context "when clearing filters" do
     let(:teaching_job_roles) { ["teacher"] }
     let(:ect_statuses) { ["ect_suitable"] }
@@ -58,6 +54,18 @@ RSpec.describe Search::VacancySearch do
     it "clears selected filters" do
       expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, teaching_job_roles: teaching_job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, quick_apply: quick_apply, school_types: school_types, visa_sponsorship_availability: visa_sponsorship_availability })
       expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], phases: [], working_patterns: [], quick_apply: [], subjects: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [], skip_strip_checkboxes: true })
+    end
+  end
+
+  context "with 2 vacancies" do
+    let!(:school_vacancy) { create(:vacancy, job_title: "At School", organisations: [school]) }
+    let(:location) { nil }
+    let(:keyword) { nil }
+
+    before { create(:vacancy, job_title: "Random") }
+
+    it "finds vacancies for the school only" do
+      expect(subject.vacancies.map(&:job_title)).to contain_exactly(school_vacancy.job_title)
     end
   end
 end

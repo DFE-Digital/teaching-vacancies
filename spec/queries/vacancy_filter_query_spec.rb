@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe VacancyFilterQuery do
-  subject { PublishedVacancy.kept.search_by_filter(filters) }
+  subject { Vacancy.kept.search_by_filter(filters) }
 
   before do
     create(:vacancy, :trashed, :secondary, working_patterns: %w[part_time full_time], subjects: %w[English Spanish], ect_status: "ect_suitable")

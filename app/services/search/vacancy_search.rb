@@ -47,9 +47,7 @@ class Search::VacancySearch
 
   def scope_without_location
     scope = @scope.includes(:organisations)
-    # simplecov:disable
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    # simplecov:enable
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope
