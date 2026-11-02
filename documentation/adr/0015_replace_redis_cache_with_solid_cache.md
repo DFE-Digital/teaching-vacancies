@@ -13,8 +13,8 @@ for Redis** instance dedicated to caching (`redis-cache` in
 `terraform/app/modules/paas/aks_redis.tf`). In production it runs on the Premium tier.
 
 Besides general caching, this cache also holds the request counters that
-[Rack::Attack](https://github.com/rack/rack-attack) uses for throttling and blocking abusive
-clients, so it must be shared across all application instances.
+[Rack::Attack](https://github.com/rack/rack-attack) uses for targeted throttling and blocking
+abusive clients, so it must be shared across all application instances.
 
 The same retirement that led us to replace Sidekiq ([ADR 0014](0014_replace_sidekiq_with_solid_queue.md))
 applies here. Microsoft has announced the
@@ -73,9 +73,9 @@ configuration, the Redis instances in Terraform and the Redis service in the dev
 
 - Reading from and writing to a database-backed cache is slower than an in-memory Redis cache.
   This is acceptable for our workload, but should be watched on hot paths.
-- Rack::Attack writes a counter on almost every request, which adds write load to PostgreSQL. We
-  need to monitor this, and may need to host the cache in a separate database if it affects the
-  application.
+- Rack::Attack writes counters for requests subject to its targeted throttles and blocking rules.
+  This adds write load to PostgreSQL, which we need to monitor; we may need to host the cache in a
+  separate database if it affects the application.
 - The database now carries application data, background jobs and the cache, making PostgreSQL an
   even more critical single dependency to size and monitor.
 - Vacancy view tracking has to be reworked before Redis can be removed.

@@ -28,23 +28,6 @@ RSpec.describe "Rack::Attack" do
     end
   end
 
-  describe "general requests throttles" do
-    let(:throttle) { Rack::Attack.throttles["requests by remote ip per minute"] }
-
-    it "allows 105 requests per minute" do
-      expect(throttle.limit).to eq(105)
-      expect(throttle.period).to eq(60)
-    end
-
-    it "keys requests by remote IP" do
-      expect(throttle.block.call(build_request("/jobs"))).to eq("1.2.3.4")
-    end
-
-    it "exempts ATS API requests" do
-      expect(throttle.block.call(build_request("/ats-api/v1/vacancies"))).to be_nil
-    end
-  end
-
   describe "ATS API throttle" do
     let(:throttle) { Rack::Attack.throttles["ATS API requests by client"] }
 
@@ -155,7 +138,7 @@ RSpec.describe "Rack::Attack" do
               hash_including(matched: "limit auth attempts by IP", ip: "127.0.0.1", path: "/jobseekers/sign-in"))
     end
 
-    it "does not apply the general throttles to ATS API requests" do
+    it "allows ATS API requests below its dedicated throttle" do
       freeze_time do
         12.times { get "/ats-api/v1/vacancies" }
       end
