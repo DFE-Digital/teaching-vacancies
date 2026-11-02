@@ -15,6 +15,12 @@ RSpec.describe FeedbackReportingPeriod do
       end
     end
 
+    it "returns from oldest feedback to now on 1st of month" do
+      travel_to(Date.new(2026, 11, 2)) do
+        expect(all_periods.map(&:from)).to eq((Date.new(2022, 1, 1)..Date.new(2026, 11, 1)).select { |d| d.day == 1 })
+      end
+    end
+
     context "when there is no feedback" do
       before { Feedback.destroy_all }
 

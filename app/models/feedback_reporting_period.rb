@@ -11,11 +11,14 @@ class FeedbackReportingPeriod
     first_feedback = Feedback.order(:created_at).first
     return [] if first_feedback.nil?
 
-    first_period = self.for(first_feedback.created_at)
+    Enumerator.new { |dates|
+      date = self.for(first_feedback.created_at).from
 
-    first_period.from.step(Date.today.at_end_of_month, 31).map do |begining_of_month|
-      self.for(begining_of_month)
-    end
+      while date <= Date.today
+        dates << self.for(date)
+        date += 1.month
+      end
+    }.to_a
   end
 
   def initialize(from:, to:)
@@ -47,9 +50,12 @@ class FeedbackReportingPeriod
       Date.parse(dateish)
     when Date
       dateish
+      # This path should never be executed. so testing it is not useful
+      # simplecov:disable
     else
       raise ArgumentError, "Unsupported date type #{dateish.class.name}"
     end
+    # simplecov:enable
   end
 
   attr_reader :from, :to
