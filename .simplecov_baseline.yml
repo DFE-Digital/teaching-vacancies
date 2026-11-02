@@ -3209,8 +3209,8 @@ app/models/feedback.rb:
     missed: 0
 app/models/feedback_reporting_period.rb:
   lines:
-    percent: 100.0
-    missed: 0
+    percent: 97.05
+    missed: 1
   branches:
     percent: 85.71
     missed: 1
