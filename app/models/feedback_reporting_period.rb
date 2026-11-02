@@ -50,12 +50,12 @@ class FeedbackReportingPeriod
       Date.parse(dateish)
     when Date
       dateish
-    else
       # This path should never be executed. so testing it is not useful
       # simplecov:disable
+    else
       raise ArgumentError, "Unsupported date type #{dateish.class.name}"
-      # simplecov:enable
     end
+    # simplecov:enable
   end
 
   attr_reader :from, :to
