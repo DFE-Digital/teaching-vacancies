@@ -3209,10 +3209,10 @@ app/models/feedback.rb:
     missed: 0
 app/models/feedback_reporting_period.rb:
   lines:
-    percent: 97.05
+    percent: 97.29
     missed: 1
   branches:
-    percent: 85.71
+    percent: 90.0
     missed: 1
 app/models/job_application.rb:
   lines:
