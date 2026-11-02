@@ -51,7 +51,10 @@ class FeedbackReportingPeriod
     when Date
       dateish
     else
+      # This path should never be executed. so testing it is not useful
+      # simplecov:disable
       raise ArgumentError, "Unsupported date type #{dateish.class.name}"
+      # simplecov:enable
     end
   end
 
