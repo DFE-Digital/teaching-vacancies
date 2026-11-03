@@ -6614,7 +6614,7 @@ app/views/publishers/vacancies/_job_details.html.slim:
     percent: 97.8
     missed: 2
   branches:
-    percent: 82.92
+    percent: 83.33
     missed: 7
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
@@ -8000,8 +8000,8 @@ app/views/vacancies/search/_results.html.slim:
     percent: 93.02
     missed: 3
   branches:
-    percent: 75.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/views/vacancies/search/_sort.html.slim:
   lines:
     percent: 100.0
