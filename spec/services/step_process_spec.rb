@@ -6,7 +6,7 @@ RSpec.describe StepProcess do
   let(:current_step) { :two }
   let(:step_groups) do
     {
-      alpha: %i[one].index_with { true },
+      alpha: {one: true },
       beta: %i[two three seven eight].index_with { |item| item.in? %i[two three] },
       gamma: nil,
       delta: %i[four five six nine ten].index_with { |item| item.in? %i[four five six] },
