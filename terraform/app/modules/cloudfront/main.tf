@@ -104,6 +104,8 @@ resource "aws_cloudfront_distribution" "default" {
     minimum_protocol_version = local.cloudfront_viewer_certificate_minimum_protocol_version
   }
 
+  web_acl_id = var.enable_cloudfront_waf ? aws_wafv2_web_acl.cloudfront-waf[0].arn : null
+
   tags = {
     Name        = "${var.service_name}-${var.environment}"
     Environment = var.environment
