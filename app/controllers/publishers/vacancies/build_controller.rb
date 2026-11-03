@@ -25,8 +25,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
         @form = form_class.load_from_model(@vacancy, current_publisher: current_publisher)
       end
     else
-      skip_step back_to_review: params[:back_to_review],
-                back_to_show: params[:back_to_show]
+      skip_step
     end
 
     render_wizard
