@@ -4735,7 +4735,7 @@ app/views/jobseekers/accounts/show.html.slim:
     missed: 0
 app/views/jobseekers/alert_mailer/alert.text.erb:
   lines:
-    percent: 95.45
+    percent: 95.0
     missed: 1
   branches:
     percent: 50.0
