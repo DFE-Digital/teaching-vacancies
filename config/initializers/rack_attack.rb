@@ -7,12 +7,11 @@ Rack::Attack.throttled_response_retry_after_header = true
 
 ####################################################################################################################
 # CLOUDFRONT WAF
-# A CloudFront WAF rate-based rule sits in front of this app and blocks any IP exceeding 900
-# requests per 5 minutes (3 req/sec) — see terraform/app/modules/cloudfront/main.tf and
-# `waf_ip_rate_limit` in terraform/workspace-variables/*.tfvars.json. Notes for rules added here:
-#   - A rule looser than 3 req/sec can never fire for origin traffic, since the edge blocks first.
-#   - The WAF only aggregates by IP, so anything keyed by API key, email or path has to live here.
-#   - The WAF blocks with an opaque edge 403; our throttles are scoped 429s, logged below.
+# A CloudFront WAF rate-based rule blocks an IP exceeding 900 requests per 5 minutes (the current
+# `waf_ip_rate_limit` in terraform/workspace-variables/*.tfvars.json) before requests reach this
+# app — see terraform/app/modules/cloudfront/main.tf. Rack::Attack is reserved for targeted
+# controls the WAF cannot provide, such as limits keyed by API key or authentication endpoint.
+# The WAF blocks with an opaque edge 403; Rack::Attack throttles return scoped 429s, logged below.
 ####################################################################################################################
 
 # Allow rack_attack to use Rails's remote_ip, which resolves the real client IP via the trusted
@@ -113,20 +112,10 @@ class Rack::Attack
 end
 
 ####################################################################################################################
-# GENERAL THROTTLING
-# Throttling of requests to prevent abuse and DoS attacks. ATS API clients have their own dedicated throttle below.
-####################################################################################################################
-
-# Throttle general requests by IP
-general_throttle = lambda do |request|
-  request.remote_ip unless request.path.start_with?(Rack::Attack::ATS_API_PATH_PREFIX) # ATS API clients have their own dedicated throttle below
-end
-Rack::Attack.throttle("requests by remote ip per minute", limit: 105, period: 60, &general_throttle) # Allow 105 requests in 1 minute (1.75 req/sec over 1 minute)
-Rack::Attack.throttle("requests by remote ip per hour", limit: 4500, period: 3600, &general_throttle) # Allow 4500 requests in 1 hour (1.25 req/sec over an hour)
-
-####################################################################################################################
 # ATS API CLIENT THROTTLING
-# More relaxed throttling for ATS API clients, keyed by API key (falling back to IP for keyless requests).
+# Throttling for ATS API clients, keyed by API key (falling back to IP for keyless requests), so a
+# client sending from several IPs shares one allowance. Each distinct key gets its own counter, so
+# this does not slow down API key guessing; the CloudFront WAF per-IP rule covers that.
 #
 # Limit is 150/min rather than the CloudFront WAF's ~180/min average (900 per 5 min, aggregated by
 # IP) so a client relying on their documented allowance gets a Rails 429 (logged, with Retry-After)

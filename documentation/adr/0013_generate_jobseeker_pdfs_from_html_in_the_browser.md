@@ -26,9 +26,9 @@ thread is building a PDF it cannot serve any other request.
 Jobseeker accounts are free and self-service, so anybody can create one. An attacker, or a group of
 them, could repeatedly request PDF downloads to keep every web thread busy generating documents.
 The service would then stop responding to everyone else. PDF endpoints are therefore a cheap and
-effective vector for a Distributed Denial of Service (DDoS) attack. Rate limiting with Rack::Attack
-reduces the risk from a single IP address, but it is much less effective against requests spread
-across many addresses and accounts.
+effective vector for a Distributed Denial of Service (DDoS) attack. The CloudFront WAF's
+per-IP rate-based rule reduces the risk from a single source IP address, but it is much less
+effective against requests spread across many addresses and accounts.
 
 Most jobseeker-facing documents are already rendered as HTML pages in the service, with print
 styles (`govuk-!-display-none-print`) that hide navigation and buttons. Browsers can print these
