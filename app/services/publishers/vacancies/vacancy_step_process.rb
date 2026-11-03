@@ -1,8 +1,6 @@
 class Publishers::Vacancies::VacancyStepProcess < StepProcess
   attr_reader :vacancy, :organisation
 
-  # StepProcess now takes a hash of hashes, with true if the step is valid and false otherwise
-  # This allows the controller to skip non-relevant steps whilst understanding the full step sequence
   def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
     @organisation = organisation
