@@ -10,7 +10,7 @@ RSpec.describe StepProcess do
       beta: { two: true, three: true, seven: false, eight: false },
       gamma: nil,
       delta: { four: true, nine: false, five: true, six: true, ten: false },
-      epsilon: [],
+      epsilon: {},
     }
   end
 
