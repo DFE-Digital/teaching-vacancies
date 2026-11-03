@@ -35,6 +35,15 @@ RSpec.describe "Job applications build" do
             end
           end
 
+          context "with a school that the publisher doesnt control" do
+            let(:school_five) {  create(:school, name: "Not Valid") }
+            let(:params) { { publishers_job_listing_job_location_form: { organisation_ids: [school_five.id] } } }
+
+            it "doesnt update" do
+              expect(vacancy.reload.organisations.map(&:name)).to eq([school_one.name])
+            end
+          end
+
           context "when updating the job location to be at multiple locations" do
             context "when neither of the locations' education phases share key stages with the vacancy's key stages" do
               let(:params) { { publishers_job_listing_job_location_form: { organisation_ids: [school_three.id, school_four.id] } } }

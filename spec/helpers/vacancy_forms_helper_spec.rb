@@ -22,6 +22,22 @@ RSpec.describe VacancyFormsHelper do
           expect(helper.vacancy_job_title_form_hint_text(vacancy)).to eq(I18n.t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.middle_secondary_or_sixth_form_or_college"))
         end
       end
+
+      # context "when nursery" do
+      #   let(:phase) { "nursery" }
+      #
+      #   it "shows a Nursery example" do
+      #     expect(helper.vacancy_job_title_form_hint_text(vacancy)).to eq(I18n.t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.nursery"))
+      #   end
+      # end
+      #
+      # context "when through" do
+      #   let(:phase) { "through" }
+      #
+      #   it "shows a Through example" do
+      #     expect(helper.vacancy_job_title_form_hint_text(vacancy)).to eq(I18n.t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.through"))
+      #   end
+      # end
     end
 
     context "with leadership role" do
