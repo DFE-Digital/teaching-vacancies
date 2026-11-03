@@ -1396,8 +1396,8 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 96.7
-    missed: 3
+    percent: 95.18
+    missed: 4
   branches:
     percent: 89.47
     missed: 4
@@ -3209,11 +3209,11 @@ app/models/feedback.rb:
     missed: 0
 app/models/feedback_reporting_period.rb:
   lines:
-    percent: 100.0
-    missed: 0
+    percent: 96.87
+    missed: 1
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 83.33
+    missed: 1
 app/models/job_application.rb:
   lines:
     percent: 100.0
@@ -3299,13 +3299,6 @@ app/models/jobseeker_profile_excluded_organisation.rb:
     percent: 100.0
     missed: 0
 app/models/jobseekers/message_received_notifier.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-app/models/keyword_location_landing_page.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -6614,7 +6607,7 @@ app/views/publishers/vacancies/_job_details.html.slim:
     percent: 97.8
     missed: 2
   branches:
-    percent: 83.33
+    percent: 82.92
     missed: 7
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
@@ -7813,13 +7806,6 @@ app/views/vacancies/_vacancy_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/vacancies/campaign_landing_page.html.slim:
-  lines:
-    percent: 82.92
-    missed: 7
-  branches:
-    percent: 40.0
-    missed: 12
 app/views/vacancies/index.html.slim:
   lines:
     percent: 97.5
@@ -8000,8 +7986,8 @@ app/views/vacancies/search/_results.html.slim:
     percent: 93.02
     missed: 3
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 75.0
+    missed: 4
 app/views/vacancies/search/_sort.html.slim:
   lines:
     percent: 100.0
