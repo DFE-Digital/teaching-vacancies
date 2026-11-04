@@ -67,7 +67,7 @@ JOBSEEKER_SYSTEM_SPEC_MAPPINGS = {
   login_keys: %w[],
   account_transfers: %w[can_transfer_data_from_old_account],
   account_feedbacks: %w[can_give_account_feedback],
-  qualifications: %w[can_add_qualifications_to_their_job_application],
+  qualifications: %w[can_add_qualifications_to_their_profile],
   professional_body_memberships: %w[can_add_professional_body_membership_to_job_application],
   employments: %w[can_add_employments_to_their_job_application],
 }.freeze
