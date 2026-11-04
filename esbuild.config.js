@@ -1,5 +1,6 @@
 import * as esbuild from 'esbuild';
-import babel from 'esbuild-plugin-babel';
+import fs from 'fs';
+import { transformAsync } from '@babel/core';
 
 const watch = process.argv[process.argv.length - 1] == '--watch';
 
@@ -11,6 +12,23 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 //          esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds \
 //          --public-path=assets --target=es6
 
+// Inline esbuild plugin that runs each JS file through Babel. Replaces `esbuild-plugin-babel`,
+// which is unmaintained and incompatible with the ESM-only Babel 8.
+const babel = ({ filter = /\.m?js$/, ...options } = {}) => ({
+  name: 'babel',
+  setup(build) {
+    build.onLoad({ filter }, async (args) => {
+      const source = await fs.promises.readFile(args.path, 'utf8');
+      const result = await transformAsync(source, {
+        ...options,
+        filename: args.path,
+        caller: { name: 'esbuild-babel', supportsStaticESM: true }
+      });
+      return { contents: result.code, loader: 'js' };
+    });
+  }
+});
+
 const config = {
   bundle: true,
   entryPoints: ['app/assets/javascript/application.js'],
@@ -18,10 +36,8 @@ const config = {
   outdir: 'app/assets/builds',
   plugins: [
     babel({
-      config: {
-        presets: ['@babel/preset-env'],
-        targets: '> 0.25%, not dead, IE 11'
-      }
+      presets: ['@babel/preset-env'],
+      targets: '> 0.25%, not dead, IE 11'
     })
   ],
   publicPath: 'assets',
