@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
   context "without qualifications" do
     let(:qualifications) { [] }
 
-    before { visit select_category_jobseekers_profile_qualifications_path(profile) }
+    before { visit select_category_jobseekers_profile_qualifications_path }
 
     it "passes a11y", :a11y do
       expect(page).to be_axe_clean
