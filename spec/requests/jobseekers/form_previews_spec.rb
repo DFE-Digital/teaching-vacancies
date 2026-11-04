@@ -136,7 +136,7 @@ RSpec.describe "Jobseekers::FormPreviewController" do
 
       it "renders the other-religion questions" do
         expect(page).to have_css(".print-section__heading", text: "Religious information")
-        expect(page).to have_text("How will you support the school's ethos and aims?")
+        expect(page).to have_text("How will you support the school's or college's ethos and aims?")
         expect(page).to have_no_text("baptism certificate")
       end
     end
