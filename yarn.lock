@@ -118,7 +118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^8.0.7":
+"@babel/core@npm:^8.0.9":
   version: 8.1.0
   resolution: "@babel/core@npm:8.1.0"
   dependencies:
@@ -8824,7 +8824,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "teaching-vacancies@workspace:."
   dependencies:
-    "@babel/core": "npm:^8.0.7"
+    "@babel/core": "npm:^8.0.9"
     "@babel/preset-env": "npm:^8.0.7"
     "@eslint/eslintrc": "npm:^3.3.7"
     "@eslint/js": "npm:^10.0.1"
