@@ -26,7 +26,31 @@ RSpec.describe Gias::ImportSchoolsAndLocalAuthorities do
     end
 
     it "creates non-discarded Schools" do
-      expect { subject.call }.to change { School.kept.count }.by 12
+      expect { subject.call }.to change { School.kept.count }.by 15
+    end
+
+    describe "further education colleges" do
+      it "imports open further education colleges" do
+        subject.call
+        %w[130467 130525 133053].each do |urn|
+          college = School.find_by!(urn: urn)
+          expect(college).to be_kept
+          expect(college).to be_fe_college
+          expect(School.colleges).to include(college)
+        end
+      end
+
+      it "discards closed further education colleges" do
+        subject.call
+        expect(School.find_by!(urn: "131095")).to be_discarded
+      end
+
+      it "restores a previously discarded open further education college" do
+        create(:school, urn: "130525", school_type: School::COLLEGE_SCHOOL_TYPE,
+                        detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE).discard
+        subject.call
+        expect(School.find_by!(urn: "130525")).to be_kept
+      end
     end
 
     it "creates SchoolGroups" do
