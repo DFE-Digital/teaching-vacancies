@@ -253,11 +253,8 @@ the DfE API catalogue the ATS API's OpenAPI document is published to by a daily 
 
 ### Coverage gates
 
-`.simplecov` sets `minimum_coverage line: 96.34, branch: 84.30`, and CI additionally runs
-`undercover` against `origin/main` (`.undercover`) to catch new or changed code without tests.
-When raising the threshold, set it 0.02 below the reported figure to absorb rounding. Known
-causes of coverage fluctuation: random values in factories, and Ruby logic inside Slim
-templates. Adding `#nocov` to pre-existing uncovered code you had to touch is acceptable.
+CI runs `simplecov patch` against `origin/main` to catch new or changed code without tests.
+Do not add `#simplecov:disable` to uncovered code, add tests to ensure good coverage.
 
 ### Factories
 
@@ -305,7 +302,6 @@ too:
 | --- | --- |
 | The Ruby, Rails or Node version | The stack line in **Overview** |
 | A rake task, a CI job, or how tests are run | **Commands** here, and `documentation/development/tooling/testing.md` |
-| The thresholds in `.simplecov` | The coverage figures quoted in **Testing** |
 | A top-level directory under `app/` | The architecture table |
 | Route namespaces, or the landing-page catch-alls | **Routing** |
 | A model's STI subclasses, enums, or status transitions | **Domain model** |
