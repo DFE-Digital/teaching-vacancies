@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :qualification do
     after(:build) do |qualification, evaluator|
-      qualification.qualification_results = build_list(:qualification_result, evaluator.results_count) if qualification.secondary?
+      qualification.qualification_results = build_list(:qualification_result, evaluator.results_count, qualification: qualification) if qualification.secondary?
     end
 
     transient do
