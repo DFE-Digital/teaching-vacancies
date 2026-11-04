@@ -25,8 +25,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
-        .search-results
-          = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
+        = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
       = govuk_pagination(pagy: @pagy)
     - else
       h2.govuk-heading-m = t(".no_results.heading")

@@ -97,7 +97,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # The coverage for this file is flakey, but profiles are going away soon anyway
     # so makes sense to exclude rather than trying to fix
     skip "app/views/jobseekers/profiles/qualified_teacher_status/_summary.html.slim"
-    # skip "app/views/publishers/jobseeker_profiles/_results.html.slim"
 
     # These files appear to have flakey coverage, so exclude them for now
     skip "app/views/jobseekers/job_applications/_banner.html.slim"
