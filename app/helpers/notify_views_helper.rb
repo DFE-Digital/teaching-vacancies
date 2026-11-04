@@ -94,15 +94,6 @@ module NotifyViewsHelper
     notify_link(url, t(".unsubscribe_link_text"))
   end
 
-  def vacancy_organisation_and_location(vacancy)
-    organisation = vacancy.organisation
-    if vacancy.organisations.many?
-      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}"
-    else
-      address_join([organisation.town, organisation.county, organisation.postcode])
-    end
-  end
-
   def edit_job_alert_link(subscription)
     url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))

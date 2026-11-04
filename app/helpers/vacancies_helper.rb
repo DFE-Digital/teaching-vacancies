@@ -100,16 +100,13 @@ module VacanciesHelper
     t("publishers.vacancies.show.page_title", job_title: vacancy.job_title)
   end
 
-  def organisation_type_label(vacancy)
-    vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
-  end
-
   def organisation_type_value(vacancy)
-    return organisation_type(vacancy.organisation) unless vacancy.organisations.many?
-
-    safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
-      tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
-    end)
+    organisation_type(vacancy.organisation)
+    # return organisation_type(vacancy.organisation) unless vacancy.organisations.many?
+    #
+    # safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
+    #   tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
+    # end)
   end
 
   def vacancy_job_location_summary(vacancy)
@@ -133,9 +130,12 @@ module VacanciesHelper
   def vacancy_job_location(vacancy)
     organisation = vacancy.organisation
     return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
-    return address_join([organisation.name, vacancy.vacancy_address]) if vacancy.for_an_fe_college?
 
-    address_join([organisation.name, organisation.town, organisation.county])
+    if vacancy.for_an_fe_college? && vacancy.job_address_fields.reject(&:blank?).any?
+      address_join([organisation.name, vacancy.job_address_town, vacancy.job_address_county])
+    else
+      address_join([organisation.name, organisation.town, organisation.county])
+    end
   end
 
   def local_authority_job_location_hint(current_publisher_preference)
@@ -147,10 +147,23 @@ module VacanciesHelper
 
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
-    return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
-    return address_join([organisation.name, vacancy.vacancy_address]) if vacancy.for_an_fe_college?
+    text = address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
+    if vacancy.organisations.many?
+      t("organisations.full_job_location", name: text, count: vacancy.organisations.size - 1)
+    elsif vacancy.for_an_fe_college? && vacancy.job_address_fields.reject(&:blank?).any?
+      address_join([organisation.name, vacancy.job_address_town, vacancy.job_address_county, vacancy.job_address_postcode])
+    else
+      text
+    end
+  end
 
-    address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
+  def vacancy_address(vacancy)
+    job_specific_address = vacancy.job_address_fields.reject(&:blank?)
+    return job_specific_address.join(", ") if job_specific_address.any?
+
+    # simplecov:disable
+    [vacancy.organisation.address, vacancy.organisation.town, vacancy.organisation.county, vacancy.organisation.postcode].reject(&:blank?).join(", ")
+    # simplecov:enable
   end
 
   def vacancy_listing_page_title_prefix(vacancy)

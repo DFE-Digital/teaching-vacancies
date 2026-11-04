@@ -36,6 +36,9 @@ en:
       at_multiple_locations: More than one location
       at_multiple_locations_with_count: More than one location (%{count})
       central_office: Head office
+    full_job_location:
+      one: '%{name} and 1 other location'
+      other: '%{name} and %{count} other locations'
     locations:
       at_one_school: '%{school_type} location'
       at_multiple_schools: '%{school_type} locations'

@@ -192,23 +192,55 @@ RSpec.describe VacanciesHelper do
     end
   end
 
-  describe "#vacancy_full_job_location" do
-    subject { helper.vacancy_full_job_location(vacancy) }
+  describe "#vacancy_address" do
+    let(:college) { build_stubbed(:college) }
 
-    context "when the vacancy is at multiple schools" do
-      let(:school_group) { create(:school_group) }
-      let(:school) { create(:school, school_groups: [school_group]) }
-      let(:school2) { create(:school, school_groups: [school_group]) }
-      let(:vacancy) { build(:vacancy, organisations: [school, school2]) }
+    context "when a custom job address has been entered" do
+      subject { build_stubbed(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
 
-      it "returns the multiple schools location" do
-        expect(subject).to eq("More than one location, #{vacancy.organisation.name}")
+      it "returns the custom address" do
+        expect(vacancy_address(subject)).to eq("10 Campus Road, Brighton, BN1 1AA")
       end
     end
 
-    context "when the vacancy is not at multiple schools" do
-      let(:school) { build(:school, name: "Magic School", town: "Cool Town", county: "Orange County", postcode: "SW1A") }
-      let(:vacancy) { build(:vacancy, organisations: [school]) }
+    context "when no custom job address has been entered" do
+      subject { build_stubbed(:vacancy, organisations: [college]) }
+
+      it "falls back to the organisation address" do
+        expect(vacancy_address(subject)).to eq([college.address, college.town, college.county, college.postcode].compact_blank.join(", "))
+      end
+    end
+  end
+
+  describe "#vacancy_full_job_location" do
+    subject { helper.vacancy_full_job_location(vacancy) }
+
+    context "when the vacancy is at 2 schools" do
+      let(:school_group) { build_stubbed(:school_group) }
+      let(:school) { build_stubbed(:school, name: "Magic School", town: "Cool Town", county: "Orange County", postcode: "SW1A") }
+      let(:school2) { build_stubbed(:school, school_groups: [school_group]) }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school, school2], publisher_organisation: school) }
+
+      it "returns the multiple schools location" do
+        expect(subject).to eq("Magic School, Cool Town, Orange County, SW1A and 1 other location")
+      end
+    end
+
+    context "when the vacancy is at 3 schools" do
+      let(:school_group) { build_stubbed(:school_group) }
+      let(:school) { build_stubbed(:school, name: "Magic School", town: "Cool Town", county: "Orange County", postcode: "SW1A") }
+      let(:next_school) { build_stubbed(:school, school_groups: [school_group]) }
+      let(:another_school) { build_stubbed(:school, school_groups: [school_group]) }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school, next_school, another_school], publisher_organisation: school) }
+
+      it "returns the multiple schools location" do
+        expect(subject).to eq("Magic School, Cool Town, Orange County, SW1A and 2 other locations")
+      end
+    end
+
+    context "when the vacancy is at 1 school" do
+      let(:school) { build_stubbed(:school, name: "Magic School", town: "Cool Town", county: "Orange County", postcode: "SW1A") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
       it "returns the full location" do
         expect(subject).to eq("#{vacancy.organisation.name}, Cool Town, Orange County, SW1A")
@@ -216,20 +248,20 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is at an FE college with a custom job address" do
-      let(:college) { build(:college, name: "City College") }
-      let(:vacancy) { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+      let(:college) { build_stubbed(:college, name: "City College") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
 
       it "returns the college name with the custom address" do
-        expect(subject).to eq("City College, 10 Campus Road, Brighton, BN1 1AA")
+        expect(subject).to eq("City College, Brighton, BN1 1AA")
       end
     end
 
     context "when the vacancy is at an FE college without a custom job address" do
-      let(:college) { build(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
-      let(:vacancy) { build(:vacancy, organisations: [college]) }
+      let(:college) { build_stubbed(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [college]) }
 
       it "returns the college name with the organisation address" do
-        expect(subject).to eq("City College, 1 High Street, Brighton, East Sussex, BN1 1AA")
+        expect(subject).to eq("City College, Brighton, East Sussex, BN1 1AA")
       end
     end
   end
@@ -238,10 +270,10 @@ RSpec.describe VacanciesHelper do
     subject { helper.vacancy_job_location(vacancy) }
 
     context "when the vacancy is at multiple schools" do
-      let(:school_group) { create(:school_group) }
-      let(:school) { create(:school, school_groups: [school_group]) }
-      let(:school2) { create(:school, school_groups: [school_group]) }
-      let(:vacancy) { build(:vacancy, organisations: [school, school2]) }
+      let(:school_group) { build_stubbed(:school_group) }
+      let(:school) { build_stubbed(:school, school_groups: [school_group]) }
+      let(:school2) { build_stubbed(:school, school_groups: [school_group]) }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school, school2]) }
 
       it "returns the multiple schools location" do
         expect(subject).to eq("More than one location, #{vacancy.organisation.name}")
@@ -249,8 +281,8 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is not at multiple schools" do
-      let(:school) { build(:school, name: "Magic School", town: "Cool Town", county: "Orange County") }
-      let(:vacancy) { build(:vacancy, organisations: [school]) }
+      let(:school) { build_stubbed(:school, name: "Magic School", town: "Cool Town", county: "Orange County") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
       it "returns the location without postcode" do
         expect(subject).to eq("Magic School, Cool Town, Orange County")
@@ -258,20 +290,20 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is at an FE college with a custom job address" do
-      let(:college) { build(:college, name: "City College") }
-      let(:vacancy) { build(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
+      let(:college) { build_stubbed(:college, name: "City College") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_county: "East Sussex") }
 
       it "returns the college name with the custom address" do
-        expect(subject).to eq("City College, 10 Campus Road, Brighton, BN1 1AA")
+        expect(subject).to eq("City College, Brighton, East Sussex")
       end
     end
 
     context "when the vacancy is at an FE college without a custom job address" do
-      let(:college) { build(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
-      let(:vacancy) { build(:vacancy, organisations: [college]) }
+      let(:college) { build_stubbed(:college, name: "City College", address: "1 High Street", town: "Brighton", county: "East Sussex", postcode: "BN1 1AA") }
+      let(:vacancy) { build_stubbed(:vacancy, organisations: [college]) }
 
       it "returns the college name with the organisation address" do
-        expect(subject).to eq("City College, 1 High Street, Brighton, East Sussex, BN1 1AA")
+        expect(subject).to eq("City College, Brighton, East Sussex")
       end
     end
   end

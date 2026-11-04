@@ -39,14 +39,6 @@ module OrganisationsHelper
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t("vacancies.listing.schools.not_given") }.join(", ")
   end
 
-  def organisation_types(organisations)
-    organisations.select(&:school?).group_by { |org| [org.school_type, org.religious_character] }.map do |type, orgs_by_type|
-      type_for_display = [pluralize(orgs_by_type.count, type.first.downcase.singularize), type.last].reject(&:blank?)
-                                                                                                    .join(", ")
-      "#{type_for_display}, ages #{orgs_by_type.map(&:minimum_age).min} to #{orgs_by_type.map(&:maximum_age).max}"
-    end
-  end
-
   def organisation_label(organisation)
     if organisation.fe_college?
       "College"

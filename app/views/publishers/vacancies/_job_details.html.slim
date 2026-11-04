@@ -7,7 +7,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       = t("jobs.job_location")
     - row.with_value
       - if vacancy.for_an_fe_college?
-        = vacancy.vacancy_address
+        = vacancy_job_location(vacancy)
       - else
         ul.govuk-list.govuk-list--spaced
           = vacancy_job_locations(vacancy)

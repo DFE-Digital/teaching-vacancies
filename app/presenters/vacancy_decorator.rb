@@ -17,13 +17,15 @@ class VacancyDecorator < Draper::Decorator
            :completed_steps, :phases, :further_details_provided, :school_visits,
            :allow_job_applications?, :can_receive_job_applications?, :enable_job_applications,
            :catholic?, :religious_character, :other_religion?, :anonymise_applications?, :is_parental_leave_cover,
-           :application_form, :website?, :vacancy_address,
+           :application_form, :website?,
+           :job_address_fields, :job_address_town, :job_address_county, :job_address_postcode,
            :external?, :job_advert, :external_advert_url,
            :supporting_documents_in_order,
            :other_start_date_details, :earliest_start_date, :latest_start_date, :starts_on, :start_date_type,
            :teaching_or_middle_leader_role?, :email?, :ect_suitable?, :ect_status,
            :key_stages, :subjects,
-           :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary
+           :receive_applications, :application_link, :further_details, :fixed_term_contract_duration, :contact_number, :application_email, :actual_salary,
+           :geolocation, :distance_in_miles_to
 
   include ActionView::Helpers::TextHelper
 
