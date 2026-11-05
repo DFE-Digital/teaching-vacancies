@@ -24,7 +24,7 @@ class Publishers::CandidateMessagesController < Publishers::BaseController
                 .where(id: conversation_ids)
                 # distinct(false) is used here to avoid a PG::InvalidColumnReference error when the query is executed. This is because the update_all method does not support DISTINCT queries, and the conversation_ids array may contain duplicate values. By using distinct(false), we ensure that the query does not include a DISTINCT clause, which allows the update_all method to execute without errors.
                 .distinct(false)
-                .update_all(archived: params[:archive_action] == "archive")
+                .find_each { |c| c.update!(archived: params[:archive_action] == "archive") }
 
     if params[:archive_action] == "archive"
       redirect_to publishers_candidate_messages_path(tab: "archive"), notice: t(".archived")
