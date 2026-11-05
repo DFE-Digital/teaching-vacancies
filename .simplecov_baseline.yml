@@ -3305,13 +3305,6 @@ app/models/jobseekers/message_received_notifier.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/keyword_location_landing_page.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/landing_page.rb:
   lines:
     percent: 100.0
@@ -4544,20 +4537,6 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
-app/views/api/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/api/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -6217,27 +6196,6 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
@@ -7848,13 +7806,6 @@ app/views/vacancies/_vacancy_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/vacancies/campaign_landing_page.html.slim:
-  lines:
-    percent: 82.92
-    missed: 7
-  branches:
-    percent: 40.0
-    missed: 12
 app/views/vacancies/index.html.slim:
   lines:
     percent: 97.5

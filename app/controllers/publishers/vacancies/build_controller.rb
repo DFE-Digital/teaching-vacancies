@@ -15,22 +15,34 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   helper_method :current_publisher_preference
 
   def show
-    @form = form_class.load_from_model(vacancy, current_publisher: current_publisher)
-    case current_step
-    when :documents
-      return redirect_to(new_organisation_job_document_path(vacancy.id,
-                                                            back_to_review: params[:back_to_review],
-                                                            back_to_show: params[:back_to_show]))
+    if step_process.all_steps.fetch(step)
+      case step
+      when :documents
+        return redirect_to(new_organisation_job_document_path(@vacancy.id,
+                                                              back_to_review: params[:back_to_review],
+                                                              back_to_show: params[:back_to_show]))
+      else
+        @form = form_class.load_from_model(@vacancy, current_publisher: current_publisher)
+      end
+    else
+      skip_step
     end
 
     render_wizard
   end
 
   def update
-    @form = form_class.load_from_params(form_params, vacancy, current_publisher: current_publisher)
+    @form = form_class.load_from_params(form_params, @vacancy, current_publisher: current_publisher)
 
     if @form.valid?
-      update_vacancy
+      updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
+      @vacancy.assign_attributes(@form.params_to_save.merge(completed_steps: updated_completed_steps))
+      @vacancy.geocode_job_address if current_step == :confirm_job_address
+      @vacancy.refresh_slug
+      update_google_index(@vacancy) if @vacancy.live?
+
+      @vacancy.save!
+
       redirect_to_next_step
     else
       render_wizard
@@ -42,9 +54,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   attr_reader :form
 
   def form_params
-    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+    if step == :important_dates && @vacancy.disable_editing_publish_on?
       expiry_date_time_params(params)
-    elsif current_step == :about_the_role
+    elsif step == :about_the_role
       params.fetch(form_key, {}).permit(form_class.fields)
     else
       super
@@ -52,7 +64,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   def form_class
-    if current_step == :important_dates && vacancy.disable_editing_publish_on?
+    if step == :important_dates && @vacancy.disable_editing_publish_on?
       Publishers::JobListing::ExpiryDateTimeForm
     else
       "publishers/job_listing/#{step}_form".camelize.constantize
@@ -88,17 +100,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
     strip_empty_checkboxes(STRIP_CHECKBOXES[step], :"publishers_job_listing_#{step}_form")
   end
 
-  def update_vacancy
-    updated_completed_steps = completed_steps(steps_to_reset: @form.steps_to_reset)
-    vacancy.assign_attributes(@form.params_to_save.merge(completed_steps: updated_completed_steps))
-    vacancy.geocode_job_address if current_step == :confirm_job_address
-    vacancy.refresh_slug
-    update_google_index(vacancy) if vacancy.live?
-
-    vacancy.save!
-  end
-
   def set_steps
-    self.steps = step_process.steps - [:review]
+    self.steps = step_process.all_steps.keys - [:review]
   end
 end
