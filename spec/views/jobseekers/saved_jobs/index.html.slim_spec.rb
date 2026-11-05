@@ -7,7 +7,7 @@ RSpec.describe "jobseekers/saved_jobs/index" do
   let(:vacancy_with_enabled_false) { create(:vacancy, enable_job_applications: false, organisations: [organisation]) }
   let(:vacancy_with_enabled_true) { create(:vacancy, enable_job_applications: true, organisations: [organisation]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:expired_external_vacancy) { create(:vacancy, :external, :expired, :trashed, organisations: [organisation]) }
+  let(:expired_external_vacancy) { create(:external_vacancy, :expired, :trashed, organisations: [organisation]) }
 
   let(:sort) { Jobseekers::SavedJobSort.new }
   let(:page) { Capybara.string(rendered) }

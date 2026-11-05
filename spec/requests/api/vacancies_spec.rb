@@ -85,15 +85,15 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "does not retrieve incomplete or deleted vacancies" do
-      create(:vacancy, organisations: [school])
-      create(:draft_vacancy)
-      create(:vacancy, :trashed)
-      create(:vacancy, :future_publish)
+      create(:vacancy, job_title: "real", organisations: [school])
+      create(:draft_vacancy, job_title: "draft")
+      create(:vacancy, :trashed, job_title: "trashed")
+      create(:vacancy, :future_publish, job_title: "future")
 
       get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:data].count).to eq(1)
+      expect(json[:data].map { |j| j.fetch(:title) }).to match_array(%w[real])
     end
   end
 

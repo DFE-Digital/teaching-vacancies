@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
 
   let(:vacancy2) { create(:vacancy, enable_job_applications: true, organisations: [organisation]) }
   let(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:expired_external_vacancy) { create(:vacancy, :external, :expired, organisations: [organisation]).tap(&:discard!) }
+  let(:expired_external_vacancy) { create(:external_vacancy, :expired, organisations: [organisation]).tap(&:discard!) }
 
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }

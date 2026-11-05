@@ -4325,8 +4325,8 @@ app/services/search/vacancy_search.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 81.25
-    missed: 3
+    percent: 88.88
+    missed: 2
 app/services/search/vacancy_sort.rb:
   lines:
     percent: 100.0
