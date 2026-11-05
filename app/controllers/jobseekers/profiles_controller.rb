@@ -3,8 +3,6 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
 
   before_action :set_profile
 
-  before_action :check_activable!, only: %i[confirm_toggle toggle]
-
   helper_method :qualification_form_param_key
 
   SECTIONS = [
@@ -47,17 +45,9 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "Your personal statement",
       display_summary: ->(profile) { profile.about_you.present? },
       key: "about_you",
-      condition: -> { profile.about_you.present? },
       link_text: "Add details about you",
       page_path: -> { edit_jobseekers_profile_about_you_path },
       partial: "jobseekers/profiles/about_you/summary",
-    },
-    {
-      title: I18n.t("jobseekers.profiles.show.hide_profile"),
-      display_summary: ->(profile) { !profile.requested_hidden_profile.nil? },
-      key: "hide_profile",
-      link_text: I18n.t("jobseekers.profiles.show.set_up_profile_visibility"),
-      page_path: -> { jobseekers_profile_hide_profile_path },
     },
   ].map(&:freeze).freeze
 
@@ -65,21 +55,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     @sections = SECTIONS
   end
 
-  def confirm_toggle; end
-
-  def toggle
-    @profile.update!(active: !@profile.active?)
-    redirect_to jobseekers_profile_path, success: t("jobseekers.profiles.show.profile_turned_#{@profile.active? ? 'on' : 'off'}")
-  end
-
   private
-
-  def check_activable!
-    return if @profile.active? || @profile.activable?
-
-    flash[:important] = t("jobseekers.profiles.toggle.not_ready")
-    redirect_to action: :show
-  end
 
   def set_profile
     @profile = JobseekerProfile.prepare(jobseeker: current_jobseeker) do
