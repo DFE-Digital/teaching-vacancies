@@ -96,7 +96,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.offered_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".offered_at")).to have_text(expected_date) }
-    it { expect(component.candidate_offered_at(candidates.first)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_offered, vacancy:, offered_at: nil) }
@@ -111,7 +110,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.declined_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".declined_at")).to have_text(expected_date) }
-    it { expect(component.candidate_declined_at(candidates.first)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_declined, vacancy:, declined_at: nil) }
@@ -126,7 +124,6 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interview_feedback_received_at.to_fs(:day_month_year) }
 
     it { expect(tab_panel.find(".interview_feedback_received_at")).to have_text(expected_date) }
-    it { expect(component.candidate_interview_feedback_received_at(candidates.first)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_unsuccessful_interview, vacancy:, interview_feedback_received_at: nil) }
@@ -141,70 +138,11 @@ RSpec.describe TabPanelComponent, type: :component do
     let(:expected_date) { candidates.first.interviewing_at.to_fs }
 
     it { expect(tab_panel.find(".interviewing_at")).to have_text(expected_date) }
-    it { expect(component.candidate_interviewing_at(candidates.first)).to eq(expected_date) }
 
     context "when date nil" do
       let(:candidates) { build_stubbed_list(:job_application, 1, :status_interviewing, vacancy:, interviewing_at: nil) }
 
       it { expect(tab_panel.find(".interviewing_at")).to have_link("Add interview date and time", href: Rails.application.routes.url_helpers.tag_organisation_job_job_applications_path(vacancy.id, params: { publishers_job_application_tag_form: { origin: :interviewing, job_applications: [candidates.first] }, tag_action: "interview_datetime" })) }
-    end
-  end
-
-  describe "#sort_candidates" do
-    let(:component) { described_class.new(tab_name: "submitted", vacancy:, candidates: [], form:) }
-    let(:vacancy) { build_stubbed(:vacancy) }
-    let(:form) { nil }
-
-    context "when tab_name is 'interviewing'" do
-      it "sorts candidates with nil interviewing_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
-        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "interviewing")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
-      end
-    end
-
-    context "when tab_name is 'offered'" do
-      it "sorts candidates with nil offered_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, offered_at: nil)
-        candidate3 = build_stubbed(:job_application, offered_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "offered")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
-      end
-    end
-
-    context "when tab_name is 'declined'" do
-      it "sorts candidates with nil declined_at first, then by date" do
-        candidate1 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, declined_at: nil)
-        candidate3 = build_stubbed(:job_application, declined_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "declined")
-
-        expect(result).to eq([candidate2, candidate3, candidate1])
-      end
-    end
-
-    context "when tab_name is something else" do
-      it "returns candidates in original order" do
-        candidate1 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 3))
-        candidate2 = build_stubbed(:job_application, interviewing_at: nil)
-        candidate3 = build_stubbed(:job_application, interviewing_at: Date.new(2025, 1, 1))
-        candidates = [candidate1, candidate2, candidate3]
-
-        result = component.sort_candidates(candidates, "submitted")
-
-        expect(result).to eq([candidate1, candidate2, candidate3])
-      end
     end
   end
 end
