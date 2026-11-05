@@ -187,8 +187,6 @@ shared:
     - qualified_teacher_status
     - qts_age_range_and_subject
     - qualified_teacher_status_year
-    - active
-    - requested_hidden_profile
     - is_statutory_induction_complete
     - teacher_reference_number
     - statutory_induction_complete_details

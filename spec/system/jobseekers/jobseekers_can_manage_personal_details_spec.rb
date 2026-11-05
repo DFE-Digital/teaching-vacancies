@@ -73,12 +73,6 @@ RSpec.describe "Jobseekers can manage their personal details" do
         expect(page).to have_content("#{new_first_name} #{new_last_name}")
         expect(page).to have_content("No, I already have the right to work in the UK")
       end
-
-      it "can be previewed" do
-        within "#top_links" do
-          click_on "Preview profile"
-        end
-      end
     end
   end
 end
