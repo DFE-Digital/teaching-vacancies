@@ -129,7 +129,6 @@ Rails.application.routes.draw do
     end
 
     resource :profile, only: %i[show] do
-      resource :preview, only: :show, controller: "profiles/preview"
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
       resources :work_history, only: %i[new create edit update destroy], controller: "profiles/employments" do
         get :review, on: :collection, to: "profiles/employments#review"
@@ -149,24 +148,6 @@ Rails.application.routes.draw do
       resources :breaks, only: %i[new create edit update destroy], controller: "profiles/breaks" do
         get :confirm_destroy
       end
-
-      resource :hide_profile, only: %i[show], controller: "profiles/hide_profile" do
-        post :confirm_hide
-        get :add
-        post :add_school
-        get :choose_school_or_trust
-        post :add_school_or_trust
-        get :cannot_find_school
-        get :schools
-        post :add_another
-        get :review
-
-        get ":exclusion_id/delete", action: :delete, as: :delete
-        delete ":exclusion_id/delete", action: :destroy
-      end
-
-      get "confirm_toggle", to: "profiles#confirm_toggle"
-      post "toggle", to: "profiles#toggle"
     end
 
     resources :job_preferences_steps, only: %i[show update], controller: "profiles/job_preferences", path: "profile/job-preferences" do
@@ -231,7 +212,6 @@ Rails.application.routes.draw do
     resources :login_keys, only: %i[show new create] do
       post :consume, on: :member
     end
-    resources :jobseeker_profiles, only: %i[index show]
     resources :candidate_messages, only: %i[index] do
       collection do
         patch :toggle_archive
@@ -387,11 +367,11 @@ Rails.application.routes.draw do
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { ect_statuses: ["ect_suitable"] } }
   get "sign-up-for-FE-job-alerts", to: "subscriptions#new", as: "fe_job_alerts", defaults: { fe_job_alert: true, search_criteria: { phases: ["sixth_form_or_college"] } }
 
+  # (very) Legacy API, users unknown
   namespace :api do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
-      get "/organisations", to: "organisations#index", as: :organisations
       resources :markers, only: %i[show]
     end
 

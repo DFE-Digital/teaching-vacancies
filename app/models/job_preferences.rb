@@ -6,14 +6,6 @@ class JobPreferences < ApplicationRecord
 
   validates :jobseeker_profile, uniqueness: true
 
-  def vacancies(scope = PublishedVacancy.live)
-    JobScope.new(scope, self).call
-  end
-
-  def all_working_patterns
-    working_patterns.map(&:humanize).join(", ")
-  end
-
   def complete?
     steps = completed_steps.symbolize_keys
     %i[roles phases key_stages subjects working_patterns locations].all? { |step| steps.include?(step) && steps[step].to_sym.in?(%i[completed skipped]) }

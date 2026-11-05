@@ -11,10 +11,6 @@ module NavigationsHelper
     request.original_fullpath =~ %r{^/publishers/candidate_messages}
   end
 
-  def candidate_profiles_active?
-    request.original_fullpath =~ %r{^/publishers/jobseeker_profiles}
-  end
-
   def statistics_active?
     request.original_fullpath =~ %r{^/publishers/current_year_statistics}
   end
