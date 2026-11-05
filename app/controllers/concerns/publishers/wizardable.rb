@@ -14,23 +14,6 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
 
   private
 
-  def job_location_params(params)
-    organisation_ids = params[:publishers_job_listing_job_location_form][:organisation_ids]
-    organisations = Organisation.where(id: organisation_ids)
-
-    location_params = params.require(:publishers_job_listing_job_location_form)
-          .permit(organisation_ids: [])
-
-    school_phases = organisations.schools.map(&:phase).uniq
-    vacancy_phases  = school_phases.select { |phase| phase.in? Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES }
-
-    if vacancy_phases.any? || organisations.schools.all?(&:school_group?)
-      location_params.merge(phases: vacancy_phases)
-    else
-      location_params
-    end
-  end
-
   def job_role_params(params)
     params.fetch(:publishers_job_listing_job_role_form, {})
           .permit(job_roles: [])

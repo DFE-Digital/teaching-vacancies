@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Copying a vacancy" do
-  let(:publisher) { create(:publisher) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
