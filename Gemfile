@@ -140,6 +140,8 @@ gem "rswag-ui"
 gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
+gem "solid_cache"
+gem "solid_cache_dashboard"
 gem "solid_queue"
 # Skylight performance monitoring https://www.skylight.io/login
 gem "skylight"

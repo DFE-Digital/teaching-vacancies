@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
     mount FieldTest::Engine, at: "/field_test"
+    mount SolidCacheDashboard::Engine, at: "/solid-cache"
   else
     authenticate :support_user do
       mount MissionControl::Jobs::Engine, at: "/solid_queue_jobs"
       mount FieldTest::Engine, at: "/field_test"
+      mount SolidCacheDashboard::Engine, at: "/solid-cache"
     end
   end
 
