@@ -100,7 +100,7 @@ en:
         religious_referee_phone: Religious referee phone number (optional)
         faith: What is your religious denomination or faith?
         place_of_worship: Address of place of worship (optional)
-        ethos_and_aims: How will you support the school's ethos and aims?
+        ethos_and_aims: How will you support the school's or college's ethos and aims?
         non_catholic_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section

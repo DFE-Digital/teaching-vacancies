@@ -234,7 +234,7 @@ en:
           title: Religious information — Application
           has_a_religious_character: "%{name} has a religious character."
           preference_to_religious_applicants: Schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but candidates who do not follow a faith or religion are still encouraged to apply.
-          ethos_and_aims: How will you support the school's ethos and aims?
+          ethos_and_aims: How will you support the school's or college's ethos and aims?
         personal_details:
           description: Provide some basic details about yourself, like how to contact you about this application.
           heading: Personal details
@@ -250,19 +250,19 @@ en:
           banner_no_documents_html: >-
             You may find it helpful to refer to %{job_link}. You should include any skills, qualities and experience that are relevant to this role.
           description: >-
-            Your personal statement is your opportunity to explain why you are suitable for this role. Schools typically expect personal statements to be about 500 to 1,000 words.
+            Your personal statement is your opportunity to explain why you are suitable for this role. Schools and colleges typically expect personal statements to be about 500 to 1,000 words.
           job_description: job description
           heading: Personal statement
-          applying_for_a_teaching_role: If you're applying for a teaching role
+          applying_for_a_teaching_role: If you're applying for a teaching or lecturing role
           you_could_provide: "You could include:"
-          personal_statement_preamble: "Get advice from experienced teachers and school leaders on "
-          personal_statement_preamble_continued_html: . You can can also use the %{tool_link} for prompts and tips to help you get started.
+          personal_statement_preamble: "Get advice from experienced teachers, lecturers and school or college leaders on "
+          personal_statement_preamble_continued_html: . You can also use the %{tool_link} for prompts and tips to help you get started.
           tool_link_text: personal statement builder
           bullets:
-            - your teaching style and approach to classroom management
+            - your teaching or lecturing style and approach to classroom management
             - your knowledge of the curriculum
             - your understanding of safeguarding and pupil wellbeing
-            - additional responsibilities you’ve taken on in school
+            - additional responsibilities you’ve taken on in schools or colleges
             - experience in special educational needs and disability (SEND)
             - any relevant interests or extra-curricular activities
           personal_statement_link_text: writing your personal statement
@@ -273,7 +273,7 @@ en:
           heading: Professional status
           step_title: Professional status
           title: Professional status — Application
-          introduction: If you're applying for a support role and do not have teaching experience, answer ‘No’ to these questions.
+          introduction: If you're applying for a support role and do not have teaching or lecturing experience, answer ‘No’ to these questions.
         qualifications:
           heading: Qualifications
           no_qualifications: No qualifications specified
@@ -426,7 +426,7 @@ en:
             - your full employment history
             - your qualifications
             - a personal statement
-            - two referees
+            - referee details
           save_and_return: You can save your application at any point and return to it later.
         heading: Before you start
         saving_your_details: Saving your application details
