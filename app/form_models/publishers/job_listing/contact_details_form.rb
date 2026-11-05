@@ -20,7 +20,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     end
 
     def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*fields), vacancy, current_publisher)
+      new(vacancy.slice(*FIELDS).merge(contact_number_provided: vacancy.contact_number.nil? ? nil : vacancy.contact_number.present?), vacancy, current_publisher)
     end
 
     def load_from_params(form_params, vacancy, current_publisher:)
@@ -57,8 +57,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
   def params_to_save
     {
       contact_email: params[:contact_email] == "other" ? params[:other_contact_email] : params[:contact_email],
-      contact_number: (contact_number if contact_number_provided),
-      contact_number_provided: contact_number_provided,
+      contact_number: contact_number_provided ? contact_number : "",
     }
   end
 

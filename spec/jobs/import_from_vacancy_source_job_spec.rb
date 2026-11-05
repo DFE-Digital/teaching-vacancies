@@ -115,7 +115,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "completed_steps" => %w[job_location job_role education_phases job_title key_stages contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
           "contact_email" => contact_email,
           "contact_number" => "01234 123456",
-          "contact_number_provided" => true,
           "contract_type" => "permanent",
           "created_at" => nil,
           "discarded_at" => nil,

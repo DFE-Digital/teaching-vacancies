@@ -60,7 +60,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       school_offer:,
       flexi_working: normalize_flexi_working,
       further_details_provided:,
-      further_details:,
+      further_details: (further_details if further_details_provided),
       flexi_working_details_provided:,
     }
   end
