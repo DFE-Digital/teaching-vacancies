@@ -2,14 +2,12 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can delete a draft job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy) }
   let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    visit jobseekers_job_applications_path
-    click_on job_application.vacancy.job_title
+    visit jobseekers_job_application_apply_path(job_application)
   end
 
   after { logout }
