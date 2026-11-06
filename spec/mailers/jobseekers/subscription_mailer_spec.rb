@@ -41,7 +41,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       mail.deliver_now
       expect(mail.to).to eq([subscription.email])
       expect(mail.personalisation).to include(unsubscribe_link: unsubscribe_subscription_url(subscription.token),
-                                              frequency: I18n.t("jobseekers.subscription_mailer.confirmation.frequency.#{subscription.frequency}"))
+                                              frequency: subscription.frequency)
     end
 
     context "when the subscription email matches a jobseeker account" do
