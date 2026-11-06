@@ -26,5 +26,6 @@ This section describes Copilot's own configuration only. Project rules stay in A
 - `.github/workflows/copilot-setup-steps.yml` prepares the cloud agent's environment: Ruby,
   gems, the database, precompiled assets and the Swagger docs. It also sets `HEADLESS=1`.
 - Gaps compared with Claude Code: Copilot has no repo-level `HEADLESS` setting, so run JavaScript
-  specs locally with `HEADLESS=1`. Copilot also has no repo-level deny rules for secret files.
+  specs locally with `HEADLESS=1`, or add `HEADLESS=1` to your git-ignored `.env.test.local`.
+  Copilot also has no repo-level deny rules for secret files.
   Only organisation content exclusion blocks those reads.
