@@ -1,5 +1,0 @@
-- profile.professional_body_memberships.each do |professional_body_membership|
-  - change_action = govuk_link_to(safe_join([t("buttons.change"), tag.span(professional_body_membership.name, class: "govuk-visually-hidden")]), edit_jobseekers_profile_professional_body_membership_path(professional_body_membership), class: "govuk-link--no-visited-state")
-  - delete_action = govuk_link_to(safe_join([t("buttons.delete"), tag.span(professional_body_membership.name, class: "govuk-visually-hidden")]), jobseekers_profile_professional_body_membership_confirm_destroy_path(professional_body_membership))
-
-  = render "jobseekers/shared/professional_body_membership", professional_body_membership: professional_body_membership, actions: [change_action, delete_action]

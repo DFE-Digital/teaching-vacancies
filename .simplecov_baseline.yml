@@ -4962,8 +4962,8 @@ app/views/jobseekers/job_applications/build/referees.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/training_and_cpds.html.slim:
   lines:
     percent: 100.0
