@@ -1653,13 +1653,6 @@ app/form_models/jobseekers/profile/choose_school_or_trust_form.rb:
   branches:
     percent: 100.0
     missed: 0
-app/form_models/jobseekers/profile/hide_profile_form.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/form_models/jobseekers/profile/qualifications_form.rb:
   lines:
     percent: 100.0
@@ -3244,11 +3237,11 @@ app/models/jobseeker_message.rb:
     missed: 0
 app/models/jobseeker_profile.rb:
   lines:
-    percent: 81.96
-    missed: 11
+    percent: 90.19
+    missed: 5
   branches:
-    percent: 52.63
-    missed: 9
+    percent: 60.0
+    missed: 6
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
@@ -5484,11 +5477,11 @@ app/views/jobseekers/profiles/job_preferences/working_patterns.html.slim:
     missed: 0
 app/views/jobseekers/profiles/job_preferences_locations/delete_location.html.slim:
   lines:
-    percent: 76.92
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/profiles/job_preferences_locations/edit.html.slim:
   lines:
     percent: 100.0
