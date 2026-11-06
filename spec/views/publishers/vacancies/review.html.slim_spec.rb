@@ -36,8 +36,8 @@ RSpec.describe "publishers/vacancies/review" do
     context "with a college" do
       let(:organisation) { build_stubbed(:college) }
 
-      it "doesn't include a change application type line" do
-        expect(rendered).not_to include(application_type)
+      it "includes a change application type line" do
+        expect(rendered).to include(application_type)
       end
 
       it "has an apply type line" do
