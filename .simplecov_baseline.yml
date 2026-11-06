@@ -5783,6 +5783,13 @@ app/views/jobseekers/sessions/new.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/jobseekers/shared/_professional_body_membership.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/shared/_side_navigation.html.slim:
   lines:
     percent: 100.0
