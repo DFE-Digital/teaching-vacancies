@@ -28,14 +28,6 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   private
 
-  def profile_complete?
-    return false unless (profile = current_jobseeker.jobseeker_profile)
-    return false unless profile.personal_details.present? && profile.job_preferences.present?
-
-    profile.personal_details.complete? && profile.job_preferences.complete?
-  end
-  helper_method :profile_complete?
-
   def saved_job
     @saved_job ||= current_jobseeker.saved_jobs.find_or_initialize_by(vacancy_id: vacancy.id)
   end

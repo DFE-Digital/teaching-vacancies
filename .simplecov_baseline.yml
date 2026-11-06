@@ -745,11 +745,11 @@ app/controllers/jobseekers/request_account_transfer_emails_controller.rb:
     missed: 0
 app/controllers/jobseekers/saved_jobs_controller.rb:
   lines:
-    percent: 90.32
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 5
+    percent: 83.33
+    missed: 1
 app/controllers/jobseekers/sessions_controller.rb:
   lines:
     percent: 79.31
@@ -3216,7 +3216,7 @@ app/models/jobseeker_message.rb:
     missed: 0
 app/models/jobseeker_profile.rb:
   lines:
-    percent: 90.19
+    percent: 90.56
     missed: 5
   branches:
     percent: 60.0

@@ -76,12 +76,6 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
-  def activable?
-    personal_details.present? &&
-      job_preferences.present? && job_preferences.complete? &&
-      qualified_teacher_status.present? && unexplained_employment_gaps.none? && qualifications.any?
-  end
-
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end
