@@ -1660,13 +1660,6 @@ app/form_models/jobseekers/profile/qualifications_form.rb:
   branches:
     percent: 100.0
     missed: 0
-app/form_models/jobseekers/profile/select_organisation_form.rb:
-  lines:
-    percent: 70.0
-    missed: 3
-  branches:
-    percent: 0.0
-    missed: 2
 app/form_models/jobseekers/profiles/delete_location_form.rb:
   lines:
     percent: 100.0
@@ -2332,13 +2325,6 @@ app/helpers/job_applications_pdf_helper.rb:
   branches:
     percent: 100.0
     missed: 0
-app/helpers/job_preferences_helper.rb:
-  lines:
-    percent: 66.66
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/helpers/job_references_helper.rb:
   lines:
     percent: 100.0
@@ -2390,8 +2376,8 @@ app/helpers/messages_helper.rb:
     missed: 0
 app/helpers/navigations_helper.rb:
   lines:
-    percent: 88.23
-    missed: 2
+    percent: 93.33
+    missed: 1
   branches:
     percent: 100.0
     missed: 0
@@ -2885,13 +2871,6 @@ app/mailers/jobseekers/peak_times_mailer.rb:
   branches:
     percent: 100.0
     missed: 0
-app/mailers/jobseekers/profiles_mailer.rb:
-  lines:
-    percent: 66.66
-    missed: 3
-  branches:
-    percent: 0.0
-    missed: 2
 app/mailers/jobseekers/subscription_mailer.rb:
   lines:
     percent: 100.0
