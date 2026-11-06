@@ -118,8 +118,8 @@ app/components/filters_component.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 93.75
+    missed: 1
 app/components/filters_component/filters_component.html.slim:
   lines:
     percent: 100.0
@@ -717,8 +717,8 @@ app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles_controller.rb:
   lines:
-    percent: 97.56
-    missed: 1
+    percent: 92.85
+    missed: 2
   branches:
     percent: 100.0
     missed: 0
@@ -3205,7 +3205,7 @@ app/models/jobseeker_profile.rb:
     percent: 97.72
     missed: 1
   branches:
-    percent: 80.0
+    percent: 75.0
     missed: 3
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
