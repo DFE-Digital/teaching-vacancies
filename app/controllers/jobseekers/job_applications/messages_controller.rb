@@ -3,17 +3,17 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
   helper_method :vacancy
 
   def create
-    conversation = find_or_create_conversation
-    @message = conversation.jobseeker_messages.build(message_form_params)
+    conversation = @job_application.conversations.first || @job_application.conversations.build
+    @message = conversation.messages.build(message_form_params.merge(type: "JobseekerMessage"))
 
-    if @message.save
+    # Saving through the conversation means a new conversation is only persisted alongside a valid message
+    if conversation.save
       redirect_to jobseekers_job_application_path(@job_application, tab: "messages"), success: t("publishers.vacancies.job_applications.messages.create.success")
     else
       @tab = "messages"
       @show_form = "true"
-
-      conversation = @job_application.conversations.first
-      @messages = conversation.messages.order(created_at: :desc)
+      # Read back from the database so the unsaved message isn't listed
+      @messages = Message.for_job_application(@job_application).order(created_at: :desc)
 
       render "jobseekers/job_applications/show", status: :unprocessable_content
     end
@@ -31,10 +31,5 @@ class Jobseekers::JobApplications::MessagesController < Jobseekers::JobApplicati
 
   def vacancy
     @job_application.vacancy
-  end
-
-  def find_or_create_conversation
-    @job_application.conversations.first ||
-      @job_application.conversations.create!
   end
 end

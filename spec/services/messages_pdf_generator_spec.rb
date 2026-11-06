@@ -16,7 +16,7 @@ RSpec.describe MessagesPdfGenerator do
     let(:pdf_text) { pdf.join(" ") }
 
     context "when there are no messages" do
-      let(:conversation) { build_stubbed(:conversation) }
+      let(:conversation) { build_stubbed(:conversation, messages: []) }
 
       # One example per document: rendering the PDF is the slow part.
       it "renders an empty conversation", :aggregate_failures do

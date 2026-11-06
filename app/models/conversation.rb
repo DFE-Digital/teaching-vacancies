@@ -6,6 +6,9 @@ class Conversation < ApplicationRecord
   has_many :jobseeker_messages, dependent: :destroy
   has_many :publisher_messages, dependent: :destroy
 
+  # A conversation is only ever started by sending a message, so saving one without a message is a defect
+  validates :messages, length: { minimum: 1 }, strict: true, on: :create
+
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
   scope :for_organisations, lambda { |org_ids|
