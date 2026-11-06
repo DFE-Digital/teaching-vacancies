@@ -65,17 +65,6 @@ class JobseekerProfile < ApplicationRecord
     [first_name, last_name].join(" ").presence || "Jobseeker"
   end
 
-  def qts_status
-    case qualified_teacher_status
-    when "yes"
-      "Gained QTS #{qualified_teacher_status_year}"
-    when "on_track"
-      "On track to receive QTS"
-    else
-      ""
-    end
-  end
-
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end

@@ -3167,8 +3167,8 @@ app/models/job_application_pdf.rb:
     missed: 4
 app/models/job_preferences.rb:
   lines:
-    percent: 83.33
-    missed: 2
+    percent: 85.71
+    missed: 1
   branches:
     percent: 100.0
     missed: 0
@@ -3216,8 +3216,8 @@ app/models/jobseeker_message.rb:
     missed: 0
 app/models/jobseeker_profile.rb:
   lines:
-    percent: 90.56
-    missed: 5
+    percent: 91.48
+    missed: 4
   branches:
     percent: 60.0
     missed: 6
