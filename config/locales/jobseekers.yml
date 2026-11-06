@@ -281,7 +281,7 @@ en:
           title: Education and qualifications — Application
         referees:
           description_html: You must include details for a referee from your current or most recent employer. If you did not work with children in this role, you must include at least one referee from the last job where you worked with children. Schools or colleges must contact referees in line with %{link}.
-          kcsie: keeping children safe in education (KCSIE) statutory guidance
+          kcsie: keeping children safe in education (KCSiE) statutory guidance
           heading: References
           no_references: No referees added
           step_title: References
@@ -511,7 +511,7 @@ en:
           caption: References
           description:
             html: If you are shortlisted, your referees may be contacted before your interview. Schools or colleges must contact referees in line with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
-          kcsie: keeping children safe in education (KCSIE) statutory guidance
+          kcsie: keeping children safe in education (KCSiE) statutory guidance
           heading: Edit a referee
           title: Edit a referee — Application
           work_in_school_heading: If you work in a school or college now
@@ -528,7 +528,7 @@ en:
           caption: References
           description:
             html: If you are shortlisted, your referees may be contacted before your interview. Schools or colleges must contact referees in line with %{link}. You can ask to be told before a school contacts your referees, but we cannot guarantee the school will do so.
-          kcsie: keeping children safe in education (KCSIE) statutory guidance
+          kcsie: keeping children safe in education (KCSiE) statutory guidance
           heading: Add a referee
           title: Add a referee — Application
           work_in_school_heading: If you work in a school or college now
