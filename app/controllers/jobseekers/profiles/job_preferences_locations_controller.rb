@@ -62,7 +62,6 @@ module Jobseekers
           # simplecov:disable
           if model.locations.empty?
             model.update!(completed_steps: model.completed_steps.merge(locations: :invalidated))
-            @profile.deactivate!
           end
           # simplecov:enable
         end
