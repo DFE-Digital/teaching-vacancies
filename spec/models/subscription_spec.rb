@@ -22,6 +22,70 @@ RSpec.describe Subscription do
         expect(Subscription.weekly.count).to eq(5)
       end
     end
+
+    describe "#needing_governance_email" do
+      subject(:scope) { Subscription.needing_governance_email }
+
+      context "when the subscription has not been sent a deletion warning" do
+        let!(:updated_over_a_year_ago) { create(:subscription, created_at: 2.years.ago, updated_at: 13.months.ago) }
+        let!(:created_over_a_year_ago_and_never_updated) { create(:subscription, created_at: 13.months.ago, updated_at: 13.months.ago) }
+
+        before do
+          create(:subscription, created_at: 2.years.ago, updated_at: 11.months.ago) # updated within the last year
+          create(:subscription, created_at: 3.months.ago, updated_at: 2.months.ago) # created within the last year
+        end
+
+        it "includes only subscriptions not updated for over a year" do
+          expect(scope).to contain_exactly(updated_over_a_year_ago, created_over_a_year_ago_and_never_updated)
+        end
+      end
+    end
+  end
+
+  describe "governance lifecycle" do
+    # Start mid-month so travelling whole months never lands exactly on a cutoff through month-end clamping
+    before { travel_to Time.zone.local(2026, 1, 15, 12) }
+
+    let!(:subscription) { create(:subscription) }
+
+    it "sends a deletion warning every year for as long as the jobseeker keeps the job alert" do
+      2.times do
+        travel 12.months + 1.day
+        expect(Subscription.needing_governance_email).to include(subscription)
+
+        subscription.keep!
+        expect(Subscription.needing_governance_email).to be_empty
+
+        travel 1.month
+        expect(Subscription.unconfirmed_after_governance_email).not_to include(subscription)
+      end
+    end
+
+    it "doesn't delete the job alert if the jobseeker updates their job details" do
+      2.times do |year|
+        travel 12.months + 1.day
+        expect(Subscription.needing_governance_email).to contain_exactly(subscription)
+        subscription.mark_deletion_warning_sent!
+
+        travel 2.weeks
+        subscription.update_with_search_criteria(search_criteria: { "keyword" => "Maths #{year}" })
+        expect(Subscription.needing_governance_email).to be_empty
+
+        travel 1.month
+        expect(Subscription.unconfirmed_after_governance_email).to be_empty
+      end
+    end
+
+    it "deletes the job alert a month after the deletion warning if the jobseeker does nothing" do
+      travel 12.months + 1.day
+      subscription.mark_deletion_warning_sent!
+
+      travel 1.month - 1.day
+      expect(Subscription.unconfirmed_after_governance_email).to be_empty
+
+      travel 2.days
+      expect(Subscription.unconfirmed_after_governance_email).to include(subscription)
+    end
   end
 
   context "with a feedback" do

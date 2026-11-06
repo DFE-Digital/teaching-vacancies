@@ -4,23 +4,16 @@ class SendSubscriptionGovernanceEmailsJob < ApplicationJob
   def perform
     return if DisableEmailNotifications.enabled?
 
-    subscriptions_needing_governance_email.find_each.with_index do |subscription, index|
+    Subscription.needing_governance_email.find_each.with_index do |subscription, index|
       delay = index * GovukNotifyMailer::WORKER_COUNT / GovukNotifyMailer::GOVUK_NOTIFY_SEND_LIMIT_PER_MINUTE
 
       mailer_method = appropriate_governance_email(subscription)
       Jobseekers::SubscriptionMailer.public_send(mailer_method, subscription).deliver_later(wait: delay.minutes)
-      subscription.update_column(:deletion_warning_email_sent_at, Time.current)
+      subscription.mark_deletion_warning_sent!
     end
   end
 
   private
-
-  def subscriptions_needing_governance_email
-    Subscription
-      .kept
-      .where(updated_at: ...12.months.ago)
-      .where(deletion_warning_email_sent_at: nil)
-  end
 
   def appropriate_governance_email(subscription)
     registered = Jobseeker.exists?(email: subscription.email.downcase)
