@@ -367,11 +367,11 @@ Rails.application.routes.draw do
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { ect_statuses: ["ect_suitable"] } }
   get "sign-up-for-FE-job-alerts", to: "subscriptions#new", as: "fe_job_alerts", defaults: { fe_job_alert: true, search_criteria: { phases: ["sixth_form_or_college"] } }
 
+  # (very) Legacy API, users unknown
   namespace :api do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
-      get "/organisations", to: "organisations#index", as: :organisations
       resources :markers, only: %i[show]
     end
 
