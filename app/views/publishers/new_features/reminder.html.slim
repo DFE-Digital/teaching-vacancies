@@ -2,12 +2,9 @@
 
 h1.govuk-heading-l
   = t("jobs.create_a_job_title", organisation: current_organisation.name)
-h2.govuk-heading-m class="govuk-!-margin-top-7"
-  = t(".page_title")
-p.govuk-body
-  = t(".content")
-p.govuk-body
-  = govuk_link_to(t(".how_applications_work_link"), post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "using-the-teaching-vacancies-application-form"), class: "govuk-body", target: "_blank", rel: "noreferrer noopener")
-p.govuk-body
-  = t(".find_a_job_service_info", link: open_in_new_tab_link_to(t(".link_text"), "https://www.gov.uk/find-a-job")).html_safe
+
+= govuk_notification_banner title_text: t("banners.important") do |banner|
+  - banner.with_heading(text: t(".page_title"))
+  p.govuk-body = t(".profiles_retired")
+
 = govuk_button_to t("buttons.reminder_continue"), organisation_jobs_path, class: "govuk-!-margin-top-8"

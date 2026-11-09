@@ -18,7 +18,6 @@ class AuthenticationController < ApplicationController
   def clear_extra_publisher_session_entries
     session.delete(:publisher_id)
     session.delete(:publisher_organisation_id)
-    session.delete(:visited_new_features_page)
     session.delete(:visited_application_feature_reminder_page)
 
     session[:publisher_dsi_token_hint] = session.delete(:publisher_dsi_token)
