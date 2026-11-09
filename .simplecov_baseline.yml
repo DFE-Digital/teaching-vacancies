@@ -2502,11 +2502,11 @@ app/helpers/vacancies_options_helper.rb:
     missed: 0
 app/helpers/vacancy_forms_helper.rb:
   lines:
-    percent: 90.74
-    missed: 5
+    percent: 94.44
+    missed: 3
   branches:
-    percent: 69.56
-    missed: 7
+    percent: 73.91
+    missed: 6
 app/jobs/alert_email/base.rb:
   lines:
     percent: 100.0
