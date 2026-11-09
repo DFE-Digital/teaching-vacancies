@@ -759,8 +759,8 @@ app/controllers/jobseekers/request_account_transfer_emails_controller.rb:
     missed: 0
 app/controllers/jobseekers/saved_jobs_controller.rb:
   lines:
-    percent: 93.93
-    missed: 2
+    percent: 90.32
+    missed: 3
   branches:
     percent: 50.0
     missed: 5
@@ -3289,7 +3289,7 @@ app/models/jobseeker_profile.rb:
     percent: 95.08
     missed: 3
   branches:
-    percent: 76.0
+    percent: 73.68
     missed: 5
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
@@ -5603,8 +5603,8 @@ app/views/jobseekers/profiles/job_preferences/working_patterns.html.slim:
     missed: 0
 app/views/jobseekers/profiles/job_preferences_locations/delete_location.html.slim:
   lines:
-    percent: 92.85
-    missed: 1
+    percent: 76.92
+    missed: 3
   branches:
     percent: 50.0
     missed: 1
@@ -5900,7 +5900,7 @@ app/views/layouts/_header.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.44
+    percent: 92.85
     missed: 1
 app/views/layouts/_phase_banner.html.slim:
   lines:
