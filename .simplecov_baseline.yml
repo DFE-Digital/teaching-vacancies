@@ -738,8 +738,8 @@ app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb:
     missed: 0
 app/controllers/jobseekers/profiles_controller.rb:
   lines:
-    percent: 94.28
-    missed: 2
+    percent: 97.05
+    missed: 1
   branches:
     percent: 100.0
     missed: 0
