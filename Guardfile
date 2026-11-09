@@ -161,6 +161,7 @@ PUBLISHER_MAPPINGS = {
   organisations: %w[],
   jobseeker_profiles: %w[],
   login_keys: %w[],
+  new_features: %w[are_reminded_of_application_functionality],
 }.freeze
 
 JOBSEEKER_SUB_FEEDBACK_MAPPINGS = {
