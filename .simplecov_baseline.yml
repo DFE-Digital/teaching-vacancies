@@ -8105,8 +8105,8 @@ lib/geocoding.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 lib/google_api_client.rb:
   lines:
     percent: 100.0
