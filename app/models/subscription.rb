@@ -20,6 +20,14 @@ class Subscription < ApplicationRecord
   # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
   JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
+  # Job alerts not updated for a year are sent a deletion warning, and deleted a month later unless kept or edited
+  scope :needing_governance_email, -> { kept.where(updated_at: ...12.months.ago, deletion_warning_email_sent_at: nil) }
+  scope :unconfirmed_after_governance_email, -> { kept.where(deletion_warning_email_sent_at: ...1.month.ago) }
+
+  # Every update follows something the jobseeker did, so it confirms they still want the job alert.
+  # Saving a subscription without the jobseeker's involvement would rescue it from deletion.
+  before_update :cancel_pending_deletion, unless: :deletion_warning_email_sent_at_changed?
+
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -73,6 +81,11 @@ class Subscription < ApplicationRecord
     end
   end
 
+  # Cancels any pending deletion and restarts the year before the next deletion warning
+  def keep!
+    update!(deletion_warning_email_sent_at: nil, updated_at: Time.current)
+  end
+
   extend DistanceHelper
 
   # Reads the location and radius from the search criteria and precomputes the area or geopoint for faster matching later.
@@ -92,7 +105,16 @@ class Subscription < ApplicationRecord
     save!
   end
 
+  # Uses update_column so sending the warning neither restarts the year (updated_at) nor triggers cancel_pending_deletion
+  def mark_deletion_warning_sent!
+    update_column(:deletion_warning_email_sent_at, Time.current)
+  end
+
   private
+
+  def cancel_pending_deletion
+    self.deletion_warning_email_sent_at = nil
+  end
 
   # A subscription with location area has a polygon area seat buffered by radius, no geopoint.
   def set_location_from_polygon(polygon, radius)
