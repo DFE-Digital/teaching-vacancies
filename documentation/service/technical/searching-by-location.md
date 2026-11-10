@@ -131,7 +131,7 @@ Once a location is provided for a search, there are three possibilities:
 
 3. **No polygon is found** for the given location.
 
-    We get the geographical coordinates for the given location.
+    We get the geographical coordinates for the given location, from Ordnance Survey first and Google as a fallback (see [Getting the geographical coordinates](#getting-the-geographical-coordinates)).
 
 ## Location Polygons
 
@@ -171,13 +171,18 @@ The current team knowledge and understanding on this area is very limited and ba
 
 As many location search terms don't match a polygon name, the service falls back to obtaining the location coordinates.
 
-We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The default source for retrieving the location coordinates is the Google Geocoding API.
+We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey returns no match or is unavailable. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
 
-Information about the API usage/costs should be accessible from the Google Cloud panel using your DfE email account.
+The first Ordnance Survey result in England whose name matches the search is used; a weak match is acceptable because this only runs when no location polygon matches the search. Otherwise Google is called.
+
+The `ORDNANCE_SURVEY_API_KEY` environment variable holds the OS key; see [Application secrets](/documentation/operations/maintenance/application-secrets.md#ordnance_survey_api_key) for how to get one.
+
+Information about the Google API usage/costs should be accessible from the Google Cloud panel using your DfE email account.
 
 ### Google Geocoding API costs
 
-Google Geocoding API is one of our higher costs in Google Cloud.
+Google Geocoding API is one of our higher costs in Google Cloud, which is why it is now only a fallback.
+A `google_geocoding_api_hit` analytics event fires on every Google call, so it measures the fallback rate directly.
 To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period (Currently set at 180 days), so there are fewer API hits renewing existing cached results.
 
 Please be aware of the impact on the API costs if deciding to modify the Geocoding cache duration period.
