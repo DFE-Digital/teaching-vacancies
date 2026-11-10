@@ -17,15 +17,7 @@ class Geocoding
 
   def coordinates
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      # 'components: "country:gb"' is used to restrict the results to within the UK.
-      # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
-      Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
-        trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
-      end
-    rescue Geocoder::OverQueryLimitError
-      trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
-      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-      Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
+      os_coordinates || google_coordinates
     end || no_coordinates_match
   end
 
@@ -70,6 +62,35 @@ class Geocoding
   end
 
   private
+
+  # A weak match is acceptable: we only get here when no location polygon matches the search.
+  # OS Names also returns fuzzy matches (e.g. an English hamlet for "Edinburgh"), so the name must match the search.
+  def os_coordinates
+    Geocoder.search(location, lookup: :uk_ordnance_survey_names)
+      .find { |result| result.data["COUNTRY"] == "England" && same_name?(result.data["NAME1"]) }
+      &.coordinates
+  end
+
+  # Compares against the part before any comma ("Guisborough, Redcar and Cleveland"), ignoring case and spaces.
+  def same_name?(name)
+    normalise(name) == normalise(location.split(",").first)
+  end
+
+  def normalise(text)
+    text.to_s.downcase.delete(" ")
+  end
+
+  # 'components: "country:gb"' is used to restrict the results to within the UK.
+  # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
+  def google_coordinates
+    Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
+      trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
+    end
+  rescue Geocoder::OverQueryLimitError
+    trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
+    Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
+    nil
+  end
 
   def trigger_google_geocoding_api_hit_event(type:, location:, result:)
     event = DfE::Analytics::Event.new
