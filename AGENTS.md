@@ -222,7 +222,7 @@ tested service object or model method — see
 ### External integrations
 
 DfE Sign In, GOV.UK One Login, GOV.UK Notify, GIAS (school data), DWP Find a Job (SFTP export),
-DfE Analytics / BigQuery, Google Indexing API, Google Places, Microsoft Defender for Cloud
+DfE Analytics / BigQuery, Google Indexing API, Ordnance Survey (OS Names, primary for geocoding), Google Geocoding (fallback), Google Places, Microsoft Defender for Cloud
 (upload virus scanning), Sentry, Zendesk, Skylight, the Publisher ATS API (REST, OpenAPI
 via RSwag), and [Find and Use an API](documentation/service/integrations/find-and-use-an-api.md),
 the DfE API catalogue the ATS API's OpenAPI document is published to by a daily scheduled job.
