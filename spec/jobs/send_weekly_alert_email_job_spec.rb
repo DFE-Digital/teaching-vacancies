@@ -25,12 +25,11 @@ RSpec.describe SendWeeklyAlertEmailJob do
     let!(:one_week_ago) { create(:vacancy, :published_slugged, publish_on: Date.current - 7) }
     let!(:two_days_ago) { create(:vacancy, :published_slugged, publish_on: Date.yesterday - 1) }
     let!(:yesterday) { create(:vacancy, :published_slugged, publish_on: Date.yesterday) }
-    let(:eighth_day) { PublishedVacancy.find_by!(publish_on: Date.current - 8) }
 
     let!(:subscription) { create(:weekly_subscription) }
 
     it "only includes jobs from the last week" do
-      expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday, two_days_ago, one_week_ago, eighth_day].map(&:id)) { mail }
+      expect(Jobseekers::AlertMailer).to receive(:alert).with(subscription.id, [yesterday, two_days_ago, one_week_ago].map(&:id)) { mail }
       expect(mail).to receive(:deliver_later) { ActionMailer::MailDeliveryJob.new }
       described_class.perform_later
     end
