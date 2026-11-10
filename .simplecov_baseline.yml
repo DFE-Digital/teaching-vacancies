@@ -5606,8 +5606,8 @@ app/views/jobseekers/profiles/job_preferences_locations/delete_location.html.sli
     percent: 76.92
     missed: 3
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 50.0
+    missed: 1
 app/views/jobseekers/profiles/job_preferences_locations/edit.html.slim:
   lines:
     percent: 100.0
