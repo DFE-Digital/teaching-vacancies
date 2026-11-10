@@ -60,7 +60,7 @@ class BlankJobApplicationPdf < JobApplicationPdf
 
   def other_religious_information
     [
-      ["How will you support the school's ethos and aims", nil],
+      ["How will you support the school's or college's ethos and aims", nil],
       ["Are you currently following a religion or faith?", "Yes / No"],
       ["What is your religious denomination or faith?", nil],
       ["Address of place of worship (optional)", nil],

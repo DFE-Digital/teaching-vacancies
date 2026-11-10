@@ -13,9 +13,9 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arra
 
 References allow employers to obtain factual information to support appointment decisions. Schools and colleges should obtain references before the interview stage, where possible. This allows any concerns raised to be explored further with the referee and taken up with the candidate during the interview. 
  
-Further guidance can be found in [Part three (safer recruitment) of the statutory safeguarding guidance for schools, Keeping children safe in education (KCSIE)](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2?).   
+Further guidance can be found in [Part three (safer recruitment) of the statutory safeguarding guidance for schools, Keeping children safe in education (KCSiE)](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2?).   
  
-KCSIE is not specific about how many references are required. Schools are best placed to make this decision based on their individual needs and circumstances. 
+KCSiE is not specific about how many references are required. Schools are best placed to make this decision based on their individual needs and circumstances. 
  
 If you are a returning teacher, [getting more teaching experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you get new referees. 
  
