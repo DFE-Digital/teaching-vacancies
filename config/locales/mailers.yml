@@ -117,9 +117,6 @@ en:
           heading: Create a Teaching Vacancies account
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
-        frequency:
-          daily: at the end of the day
-          weekly: weekly
         next_steps: >-
           You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert confirmation
@@ -133,9 +130,6 @@ en:
           heading: Create a Teaching Vacancies account
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
-        frequency:
-          daily: at the end of the day
-          weekly: weekly
         next_steps: >-
           You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert update

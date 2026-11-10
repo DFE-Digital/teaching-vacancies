@@ -34,7 +34,7 @@ production:
   # WEEKLY CRON JOBS
   #
   queue_weekly_alerts:
-    schedule: '0 18 * * 5' # "At 18:00 on Friday."
+    schedule: '0 9 * * 6' # 9am Saturday
     class: 'SendWeeklyAlertEmailJob'
     queue: default
 
@@ -172,7 +172,7 @@ production:
     queue: low
 
   queue_daily_alerts:
-    schedule: '0 15 * * *' # "At 15:00."
+    schedule: '0 7 * * *' # "At 7am."
     class: 'SendDailyAlertEmailJob'
     queue: default
 

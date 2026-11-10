@@ -311,8 +311,8 @@ en:
       current: 'You are receiving these alerts '
       future: 'You will receive these alerts '
     frequency:
-      daily: daily, at around 3 pm
-      weekly: weekly (Friday evening at around 6 pm)
+      daily: daily
+      weekly: weekly (Saturdays)
     create:
       success: Your job alert has been created
     keep:

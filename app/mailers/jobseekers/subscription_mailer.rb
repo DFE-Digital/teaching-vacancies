@@ -34,7 +34,7 @@ module Jobseekers
                     to: subscription.email,
                     personalisation: {
                       subscription_link: new_subscription_url,
-                      frequency: subscription.daily? ? "at the end of the day" : "weekly",
+                      frequency: subscription.frequency,
                       action: action,
                       action_description: action_desc,
                       jobseeker_missing_content: jobseeker_missing_content(subscription),

@@ -413,8 +413,8 @@ en:
       jobseekers_subscription_form:
         email: Email address
         frequency_options:
-          daily: Daily, around 3pm
-          weekly: Weekly, on Friday around 6pm
+          daily: Daily
+          weekly: Weekly, on Saturdays
       jobseekers_unsubscribe_feedback_form:
         email: What is your email address?
         comment: Is there anything else you'd like to tell us?
