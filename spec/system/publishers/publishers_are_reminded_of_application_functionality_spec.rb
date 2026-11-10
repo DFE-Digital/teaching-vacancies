@@ -17,10 +17,9 @@ RSpec.describe "Application feature reminder" do
 
     after { logout }
 
-    it "does not show reminder page when creating a job", :js do
+    it "does not show reminder page when creating a job" do
       expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
-      sleep 20
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
     end
   end
