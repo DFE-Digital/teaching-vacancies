@@ -25,9 +25,10 @@ download_dir=$(mktemp -d)
 # make sure script cleans up after itself
 # from https://stackoverflow.com/questions/10982911/creating-temporary-files-in-bash
 trap 'rm -rf "$download_dir"; exit' ERR EXIT  # HUP INT TERM
-wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
+wget --auth-no-challenge --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
-  | fgrep -v teaching-jobs-in- \
+  | fgrep -v "\-jobs-in-" \
+  | fgrep -v "\-jobs/" \
   | fgrep -v "\-teacher-jobs" \
   | fgrep -v "/jobs/" \
   | sed s'/    <loc>//' \
@@ -35,7 +36,7 @@ wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | wget -nv -np -H -r -t5 -l1 -i - --user=$2 --password=$3 \
   -P $download_dir \
   --spider \
-  --limit-rate=200k \
+  --limit-rate=120k \
   --exclude-directories="assets" \
   --auth-no-challenge \
   --no-relative \
