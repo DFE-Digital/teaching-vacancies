@@ -112,14 +112,29 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 
 
 ### ORDNANCE_SURVEY_API_KEY
-Used for geocoding.
-The key cannot be revoked through the portal. Contact Ordnance survey support.
+Used for the OS Names API: location geocoding, with Google as a fallback
+(see [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md)).
 
-To create a new key:
-1. Connect to https://developer.ordnancesurvey.co.uk/
-1. Navigate to My Keys > Add a new key
-1. Enter key name, select `OS Names API` and click `Save Key`
+There is one [OS Data Hub](https://osdatahub.os.uk/) project, and so one key, per environment:
+- [Teaching Vacancies - Prod](https://osdatahub.os.uk/data/apis/projects/Teaching_Vacancies_-_Prod)
+- [Teaching Vacancies - Staging](https://osdatahub.os.uk/data/apis/projects/Teaching_Vacancies_-_Staging)
+- [Teaching Vacancies - QA](https://osdatahub.os.uk/data/apis/projects/Teaching_Vacancies_-_QA)
+- [Teaching Vacancies - Review](https://osdatahub.os.uk/data/apis/projects/Teaching_Vacancies_-_Review)
+- [Teaching Vacancies - Dev](https://osdatahub.os.uk/data/apis/projects/Teaching_Vacancies_-_Dev): use this one for local development
+
+To get access to the projects:
+1. Sign up at [OS Data Hub](https://osdatahub.os.uk/) using your `education.gov.uk` email.
+1. When prompted, select the **Public Sector Plan** and set **Organisation** to `Department of Education`.
+1. Wait for the Department for Education account holder to approve your account.
+1. Once approved, the projects are listed under [API projects](https://osdatahub.os.uk/projects).
+
+To change a key:
+1. Copy or regenerate the API key in the relevant project. The project needs the `OS Names API` added.
 1. Update `ORDNANCE_SURVEY_API_KEY` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
+1. Do a rolling restart on the updated environment for the application
+
+For local development, set `ORDNANCE_SURVEY_API_KEY` in your `.env` file to the Dev project key. Without it every
+lookup falls back to Google.
 
 ### SENTRY_DSN and SENTRY_FRONTEND_DSN
 
