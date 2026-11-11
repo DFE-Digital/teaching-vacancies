@@ -123,5 +123,39 @@ RSpec.describe "Referees::BuildReferencesController" do
         expect(job_reference.reload.can_give_reference).to be(true)
       end
     end
+
+    context "when the referee is currently employed and an invalid end date was also submitted" do
+      let(:params) do
+        {
+          referees_employment_reference_form: {
+            token: token,
+            how_do_you_know_the_candidate: "Line manager",
+            "employment_start_date(1i)" => "2020",
+            "employment_start_date(2i)" => "1",
+            "employment_start_date(3i)" => "1",
+            currently_employed: "true",
+            "employment_end_date(1i)" => "2024",
+            "employment_end_date(2i)" => "13",
+            "employment_end_date(3i)" => "1",
+            reason_for_leaving: "Relocation",
+            would_reemploy_current: "true",
+            would_reemploy_current_reason: "Reliable",
+            would_reemploy_any: "true",
+            would_reemploy_any_reason: "Reliable",
+          },
+        }
+      end
+
+      before do
+        job_reference.update!(employment_end_date: Date.new(2023, 1, 1))
+      end
+
+      it "saves the reference without an end date" do
+        patch reference_build_path(reference_request.id, :employment_reference, token: token), params: params
+
+        expect(response).to have_http_status(:redirect)
+        expect(job_reference.reload).to have_attributes(currently_employed: true, employment_end_date: nil)
+      end
+    end
   end
 end
