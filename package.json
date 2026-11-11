@@ -52,7 +52,7 @@
     "sass": "^1.106.1",
     "stylelint": "^17.16.0",
     "stylelint-config-sass-guidelines": "^13.0.0",
-    "stylelint-config-standard": "^40.0.0"
+    "stylelint-config-standard": "^41.0.0"
   },
   "scripts": {
     "build": "node esbuild.config.js",
