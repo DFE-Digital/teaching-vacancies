@@ -20,9 +20,12 @@
     = f.govuk_check_box :salary_types, "hourly_rate" do
       = f.govuk_text_field :hourly_rate, label: { size: "s" }
 
-  = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
-    = f.govuk_radio_button :benefits, "true" do
-      = f.govuk_text_area :benefits_details, label: { size: "s" }
-    = f.govuk_radio_button :benefits, "false", link_errors: true
+  - if @vacancy.has_optional_benefits?
+    = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
+      = f.govuk_radio_button :benefits, "true" do
+        = f.govuk_text_area :benefits_details, label: { size: "s" }
+      = f.govuk_radio_button :benefits, "false", link_errors: true
+  - else
+    = f.hidden_field :benefits, value: false
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f
