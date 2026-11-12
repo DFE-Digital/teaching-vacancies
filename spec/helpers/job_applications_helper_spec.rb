@@ -119,17 +119,19 @@ RSpec.describe JobApplicationsHelper do
       expect(tabs_data["offered"].values.flatten.map(&:status).uniq).to match_array(%w[offered declined])
     end
 
-    context "with a status sorted by date" do
-      let(:job_applications) do
-        [
-          build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 3)),
-          build_stubbed(:job_application, :status_offered, offered_at: nil),
-          build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 1)),
-        ]
-      end
+    { "interviewing" => %w[interviewing interviewing_at],
+      "offered" => %w[offered offered_at],
+      "declined" => %w[offered declined_at] }.each do |status, (tab, date_field)|
+      context "with #{status} applications" do
+        let(:job_applications) do
+          [Date.new(2025, 1, 3), nil, Date.new(2025, 1, 1)].map do |date|
+            build_stubbed(:job_application, :"status_#{status}", date_field => date)
+          end
+        end
 
-      it "lists applications without the date first, then by date" do
-        expect(tabs_data["offered"]["offered"]).to eq(job_applications.values_at(1, 2, 0))
+        it "lists applications without a #{date_field} first, then by date" do
+          expect(tabs_data[tab][status]).to eq(job_applications.values_at(1, 2, 0))
+        end
       end
     end
 

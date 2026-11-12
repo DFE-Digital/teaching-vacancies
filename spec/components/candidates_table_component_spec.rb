@@ -5,7 +5,7 @@ RSpec.describe CandidatesTableComponent, type: :component do
 
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:status) { :status_submitted }
-  let(:alice) { build_stubbed(:job_application, status, first_name: "Alice", last_name: "Archer", vacancy:) }
+  let(:alice) { build_stubbed(:job_application, status, first_name: "Alice", last_name: "Archer", vacancy:).decorate }
   let(:candidates) { [alice] }
   let(:component) { described_class.new(vacancy:, candidates:) }
 
@@ -32,11 +32,10 @@ RSpec.describe CandidatesTableComponent, type: :component do
       end
     end
 
-    # Candidates are passed undecorated, so these also check the table hides personal details itself
     context "when the vacancy anonymises applications" do
       let(:vacancy) { build_stubbed(:vacancy, anonymise_applications: true) }
       # Derived from the application's id, so it differs each run
-      let(:reference) { alice.decorate.anonymised_name }
+      let(:reference) { alice.anonymised_name }
 
       it "shows only the anonymised reference, linked to the application" do
         expect(page).to have_table(with_rows: [{ "Name" => reference, "Contact details" => "Information not shown" }], exact: true)
@@ -77,7 +76,7 @@ RSpec.describe CandidatesTableComponent, type: :component do
   describe "date columns" do
     let(:alice) do
       build_stubbed(:job_application, :status_offered, first_name: "Alice", last_name: "Archer", vacancy:,
-                                                       offered_at: date, declined_at: date, interview_feedback_received_at: date, interviewing_at: date)
+                                                       offered_at: date, declined_at: date, interview_feedback_received_at: date, interviewing_at: date).decorate
     end
     let(:component) do
       described_class.new(vacancy:, candidates:,

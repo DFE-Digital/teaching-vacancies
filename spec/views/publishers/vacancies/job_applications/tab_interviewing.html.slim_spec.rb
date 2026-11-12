@@ -65,19 +65,6 @@ RSpec.describe "publishers/vacancies/job_applications/_tab_interviewing" do
         }
       end
     end
-
-    describe "#sort_candidates" do
-      let(:first_candidate) { build_stubbed(:job_application, :status_interviewing, interviewing_at: Date.new(2025, 1, 3)) }
-      let(:nil_candidate) { build_stubbed(:job_application, :status_interviewing, interviewing_at: nil) }
-      let(:early_candidate) { build_stubbed(:job_application, :status_interviewing, interviewing_at: Date.new(2025, 1, 1)) }
-      let(:interview_candidates) { [first_candidate, nil_candidate, early_candidate] }
-
-      let(:result) { page.all(".application-interviewing a").map(&:text).reject { |n| ["Pre-interview checks", "Add interview date and time"].include?(n) } }
-
-      it "sorts candidates with nil interviewing_at first, then by date" do
-        expect(result).to eq([nil_candidate, early_candidate, first_candidate].map(&:name))
-      end
-    end
   end
 
   describe "unsuccessful interview panel" do
@@ -87,8 +74,8 @@ RSpec.describe "publishers/vacancies/job_applications/_tab_interviewing" do
       expect(tab_panel.all('input[type="checkbox"]')).to be_empty
     end
 
-    it "form points to no url" do
-      expect(tab_panel.find("form")["action"]).to eq("")
+    it "is not a form" do
+      expect(tab_panel).to have_no_css("form")
     end
 
     it "table has moj multi select attributes" do

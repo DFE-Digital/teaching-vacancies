@@ -4,7 +4,7 @@ require "rails_helper"
 RSpec.describe SelectableCandidatesTableComponent, type: :component do
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:status) { :status_submitted }
-  let(:alice) { build_stubbed(:job_application, status, first_name: "Alice", last_name: "Archer", vacancy:) }
+  let(:alice) { build_stubbed(:job_application, status, first_name: "Alice", last_name: "Archer", vacancy:).decorate }
 
   # Assertions use `page`: Capybara can't find fields by label in what render_inline returns.
   # The block runs in the view, so it is handed what it needs from the spec.
@@ -18,6 +18,15 @@ RSpec.describe SelectableCandidatesTableComponent, type: :component do
 
   it "has a labelled checkbox for each candidate" do
     expect(page).to have_field("Select Alice Archer", type: :checkbox)
+  end
+
+  # Publishers select unsuccessful candidates to send them rejection emails
+  context "with an unsuccessful candidate" do
+    let(:status) { :status_unsuccessful }
+
+    it "can be selected" do
+      expect(page).to have_field("Select Alice Archer", type: :checkbox)
+    end
   end
 
   # The absence is checked alongside the row, so it can't pass just because nothing rendered
