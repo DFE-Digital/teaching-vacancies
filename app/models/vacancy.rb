@@ -180,6 +180,7 @@ class Vacancy < ApplicationRecord
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
+  OUTBOUND_UTM_PARAMS = { utm_source: "teaching-vacancies", utm_medium: "referral" }.freeze
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -193,6 +194,11 @@ class Vacancy < ApplicationRecord
 
   def external?
     external_source.present? || publisher_ats_api_client.present?
+  end
+
+  def outbound_application_url
+    url = external? ? external_advert_url : application_link
+    with_utm_params(url) if url.present?
   end
 
   def organisation
@@ -335,6 +341,17 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  def with_utm_params(url)
+    uri = Addressable::URI.parse(url)
+    # don't override existing utm params in case organisations are doing their own analytics
+    return url if uri.query.to_s.split("&").any? { |param| param.start_with?("utm_") }
+
+    uri.query = [uri.query.presence, OUTBOUND_UTM_PARAMS.to_query].compact.join("&")
+    uri.to_s
+  rescue Addressable::URI::InvalidURIError
+    url
+  end
 
   def job_address_fields
     [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]

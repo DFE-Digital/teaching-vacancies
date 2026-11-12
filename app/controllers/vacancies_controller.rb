@@ -40,11 +40,12 @@ class VacanciesController < ApplicationController
 
   def apply
     vacancy = PublishedVacancy.live.friendly.find(params[:id])
-    raise ActiveRecord::RecordNotFound if vacancy.application_link.blank?
+    destination = vacancy.outbound_application_url
+    raise ActiveRecord::RecordNotFound if destination.blank?
     return redirect_to(trn_interstitial_job_path(vacancy.id)) if vacancy.website? && !params[:trn_prompted] && trn_prompt_required?(vacancy)
 
     vacancy.increment!(:external_application_clicks)
-    redirect_to vacancy.application_link, allow_other_host: true
+    redirect_to destination, allow_other_host: true
   end
 
   def campaign_landing_page

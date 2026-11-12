@@ -238,7 +238,7 @@ RSpec.describe "Jobseekers can complete a job application" do
         expect(page).to have_content("What is your teacher reference number")
         fill_in "job-application-teacher-reference-number-field", with: Faker::Number.number(digits: 7)
         click_on "Continue"
-        expect(page).to have_current_path(vacancy.application_link)
+        expect(page).to have_current_path(vacancy.outbound_application_url)
       end
 
       scenario "without a TRN" do
@@ -247,7 +247,7 @@ RSpec.describe "Jobseekers can complete a job application" do
         end
         expect(page).to have_content("What is your teacher reference number")
         click_on "Skip"
-        expect(page).to have_current_path(vacancy.application_link)
+        expect(page).to have_current_path(vacancy.outbound_application_url)
       end
     end
   end
