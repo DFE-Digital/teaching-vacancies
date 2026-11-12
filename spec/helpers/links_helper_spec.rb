@@ -32,7 +32,7 @@ RSpec.describe LinksHelper do
       expect(subject).to have_css("a[data-tracked-link-href='#{vacancy.external_advert_url}']")
     end
 
-    it "sends our origin as the referrer so the destination can attribute the traffic" do
+    it "omits noreferrer so the destination can attribute the traffic to us" do
       expect(subject).to have_css("a[rel='noopener']")
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe LinksHelper do
       expect(subject).to have_css("a[data-tracked-link-href='#{vacancy.application_link}']")
     end
 
-    it "sends our origin as the referrer so the destination can attribute the traffic" do
+    it "omits noreferrer so the destination can attribute the traffic to us" do
       expect(subject).to have_css("a[rel='noopener']")
     end
   end
