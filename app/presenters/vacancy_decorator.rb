@@ -11,6 +11,7 @@ class VacancyDecorator < Draper::Decorator
            :visa_sponsorship_available, :school_offer, :flexi_working,
            :include_additional_documents, :central_office?, :contact_email,
            :school_visits?, :location, :benefits?, :supporting_documents,
+           :has_optional_benefits?,
            :allow_phase_to_be_set?, :published?, :draft?, :pending?,
            :salary_types, :benefits,
            :working_patterns_details?, :working_patterns_details,

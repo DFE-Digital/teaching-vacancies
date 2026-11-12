@@ -47,7 +47,7 @@ RSpec.describe "Creating a vacancy as an FE college" do
     publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
 
     expect(publisher_pay_package_page).to be_displayed
-    publisher_pay_package_page.fill_in_and_submit_form(vacancy)
+    publisher_pay_package_page.fill_in_and_submit_form(vacancy, benefits: false)
 
     expect(publisher_about_the_role_page).to be_displayed
     click_on I18n.t("buttons.save_and_continue")
@@ -115,6 +115,8 @@ RSpec.describe "Creating a vacancy as an FE college" do
       within("#job_location") do
         expect(page).to have_link(I18n.t("buttons.change"), href: /confirm_job_address/)
       end
+
+      expect(page).to have_no_content "additional allowances"
 
       within("#receive_applications") do
         expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.website"))

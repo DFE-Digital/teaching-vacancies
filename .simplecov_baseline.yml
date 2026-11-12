@@ -1259,8 +1259,8 @@ app/controllers/publishers/vacancies/wizard_base_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 71.42
-    missed: 4
+    percent: 83.33
+    missed: 2
 app/controllers/publishers/vacancies/wizard_controller.rb:
   lines:
     percent: 100.0
@@ -3289,8 +3289,8 @@ app/models/jobseeker_profile.rb:
     percent: 95.08
     missed: 3
   branches:
-    percent: 73.68
-    missed: 5
+    percent: 82.35
+    missed: 3
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
@@ -4544,20 +4544,6 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
-app/views/api/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/api/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -4808,8 +4794,8 @@ app/views/jobseekers/job_applications/_print_nested_section.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
-    missed: 4
+    percent: 87.5
+    missed: 1
 app/views/jobseekers/job_applications/_print_table.html.slim:
   lines:
     percent: 100.0
@@ -6217,27 +6203,6 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
@@ -6646,11 +6611,11 @@ app/views/publishers/vacancies/_important_dates.html.slim:
     missed: 2
 app/views/publishers/vacancies/_job_details.html.slim:
   lines:
-    percent: 97.8
+    percent: 97.82
     missed: 2
   branches:
-    percent: 82.92
-    missed: 7
+    percent: 86.04
+    missed: 6
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
     percent: 100.0
@@ -6831,7 +6796,7 @@ app/views/publishers/vacancies/build/pay_package.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
+    percent: 83.33
     missed: 1
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
