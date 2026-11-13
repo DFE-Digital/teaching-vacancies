@@ -81,6 +81,18 @@ class VacancyDecorator < Draper::Decorator
     I18n.t("helpers.label.publishers_job_listing_about_the_role_form.fe_role_qts_required_options.#{model.fe_role_qts_required}")
   end
 
+  def vacancy_salary
+    if model.salary?
+      [I18n.t("jobs.annual_salary"), model.salary]
+    elsif model.actual_salary?
+      [I18n.t("jobs.actual_salary"), model.actual_salary]
+    elsif model.pay_scale?
+      [I18n.t("jobs.pay_scale"), model.pay_scale]
+    else
+      [I18n.t("jobs.hourly_rate"), model.hourly_rate]
+    end
+  end
+
   private
 
   def retrieve_section_forms(section, step_process)

@@ -2491,7 +2491,7 @@ app/helpers/vacancies_helper.rb:
     percent: 94.77
     missed: 8
   branches:
-    percent: 92.5
+    percent: 92.68
     missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
