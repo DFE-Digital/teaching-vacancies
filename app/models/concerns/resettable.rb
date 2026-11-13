@@ -26,6 +26,9 @@ module Resettable
 
     validates :benefits_details, absence: true, if: -> { benefits == false }
     validates :benefits_details, presence: true, if: -> { benefits == true }
+
+    validates :further_details, absence: true, if: -> { further_details_provided == false }
+    validates :further_details, presence: true, if: -> { further_details_provided == true }
   end
 
   def reset_dependent_fields
@@ -96,15 +99,5 @@ module Resettable
     return unless include_additional_documents_changed?
 
     supporting_documents.each(&:purge_later) unless include_additional_documents?
-  end
-
-  def contact_number_provided=(value)
-    self[:contact_number] = nil unless value
-    super
-  end
-
-  def further_details_provided=(value)
-    self[:further_details] = nil unless value
-    super
   end
 end
