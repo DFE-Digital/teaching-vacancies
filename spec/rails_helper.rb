@@ -149,6 +149,7 @@ RSpec.configure do |config|
     )
 
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
+    stub_request(:get, %r{api\.os\.uk/search/names/v1/find}).to_return(status: 200, body: '{"header": {"totalresults": 0}}', headers: {})
   end
 
   config.before do |example|
@@ -347,6 +348,12 @@ VCR.configure do |config|
 
   config.filter_sensitive_data("<GOOGLE_LOCATION_SEARCH_API_KEY>") do |interaction|
     if interaction.request.parsed_uri.host == "maps.googleapis.com"
+      URI::QueryParams.parse(interaction.request.parsed_uri.query)["key"]
+    end
+  end
+
+  config.filter_sensitive_data("<ORDNANCE_SURVEY_API_KEY>") do |interaction|
+    if interaction.request.parsed_uri.host == "api.os.uk"
       URI::QueryParams.parse(interaction.request.parsed_uri.query)["key"]
     end
   end
