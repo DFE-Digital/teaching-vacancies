@@ -7,6 +7,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   self.delivery_job = AlertMailerJob
   helper DatesHelper
   helper VacanciesHelper
+  helper OrganisationsHelper
   helper ReadableVacancyHelper
 
   helper_method :subscription, :jobseeker, :jobseeker_has_profile?
