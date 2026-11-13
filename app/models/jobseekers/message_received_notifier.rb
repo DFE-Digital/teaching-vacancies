@@ -13,8 +13,7 @@ module Jobseekers
       config.args = :message_instance
     end
 
-    # rubocop:disable Metrics/BlockLength
-    notification_methods do
+    notification_methods do # rubocop:disable Metrics/BlockLength
       def message
         if job_application.unsuccessful?
           t("notifications.jobseekers/message_received_notification.unsuccessful.message_html",
@@ -62,5 +61,4 @@ module Jobseekers
       record
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end

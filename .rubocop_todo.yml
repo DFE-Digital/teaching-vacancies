@@ -170,7 +170,6 @@ FactoryBot/FactoryAssociationWithStrategy:
 # SupportedStylesAlignWith: start_of_line, relative_to_receiver
 Layout/IndentationWidth:
   Exclude:
-    - 'app/jobs/disable_inactive_profiles_job.rb'
     - 'app/jobs/inactive_profile_warnings_job.rb'
 
 # Offense count: 80
