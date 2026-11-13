@@ -343,7 +343,7 @@ class Vacancy < ApplicationRecord
   private
 
   def with_utm_params(url)
-    uri = Addressable::URI.parse(url)
+    uri = Addressable::URI.heuristic_parse(url)
     # don't override existing utm params in case organisations are doing their own analytics
     return url if uri.query.to_s.split("&").any? { |param| param.downcase.start_with?("utm_") }
 
