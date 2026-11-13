@@ -252,7 +252,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build_stubbed(:vacancy, organisations: [college], job_address_line1: "10 Campus Road", job_address_town: "Brighton", job_address_postcode: "BN1 1AA") }
 
       it "returns the college name with the custom address" do
-        expect(subject).to eq("City College, Brighton, BN1 1AA")
+        expect(subject).to eq("City College, 10 Campus Road, Brighton, BN1 1AA")
       end
     end
 
@@ -261,7 +261,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build_stubbed(:vacancy, organisations: [college]) }
 
       it "returns the college name with the organisation address" do
-        expect(subject).to eq("City College, Brighton, East Sussex, BN1 1AA")
+        expect(subject).to eq("City College, 1 High Street, Brighton, East Sussex, BN1 1AA")
       end
     end
   end

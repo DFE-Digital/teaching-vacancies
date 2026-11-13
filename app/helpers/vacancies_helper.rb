@@ -145,8 +145,8 @@ module VacanciesHelper
     text = address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
     if vacancy.organisations.many?
       t("organisations.full_job_location", name: text, count: vacancy.organisations.size - 1)
-    elsif vacancy.for_an_fe_college? && vacancy.job_address_fields.reject(&:blank?).any?
-      address_join([organisation.name, vacancy.job_address_town, vacancy.job_address_county, vacancy.job_address_postcode])
+    elsif vacancy.for_an_fe_college?
+      address_join([organisation.name, vacancy_address(vacancy)])
     else
       text
     end
