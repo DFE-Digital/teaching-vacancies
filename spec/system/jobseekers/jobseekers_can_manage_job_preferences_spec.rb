@@ -20,6 +20,18 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
 
   after { logout }
 
+  context "when just filling in roles" do
+    it "displays an incomplete summary" do
+      expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
+
+      check "Head of year or phase"
+      check "Assistant headteacher"
+      click_on I18n.t("buttons.save_and_continue")
+      click_on I18n.t("buttons.cancel")
+      expect(page).to have_link("Complete job preferences", href: jobseekers_job_preferences_step_path(:phases))
+    end
+  end
+
   it "allows the jobseeker to fill in their job preferences", :vcr do
     expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
     expect(page).to have_css("h1", text: "What roles are you interested in?")
