@@ -1315,7 +1315,7 @@ app/controllers/subscriptions_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.11
+    percent: 94.23
     missed: 2
 app/controllers/support_requests_controller.rb:
   lines:
@@ -2505,8 +2505,8 @@ app/helpers/vacancy_forms_helper.rb:
     percent: 94.44
     missed: 3
   branches:
-    percent: 73.91
-    missed: 6
+    percent: 78.26
+    missed: 5
 app/jobs/alert_email/base.rb:
   lines:
     percent: 100.0
@@ -4955,7 +4955,7 @@ app/views/jobseekers/job_applications/build/professional_body_memberships.html.s
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
+    percent: 83.33
     missed: 1
 app/views/jobseekers/job_applications/build/professional_status.html.slim:
   lines:
@@ -4983,7 +4983,7 @@ app/views/jobseekers/job_applications/build/training_and_cpds.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
+    percent: 83.33
     missed: 1
 app/views/jobseekers/job_applications/confirm_destroy.html.slim:
   lines:
@@ -8105,8 +8105,8 @@ lib/geocoding.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
 lib/google_api_client.rb:
   lines:
     percent: 100.0
