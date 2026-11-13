@@ -2,7 +2,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
   before_action :set_vacancy, except: %i[index start create use_template]
 
   before_action :invent_job_alert_search_criteria, only: %i[show preview]
-  before_action :redirect_to_new_features_reminder, only: %i[create]
+
+  before_action only: %i[create], if: -> { show_application_feature_reminder_page? } do
+    redirect_to reminder_publishers_new_features_path
+  end
 
   before_action :set_publisher_preference, only: %i[index]
   before_action :strip_empty_checkbox_params, only: %i[index]
@@ -108,12 +111,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::WizardBaseControl
     @invented_job_alert_search_criteria = Search::CriteriaInventor.new(vacancy).criteria
   end
 
-  def redirect_to_new_features_reminder
-    redirect_to reminder_publishers_new_features_path if show_application_feature_reminder_page?
-  end
-
   def show_application_feature_reminder_page?
-    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
+    return false if session[:visited_application_feature_reminder_page]
 
     PublishedVacancy.kept.where(
       publisher_id: current_publisher.id,

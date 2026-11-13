@@ -1270,7 +1270,7 @@ app/controllers/publishers/vacancies/wizard_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies_controller.rb:
   lines:
-    percent: 98.86
+    percent: 98.85
     missed: 1
   branches:
     percent: 100.0
@@ -3289,8 +3289,8 @@ app/models/jobseeker_profile.rb:
     percent: 95.08
     missed: 3
   branches:
-    percent: 73.68
-    missed: 5
+    percent: 82.35
+    missed: 3
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
