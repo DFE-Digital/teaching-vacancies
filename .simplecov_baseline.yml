@@ -3205,8 +3205,8 @@ app/models/jobseeker_profile.rb:
     percent: 97.72
     missed: 1
   branches:
-    percent: 75.0
-    missed: 2
+    percent: 90.0
+    missed: 1
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
