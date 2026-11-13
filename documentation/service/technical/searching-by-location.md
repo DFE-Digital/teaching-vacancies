@@ -171,13 +171,19 @@ The current team knowledge and understanding on this area is very limited and ba
 
 As many location search terms don't match a polygon name, the service falls back to obtaining the location coordinates.
 
-We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The default source for retrieving the location coordinates is the Google Geocoding API.
+We use the [Geocoding class](/lib/geocoding.rb) to retrieve the location coordinates, storing them in the `geocoded_locations` table (see the [`GeocodedLocation` model](/app/models/geocoded_location.rb)). The default source for retrieving the location coordinates is the Google Geocoding API.
 
 Information about the API usage/costs should be accessible from the Google Cloud panel using your DfE email account.
 
 ### Google Geocoding API costs
 
 Google Geocoding API is one of our higher costs in Google Cloud.
-To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period (Currently set at 180 days), so there are fewer API hits renewing existing cached results.
+To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we store the results and reuse them for 180 days (`GeocodedLocation::FRESH_FOR`). Lookups are normalised (trimmed, whitespace squished, lowercased), so "London " and "london" share one row.
 
-Please be aware of the impact on the API costs if deciding to modify the Geocoding cache duration period.
+- Results are kept in a database table rather than `Rails.cache`, because the cache is short-lived and evicts oldest-first. See [ADR 0017](/documentation/adr/0017_store_geocoding_results_in_a_database_table.md).
+- A row older than 180 days is refreshed from Google. If the refresh fails, the old coordinates are still returned.
+- Locations Google finds no match for are stored for 7 days (`GeocodedLocation::NO_MATCH_FRESH_FOR`). Results from the Ordnance Survey fallback, used when Google is over its query limit, are stored like any other.
+- `PurgeStaleGeocodedLocationsJob` deletes rows older than a year (`GeocodedLocation::RETENTION`) daily.
+- `rake geocoding:import_from_redis_cache` copies the results held by the legacy Redis cache into the table. It is safe to re-run.
+
+Please be aware of the impact on the API costs if deciding to modify the freshness period.

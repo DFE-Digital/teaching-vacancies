@@ -333,3 +333,11 @@
     - variant
     - created_at
     - converted
+  :geocoded_locations:
+    - id
+    - query
+    - latitude
+    - longitude
+    - geocoded_at
+    - created_at
+    - updated_at
