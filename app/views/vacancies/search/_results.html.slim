@@ -14,7 +14,7 @@
       p.govuk-body
         = safe_join([organisation_type_value(vacancy), vacancy.readable_working_patterns_with_details], " ")
       p.govuk-body
-        = Vacancy::SALARY_TYPES.filter_map { |salary_field| vacancy.public_send(salary_field) }.join(" ")
+        = vacancy_salary(vacancy).join(" ")
       - if search_coordinates && vacancy.geolocation
         p.govuk-body.distance-from
           = t("jobs.distance_from_location", distance: vacancy.distance_in_miles_to(search_coordinates).round(1))

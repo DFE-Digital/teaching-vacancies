@@ -2488,10 +2488,10 @@ app/helpers/status_tag_helper.rb:
     missed: 0
 app/helpers/vacancies_helper.rb:
   lines:
-    percent: 94.48
+    percent: 94.77
     missed: 8
   branches:
-    percent: 92.0
+    percent: 92.5
     missed: 6
 app/helpers/vacancies_options_helper.rb:
   lines:
