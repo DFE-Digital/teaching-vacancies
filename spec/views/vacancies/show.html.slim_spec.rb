@@ -297,7 +297,7 @@ RSpec.describe "vacancies/show" do
     end
 
     describe "View advert on external website" do
-      let(:vacancy) { build_stubbed(:vacancy, :external) }
+      let(:vacancy) { build_stubbed(:external_vacancy) }
       let(:jobseeker) { nil }
 
       it "has the correct text" do
@@ -306,7 +306,7 @@ RSpec.describe "vacancies/show" do
     end
 
     describe "External college notice" do
-      let(:vacancy) { build_stubbed(:vacancy, :external, organisations: [build(:college)]) }
+      let(:vacancy) { build_stubbed(:external_vacancy, organisations: [build(:college)]) }
       let(:jobseeker) { nil }
 
       it "uses college wording" do
