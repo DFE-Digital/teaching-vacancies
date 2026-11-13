@@ -226,6 +226,11 @@ class Vacancy < ApplicationRecord
     organisations.any?(&:fe_college?)
   end
 
+  # colleges don't support the benefits question
+  def has_optional_benefits?
+    !for_an_fe_college?
+  end
+
   def live?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
