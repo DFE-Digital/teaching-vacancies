@@ -2488,11 +2488,11 @@ app/helpers/vacancies_options_helper.rb:
     missed: 0
 app/helpers/vacancy_forms_helper.rb:
   lines:
-    percent: 90.74
-    missed: 5
+    percent: 94.44
+    missed: 3
   branches:
-    percent: 69.56
-    missed: 7
+    percent: 73.91
+    missed: 6
 app/jobs/alert_email/base.rb:
   lines:
     percent: 100.0
@@ -3275,8 +3275,8 @@ app/models/jobseeker_profile.rb:
     percent: 95.08
     missed: 3
   branches:
-    percent: 73.68
-    missed: 5
+    percent: 88.23
+    missed: 2
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
@@ -4962,8 +4962,8 @@ app/views/jobseekers/job_applications/build/referees.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/job_applications/build/training_and_cpds.html.slim:
   lines:
     percent: 100.0
@@ -5935,8 +5935,8 @@ app/views/layouts/application.html.slim:
     percent: 75.67
     missed: 9
   branches:
-    percent: 60.0
-    missed: 4
+    percent: 80.0
+    missed: 2
 app/views/layouts/application_intermediary.html.slim:
   lines:
     percent: 73.52
