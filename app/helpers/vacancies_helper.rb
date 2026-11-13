@@ -256,6 +256,18 @@ module VacanciesHelper
     end
   end
 
+  def vacancy_salary(vacancy)
+    if vacancy.salary?
+      [t("jobs.annual_salary"), vacancy.salary]
+    elsif vacancy.actual_salary?
+      [t("jobs.actual_salary"), vacancy.actual_salary]
+    elsif vacancy.pay_scale?
+      [t("jobs.pay_scale"), vacancy.pay_scale]
+    else
+      [t("jobs.hourly_rate"), vacancy.hourly_rate]
+    end
+  end
+
   private
 
   def request_referrer

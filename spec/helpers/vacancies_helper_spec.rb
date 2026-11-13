@@ -653,4 +653,38 @@ RSpec.describe VacanciesHelper do
       expect(subject).to eq(link)
     end
   end
+
+  describe "#vacancy_salary" do
+    context "with a salary" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, salary: "20000") }
+
+      it "shows salary" do
+        expect(vacancy_salary(vacancy)).to eq([t("jobs.annual_salary"), "20000"])
+      end
+    end
+
+    context "with actual salary" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, actual_salary: "20000") }
+
+      it "shows salary" do
+        expect(vacancy_salary(vacancy)).to eq([t("jobs.actual_salary"), "20000"])
+      end
+    end
+
+    context "with a pay scale" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, pay_scale: "HS2") }
+
+      it "shows salary" do
+        expect(vacancy_salary(vacancy)).to eq([t("jobs.pay_scale"), "HS2"])
+      end
+    end
+
+    context "with an hourly rate" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, hourly_rate: "25 per hour") }
+
+      it "shows salary" do
+        expect(vacancy_salary(vacancy)).to eq([t("jobs.hourly_rate"), "25 per hour"])
+      end
+    end
+  end
 end
