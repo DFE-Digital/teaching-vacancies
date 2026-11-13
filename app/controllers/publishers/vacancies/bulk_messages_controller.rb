@@ -35,7 +35,7 @@ module Publishers
       def send_messages_for(job_applications)
         job_applications.each do |job_application|
           conversation = job_application.conversations.build
-          conversation.publisher_messages.build(send_message_params.merge(sender: current_publisher))
+          conversation.messages.build(send_message_params.merge(type: "PublisherMessage", sender: current_publisher))
           conversation.save!
         end
       end

@@ -62,7 +62,8 @@ RSpec.describe "Jobseeker notifications" do
 
     context "when marking all notifications on current page as read" do
       before do
-        3.times do
+        # Together with the message the conversation was started with, this gives 3 notifications
+        2.times do
           create(:publisher_message, conversation:)
         end
         sign_in(jobseeker, scope: :jobseeker)

@@ -6,6 +6,9 @@ class Conversation < ApplicationRecord
   has_many :jobseeker_messages, dependent: :destroy
   has_many :publisher_messages, dependent: :destroy
 
+  # Only sees messages built through `messages`, not through `jobseeker_messages` or `publisher_messages`
+  validates :messages, length: { minimum: 1 }, strict: true
+
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
   scope :for_organisations, lambda { |org_ids|
