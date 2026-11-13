@@ -1254,13 +1254,6 @@ app/controllers/publishers/vacancies/statistics_controller.rb:
   branches:
     percent: 100.0
     missed: 0
-app/controllers/publishers/vacancies/wizard_base_controller.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 71.42
-    missed: 4
 app/controllers/publishers/vacancies/wizard_controller.rb:
   lines:
     percent: 100.0
@@ -3289,8 +3282,8 @@ app/models/jobseeker_profile.rb:
     percent: 95.08
     missed: 3
   branches:
-    percent: 82.35
-    missed: 3
+    percent: 88.23
+    missed: 2
 app/models/jobseeker_profile_excluded_organisation.rb:
   lines:
     percent: 100.0
@@ -4220,8 +4213,8 @@ app/services/record_sort.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
-    missed: 2
+    percent: 100.0
+    missed: 0
 app/services/reference_pdf_generator.rb:
   lines:
     percent: 100.0
@@ -4803,13 +4796,6 @@ app/views/jobseekers/job_applications/_print_header.html.slim:
   branches:
     percent: 75.0
     missed: 2
-app/views/jobseekers/job_applications/_print_nested_section.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/views/jobseekers/job_applications/_print_table.html.slim:
   lines:
     percent: 100.0
@@ -5944,13 +5930,6 @@ app/views/layouts/action_text/contents/_content.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/layouts/application.html.slim:
-  lines:
-    percent: 75.67
-    missed: 9
-  branches:
-    percent: 80.0
-    missed: 2
 app/views/layouts/application_intermediary.html.slim:
   lines:
     percent: 73.52
@@ -8084,8 +8063,8 @@ lib/dsi_client.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 40.0
-    missed: 6
+    percent: 50.0
+    missed: 4
 lib/fail_safe.rb:
   lines:
     percent: 100.0

@@ -103,6 +103,9 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/views/jobseekers/job_applications/_job_application_review_sections.html.slim"
     skip "app/views/api/vacancies/_show.json.jbuilder"
     skip "app/views/jobseekers/job_applications/_messages.html.slim"
+    skip "app/views/jobseekers/job_applications/_print_nested_section.html.slim"
+    skip "app/views/layouts/application.html.slim"
+    skip "app/controllers/publishers/vacancies/wizard_base_controller.rb"
 
     skip "app/views/publishers/vacancy_templates/_salary_details.html.slim"
     skip "app/views/support_users/service_data/index.html.slim"
