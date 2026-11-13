@@ -25,17 +25,19 @@ download_dir=$(mktemp -d)
 # make sure script cleans up after itself
 # from https://stackoverflow.com/questions/10982911/creating-temporary-files-in-bash
 trap 'rm -rf "$download_dir"; exit' ERR EXIT  # HUP INT TERM
+# Using -e and -F allows the parameter string to be treated literally rather than having to be escaped so it is not treated as an option
 wget --auth-no-challenge -q --user=$2 --password=$3 $1/sitemap.xml -O - \
   | fgrep loc \
-  | fgrep -v teaching-jobs-in- \
-  | fgrep -v "\-teacher-jobs" \
-  | fgrep -v "/jobs/" \
+  | grep -v -F -e "-jobs-in-" \
+  | grep -v -F -e "-jobs/" \
+  | grep -v -F -e "-teacher-jobs" \
+  | grep -v -F -e "/jobs/" \
   | sed s'/    <loc>//' \
   | sed s'/<\/loc>//' \
   | wget -nv -np -H -r -t5 -l1 -i - --user=$2 --password=$3 \
   -P $download_dir \
   --spider \
-  --limit-rate=200k \
+  --limit-rate=150k \
   --exclude-directories="assets" \
   --auth-no-challenge \
   --no-relative \
