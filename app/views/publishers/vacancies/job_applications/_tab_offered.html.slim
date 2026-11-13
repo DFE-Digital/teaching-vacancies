@@ -10,4 +10,12 @@
 
 = govuk_section_break(visible: true, size: "xl")
 
-= render TabPanelComponent.new(vacancy:, candidates: candidates.fetch("declined"), tab_name: "declined", displayed_fields: %i[name email_address declined_at])
+.tab-declined
+  h2.govuk-heading-m = t("tabs.declined.heading")
+
+  - if candidates.fetch("declined").any?
+    = render CandidatesTableComponent.new(vacancy:,
+                                          candidates: candidates.fetch("declined"),
+                                          displayed_fields: %i[name email_address declined_at])
+  - else
+    = empty_section title: t("tabs.declined.none")
