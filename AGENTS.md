@@ -1,380 +1,160 @@
 # AGENTS.md
 
-Guidance for AI coding agents working in this repository. It is deliberately vendor-neutral, and
-it is the single source of truth — other agent config files point here rather than duplicate it.
-
-## Agent entry points
-
-Different tools look for different filenames. Keep this file authoritative and the others thin.
-
-| Tool | File it reads | How it reaches this file |
-| --- | --- | --- |
-| OpenAI Codex / ChatGPT | `AGENTS.md` | Reads this file directly — nothing else needed |
-| Claude Code | `CLAUDE.md` | Imports it with `@AGENTS.md` (content is inlined at load time), then adds notes on Claude Code's own configuration |
-| Gemini CLI | `GEMINI.md` | Imports it with `@./AGENTS.md`; content is inlined at load time |
-| GitHub Copilot | `.github/copilot-instructions.md` | Links here. Copilot has no include mechanism, so the pointer tells it to open this file. The cloud agent, Copilot CLI and code review on GitHub.com also read a root `AGENTS.md` directly. IDE code review reads only `copilot-instructions.md`. See that file for Copilot's hooks and cloud agent setup |
-
-**Agent hooks.** The rules the hooks enforce live once in `.agents/hooks/lib/`. Each harness has a
-thin adapter that only translates its own input and output format (`.claude/hooks/` for Claude
-Code, `.github/hooks/` for Copilot). Change a rule in the core, never in an adapter.
-
-**Project rules are never duplicated in those files** — this file is the only copy to keep
-current. Add rules here. A tool's own file may describe that tool's configuration (for example
-`CLAUDE.md` covers the `.claude/` settings and hooks), but never project rules.
+The single source of truth for project rules for AI coding agents. Tool-specific files
+(`CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`) point here and may only describe
+their own tool's configuration. Agent hook rules live in `.agents/hooks/lib/`; the adapters in
+`.claude/hooks/` and `.github/hooks/` only translate formats, so change rules in the core.
 
 ## Overview
 
-Teaching Vacancies is a free job-listing service from the Department for Education (DfE).
-Teachers search and apply for jobs at schools, trusts and colleges in England; hiring staff
-list and manage those vacancies.
+Teaching Vacancies is a free DfE job-listing service: teachers search and apply for jobs at
+schools, trusts and colleges in England; hiring staff list and manage vacancies.
 
 Ruby 4.0.9, Rails 8.x, PostgreSQL with PostGIS, Solid Queue, Redis (production cache only).
 
 Two things shape every rule below:
 
-1. **This repository is public and open source.** Assume every line of code, comment, TODO,
-   fixture, branch name and commit message is world-readable, permanently.
-2. **The service holds substantial personal data.** Jobseeker names, addresses, dates of
-   birth, National Insurance numbers, criminal-record self-disclosures and references all pass
-   through this codebase. A careless log line or fixture is a real data incident, not a
-   style nit.
+1. **This repository is public.** Every line of code, comment, TODO, fixture, branch name and
+   commit message is world-readable, permanently.
+2. **The service holds substantial personal data** (names, addresses, dates of birth, National
+   Insurance numbers, criminal-record self-disclosures, references). A careless log line or
+   fixture is a real data incident.
 
 ## Non-negotiables
 
-- **Nothing internal goes in the repo.** No internal-only URLs or hostnames, no credentials,
-  no colleague names, no ticket contents pasted into comments or commit messages.
-- **Never commit real user data.** Build test data with FactoryBot plus `faker`/`ffaker`. Test
-  emails use the `contoso.com` domain (`TEST_EMAIL_DOMAIN` in `spec/rails_helper.rb`).
-- **Never force-add a gitignored secret.** `.gitignore` already covers `.env*` (except
-  `.env.development` and `.env.test`), `*.pem`, `*.key`, `*.crt`, `serviceAccount.json`,
-  `*.sql` and `*dump*`. If `git add` refuses, that is the control working — do not use `-f`.
-- **Secrets live outside the repo.** Application secrets are in AWS Systems Manager Parameter
-  Store under `/teaching-vacancies/<env>/app/*`; non-secret config is in
+- **Nothing internal in the repo:** no internal-only URLs or hostnames, credentials, colleague
+  names, or pasted ticket contents in code, comments or commit messages.
+- **Never commit real user data.** Use FactoryBot with `faker`/`ffaker`; test emails use
+  `contoso.com` (`TEST_EMAIL_DOMAIN` in `spec/rails_helper.rb`).
+- **Never force-add (`git add -f`) a gitignored file.** If `git add` refuses, that is the control
+  working.
+- **Secrets live outside the repo**, in AWS Systems Manager Parameter Store under
+  `/teaching-vacancies/<env>/app/*`; non-secret config is in
   `terraform/workspace-variables/<env>_app_env.yml`. Generate a local `.env` with
   `aws-vault exec ReadOnly -- make -s local print-env > .env`. See
-  [secrets detection](documentation/development/tooling/secrets-detection.md) for the
-  `git-secrets` pre-commit hook.
+  [secrets detection](documentation/development/tooling/secrets-detection.md).
 - **Any new field holding personal data must be added to
-  `config/initializers/filter_parameter_logging.rb`.** This is the single most important
-  repo-specific security rule. `config/initializers/sentry.rb` derives its event-scrubbing
-  filter from that same list, so an omission leaks the field into both the application logs
-  and Sentry.
-- **Sensitive columns are encrypted at rest** with Lockbox `has_encrypted` — see
-  `app/models/job_application.rb`, `self_disclosure.rb`, `personal_details.rb`, `referee.rb`,
-  `job_reference.rb`, `publisher.rb`. Do not add a plaintext column for sensitive data.
-- **Do not weaken the security middleware** to make something work:
-  `config/initializers/rack_attack.rb`, `content_security_policy.rb`, `recaptcha.rb`,
-  `cors.rb`, `permissions_policy.rb`, or CSRF protection. Brakeman must pass.
-- **Never record a VCR cassette against a real environment.** Cassettes live in
-  `spec/fixtures/vcr`; WebMock runs with `disable_net_connect!`. Check any new cassette for
-  personal data and API keys before committing it.
-- **Disclose AI assistance.** When an AI coding agent contributes to a commit, record it. A tool's
-  own automatic co-author trailer, such as Copilot's `Co-authored-by: Copilot`, satisfies this.
-  Otherwise, add a `Co-Authored-By:` trailer naming the tool and model, for example
-  `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`. This is a public sector project and
-  we disclose the tools used to build it.
+  `config/initializers/filter_parameter_logging.rb`.** This is the most important repo-specific
+  security rule: `config/initializers/sentry.rb` builds its scrubbing filter from the same list,
+  so an omission leaks into both logs and Sentry.
+- **Encrypt sensitive columns at rest** with Lockbox `has_encrypted` (as in
+  `app/models/job_application.rb`). Never add a plaintext column for sensitive data.
+- **Do not weaken security middleware** (`config/initializers/rack_attack.rb`,
+  `content_security_policy.rb`, `recaptcha.rb`, `cors.rb`, `permissions_policy.rb`) or CSRF
+  protection. Brakeman must pass.
+- **Never record a VCR cassette against a real environment.** Check new cassettes in
+  `spec/fixtures/vcr` for personal data and API keys.
+- **Disclose AI assistance** on every commit an agent contributes to. A tool's automatic
+  co-author trailer (e.g. Copilot's) satisfies this; otherwise add one naming tool and model,
+  e.g. `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`.
 
-## Setup and running
+## Setup
 
-Two setups are supported, both described in
-[the quick start guide](documentation/development/setup/quick_start.md):
-
-- **Native Rails with a dockerised database** (primary): Rails runs on
-  your machine and PostgreSQL/PostGIS runs from `compose.yaml`. `bin/setup` and `bin/dev` start
-  the database through `bin/dev-db` (skipped inside a container or with `SKIP_DEV_DB=1`).
-- **The devcontainer** in `.devcontainer/`.
-
-```bash
-bin/dev     # starts the database on the host, then web on :3000, JS watcher, CSS watcher, Solid Queue worker (see Procfile.dev)
-bin/jobs    # Solid Queue worker on its own
-```
-
-The app is tied to port 3000; no other port works. Outside the devcontainer, run
-`corepack enable` first for Yarn 4. Redis is not needed outside production, where it is the cache store.
-Ports in use: 3000 (Rails), 3035 (assets), 5432 (Postgres), 6379 (Redis, devcontainer only).
+See [the quick start guide](documentation/development/setup/quick_start.md). `bin/dev` starts
+the dockerised database (via `bin/dev-db`; skip with `SKIP_DEV_DB=1`), web, asset watchers and
+the Solid Queue worker. The app only works on port 3000. Outside the devcontainer, run
+`corepack enable` first (Yarn 4).
 
 ## Commands
 
-### Tests
-
 ```bash
-bundle exec rspec                                 # all specs
-bundle exec rspec spec/models/vacancy_spec.rb:42  # one example
-CI=1 bundle exec rake parallel:spec               # parallel; without CI=1 or HEADLESS=1, js specs open a browser
-RAILS_ENV=test bin/rails parallel:create          # one-off parallel DB setup (tvs_test1, tvs_test2, ...)
-COVERAGE=1 bundle exec rspec                      # writes coverage/ and the undercover lcov report
-bundle exec undercover                            # fails on new/changed code without coverage
-bundle exec rspec --tag a11y                      # accessibility specs (excluded by default)
-bundle exec rake rswag:specs:swaggerize           # once on a fresh clone, and after ATS API changes: specs read the git-ignored swagger/v1/swagger.yaml
-yarn run js:test                                  # Jest
+bundle exec rspec                         # all specs; .rspec excludes ~smoke_test and ~a11y
+bundle exec rspec --tag a11y              # accessibility specs
+CI=1 bundle exec rake parallel:spec       # parallel; without CI=1 or HEADLESS=1, js specs open a browser
+RAILS_ENV=test bin/rails parallel:create  # one-off parallel DB setup
+COVERAGE=1 bundle exec rspec && bundle exec undercover  # fails on new/changed code without coverage
+bundle exec rake rswag:specs:swaggerize   # on a fresh clone and after ATS API changes (specs read the git-ignored swagger/v1/swagger.yaml)
+bundle exec rake lint                     # rubocop + slim-lint + brakeman
+bundle exec database_consistency          # required CI check: model/schema agreement
+yarn run js:lint && yarn run sass:lint && yarn run js:test  # frontend
 ```
 
-`.rspec` excludes **both** `~smoke_test` and `~a11y`, so neither runs in a normal
-`bundle exec rspec`.
+**Before calling a task done**, run what CI runs (`.github/workflows/test.yml` and `lint.yml`):
+the specs, `rake lint`, `database_consistency`, `undercover` and `bin/rails db:migrate:status`,
+plus the frontend commands if you touched the frontend.
 
-### Linting
+## Where code goes
 
-```bash
-bundle exec rake lint                          # rubocop + slim-lint + brakeman
-bundle exec rubocop
-bundle exec slim-lint app/views app/components
-bundle exec brakeman
-bundle exec database_consistency                # required CI check; validates model/schema agreement
-yarn run js:lint
-yarn run sass:lint
-```
+Business logic in `app/services/` (namespaced; `step_process.rb` drives multi-step wizards),
+complex reads in `app/queries/`, non-ActiveRecord forms in `app/form_models/` (`base_form.rb`),
+ViewComponents in `app/components/`, Draper decorators and presenters in `app/presenters/`,
+in-app notifications (`noticed`) in `app/notifiers/`, Solid Queue jobs in `app/jobs/`.
+Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK One Login.
 
-### Other
+## Pitfalls
 
-```bash
-bundle exec rake                               # lint + spec
-bundle exec rake rswag:specs:swaggerize        # regenerate the ATS API OpenAPI docs
-bundle exec rake fauapi:publish                # publish the ATS API docs to the DfE API catalogue
-bin/rails db:migrate:status
-```
-
-## Architecture
-
-| Directory | Contents |
-| --- | --- |
-| `app/services/` | Business logic. Namespaced `jobseekers/`, `publishers/`, `vacancies/`, `search/`, `gias/`. `step_process.rb` drives multi-step wizards |
-| `app/queries/` | Complex reads: `VacancyFilterQuery`, `VacancyFullTextSearchQuery`, `VacancyLocationQuery`, `SubscriptionVacanciesMatchingQuery` |
-| `app/form_models/` | Non-ActiveRecord form objects, base class `base_form.rb` |
-| `app/components/` | ViewComponents on the GOV.UK Design System. Each is `foo_component.rb` plus a sibling `foo_component/foo_component.html.slim` |
-| `app/presenters/` | Draper decorators and presenters (naming is mixed, both patterns exist) |
-| `app/notifiers/` | In-app notifications via `noticed` v2 |
-| `app/jobs/` | Solid Queue jobs |
-| `app/validators/`, `app/helpers/`, `app/mailers/` | Custom validators, view helpers, GOV.UK Notify mailers |
-
-### Routing
-
-Controllers mirror the route namespaces in `config/routes.rb`:
-
-- `namespace :jobseekers` → `app/controllers/jobseekers/`
-- `namespace :publishers` → publisher account, organisations, messages, statistics
-- `scope "/organisation"` → the main publisher vacancy area, controllers under
-  `app/controllers/publishers/vacancies/`
-- `namespace :support_users, path: "support-users"`
-- `namespace :api` with `scope "v:api_version"` → the internal JSON API
-- `scope path: "ats-api"` → `publishers/ats_api/v1`, the external Publisher ATS API
-
-Two easy mistakes:
-
-- **`config/routes.rb` ends with lambda-constrained landing-page catch-alls**
-  (`CampaignPage.exists?`, `LandingPage.exists?`, `OrganisationLandingPage.exists?`, …). A new
-  top-level route added below these will never match. Add it above them.
-- **Removing or renaming a public route requires a redirect** in
-  `config/routes/legacy_redirects.rb`. These URLs are indexed by search engines.
-
-Engines mounted behind `authenticate :support_user` outside development: `/solid_queue_jobs`
-(Mission Control) and `/field_test`. The RSwag docs at `/ats-api-docs` are public; ATS API client
-management is in Supportal.
-
-### Domain model
-
-- **`Vacancy`** — single-table inheritance: `DraftVacancy` and `PublishedVacancy`. There is
-  **no `status` enum**; status is derived (`draft?`, `scheduled?`, `live?`, `expired?`). Uses a
-  custom `ArrayEnum` extension for `phases`, `job_roles`, `key_stages` and `working_patterns`,
-  plus regular enums for `contract_type`, `receive_applications`, `start_date_type` and others.
-  FriendlyId slugs with history, Discard for soft deletes, PaperTrail for the activity log.
-- **`JobApplication`** — STI: `NativeJobApplication` and `UploadedJobApplication`. `enum :status`
-  with 11 values, governed by a hand-rolled `STATUS_TRANSITIONS` map rather than a state
-  machine gem. **Adding a status also requires a matching `<status>_at` column** on
-  `job_applications`, which `before_save :update_status_timestamp` writes.
-- **`Organisation`** — STI: `School` and `SchoolGroup`. Trusts and local authorities are both
-  `SchoolGroup`, distinguished by `uid` vs `local_authority_code`. GIAS data lives in a
-  `gias_data` JSON column; name search uses `pg_search` over a `searchable_content` tsvector.
-- **`Jobseeker` / `JobseekerProfile`** — jobseeker accounts and profiles.
-- **`Publisher`** — hiring staff, keyed on the DfE Sign In `oid`, 120-minute session timeout.
-- **`Subscription`** — job alerts.
-
-### Authentication
-
-- **Publishers and support users**: DfE Sign In (DSI) via OmniAuth/OIDC.
-- **Jobseekers**: GOV.UK One Login via Devise + OmniAuth.
-
-See [DSI integration](documentation/service/users/dsi-integration.md),
-[Supportal access and fallback](documentation/service/users/supportal-access.md) and
-[GOV.UK One Login](documentation/service/users/govuk-one-login.md).
-
-### Background jobs
-
-Solid Queue, backed by PostgreSQL, run with `bin/jobs`. Worker and queue layout in
-`config/queue.yml`; scheduled jobs in `config/recurring.yml`. Monitored via Mission Control at
-`/solid_queue_jobs`. Emails go out through GOV.UK Notify (`mail-notify`, `NotifyMailer`).
-
-### Feature flags and A/B tests
-
-There is **no Flipper and no `FeatureFlag` model**. Two separate mechanisms:
-
-- **`Flag`** (`lib/flag.rb`) — environment-variable backed, instantiated in
-  `config/initializers/flags.rb`: `DisableExpensiveJobs`, `DisableIntegrations`,
-  `DisableEmailNotifications`, `AuthenticationFallback`,
-  `AuthenticationFallbackForJobseekers`, `FauapiPublishing`. Values are read once at boot.
-- **`field_test`** — A/B experiments defined in `config/field_test.yml`, dashboard at
-  `/field_test`.
-
-### Database
-
-PostGIS adapter for location search, UUID primary keys, PaperTrail for audit history, Discard
-for soft deletes, Lockbox for field-level encryption, `online_migrations` for safe migrations
-against large live tables.
-
-**Migrations are for schema changes only.** Data migrations belong in rake tasks that call a
-tested service object or model method — see
-[agreed practices](documentation/development/agreed-practices.md).
-
-### External integrations
-
-DfE Sign In, GOV.UK One Login, GOV.UK Notify, GIAS (school data), DWP Find a Job (SFTP export),
-DfE Analytics / BigQuery, Google Indexing API, Google Places, Microsoft Defender for Cloud
-(upload virus scanning), Sentry, Zendesk, Skylight, the Publisher ATS API (REST, OpenAPI
-via RSwag), and [Find and Use an API](documentation/service/integrations/find-and-use-an-api.md),
-the DfE API catalogue the ATS API's OpenAPI document is published to by a daily scheduled job.
+- **Routes:** `config/routes.rb` ends with lambda-constrained landing-page catch-alls
+  (`LandingPage.exists?`, …); add new top-level routes above them or they never match.
+  **Removing or renaming a public route requires a redirect** in
+  `config/routes/legacy_redirects.rb`.
+- **`Vacancy`** is STI (`DraftVacancy`, `PublishedVacancy`) with **no `status` enum**; status is
+  derived (`draft?`, `scheduled?`, `live?`, `expired?`). Array-valued fields use a custom
+  `ArrayEnum` extension.
+- **`JobApplication`** is STI (`NativeJobApplication`, `UploadedJobApplication`); `enum :status`
+  transitions follow a hand-rolled `STATUS_TRANSITIONS` map. **A new status needs a matching
+  `<status>_at` column**, written by `before_save :update_status_timestamp`.
+- **`Organisation`** is STI (`School`, `SchoolGroup`); trusts and local authorities are both
+  `SchoolGroup`, distinguished by `uid` vs `local_authority_code`.
+- **Feature flags:** no Flipper and no `FeatureFlag` model. `Flag` (`lib/flag.rb`,
+  `config/initializers/flags.rb`) is env-var backed and read once at boot; A/B tests use
+  `field_test` (`config/field_test.yml`).
+- **Migrations are for schema changes only.** Data migrations belong in rake tasks calling a
+  tested service object or model method. Use `online_migrations` patterns for large tables.
 
 ## Code style
 
-- GOV.UK RuboCop. `.rubocop.yml` inherits selected `rubocop-govuk` configs (layout, naming,
-  style, rake, rails, rspec) and deliberately **not** `default.yml`, so the metrics cops stay
-  on. Existing offences are parked in `.rubocop_todo.yml` — don't add to it.
-- Double quotes, trailing commas in multiline literals, no `# frozen_string_literal` comment,
-  `is_` predicate prefixes forbidden.
-- Custom cop `Custom/RakeTaskInvoke`: use `execute`, not `invoke`, for Rake tasks.
-- Views are Slim, not ERB.
-- **User-facing copy belongs in `config/locales/`** (53 YAML files, mirroring the controller and
-  form namespaces), never inline. Specs frequently click and assert on `I18n.t(...)` values, so
-  editing a YAML string changes what the tests match.
-- Follow Rails conventions. If you are fighting the framework, you are doing it wrong.
-- Do not change the existing code structure when extending a method/class etc. Discuss refactors
-  before executing them, unless originally asked to.
+- GOV.UK RuboCop without its `default.yml`, so metrics cops stay on. Don't add to
+  `.rubocop_todo.yml`.
+- Double quotes, trailing commas in multiline literals, no `# frozen_string_literal`, no `is_`
+  predicate prefixes. Use `execute`, not `invoke`, for Rake tasks (`Custom/RakeTaskInvoke`).
+- Views are Slim, not ERB. Components are `foo_component.rb` plus
+  `foo_component/foo_component.html.slim`.
+- **User-facing copy belongs in `config/locales/`**, never inline. Specs assert on `I18n.t(...)`,
+  so editing a YAML string changes what tests match.
+- Don't restructure existing code when extending it; discuss refactors first unless asked.
 
 ## Testing
 
-### Principles
-
-- Pyramid: system specs for the happy path only; request and view specs for edge cases and
-  detailed context.
+- System specs cover the happy path only; use request and view specs for edge cases. Name them
+  `spec/system/<actor>/<actor>s_can_<action>_spec.rb` and prefer `describe` / `scenario`.
 - Prefer `build_stubbed` and `instance_double` over `double`.
-- Favour `describe` / `scenario` over `context` / `it` in system specs.
-- Cover every branch you add. Coverage is enforced, not advisory.
+- Cover every branch you add: CI runs `simplecov patch` against `origin/main`. Never add
+  `#simplecov:disable`.
+- **In factories, use `factory_rand`, `factory_sample` and `factory_rand_sample`**
+  (`spec/factories/support/random_helpers.rb`), not `rand`/`sample`, to keep coverage stable.
+  Factories also seed review apps via `:for_seed_data` traits, so they are not test-only.
+- `:vacancy` builds a `PublishedVacancy`; `:job_application` builds a `NativeJobApplication`.
+- Sign-in helpers are in `spec/support/auth_helpers.rb`; behaviour-changing metadata tags
+  (`:geocode`, `:perform_enqueued`, `disable_integrations`, …) are in `spec/rails_helper.rb`.
+- **`Geocoder.search` raises** unless the example is tagged `:geocode`.
+- WebMock blocks real HTTP (`disable_net_connect!`).
+- System specs use `rack_test`; `js: true` switches to Cuprite (headless under `CI`/`HEADLESS`),
+  `a11y: true` to Chrome with axe. `CAPYBARA_DRIVER=chrome` gives a headed browser for debugging.
 
-### Coverage gates
-
-CI runs `simplecov patch` against `origin/main` to catch new or changed code without tests.
-Do not add `#simplecov:disable` to uncovered code, add tests to ensure good coverage.
-
-### Factories
-
-- One file per model in `spec/factories/`, plural filenames.
-- **Use `factory_rand`, `factory_sample` and `factory_rand_sample`**
-  (`spec/factories/support/random_helpers.rb`) instead of `rand` and `sample`. They return the
-  minimum or first value under `Rails.env.test?`, which is what keeps coverage stable.
-- Factories build STI subclasses: `:vacancy` produces a `PublishedVacancy`, `:job_application`
-  a `NativeJobApplication`. Organisation factories are `:school`, `:academy`, `:college`,
-  `:school_group`, `:trust`, `:local_authority`.
-- Factories are **not test-only** — review-app seeding uses them via `:for_seed_data` traits,
-  which is why `factory_bot_rails` and `faker` sit outside the test group in the `Gemfile`.
-
-### Helpers and tags
-
-- Sign-in helpers in `spec/support/auth_helpers.rb`: `login_as(jobseeker, scope: :jobseeker)`,
-  `login_publisher(publisher:, organisation:)`, the block forms `run_with_jobseeker` and
-  `run_with_publisher_and_organisation`, and the full-UI flows `sign_in_publisher`,
-  `sign_in_jobseeker_govuk_one_login`, `sign_in_support_user`.
-- Metadata tags that change behaviour: `:vcr`, `:geocode`, `:dfe_analytics`,
-  `:perform_enqueued`, `:recaptcha`, `:a11y`, `js: true`, and `disable_email_notifications`,
-  `disable_expensive_jobs`, `disable_integrations`.
-- **Geocoder is stubbed by default and `Geocoder.search` raises** unless the example is tagged
-  `:geocode`.
-- System specs default to `rack_test`; `js: true` switches to Cuprite (headless under `CI`,
-  `HEADLESS` or the devcontainer, headed otherwise); `a11y: true`
-  uses Chrome with axe. `CAPYBARA_DRIVER=chrome` gives a headed browser for debugging.
-- Page objects use `site_prism`, under `spec/page_objects/`. Also available:
-  `shoulda-matchers`, `webmock`, `vcr`, `climate_control`, `rspec-rebound`.
-- System spec naming: `spec/system/<actor>/<actor>s_can_<action>_spec.rb`.
-
-See [tests and linting](documentation/development/tooling/testing.md) for more.
+More in [tests and linting](documentation/development/tooling/testing.md).
 
 ## Keeping documentation current
 
-Documentation changes belong in the **same pull request** as the change that makes them true,
-not a follow-up. The guidance file this one replaced drifted precisely because it was updated
-separately, and ended up stating the wrong Ruby version and a model structure that no longer
-existed.
+Update docs in the **same PR** as the change that makes them true. If you change the Ruby or Rails
+version, a command, a pitfall above, or the setup, update this file. If you find this file wrong
+or stale, fix it in the same PR. Also update:
 
-**This file quotes specific values that go stale.** If you change one of them, change it here
-too:
+- commands or CI → `documentation/development/tooling/testing.md`
+- setup, ports, devcontainer or `compose.yaml` → `documentation/development/setup/quick_start.md`
+- an authentication flow → `documentation/service/users/`
+- an external integration → `documentation/service/integrations/`
 
-| If you change | Update |
-| --- | --- |
-| The Ruby, Rails or Node version | The stack line in **Overview** |
-| A rake task, a CI job, or how tests are run | **Commands** here, and `documentation/development/tooling/testing.md` |
-| A top-level directory under `app/` | The architecture table |
-| Route namespaces, or the landing-page catch-alls | **Routing** |
-| A model's STI subclasses, enums, or status transitions | **Domain model** |
-| A flag in `config/initializers/flags.rb`, or an experiment in `config/field_test.yml` | **Feature flags and A/B tests** |
-| An authentication flow | `documentation/service/users/` |
-| An external integration | `documentation/service/integrations/` |
-| Setup steps, ports, the devcontainer, or `compose.yaml` | `documentation/development/setup/quick_start.md` |
-| A practice the team has agreed | `documentation/development/agreed-practices.md` |
-
-Also:
-
-- **A new file under `documentation/` must be linked from the index in `README.md`.** Every
-  non-ADR document is currently linked there; keep it that way, or the document is invisible.
-  ADRs are a numbered series and are not indexed individually.
-- **A significant architectural decision gets an ADR** in `documentation/adr/`, using the next
-  number in the sequence.
-- **If you find this file wrong, incomplete, or misleading while working, fix it in the same
-  PR.** That is expected, not scope creep. Noticing that the guidance is stale and leaving it
-  stale is the failure mode to avoid.
-- **Project rules live only in this file.** `CLAUDE.md`, `GEMINI.md` and
-  `.github/copilot-instructions.md` point here and may only describe their own tool's
-  configuration — never add a project rule to them.
-
-## Before you call a task done
-
-Run what CI runs (`.github/workflows/test.yml` and `lint.yml`), so green locally means green
-in CI:
-
-```bash
-CI=1 bundle exec rake parallel:spec   # or: bundle exec rspec
-bundle exec rubocop
-bundle exec slim-lint app/views app/components
-bundle exec brakeman
-bundle exec database_consistency
-bundle exec undercover                # after a COVERAGE=1 run
-bin/rails db:migrate:status
-yarn run js:lint && yarn run sass:lint && yarn run js:test   # if you touched the frontend
-```
-
-Then check the documentation: does this change make anything in **Keeping documentation
-current** above out of date? If so, update it in this PR.
+- A new file under `documentation/` must be linked from the index in [README.md](README.md).
+- Significant architectural decisions get the next numbered ADR in `documentation/adr/`.
+- Team practices live in [agreed practices](documentation/development/agreed-practices.md).
 
 ## Git and pull requests
 
-- Branch off `main`. Short, sentence-case commit subjects; the squash merge appends `(#PR)`.
-- Fill in `.github/pull_request_template.md`. **Its data and schema checklist is load-bearing.**
-  Changing a `Vacancy` enum, a model validation, or a database field can break DfE Analytics
-  event schemas, legacy import mappings, the DWP Find a Job export, the Publisher ATS API
-  (which may need versioning), existing subscription alert filters, vacancy copying, and
-  in-progress drafts. Surface that impact in the PR rather than changing an enum quietly.
-- Create pull requests as drafts (`gh pr create --draft`). Only the developer marks them ready.
-- Keep PR descriptions to a short what/why, not a list of every code change. Still complete the
-  template's data and schema checklist.
+- Branch off `main`. Short, sentence-case commit subjects.
+- Create PRs as drafts (`gh pr create --draft`); only the developer marks them ready. Keep the
+  description to a short what/why.
+- **Complete the data and schema checklist** in `.github/pull_request_template.md`. Changing a
+  `Vacancy` enum, validation or database field can break DfE Analytics schemas, legacy imports,
+  the DWP Find a Job export, the Publisher ATS API (which may need versioning), subscription
+  alert filters, vacancy copying and in-progress drafts.
 - Avoid Friday deploys where possible.
-
-## Further reading
-
-The full documentation index is in [README.md](README.md). Most useful starting points:
-
-- [Service overview and C4 diagrams](documentation/service/overview.md)
-- [Architecture decision records](documentation/adr)
-- [Development agreed practices](documentation/development/agreed-practices.md)
-- [Tests and linting](documentation/development/tooling/testing.md)
-- [Secrets detection](documentation/development/tooling/secrets-detection.md)
-- [Our front-end](documentation/service/technical/front-end.md) and
-  [view components](documentation/service/technical/components.md)
-- [Searching by location](documentation/service/technical/searching-by-location.md)
-- [Integrations](documentation/service/integrations/integrations.md) and the
-  [Publisher ATS API](documentation/service/integrations/publisher-ats-api.md)
