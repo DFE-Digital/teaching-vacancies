@@ -15,17 +15,7 @@ class JobseekerProfile < ApplicationRecord
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
   delegate :email, to: :jobseeker
 
-  scope :active, -> { where(active: true) }
-  scope :not_hidden_from, lambda { |organisation|
-    relevant_orgs = [organisation]
-    relevant_orgs += organisation.school_groups if organisation.respond_to?(:school_groups)
-
-    hidden_profile_ids = JobseekerProfileExcludedOrganisation
-      .where(organisation: relevant_orgs)
-      .pluck(:jobseeker_profile_id)
-
-    where.not(id: hidden_profile_ids)
-  }
+  self.ignored_columns += %i[active requested_hidden_profile]
 
   enum :qualified_teacher_status, { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
@@ -71,35 +61,8 @@ class JobseekerProfile < ApplicationRecord
     personal_details.present? && !personal_details.has_right_to_work_in_uk?
   end
 
-  def deactivate!
-    return unless active?
-
-    update_column(:active, false)
-  end
-
   def full_name
     [first_name, last_name].join(" ").presence || "Jobseeker"
-  end
-
-  def qts_status
-    case qualified_teacher_status
-    when "yes"
-      "Gained QTS #{qualified_teacher_status_year}"
-    when "on_track"
-      "On track to receive QTS"
-    else
-      ""
-    end
-  end
-
-  def activable?
-    personal_details.present? &&
-      job_preferences.present? && job_preferences.complete? &&
-      qualified_teacher_status.present? && unexplained_employment_gaps.none? && qualifications.any?
-  end
-
-  def hidden_from_any_organisations?
-    requested_hidden_profile && excluded_organisations.any?
   end
 
   def unexplained_employment_gaps

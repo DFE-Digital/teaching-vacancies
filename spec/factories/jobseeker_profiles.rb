@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :jobseeker_profile do
     about_you { Faker::Lorem.paragraph(sentence_count: 2) }
-    active { true }
     qualified_teacher_status { "yes" }
     qualified_teacher_status_year { "2000" }
 

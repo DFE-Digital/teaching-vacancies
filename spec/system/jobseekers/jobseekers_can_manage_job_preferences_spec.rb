@@ -28,7 +28,6 @@ RSpec.describe "Jobseekers can manage their job preferences", :geocode do
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
       click_on I18n.t("buttons.cancel")
-      expect(page).to have_content("You must complete your job preferences before you turn on your profile.")
       expect(page).to have_link("Complete job preferences", href: jobseekers_job_preferences_step_path(:phases))
     end
   end
