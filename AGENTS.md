@@ -245,6 +245,8 @@ the DfE API catalogue the ATS API's OpenAPI document is published to by a daily 
   form namespaces), never inline. Specs frequently click and assert on `I18n.t(...)` values, so
   editing a YAML string changes what the tests match.
 - Follow Rails conventions. If you are fighting the framework, you are doing it wrong.
+- Do not change the existing code structure when extending a method/class etc. Discuss refactors
+  before executing them, unless originally asked to.
 
 ## Testing
 
