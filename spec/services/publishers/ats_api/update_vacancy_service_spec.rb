@@ -155,8 +155,8 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       end
     end
 
-    context "when the given school is an FE college" do
-      let(:college) { create(:college) }
+    context "when the given school is discarded" do
+      let(:college) { create(:college, :discarded) }
       let(:school_urns) { { school_urns: [college.urn] } }
 
       it "raises Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError" do

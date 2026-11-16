@@ -358,16 +358,6 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
       end
     end
 
-    context "when the school is an FE college" do
-      before do
-        school1.update(school_type: School::COLLEGE_SCHOOL_TYPE, detailed_school_type: School::FE_DETAILED_SCHOOL_TYPE)
-      end
-
-      it "does not import vacancy" do
-        expect(subject.count).to eq(0)
-      end
-    end
-
     context "when the school group is soft-deleted" do
       let!(:school_group) { create(:school_group, name: "Ventrus", uid: "4243", schools: schools, discarded_at: Time.current) }
       let(:response_body) { super().gsub("111111", "") }

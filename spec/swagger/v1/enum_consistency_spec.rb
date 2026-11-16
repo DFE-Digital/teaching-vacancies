@@ -26,12 +26,12 @@ require "swagger_helper"
 #     - Do NOT update V1 frozen constants.
 RSpec.describe "V1 API schema enum consistency" do
   {
-    "job_roles" => { v1: V1_JOB_ROLES, model: -> { Vacancy.job_roles.keys - Vacancy::FE_SUPPORT_JOB_ROLES } },
+    "job_roles" => { v1: V1_JOB_ROLES, model: -> { Vacancy.job_roles.keys } },
     "contract_types" => { v1: V1_CONTRACT_TYPES, model: -> { Vacancy.contract_types.keys } },
     "working_patterns" => { v1: V1_WORKING_PATTERNS, model: -> { Vacancy::WORKING_PATTERNS } },
     "phases" => { v1: V1_PHASES, model: -> { Vacancy.phases.keys } },
     "key_stages" => { v1: V1_KEY_STAGES, model: -> { Vacancy.key_stages.keys } },
-    "subjects" => { v1: V1_SUBJECTS, model: -> { SUBJECT_OPTIONS.map(&:first) } },
+    "subjects" => { v1: V1_SUBJECTS, model: -> { VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first) } },
   }.each do |field, sources|
     describe field do
       let(:v1_values) { sources[:v1].map(&:to_s).sort }

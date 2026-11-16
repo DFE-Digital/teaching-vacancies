@@ -74,8 +74,8 @@ class Organisation < ApplicationRecord
 
   scope :colleges, -> { where(school_type: COLLEGE_SCHOOL_TYPE, detailed_school_type: FE_DETAILED_SCHOOL_TYPE) }
   scope :not_fe_colleges, -> { where.not(id: colleges) }
-  # FE colleges may only publish vacancies manually during the private beta; discarded organisations must never match.
-  scope :eligible_for_external_publishing, -> { kept.not_fe_colleges }
+  # discarded/closed organisations cant publish vacancies.
+  scope :eligible_for_external_publishing, -> { kept }
 
   scope :without_publishers_accepted_terms, lambda {
     where.not(id: OrganisationPublisher.joins(:publisher).where.not(publishers: { accepted_terms_at: nil }).select(:organisation_id))
