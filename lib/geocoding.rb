@@ -15,6 +15,14 @@ class Geocoding
     @location = location
   end
 
+  # 9th November 2026. This hand-rolled cache code is slowly being removed as we have enabled
+  # the library-level cache facility. Over the next few months, the library cache will match our manual cache,
+  # at which point the manual cache code can be removed safely
+  # The cache has significant costs involved in its setup, so cannot be trivially replaced
+  # Once the library cache is being populated, it could be slowly replaced by a database implementation
+  # inclding the idea of a database implementation fallback
+  # (read from redis/fallback to DB, write to DB)
+
   def coordinates
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
       # 'components: "country:gb"' is used to restrict the results to within the UK.
@@ -51,24 +59,6 @@ class Geocoding
     end
   end
 
-  def postcode_from_coordinates # rubocop:disable Metrics/AbcSize
-    Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      result = Geocoder.search(location, lookup: :google).first
-      if result.present?
-        postcode = result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name")
-        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: postcode)
-        postcode
-      else
-        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: nil)
-        nil
-      end
-    rescue Geocoder::OverQueryLimitError
-      trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: "OVER_QUERY_LIMIT")
-      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-      fallback_postcode_from_coords
-    end || no_postcode_match
-  end
-
   private
 
   def trigger_google_geocoding_api_hit_event(type:, location:, result:)
@@ -79,23 +69,8 @@ class Geocoding
     DfE::Analytics::SendEvents.do([event])
   end
 
-  def fallback_postcode_from_coords(service: :nominatim)
-    result = Geocoder.search(location, lookup: service).first.data
-    if result["error"].present?
-      Rails.logger.error("Geocoding Nominatim API responded with error: #{result['error']}")
-      no_postcode_match
-    else
-      result["address"]["postcode"]
-    end
-  end
-
   def no_coordinates_match
     Rails.logger.info("The Geocoder API returned no coordinates match (0, 0) for '#{location}'. This was not cached.")
     COORDINATES_NO_MATCH
-  end
-
-  def no_postcode_match
-    Rails.logger.info("The Geocoder API returned no postcode match for '#{location}'. This was not cached.")
-    nil
   end
 end

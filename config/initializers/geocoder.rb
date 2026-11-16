@@ -1,3 +1,5 @@
+require "geocoding"
+
 Geocoder.configure(
   timeout: 5,
   units: :mi,
@@ -12,4 +14,7 @@ Geocoder.configure(
   uk_ordnance_survey_names: {
     api_key: Rails.env.test? ? "placeholder_key" : ENV.fetch("ORDNANCE_SURVEY_API_KEY", ""),
   },
+
+  cache: Redis.new(url: Rails.application.config.redis_cache_url),
+  cache_options: { expiration: Geocoding::CACHE_DURATION },
 )
