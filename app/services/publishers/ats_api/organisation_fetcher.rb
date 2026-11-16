@@ -7,7 +7,7 @@ module Publishers
         return [] unless school_params
 
         trust = find_trust(school_params[:trust_uid])
-        schools = find_schools(trust, school_params[:school_urns].compact)
+        schools = find_schools(trust, school_params[:school_urns]&.compact)
 
         validate_organisations!(trust, schools, school_params[:school_urns])
 
