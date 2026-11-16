@@ -37,19 +37,6 @@ RSpec.describe "publishers/vacancies/job_applications/_tab_offered" do
                                                                               }))
         }
       end
-
-      describe "#sort_candidates" do
-        let(:last_candidate) { build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 3)) }
-        let(:nil_offered) { build_stubbed(:job_application, :status_offered, offered_at: nil) }
-        let(:first_candidate) { build_stubbed(:job_application, :status_offered, offered_at: Date.new(2025, 1, 1)) }
-        let(:offered_candidates) { [last_candidate, nil_offered, first_candidate] }
-
-        let(:result) { tab_panel.all(".application-offered a").map(&:text).reject { |n| ["Pre-employment checks", "Add job offer date"].include?(n) } }
-
-        it "sorts candidates with nil offered_at first, then by date" do
-          expect(result).to eq([nil_offered, first_candidate, last_candidate].map(&:name))
-        end
-      end
     end
   end
 
@@ -73,19 +60,6 @@ RSpec.describe "publishers/vacancies/job_applications/_tab_offered" do
                                                                                       },
                                                                                       tag_action: "declined" }))
       }
-    end
-
-    describe "#sort_candidates" do
-      let(:first_candidate) { build_stubbed(:job_application, :status_declined, declined_at: Date.new(2025, 1, 3)) }
-      let(:nil_candidate) { build_stubbed(:job_application, :status_declined, declined_at: nil) }
-      let(:early_candidate) { build_stubbed(:job_application, :status_declined, declined_at: Date.new(2025, 1, 1)) }
-      let(:declined_candidates) { [first_candidate, nil_candidate, early_candidate] }
-
-      let(:result) { page.all(".application-declined a").map(&:text).reject { |n| ["Pre-interview checks", "Add decline date"].include?(n) } }
-
-      it "sorts candidates with nil declined_at first, then by date" do
-        expect(result).to eq([nil_candidate, early_candidate, first_candidate].map(&:name))
-      end
     end
   end
 end

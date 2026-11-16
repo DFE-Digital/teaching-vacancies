@@ -56,11 +56,27 @@ module JobApplicationsHelper
                                        .flat_map { |keys, v| keys.map { |k| [k, v] } }
                                        .to_h.freeze
 
+  # Statuses whose applications are listed by a date, rather than in the order given
+  STATUS_SORT_FIELDS = {
+    "interviewing" => :interviewing_at,
+    "offered" => :offered_at,
+    "declined" => :declined_at,
+  }.freeze
+
   def job_applications_to_tabs(job_applications_hash)
     TABS_DEFINITION.transform_values do |status_list|
       # There might not be any applications with a particular status, so fill with empty list
-      status_list.index_with { |status| job_applications_hash.fetch(status, []) }
+      status_list.index_with { |status| sort_for_tab(status, job_applications_hash.fetch(status, [])) }
     end
+  end
+
+  # Applications without the date come first, as they need action from the publisher
+  def sort_for_tab(status, job_applications)
+    field = STATUS_SORT_FIELDS[status]
+    return job_applications unless field
+
+    without_date, with_date = job_applications.partition { |job_application| job_application.public_send(field).nil? }
+    without_date + with_date.sort_by(&field)
   end
 
   def tab_name(job_application_status)
