@@ -3,6 +3,37 @@
 require "rails_helper"
 
 RSpec.describe Referees::EmploymentReferenceForm do
+  describe "#params_to_save" do
+    let(:form) { described_class.new(currently_employed: currently_employed, employment_end_date: employment_end_date) }
+
+    context "when not currently employed" do
+      let(:currently_employed) { false }
+      let(:employment_end_date) { Date.new(2023, 1, 1) }
+
+      it "includes the employment end date" do
+        expect(form.params_to_save[:employment_end_date]).to eq(employment_end_date)
+      end
+    end
+
+    context "when currently employed with a valid end date" do
+      let(:currently_employed) { true }
+      let(:employment_end_date) { Date.new(2023, 1, 1) }
+
+      it "clears the employment end date" do
+        expect(form.params_to_save[:employment_end_date]).to be_nil
+      end
+    end
+
+    context "when currently employed with an invalid end date" do
+      let(:currently_employed) { true }
+      let(:employment_end_date) { { 1 => "2024", 2 => "13", 3 => "1" } }
+
+      it "clears the employment end date" do
+        expect(form.params_to_save[:employment_end_date]).to be_nil
+      end
+    end
+  end
+
   context "with no data" do
     let(:form) { described_class.new }
 
