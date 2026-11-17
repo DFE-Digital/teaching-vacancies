@@ -11,6 +11,12 @@ provider "statuscake" {
   api_token = local.infra_secrets.statuscake_apikey
 }
 
+provider "airbyte" {
+  server_url    = "${local.airbyte_server_url}/api/public/v1"
+  client_id     = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID, "")
+  client_secret = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET, "")
+}
+
 /*
 Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
@@ -81,6 +87,13 @@ module "paas" {
   postgres_server_version             = var.postgres_server_version
   postgres_server_docker_image        = var.postgres_server_docker_image
   pg_airbyte_enabled                  = var.pg_airbyte_enabled
+  airbyte_enabled                     = var.airbyte_enabled
+  connection_status                   = var.connection_status
+  airbyte_workspace_id                = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-WORKSPACE-ID : null
+  airbyte_client_id                   = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID : null
+  airbyte_client_secret               = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET : null
+  airbyte_repl_password               = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-REPLICATION-PASSWORD : null
+  airbyte_bq_sa                       = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-BQ-SA : null
   azure_storage_mb                    = var.azure_storage_mb
   redis_cache_capacity                = var.redis_cache_capacity
   redis_cache_family                  = var.redis_cache_family
