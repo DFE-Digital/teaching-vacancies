@@ -1,0 +1,50 @@
+name: Copilot setup steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+  pull_request:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  # The job name is fixed: Copilot only runs a job called copilot-setup-steps
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+
+      - name: Export database environment
+        run: |
+          echo "DATABASE_URL=postgis://postgres:postgres@localhost:5432" >> "$GITHUB_ENV"
+          echo "RAILS_ENV=test" >> "$GITHUB_ENV"
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+
+      - name: Set up test database
+        run: bundle exec rake db:create db:schema:load
+
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      - name: Generate Swagger (OpenAPI) docs
+        run: bundle exec rake rswag:specs:swaggerize
+
+      - name: Run JavaScript specs headless
+        run: echo "HEADLESS=1" >> "$GITHUB_ENV"

@@ -74,7 +74,7 @@ parallel_rspec
 ```
 
 ## RSpec test coverage reports
-We use [Simplecov](https://github.com/simplecov-ruby/simplecov) and [Undercover](https://github.com/grodowski/undercover) gems for measuring and enforcing our test coverage.
+We use the [Simplecov](https://github.com/simplecov-ruby/simplecov) gem for measuring and enforcing our test coverage.
 
 The configuration and minimum coverage requirements are set on the [.simplecov file](/.simplecov)
 
@@ -95,8 +95,8 @@ When the step is expanded, there is a link to download it as:
 
 The link will download a `ZIP` file containing the coverage report for the PR tests run.
 
-### Undercover alerts
+### Patch coverage alerts
 
-Once having a coverage report generated, undercover can be used to alert us about code that we added or changed without test coverage.
+Once having a coverage report generated, `simplecov patch` can be used to alert us about code that we added or changed without test coverage.
 
-This happens automatically in the PRs `test -> Run RSpec Tests in parallel` workflow. But can also be run locally invoking the `undercover` command.
+This happens automatically in the PRs `test -> Run RSpec Tests in parallel` workflow. But it can also be run locally with `bundle exec simplecov patch --base origin/main --minimum 100`.
