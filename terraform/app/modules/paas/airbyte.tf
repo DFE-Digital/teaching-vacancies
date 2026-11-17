@@ -1,9 +1,16 @@
 terraform {
   required_providers {
     airbyte = {
-      source = "airbytehq/airbyte"
+      source  = "airbytehq/airbyte"
+      version = "0.10.0"
     }
   }
+}
+
+provider "airbyte" {
+  server_url    = "${local.airbyte_server_url}/api/public/v1"
+  client_id     = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID, "")
+  client_secret = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET, "")
 }
 
 module "infrastructure_secrets" {

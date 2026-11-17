@@ -11,12 +11,6 @@ provider "statuscake" {
   api_token = local.infra_secrets.statuscake_apikey
 }
 
-provider "airbyte" {
-  server_url    = "${local.airbyte_server_url}/api/public/v1"
-  client_id     = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID, "")
-  client_secret = try(module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET, "")
-}
-
 /*
 Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html

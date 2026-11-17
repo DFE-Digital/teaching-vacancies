@@ -17,9 +17,5 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.32.0"
     }
-    airbyte = {
-      source  = "airbytehq/airbyte"
-      version = "0.10.0"
-    }
   }
 }

@@ -151,6 +151,18 @@ variable "pg_airbyte_enabled" {
   description = "Enable PostgreSQL logical replication for Airbyte"
 }
 
+variable "airbyte_enabled" {
+  type        = bool
+  default     = false
+  description = "Create the Airbyte source, destination and connection"
+}
+
+variable "connection_status" {
+  type        = string
+  default     = "inactive"
+  description = "Airbyte connection status, either active or inactive"
+}
+
 variable "azure_storage_mb" {
   type    = number
   default = 32768
