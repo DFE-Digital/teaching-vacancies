@@ -8,6 +8,20 @@ app/components/application_component.rb:
   branches:
     percent: 100.0
     missed: 0
+app/components/candidates_table_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/candidates_table_component/candidates_table_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/components/card_component.rb:
   lines:
     percent: 100.0
@@ -16,6 +30,13 @@ app/components/card_component.rb:
     percent: 100.0
     missed: 0
 app/components/card_component/card_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/concerns/candidate_cells.rb:
   lines:
     percent: 100.0
     missed: 0
@@ -232,6 +253,20 @@ app/components/searchable_collection_component/searchable_collection_component.h
   branches:
     percent: 63.63
     missed: 8
+app/components/selectable_candidates_table_component.rb:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
+app/components/selectable_candidates_table_component/selectable_candidates_table_component.html.slim:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 100.0
+    missed: 0
 app/components/sort_component.rb:
   lines:
     percent: 100.0
@@ -3573,7 +3608,7 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.53
+    percent: 99.45
     missed: 1
   branches:
     percent: 98.0
@@ -6618,7 +6653,7 @@ app/views/publishers/vacancies/_important_dates.html.slim:
     missed: 2
 app/views/publishers/vacancies/_job_details.html.slim:
   lines:
-    percent: 97.84
+    percent: 97.8
     missed: 2
   branches:
     percent: 82.92
@@ -6803,7 +6838,7 @@ app/views/publishers/vacancies/build/pay_package.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
+    percent: 75.0
     missed: 1
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
