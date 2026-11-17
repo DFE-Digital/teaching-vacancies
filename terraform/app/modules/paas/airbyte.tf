@@ -6,6 +6,15 @@ terraform {
   }
 }
 
+module "infrastructure_secrets" {
+  source = "../../vendor/modules/aks//aks/secrets"
+
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+  key_vault_short       = "inf"
+}
+
 module "airbyte" {
   source = "../../vendor/modules/aks//aks/airbyte"
 
@@ -22,11 +31,11 @@ module "airbyte" {
   host_name     = module.postgres.host
   database_name = module.postgres.name
 
-  workspace_id  = var.airbyte_workspace_id
-  client_id     = var.airbyte_client_id
-  client_secret = var.airbyte_client_secret
-  repl_password = var.airbyte_repl_password
-  gcp_bq_sa     = var.airbyte_bq_sa
+  workspace_id  = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-WORKSPACE-ID : null
+  client_id     = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-ID : null
+  client_secret = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-CLIENT-SECRET : null
+  repl_password = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-REPLICATION-PASSWORD : null
+  gcp_bq_sa     = var.airbyte_enabled ? module.infrastructure_secrets.map.AIRBYTE-BQ-SA : null
 
   server_url        = local.airbyte_server_url
   connection_status = var.connection_status

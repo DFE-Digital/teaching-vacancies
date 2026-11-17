@@ -98,34 +98,6 @@ variable "connection_status" {
   description = "Airbyte connection status, either active or inactive"
 }
 
-variable "airbyte_workspace_id" {
-  type    = string
-  default = null
-}
-
-variable "airbyte_client_id" {
-  type      = string
-  default   = null
-  sensitive = true
-}
-
-variable "airbyte_client_secret" {
-  type      = string
-  default   = null
-  sensitive = true
-}
-
-variable "airbyte_repl_password" {
-  type      = string
-  default   = null
-  sensitive = true
-}
-
-variable "airbyte_bq_sa" {
-  type    = string
-  default = null
-}
-
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}
