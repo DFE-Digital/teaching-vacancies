@@ -6,6 +6,9 @@ class Conversation < ApplicationRecord
   has_many :jobseeker_messages, dependent: :destroy
   has_many :publisher_messages, dependent: :destroy
 
+  # A conversation is only ever started by sending a message, so saving one without a message is a defect
+  validate :started_with_a_message, on: :create
+
   scope :inbox, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
   scope :for_organisations, lambda { |org_ids|
@@ -59,5 +62,14 @@ class Conversation < ApplicationRecord
       b: [job_application.name],                    # Candidate name (mid weight)
       d: message_content,                           # Message content (lower weight)
     ).tsvector
+  end
+
+  private
+
+  # Messages may be built through any of the three associations, so check them all
+  def started_with_a_message
+    return if [messages, jobseeker_messages, publisher_messages].any?(&:any?)
+
+    errors.add(:messages, :too_short, count: 1, strict: true)
   end
 end

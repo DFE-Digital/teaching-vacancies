@@ -5,18 +5,46 @@ RSpec.describe Conversation do
   let(:job_application) { create(:job_application, status: "interviewing") }
 
   describe "associations" do
+    # The strict validation raises on a conversation without messages, so give the matchers a saved one
+    subject { create(:conversation) }
+
     it { is_expected.to belong_to(:job_application) }
     it { is_expected.to have_many(:messages).dependent(:destroy) }
     it { is_expected.to have_many(:jobseeker_messages).dependent(:destroy) }
     it { is_expected.to have_many(:publisher_messages).dependent(:destroy) }
   end
 
+  describe "validations" do
+    let(:publisher) { create(:publisher) }
+
+    it "raises when created without a message" do
+      conversation = build(:conversation, job_application: job_application)
+
+      expect { conversation.valid? }.to raise_error(ActiveModel::StrictValidationFailed)
+    end
+
+    it "is invalid when its message is invalid" do
+      conversation = job_application.conversations.build
+      conversation.messages.build(type: "PublisherMessage", sender: publisher, content: "")
+
+      expect { conversation.save }.not_to change(described_class, :count)
+    end
+
+    it "is saved along with a valid message" do
+      conversation = job_application.conversations.build
+      conversation.messages.build(type: "PublisherMessage", sender: publisher, content: "Hello")
+
+      expect { conversation.save! }.to change(Message, :count).by(1)
+      expect(conversation.reload.last_message_at).to be_present
+    end
+  end
+
   describe "#last_message_at" do
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
-    context "when conversation has no messages" do
-      it "returns nil" do
-        expect(conversation.last_message_at).to be_nil
+    context "when conversation is created" do
+      it "is set from the message it was started with" do
+        expect(conversation.last_message_at).to eq(conversation.messages.sole.created_at)
       end
     end
 
@@ -38,7 +66,7 @@ RSpec.describe Conversation do
   describe "#has_unread_jobseeker_messages" do
     let!(:conversation) { create(:conversation, job_application: job_application) }
 
-    context "when conversation has no messages" do
+    context "when conversation only has the publisher message it was started with" do
       it "returns false" do
         expect(conversation.has_unread_jobseeker_messages).to be false
       end
@@ -130,6 +158,7 @@ RSpec.describe Conversation do
     describe "on conversation creation" do
       it "populates searchable_content" do
         new_conversation = build(:conversation, job_application: job_application)
+        new_conversation.messages << build(:publisher_message, conversation: new_conversation)
 
         expect { new_conversation.save! }.to change { new_conversation.searchable_content }.from(nil)
         expect(new_conversation.searchable_content).to include("science")
