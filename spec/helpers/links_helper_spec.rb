@@ -22,7 +22,7 @@ RSpec.describe LinksHelper do
   describe "#external_advert_link" do
     subject { helper.external_advert_link(vacancy) }
 
-    let(:vacancy) { build_stubbed(:vacancy, :external) }
+    let(:vacancy) { build_stubbed(:external_vacancy) }
 
     it "links through the apply action" do
       expect(subject).to have_link(href: helper.apply_job_path(vacancy))
