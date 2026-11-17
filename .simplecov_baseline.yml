@@ -2348,10 +2348,10 @@ app/helpers/guiding_pages_helper.rb:
     missed: 1
 app/helpers/job_applications_helper.rb:
   lines:
-    percent: 95.52
+    percent: 95.89
     missed: 3
   branches:
-    percent: 92.3
+    percent: 92.85
     missed: 2
 app/helpers/job_applications_pdf_helper.rb:
   lines:
@@ -8051,13 +8051,6 @@ lib/dfe_sign_in/api.rb:
   branches:
     percent: 100.0
     missed: 0
-lib/dsi_client.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 4
 lib/fail_safe.rb:
   lines:
     percent: 100.0
