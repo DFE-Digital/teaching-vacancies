@@ -62,7 +62,7 @@ bundle exec rspec                         # all specs; .rspec excludes ~smoke_te
 bundle exec rspec --tag a11y              # accessibility specs
 CI=1 bundle exec rake parallel:spec       # parallel; without CI=1 or HEADLESS=1, js specs open a browser
 RAILS_ENV=test bin/rails parallel:create  # one-off parallel DB setup
-COVERAGE=1 bundle exec rspec && bundle exec undercover  # fails on new/changed code without coverage
+COVERAGE=1 bundle exec rspec && bundle exec simplecov patch --base origin/main --minimum 100  # fails on new/changed code without coverage
 bundle exec rake rswag:specs:swaggerize   # on a fresh clone and after ATS API changes (specs read the git-ignored swagger/v1/swagger.yaml)
 bundle exec rake lint                     # rubocop + slim-lint + brakeman
 bundle exec database_consistency          # required CI check: model/schema agreement
@@ -70,7 +70,7 @@ yarn run js:lint && yarn run sass:lint && yarn run js:test  # frontend
 ```
 
 **Before calling a task done**, run what CI runs (`.github/workflows/test.yml` and `lint.yml`):
-the specs, `rake lint`, `database_consistency`, `undercover` and `bin/rails db:migrate:status`,
+the specs, `rake lint`, `database_consistency`, `simplecov patch` and `bin/rails db:migrate:status`,
 plus the frontend commands if you touched the frontend.
 
 ## Where code goes
