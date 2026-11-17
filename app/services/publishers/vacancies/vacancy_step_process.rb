@@ -7,8 +7,8 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
 
     super(current_step, {
       job_details: job_details_steps,
-      about_the_role: %i[about_the_role school_visits visa_sponsorship].index_with { true },
-      important_dates: %i[important_dates].index_with { true },
+      about_the_role: { about_the_role: true, school_visits: true, visa_sponsorship: true },
+      important_dates: { important_dates: true },
       application_process: application_process_steps,
       review: %i[review].index_with { true },
     })
