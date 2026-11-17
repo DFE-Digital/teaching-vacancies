@@ -10,7 +10,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       about_the_role: { about_the_role: true, school_visits: true, visa_sponsorship: true },
       important_dates: { important_dates: true },
       application_process: application_process_steps,
-      review: %i[review].index_with { true },
+      review: { review: true },
     })
   end
 
