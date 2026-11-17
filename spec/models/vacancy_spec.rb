@@ -655,6 +655,73 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#outbound_application_url" do
+    subject { vacancy.outbound_application_url }
+
+    let(:vacancy) { build_stubbed(:vacancy, :apply_via_website, application_link:) }
+    let(:application_link) { "https://contoso.com/jobs/123" }
+
+    it "tags the application link with our UTM parameters" do
+      expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=teaching-vacancies")
+    end
+
+    context "when the vacancy is from an ATS API client" do
+      let(:vacancy) { build_stubbed(:vacancy, :external, external_source: nil, external_advert_url: "https://contoso.com/adverts/123") }
+
+      it "tags the external advert URL" do
+        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
+      end
+    end
+
+    context "when the vacancy is from an external source" do
+      let(:vacancy) { build_stubbed(:vacancy, :external, publisher_ats_api_client: nil, external_advert_url: "https://contoso.com/adverts/123") }
+
+      it "tags the external advert URL" do
+        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
+      end
+    end
+
+    context "when there is no URL to send jobseekers to" do
+      let(:vacancy) { build_stubbed(:vacancy, application_link: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when the URL already has a query string" do
+      let(:application_link) { "https://contoso.com/jobs?id=123&tag=a&tag=b" }
+
+      it "appends our UTM parameters without changing the existing ones" do
+        expect(subject).to eq("https://contoso.com/jobs?id=123&tag=a&tag=b&utm_medium=referral&utm_source=teaching-vacancies")
+      end
+    end
+
+    context "when the URL has a fragment" do
+      let(:application_link) { "https://contoso.com/jobs/123#apply" }
+
+      it "keeps the fragment after the query string" do
+        expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=teaching-vacancies#apply")
+      end
+    end
+
+    context "when the URL already carries UTM parameters" do
+      let(:application_link) { "https://contoso.com/jobs/123?utm_source=their-campaign" }
+
+      it "leaves the URL untouched" do
+        expect(subject).to eq(application_link)
+      end
+    end
+
+    context "when the URL cannot be parsed" do
+      let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
+
+      it "returns the URL unchanged" do
+        vacancy[:application_link] = "http://contoso.com:invalid-port/jobs"
+
+        expect(subject).to eq("http://contoso.com:invalid-port/jobs")
+      end
+    end
+  end
+
   describe "#trust_uid" do
     let(:vacancy) { create(:vacancy, organisations: organisations) }
 

@@ -39,8 +39,10 @@ module LinksHelper
     tracked_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **)
   end
 
-  def tracked_open_in_new_tab_button_link_to(text, href, **)
-    tracked_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noreferrer noopener", **)
+  # removed "noreferrer" so destinations can attribute traffic to us. "noopener" prevents tabnabbing in all modern browsers now.
+  # use tracked_open_in_new_tab_link_to for other external links where we don't need attribution.
+  def tracked_outbound_apply_button_link_to(text, href, **)
+    tracked_button_link_to(t("app.opens_in_new_tab", link_text: text), href, target: "_blank", rel: "noopener", **)
   end
 
   def open_in_new_tab_button_link_to(text, href, **)
@@ -69,9 +71,11 @@ module LinksHelper
   end
 
   def external_advert_link(vacancy, **)
-    tracked_open_in_new_tab_button_link_to(
+    tracked_outbound_apply_button_link_to(
       t("jobs.view_advert.external"),
-      vacancy.external_advert_url,
+      apply_job_path(vacancy),
+      # href goes via our apply action so report the real link destination to analytics
+      tracked_link_href: vacancy.external_advert_url,
       link_type: :external_advert_link,
       link_subject: vacancy.id,
       **,
@@ -79,9 +83,11 @@ module LinksHelper
   end
 
   def apply_link(vacancy, text: t("jobs.view_advert.#{school_or_college_type(vacancy.organisation)}"), **)
-    tracked_open_in_new_tab_button_link_to(
+    tracked_outbound_apply_button_link_to(
       text,
       apply_job_path(vacancy),
+      # href goes via our apply action so report the real link destination to analytics
+      tracked_link_href: vacancy.application_link,
       "aria-label": t("jobs.aria_labels.apply_link"),
       link_type: :get_more_information,
       link_subject: vacancy.id,

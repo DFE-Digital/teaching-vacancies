@@ -19,6 +19,42 @@ RSpec.describe LinksHelper do
     end
   end
 
+  describe "#external_advert_link" do
+    subject { helper.external_advert_link(vacancy) }
+
+    let(:vacancy) { build_stubbed(:vacancy, :external) }
+
+    it "links through the apply action" do
+      expect(subject).to have_link(href: helper.apply_job_path(vacancy))
+    end
+
+    it "tracks the external advert URL as the link destination" do
+      expect(subject).to have_css("a[data-tracked-link-href='#{vacancy.external_advert_url}']")
+    end
+
+    it "omits noreferrer so the destination can attribute the traffic to us" do
+      expect(subject).to have_css("a[rel='noopener']")
+    end
+  end
+
+  describe "#apply_link" do
+    subject { helper.apply_link(vacancy) }
+
+    let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
+
+    it "links through the apply action" do
+      expect(subject).to have_link(href: helper.apply_job_path(vacancy))
+    end
+
+    it "tracks the application link as the link destination" do
+      expect(subject).to have_css("a[data-tracked-link-href='#{vacancy.application_link}']")
+    end
+
+    it "omits noreferrer so the destination can attribute the traffic to us" do
+      expect(subject).to have_css("a[rel='noopener']")
+    end
+  end
+
   describe "#organisation_vacancies_link" do
     subject { helper.organisation_vacancies_link(organisation) }
 

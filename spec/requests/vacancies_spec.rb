@@ -70,7 +70,20 @@ RSpec.describe "Vacancies" do
       expect { get apply_job_path(vacancy) }
         .to change { vacancy.reload.external_application_clicks }.from(2).to(3)
 
-      expect(response).to redirect_to(vacancy.application_link)
+      expect(response).to redirect_to(vacancy.outbound_application_url)
+    end
+
+    it "tags the redirect with our UTM parameters" do
+      get apply_job_path(vacancy)
+
+      expect(Addressable::URI.parse(response.location).query_values)
+        .to include("utm_source" => "teaching-vacancies", "utm_medium" => "referral")
+    end
+
+    it "only sends our origin as the referrer to the destination" do
+      get apply_job_path(vacancy)
+
+      expect(response.headers["Referrer-Policy"]).to eq("strict-origin-when-cross-origin")
     end
 
     it "does not count clicks for an expired vacancy" do
@@ -89,6 +102,41 @@ RSpec.describe "Vacancies" do
         .to(not_change { vacancy.reload.external_application_clicks })
 
       expect(response).to have_http_status(:not_found)
+    end
+
+    context "when the vacancy is from an ATS API client" do
+      let(:vacancy) { create(:vacancy, :external, external_source: nil, external_application_clicks: 2) }
+
+      it "increments the application click count and redirects to the external advert" do
+        expect { get apply_job_path(vacancy) }
+          .to change { vacancy.reload.external_application_clicks }.from(2).to(3)
+
+        expect(response).to redirect_to(vacancy.outbound_application_url)
+      end
+    end
+
+    context "when the vacancy is from an external source" do
+      let(:vacancy) { create(:vacancy, :external, publisher_ats_api_client: nil, external_application_clicks: 2) }
+
+      it "increments the application click count and redirects to the external advert" do
+        expect { get apply_job_path(vacancy) }
+          .to change { vacancy.reload.external_application_clicks }.from(2).to(3)
+
+        expect(response).to redirect_to(vacancy.outbound_application_url)
+      end
+    end
+
+    context "when an external vacancy has no advert URL" do
+      let(:vacancy) { create(:vacancy, :external, external_application_clicks: 2) }
+
+      it "does not count the click" do
+        vacancy.update_column(:external_advert_url, nil)
+
+        expect { get apply_job_path(vacancy) }
+          .to(not_change { vacancy.reload.external_application_clicks })
+
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     context "when a signed-in jobseeker is in the TRN variant" do
@@ -113,7 +161,7 @@ RSpec.describe "Vacancies" do
         expect { get apply_job_path(vacancy, trn_prompted: true) }
           .to change { vacancy.reload.external_application_clicks }.from(2).to(3)
 
-        expect(response).to redirect_to(vacancy.application_link)
+        expect(response).to redirect_to(vacancy.outbound_application_url)
       end
 
       context "when the vacancy is not for a teaching or middle leader role" do
@@ -122,7 +170,7 @@ RSpec.describe "Vacancies" do
         it "redirects to the application website" do
           get apply_job_path(vacancy)
 
-          expect(response).to redirect_to(vacancy.application_link)
+          expect(response).to redirect_to(vacancy.outbound_application_url)
         end
       end
     end
