@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe NotifyViewsHelper do
-  describe "#vacancy_organisation_and_location" do
-    subject { helper.vacancy_organisation_and_location(vacancy) }
-
+  describe "vacancy organisation name and location" do
     let(:school) { create(:school, school_groups: [school_group]) }
     let(:school2) { create(:school, school_groups: [school_group]) }
     let(:school_group) { create(:school_group) }
@@ -11,16 +9,18 @@ RSpec.describe NotifyViewsHelper do
     context "when the vacancy is at a single school" do
       let(:vacancy) { create(:vacancy, organisations: [school]) }
 
-      it "returns the address without organization name" do
-        expect(subject).to eq("#{school.town}, #{school.county}, #{school.postcode}")
+      it "returns the school name and its address" do
+        expect(helper.vacancy_organisation_name(vacancy)).to eq(school.name)
+        expect(helper.vacancy_location(vacancy)).to eq("#{school.town}, #{school.county}, #{school.postcode}")
       end
     end
 
     context "when the vacancy is at multiple schools" do
       let(:vacancy) { create(:vacancy, organisations: [school, school2]) }
 
-      it "returns the multiple locations text with organization name" do
-        expect(subject).to eq("#{t('organisations.job_location_summary.at_multiple_locations')}, #{school_group.name}")
+      it "returns the trust name and the multiple locations text" do
+        expect(helper.vacancy_organisation_name(vacancy)).to eq(school_group.name)
+        expect(helper.vacancy_location(vacancy)).to eq(I18n.t("organisations.job_location_summary.at_multiple_locations"))
       end
     end
   end

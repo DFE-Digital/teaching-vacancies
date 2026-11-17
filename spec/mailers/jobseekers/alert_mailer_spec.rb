@@ -95,6 +95,23 @@ RSpec.describe Jobseekers::AlertMailer do
     end
   end
 
+  describe "organisation name and location" do
+    it "shows the school name and its location below the job title" do
+      expect(body).to include("#{expected_job_title_link}\n  #{school.name}\n  #{vacancy_location(vacancies.first)}\n")
+    end
+
+    context "when the vacancy is at multiple locations" do
+      let(:school_group) { create(:school_group) }
+      let(:schools) { create_list(:school, 2, school_groups: [school_group]) }
+      let(:vacancies) { create_list(:vacancy, 1, organisations: schools).map(&:decorate) }
+
+      it "shows the trust name and the multiple locations text below the job title" do
+        expect(body).to include("#{expected_job_title_link}\n  #{school_group.name}\n  " \
+                                "#{I18n.t('organisations.job_location_summary.at_multiple_locations')}\n")
+      end
+    end
+  end
+
   context "when frequency is daily" do
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
     let(:frequency) { "daily" }
