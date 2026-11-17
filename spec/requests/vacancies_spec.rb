@@ -105,7 +105,7 @@ RSpec.describe "Vacancies" do
     end
 
     context "when the vacancy is from an ATS API client" do
-      let(:vacancy) { create(:vacancy, :external, external_source: nil, external_application_clicks: 2) }
+      let(:vacancy) { create(:external_vacancy, external_source: nil, external_application_clicks: 2) }
 
       it "increments the application click count and redirects to the external advert" do
         expect { get apply_job_path(vacancy) }
@@ -116,7 +116,7 @@ RSpec.describe "Vacancies" do
     end
 
     context "when the vacancy is from an external source" do
-      let(:vacancy) { create(:vacancy, :external, publisher_ats_api_client: nil, external_application_clicks: 2) }
+      let(:vacancy) { create(:external_vacancy, publisher_ats_api_client: nil, external_application_clicks: 2) }
 
       it "increments the application click count and redirects to the external advert" do
         expect { get apply_job_path(vacancy) }
@@ -127,7 +127,7 @@ RSpec.describe "Vacancies" do
     end
 
     context "when an external vacancy has no advert URL" do
-      let(:vacancy) { create(:vacancy, :external, external_application_clicks: 2) }
+      let(:vacancy) { create(:external_vacancy, external_application_clicks: 2) }
 
       it "does not count the click" do
         vacancy.update_column(:external_advert_url, nil)

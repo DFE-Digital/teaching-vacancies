@@ -666,7 +666,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy is from an ATS API client" do
-      let(:vacancy) { build_stubbed(:vacancy, :external, external_source: nil, external_advert_url: "https://contoso.com/adverts/123") }
+      let(:vacancy) { build_stubbed(:external_vacancy, external_source: nil, external_advert_url: "https://contoso.com/adverts/123") }
 
       it "tags the external advert URL" do
         expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
@@ -674,7 +674,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy is from an external source" do
-      let(:vacancy) { build_stubbed(:vacancy, :external, publisher_ats_api_client: nil, external_advert_url: "https://contoso.com/adverts/123") }
+      let(:vacancy) { build_stubbed(:external_vacancy, publisher_ats_api_client: nil, external_advert_url: "https://contoso.com/adverts/123") }
 
       it "tags the external advert URL" do
         expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
