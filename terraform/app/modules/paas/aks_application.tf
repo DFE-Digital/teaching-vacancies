@@ -19,6 +19,12 @@ module "application_configuration" {
       BIGQUERY_DATASET    = var.dataset_name
       BIGQUERY_PROJECT_ID = "teacher-vacancy-service"
       BIGQUERY_TABLE_NAME = "events-dfe-analytics"
+
+      BIGQUERY_AIRBYTE_DATASET = var.airbyte_enabled ? local.gcp_dataset_name : null
+      AIRBYTE_SERVER_URL       = var.airbyte_enabled ? local.airbyte_server_url : null
+      BIGQUERY_POLICY_TAGS = var.airbyte_enabled ? jsonencode({
+        hidden = "projects/${local.gcp_project_id}/locations/europe-west2/taxonomies/${local.gcp_taxonomy_id}/policyTags/${local.gcp_policy_tag_id}"
+      }) : null
     },
     local.dfe_sign_in_map,
     local.disable_emails_map,
@@ -34,7 +40,14 @@ module "application_configuration" {
     local.app_env_api_keys,
     local.app_env_secrets,
     local.app_env_documents_azure_storage_credentials,
-    local.app_env_images_logos_azure_storage_credentials
+    local.app_env_images_logos_azure_storage_credentials,
+    {
+      AIRBYTE_CONFIGURATION = var.airbyte_enabled ? jsonencode({
+        SOURCE_ID      = module.airbyte[0].airbyte_source_id
+        DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+        CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+      }) : null
+    }
   )
 }
 

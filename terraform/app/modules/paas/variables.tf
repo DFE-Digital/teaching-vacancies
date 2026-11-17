@@ -88,6 +88,16 @@ variable "pg_airbyte_enabled" {
   description = "Enable PostgreSQL logical replication for Airbyte"
 }
 
+variable "airbyte_enabled" {
+  type        = bool
+  description = "Create the Airbyte source, destination and connection"
+}
+
+variable "connection_status" {
+  type        = string
+  description = "Airbyte connection status, either active or inactive"
+}
+
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}
