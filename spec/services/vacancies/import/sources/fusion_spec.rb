@@ -342,8 +342,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
-          :vacancy,
-          :external,
+          :external_vacancy,
           phases: %w[primary],
           external_source: "fusion",
           external_reference: "0044",

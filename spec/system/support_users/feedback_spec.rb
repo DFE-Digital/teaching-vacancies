@@ -218,6 +218,7 @@ RSpec.describe "Feedback supportal section" do
 
   describe "Satisfaction ratings" do
     before do
+      travel_to Date.new(2026, 10, 15)
       feedback_types = {
         unsubscribe: { unsubscribe_reason: %i[job_found circumstances_change not_relevant other_reason] },
         jobseeker_account: { rating: %i[highly_satisfied somewhat_satisfied neither somewhat_dissatisfied highly_dissatisfied] },

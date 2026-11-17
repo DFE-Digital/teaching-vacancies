@@ -7,8 +7,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
 
   let(:vacancy) do
     create(
-      :vacancy,
-      :external,
+      :external_vacancy,
       external_reference: "old-ref",
       publisher_ats_api_client_id: publisher_ats_api_client_id,
       job_title: "English Teacher",
@@ -272,8 +271,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   context "when a non-deleted vacancy with the same external reference exists" do
     let!(:existing_vacancy) do
       create(
-        :vacancy,
-        :external,
+        :external_vacancy,
         external_reference: "new-ref",
         publisher_ats_api_client_id: publisher_ats_api_client_id,
       )
@@ -295,9 +293,8 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   context "when a deleted vacancy with the same external reference exists" do
     let!(:existing_vacancy) do
       create(
-        :vacancy,
+        :external_vacancy,
         :trashed,
-        :external,
         external_reference: "new-ref",
         publisher_ats_api_client_id: publisher_ats_api_client_id,
       )

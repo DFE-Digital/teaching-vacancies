@@ -34,7 +34,7 @@ RSpec.describe ImportFromVacancySourceJob do
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school])
+        build(:external_vacancy, :secondary, job_roles: ["teaching_assistant"], organisations: [school])
       end
 
       it "saves the vacancy" do
@@ -51,7 +51,7 @@ RSpec.describe ImportFromVacancySourceJob do
     context "when the vacancy has already been imported" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :external, :secondary, job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
+        build(:external_vacancy, :secondary, job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
       end
 
       before { described_class.perform_now(FakeVacancySource) }
@@ -66,8 +66,7 @@ RSpec.describe ImportFromVacancySourceJob do
       let(:vacancies_from_source) { [vacancy] }
       let(:contact_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
       let(:vacancy) do
-        build(:vacancy,
-              :external,
+        build(:external_vacancy,
               :ect_suitable,
               phases: [],
               enable_job_applications: true,
@@ -198,8 +197,8 @@ RSpec.describe ImportFromVacancySourceJob do
 
     context "when there is already a duplicate vacancy in the FailedImportedVacancy table" do
       let(:vacancies_from_source) { [vacancy1, vacancy2] }
-      let(:vacancy1) { build(:vacancy, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
-      let(:vacancy2) { build(:vacancy, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy1) { build(:external_vacancy, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy2) { build(:external_vacancy, external_reference: "123", phases: [], organisations: [school], job_title: "") }
 
       it "does not save the second vacancy" do
         import_from_vacancy_source_job
@@ -209,7 +208,7 @@ RSpec.describe ImportFromVacancySourceJob do
     end
 
     context "when a live vacancy no longer comes through" do
-      before { create(:vacancy, :external, :secondary, organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      before { create(:external_vacancy, :secondary, organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
 
       let(:vacancies_from_source) { [] }
 

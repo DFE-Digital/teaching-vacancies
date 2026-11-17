@@ -309,8 +309,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
-          :vacancy,
-          :external,
+          :external_vacancy,
           phases: %w[primary],
           external_source: "vacancy_poster",
           external_reference: "TEST002",
