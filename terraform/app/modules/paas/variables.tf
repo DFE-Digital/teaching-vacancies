@@ -83,6 +83,11 @@ variable "postgres_server_docker_image" {
   description = "Docker image to use for PostgreSQL Kubernetes deployment"
 }
 
+variable "pg_airbyte_enabled" {
+  type        = bool
+  description = "Enable PostgreSQL logical replication for Airbyte"
+}
+
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}
 variable "azure_storage_mb" {}
