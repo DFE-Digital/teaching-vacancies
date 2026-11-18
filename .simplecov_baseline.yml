@@ -1186,10 +1186,10 @@ app/controllers/publishers/vacancies/job_applications/base_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies/job_applications/messages_controller.rb:
   lines:
-    percent: 94.73
+    percent: 95.83
     missed: 1
   branches:
-    percent: 66.66
+    percent: 75.0
     missed: 2
 app/controllers/publishers/vacancies/job_applications/notes_controller.rb:
   lines:
@@ -1424,8 +1424,8 @@ app/controllers/support_users/sessions_controller.rb:
     missed: 1
 app/controllers/vacancies_controller.rb:
   lines:
-    percent: 96.7
-    missed: 3
+    percent: 99.15
+    missed: 1
   branches:
     percent: 89.47
     missed: 4
@@ -4150,7 +4150,7 @@ app/services/publishers/ats_api/organisation_fetcher.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 93.75
+    percent: 95.83
     missed: 1
 app/services/publishers/ats_api/update_vacancy_service.rb:
   lines:
@@ -6621,8 +6621,8 @@ app/views/publishers/vacancies/_job_details.html.slim:
     percent: 97.8
     missed: 2
   branches:
-    percent: 82.92
-    missed: 7
+    percent: 86.04
+    missed: 6
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
     percent: 100.0
