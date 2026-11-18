@@ -990,9 +990,6 @@ en:
         title: Jobseeker sign in
         govuk_one_log_in:
           paragraph: Use GOV.UK One Login to sign in to Teaching Vacancies. You can create an account if you do not already have one.
-          how_to_find_registered_email:
-            summary: How to find your registered email address
-            body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
         fallback:
           description: Enter your email below and we will send you a link that will take you straight into your account.
     subscriptions:
