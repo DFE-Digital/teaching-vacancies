@@ -2,6 +2,10 @@ class SupportUsers::PublisherAtsApiClientsController < SupportUsers::BaseControl
   def index
     api_clients = PublisherAtsApiClient.all
     @pagy, @api_clients = pagy(api_clients)
+    vacancies = Vacancy.where(publisher_ats_api_client_id: @api_clients.map(&:id)).group(:publisher_ats_api_client_id)
+    @first_vacancy_dates = vacancies.minimum(:created_at)
+    @vacancy_counts = vacancies.count
+    @unique_organisation_counts = vacancies.joins(:organisations).distinct.count("organisations.id")
   end
 
   def show
