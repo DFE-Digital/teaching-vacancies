@@ -7,7 +7,7 @@
         = full_address(school)
     - if malware_scan_clean?(school.logo)
       .header-with-logo-logo--search-result
-        = image_tag(school.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: school.name))
+        = image_tag(school.logo, alt: t("publishers.organisations.organisation_logo.alt_text", organisation_name: school.name))
 
   = govuk_summary_list(classes: "govuk-summary-list--no-border") do |summary_list|
     - if school.key_stages.present?

@@ -6,7 +6,7 @@ module Jobseekers
                     personalisation: {
                       date: job_application.vacancy.expires_at.to_date.to_fs,
                       job_title: job_application.vacancy.job_title,
-                      school: job_application.vacancy.organisation.name,
+                      school: job_application.vacancy.organisation_name,
                       application_link: jobseekers_job_application_review_url(job_application),
                       advice_link: jobseeker_guides_write_a_great_teaching_job_application_in_five_steps_url,
                       home_page_link: root_url,
@@ -20,7 +20,7 @@ module Jobseekers
                       date: vacancy.expires_at.to_date.to_fs,
                       job_title: vacancy.job_title,
                       first_name: jobseeker.jobseeker_profile&.first_name || "Jobseeker",
-                      school: vacancy.organisation.name,
+                      school: vacancy.organisation_name,
                       apply_for_link: job_url(vacancy),
                       advice_link: jobseeker_guides_write_a_great_teaching_job_application_in_five_steps_url,
                       home_page_link: root_url,

@@ -52,7 +52,7 @@ json.url job_url(vacancy)
 
 json.hiringOrganization do
   json.set! "@type", "Organization"
-  json.name vacancy.organisation&.name
+  json.name vacancy.organisation_name
   # This should at least put the school logo (from Google) next to the advert
   json.sameAs vacancy.organisation.url
   json.identifier vacancy.organisation&.urn || vacancy.organisation&.uid

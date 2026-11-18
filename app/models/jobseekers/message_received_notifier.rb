@@ -54,7 +54,7 @@ module Jobseekers
       end
 
       def school_name
-        job_application.vacancy.organisation.name
+        job_application.vacancy.organisation_name
       end
     end
 
