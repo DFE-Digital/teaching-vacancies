@@ -42,12 +42,22 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the ECT job alerts url" do
-      let(:params) { { "ect_job_alert" => true, "search_criteria" => { "ect_statuses" => ["ect_suitable"] } } }
+      let(:params) { { ect_job_alert: true, search_criteria: { "ect_statuses" => ["ect_suitable"] } } }
 
       before { get ect_job_alerts_path }
 
       it "includes the correct parameters" do
-        expect(request.parameters).to include(params)
+        expect(request.parameters.symbolize_keys.except(:controller, :action)).to eq(params)
+      end
+    end
+
+    context "when hit via the FE job alerts url" do
+      let(:params) { { fe_job_alert: true, search_criteria: { "phases" => ["sixth_form_or_college"] } } }
+
+      before { get fe_job_alerts_path }
+
+      it "includes the correct parameters" do
+        expect(request.parameters.symbolize_keys.except(:controller, :action)).to eq(params)
       end
     end
   end

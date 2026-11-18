@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     expect(page).to have_css("p", text: "Get teaching jobs sent straight to your inbox.")
     expect(page).to have_field("City, county, or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: email_address)
-                .and have_field("Search radius", with: "15")
+                .and have_field("Search radius", with: "25")
                 .and have_checked_field("Teacher")
                 .and have_checked_field("Suitable for early career teachers")
                 .and have_checked_field("Full time")

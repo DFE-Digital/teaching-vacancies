@@ -7,15 +7,22 @@ class SubscriptionsController < ApplicationController
 
   before_action :trigger_create_job_alert_clicked_event, only: :new, if: -> { vacancy_id.present? }
 
-  def new
+  def new # rubocop:disable Metrics/AbcSize
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
     @fe_job_alert = params[:fe_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
-    @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
 
-    render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
+    # use the presence of this field to determine that it is an email campaign
+    # either from MailChimp or from FE Campaign newsletter
+    if params[:email_contact].present?
+      @form = Jobseekers::SubscriptionForm.new(campaign_attributes)
+      render("subscriptions/campaign/new", layout: "subscription_campaign")
+    else
+      @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
+      render("new")
+    end
   end
 
   def create # rubocop:disable Metrics/AbcSize
@@ -95,10 +102,6 @@ class SubscriptionsController < ApplicationController
 
   private
 
-  def campaign_link?
-    params[:email_contact].present?
-  end
-
   # There are mailing campaigns using Mailchimp to send "Subscribe to our job alerts" emails to user groups.
   # These emails links to our service contain parameters in their URL, which values are used to pre-populate the
   # subscription form fields.
@@ -110,7 +113,7 @@ class SubscriptionsController < ApplicationController
       subjects: ([campaign[:email_subject].capitalize] if campaign[:email_subject].present?),
       phases: ([campaign[:email_phase]] if campaign[:email_phase].present?),
       location: campaign[:email_postcode].presence,
-      radius: campaign[:email_radius].presence || "15",
+      radius: campaign[:email_radius].presence || "25",
       teaching_job_roles: (campaign[:email_jobrole].present? ? [campaign[:email_jobrole]] : ["teacher"]),
       ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
       working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
@@ -122,8 +125,6 @@ class SubscriptionsController < ApplicationController
   def new_form_attributes
     if params[:search_criteria].present?
       search_criteria_params
-    elsif campaign_link?
-      email.merge(campaign_attributes)
     else
       email
     end
@@ -181,7 +182,15 @@ class SubscriptionsController < ApplicationController
                                     :location,
                                     :organisation_slug,
                                     :radius,
-                                    { teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], visa_sponsorship_availability: [], organisation_types: [], school_types: [] }])
+                                    { teaching_job_roles: [],
+                                      support_job_roles: [],
+                                      ect_statuses: [],
+                                      subjects: [],
+                                      phases: [],
+                                      working_patterns: [],
+                                      visa_sponsorship_availability: [],
+                                      organisation_types: [],
+                                      school_types: [] }])
   end
 
   def subscription_params
