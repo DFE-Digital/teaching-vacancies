@@ -335,11 +335,11 @@ class Vacancy < ApplicationRecord
     self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
-  private
-
   def job_address_fields
     [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
   end
+
+  private
 
   def with_utm_params(url)
     uri = Addressable::URI.heuristic_parse(url)
