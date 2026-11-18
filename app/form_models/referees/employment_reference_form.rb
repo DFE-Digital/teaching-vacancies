@@ -37,5 +37,12 @@ module Referees
         STRING_FIELDS + BOOLEAN_FIELDS + %i[employment_start_date employment_end_date]
       end
     end
+
+    # A candidate who is still employed has no end date. The end date field is only hidden
+    # in the browser when "currently employed" is selected, so it can still be submitted.
+    # It is not validated in that case, so it must not be saved either.
+    def params_to_save
+      super.tap { |params| params[:employment_end_date] = nil if currently_employed }
+    end
   end
 end
