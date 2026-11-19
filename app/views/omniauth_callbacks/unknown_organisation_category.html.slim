@@ -1,15 +1,13 @@
-- content_for(:page_title_prefix) { "Sign In error" }
+- content_for(:page_title_prefix) { t("omniauth_callbacks.sign_in_error_title") }
 
-h1.govuk-heading-xl Sorry, we cannot sign you in
+h1.govuk-heading-xl = t("omniauth_callbacks.sign_in_error_heading")
 
-p.govuk-body You are trying to sign in to Teaching Vacancies on behalf of #{@org_name}, which is an organisation of type "#{@org_type}". This type of organisation cannot use Teaching Vacancies.
+p.govuk-body = t("omniauth_callbacks.unknown_organisation_html", organisation: @org_name, organisation_type: @org_type)
 
-p.govuk-body To use Teaching Vacancies, you must sign in on behalf of one of the following types of organisation on DfE Sign In:
+p.govuk-body = t("omniauth_callbacks.supported_organisation_types_intro")
 
 ul.govuk-list.govuk-list--bullet
-  li Single establishment (for example, a school or a single-academy trust)
-  li Multi-academy trust
-  li Local authority
+  - t("omniauth_callbacks.supported_organisation_types").each do |organisation_type|
+    li = organisation_type
 
-p.govuk-body
-  | If you are not sure why you are seeing this error, you can #{link_to("report a problem", new_support_request_path)}.
+p.govuk-body = t("omniauth_callbacks.report_problem_html", link: link_to(t("omniauth_callbacks.report_problem"), new_support_request_path))

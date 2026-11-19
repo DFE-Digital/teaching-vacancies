@@ -200,6 +200,7 @@ en:
     further_details: Further details about the role
     further_details_hint: Tell jobseekers about your learners and the culture of your %{organisation_type}
     location: Location
+    location_context: Jobs in or near %{location}
     location_find_more_html:
       one: Find more %{school_type} jobs in %{location_link}
       other: Find more %{school_type} jobs in %{location_link} and %{second_location_link}
@@ -260,6 +261,7 @@ en:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
+    primary_school_classroom_image_alt: Primary school classroom with children
     publication_date: Publish date
     start_on: Job start date
     starts_on: Job start date

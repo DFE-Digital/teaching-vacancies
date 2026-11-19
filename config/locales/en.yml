@@ -2,6 +2,8 @@ en:
   components:
     editor:
       bullet_points_hint: You can copy and paste bullet points into the text box
+    map:
+      close: Close
 
   active_storage:
     blobs:
@@ -63,7 +65,13 @@ en:
 
   error_pages:
     not_found: Page not found.
+    not_found_address: If you entered a web address please check it was correct.
+    not_found_homepage_html: You can %{link} to try and find the information you need.
+    return_to_homepage: return to the homepage
     server_error: Sorry, there’s a technical issue at our end
+    server_error_working: We’re working to fix this, so please try again shortly.
+    server_error_contact_html: If you continue to have problems accessing Teaching Vacancies you can email %{email}.
+    server_error_include_number: "Please include this error number in your email, as it will help us identify the problem:"
     unauthorised:
       footer: >-
         If you still can’t access this page, or you haven’t yet been authorised, please email
@@ -130,6 +138,42 @@ en:
       paragraph_1: Your request to access Teaching Vacancies has been sent to your organisation's DfE Sign-in approver.
       paragraph_2: You'll be able to sign in after they approve your request.
       paragraph_3: If you need help, contact your organisation's DfE Sign-in approver.
+    sign_in_error_title: Sign In error
+    sign_in_error_heading: Sorry, we cannot sign you in
+    unknown_organisation_html: >-
+      You are trying to sign in to Teaching Vacancies on behalf of %{organisation}, which is an organisation of type
+      "%{organisation_type}". This type of organisation cannot use Teaching Vacancies.
+    supported_organisation_types_intro: >-
+      To use Teaching Vacancies, you must sign in on behalf of one of the following types of organisation on DfE Sign In:
+    supported_organisation_types:
+      - Single establishment (for example, a school or a single-academy trust)
+      - Multi-academy trust
+      - Local authority
+    report_problem_html: If you are not sure why you are seeing this error, you can %{link}.
+    report_problem: report a problem
+    unregistered_establishment_html: >-
+      You are trying to sign in to Teaching Vacancies on behalf of %{organisation}. This establishment is not registered
+      with Teaching Vacancies.
+    unsupported_establishment_html: >-
+      You are trying to sign in to Teaching Vacancies on behalf of %{organisation}, which is an establishment of type
+      "%{establishment_type}". This type of establishment is not supported by Teaching Vacancies.
+    not_authorised:
+      title: The email you're signed in with isn't authorised to list jobs for this school
+      tried_signing_in_html: >-
+        You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an
+        authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into
+        Teaching Vacancies with your authorised email. You can do this at %{link}.
+      dfe_sign_in: DfE Sign-in
+      authorised_email_heading: If you are signing in with an authorised email
+      technical_issue_html: >-
+        If you know the email you’ve signed in with is authorised then there could be a technical issue. Please try using
+        a different web browser to sign in or, if this fails, email %{email} with 'help' in the subject line.
+      account_heading: If you need an account
+      account_guidance_html: >-
+        If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a state-funded
+        school or trust providing primary or secondary education in England and have your headteacher or CEO’s approval.
+        You can %{link}.
+      account_link: get a Teaching Vacancies account through DfE Sign-in
 
   nav:
     create_a_job_alert: Create a job alert

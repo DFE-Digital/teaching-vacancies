@@ -20,6 +20,17 @@ RSpec.describe "Errors" do
       get internal_server_error_path
       expect(response).to have_http_status(:internal_server_error)
     end
+
+    context "when the error has an id" do
+      it "includes the error id in the response" do
+        allow(Sentry).to receive(:last_event_id).and_return("test-error-id")
+
+        get internal_server_error_path
+
+        expect(response.body).to include(I18n.t("error_pages.server_error_include_number"))
+        expect(response.body).to include("test-error-id")
+      end
+    end
   end
 
   describe "GET #unauthorised" do

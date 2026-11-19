@@ -3,9 +3,9 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl = t("error_pages.server_error")
-    p.govuk-body We’re working to fix this, so please try again shortly.
-    p.govuk-body If you continue to have problems accessing Teaching Vacancies you can email #{govuk_mail_to t("help.email"), t("help.email")}
+    p.govuk-body = t("error_pages.server_error_working")
+    p.govuk-body = t("error_pages.server_error_contact_html", email: govuk_mail_to(t("help.email"), t("help.email")))
     - if @error_id.present?
       p.govuk-body
-        | Please include this error number in your email, as it will help us identify the problem:
+        = t("error_pages.server_error_include_number")
       = govuk_inset_text(text: @error_id)

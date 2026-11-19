@@ -22,7 +22,7 @@ p.govuk-body = t(".hint")
 p
   = open_in_new_tab_link_to(t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
 p
-  | By publishing this job listing you agree to the #{govuk_link_to "terms and conditions", page_path("terms-and-conditions")}.
+  = t(".publish_terms_html", link: govuk_link_to(t(".terms_and_conditions"), page_path("terms-and-conditions")))
 
 .govuk-button-group.align-items-center
   - if vacancy.publish_on&.future?
