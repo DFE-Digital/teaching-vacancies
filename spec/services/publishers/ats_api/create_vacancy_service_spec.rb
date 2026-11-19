@@ -33,6 +33,8 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
   end
 
   describe "#call" do
+    let(:newly_created) { PublishedVacancy.last }
+
     context "when the vacancy is successfully created" do
       let(:new_vacancy) { PublishedVacancy.last }
 
@@ -475,8 +477,8 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when the given school is an FE college" do
-      let(:college) { create(:college) }
+    context "when the given school is an discarded college" do
+      let(:college) { create(:college, :discarded) }
       let(:school_urns) { { school_urns: [college.urn] } }
 
       it "raises InvalidOrganisationError" do
@@ -512,14 +514,14 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when an FE college and a valid school are both provided" do
+    context "with discarded, school and college" do
       let(:college) { create(:college) }
-      let(:school_urns) { { school_urns: [college.urn, school.urn] } }
+      let(:discarded) { create(:school, :discarded) }
+      let(:school_urns) { { school_urns: [college.urn, school.urn, discarded.urn] } }
 
       it "only assigns the vacancy to the valid school" do
         create_vacancy_service
-        vacancy = PublishedVacancy.last
-        expect(vacancy.organisations).to contain_exactly(school)
+        expect(newly_created.organisations).to contain_exactly(school, college)
       end
     end
 

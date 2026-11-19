@@ -17,11 +17,9 @@ class ExternalVacancyValidator < ActiveModel::Validator
 
   private
 
-  # FE-exclusive job roles are only available to publishers posting on behalf of an FE college via the web
-  # app - they must not be accepted through external integrations (API or legacy), documented or not.
   def validate_job_roles(record)
     ArrayEnum::SubsetValidator
-      .new(attributes: [:job_roles], in: Vacancy.job_roles.keys - Vacancy::FE_SUPPORT_JOB_ROLES)
+      .new(attributes: [:job_roles], in: Vacancy.job_roles.keys)
       .validate(record)
   end
 

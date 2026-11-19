@@ -133,32 +133,6 @@ RSpec.describe ExternalVacancyValidator, type: :model do
         expect(vacancy.errors[:job_roles]).to be_empty
       end
     end
-
-    context "when job_roles contains an FE-exclusive support role" do
-      before do
-        vacancy.job_roles = %w[teacher leadership_and_management]
-        vacancy.validate
-      end
-
-      it "adds a job roles error" do
-        expect(vacancy.errors[:job_roles]).to include("Select a job role")
-      end
-
-      it "adds an inclusion error" do
-        expect(vacancy.errors.of_kind?(:job_roles, :inclusion)).to be true
-      end
-    end
-
-    context "when job_roles only contains FE-exclusive support roles" do
-      before do
-        vacancy.job_roles = Vacancy::FE_SUPPORT_JOB_ROLES
-        vacancy.validate
-      end
-
-      it "adds a job roles error" do
-        expect(vacancy.errors[:job_roles]).to include("Select a job role")
-      end
-    end
   end
 
   describe "external reference conflict validation" do

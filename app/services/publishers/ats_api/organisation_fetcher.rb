@@ -7,7 +7,7 @@ module Publishers
         return [] unless school_params
 
         trust = find_trust(school_params[:trust_uid])
-        schools = find_schools(trust, school_params[:school_urns])
+        schools = find_schools(trust, school_params[:school_urns]&.compact)
 
         validate_organisations!(trust, schools, school_params[:school_urns])
 
@@ -21,8 +21,6 @@ module Publishers
       end
 
       def find_schools(trust, school_urns)
-        return if school_urns.blank?
-
         if trust
           trust.schools.eligible_for_external_publishing.where(urn: school_urns)
         else
@@ -44,8 +42,6 @@ module Publishers
       end
 
       def validate_school_types!(schools)
-        return if schools.blank?
-
         excluded_school = schools.find { |school| school.detailed_school_type.in?(::Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
         if excluded_school
           raise InvalidOrganisationError, "School type '#{excluded_school.detailed_school_type}' is not eligible to post vacancies"

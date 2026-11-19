@@ -130,7 +130,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             visa_sponsorship_available: true,
             external_reference: "REF1234HYZ",
             ect_suitable: true,
-            job_roles: %w[teacher],
+            job_roles: %w[teacher marketing_and_communications],
             is_job_share: false,
             working_patterns: %w[full_time],
             contract_type: "permanent",
@@ -158,7 +158,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             visa_sponsorship_available: true,
             external_reference: "REF1234HYZ",
             ect_status: "ect_suitable",
-            job_roles: %w[teacher],
+            job_roles: %w[teacher marketing_and_communications],
             is_job_share: false,
             working_patterns: %w[full_time],
             contract_type: "permanent",
@@ -619,7 +619,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
              benefits_details: "Original benefits",
              visa_sponsorship_available: false,
              key_stages: %w[ks1 ks2],
-             subjects: %w[English Spanish])
+             subjects: %w[English Spanish Catering])
     end
     let(:id) { original_vacancy.id }
 

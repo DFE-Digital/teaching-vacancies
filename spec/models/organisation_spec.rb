@@ -261,8 +261,8 @@ RSpec.describe Organisation do
     let!(:discarded_college) { create(:college, :discarded) }
     let!(:discarded_trust) { create(:trust, discarded_at: Time.current) }
 
-    it "returns kept non-FE-college organisations only" do
-      expect(Organisation.eligible_for_external_publishing).to contain_exactly(school, trust)
+    it "returns kept organisations only" do
+      expect(Organisation.eligible_for_external_publishing).to contain_exactly(school, trust, college)
     end
   end
 

@@ -7,8 +7,7 @@ module Publishers
         def call(params)
           vacancy = PublishedVacancy.new(sanitised_params(params))
 
-          if vacancy.valid?
-            vacancy.save!
+          if vacancy.save
             success_response(vacancy)
           elsif (conflict = vacancy.find_conflicting_vacancy)
             track_conflict_attempt(vacancy, conflict)

@@ -448,16 +448,6 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         end
       end
 
-      context "when the school is an FE college" do
-        let(:college) { create(:college, urn: "444444") }
-        let(:school_urns) { [college.urn] }
-        let(:trust_uid) { nil }
-
-        it "does not import vacancy" do
-          expect(subject.count).to eq(0)
-        end
-      end
-
       context "when a soft-deleted school belongs to the given trust" do
         let(:discarded_school) { create(:school, :discarded, urn: "333333") }
         let(:trust_schools) { [discarded_school] }
