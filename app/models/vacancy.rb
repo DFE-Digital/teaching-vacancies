@@ -166,7 +166,9 @@ class Vacancy < ApplicationRecord
   # An FE college may want to post a vacancy at a campus in a completely different location from the
   # college's main address. These fields are exclusively reserved for storing that campus-specific
   # address and are only applicable to FE college vacancies.
-  validate :job_address_only_for_fe_colleges, if: -> { organisations.any? && job_address_fields.any?(&:present?) }
+  %i[job_address_line1 job_address_line2 job_address_town job_address_county job_address_postcode].each do |address_field|
+    validates address_field, absence: true, if: -> { organisations.any? && !for_an_fe_college? }
+  end
 
   has_noticed_notifications
   has_paper_trail on: [:update],
@@ -313,15 +315,6 @@ class Vacancy < ApplicationRecord
     blobs.reject(&:malware_scan_clean?)
   end
 
-  def vacancy_address
-    job_specific_address = job_address_fields.reject(&:blank?)
-    return job_specific_address.join(", ") if job_specific_address.any?
-
-    # simplecov:disable
-    [organisation&.address, organisation&.town, organisation&.county, organisation&.postcode].reject(&:blank?).join(", ")
-    # simplecov:enable
-  end
-
   def geocode_job_address
     address = [job_address_line1, job_address_town, job_address_postcode].reject(&:blank?).join(", ")
 
@@ -340,6 +333,10 @@ class Vacancy < ApplicationRecord
     self.uk_geolocation = GeoFactories.convert_wgs84_to_sr27700(geopoint)
   end
 
+  def job_address_fields
+    [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
+  end
+
   private
 
   def with_utm_params(url)
@@ -351,16 +348,6 @@ class Vacancy < ApplicationRecord
     uri.to_s
   rescue Addressable::URI::InvalidURIError
     url
-  end
-
-  def job_address_fields
-    [job_address_line1, job_address_line2, job_address_town, job_address_county, job_address_postcode]
-  end
-
-  def job_address_only_for_fe_colleges
-    return if for_an_fe_college?
-
-    errors.add(:base, :job_address_only_for_fe_colleges)
   end
 
   def update_conversation_searchable_content

@@ -430,4 +430,38 @@ RSpec.describe VacancyDecorator do
       end
     end
   end
+
+  describe "#vacancy_salary" do
+    context "with a salary" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, salary: "20000") }
+
+      it "shows salary" do
+        expect(decorated.vacancy_salary).to eq([I18n.t("jobs.annual_salary"), "20000"])
+      end
+    end
+
+    context "with actual salary" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, actual_salary: "20000") }
+
+      it "shows salary" do
+        expect(decorated.vacancy_salary).to eq([I18n.t("jobs.actual_salary"), "20000"])
+      end
+    end
+
+    context "with a pay scale" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, pay_scale: "HS2") }
+
+      it "shows pay scale" do
+        expect(decorated.vacancy_salary).to eq([I18n.t("jobs.pay_scale"), "HS2"])
+      end
+    end
+
+    context "with an hourly rate" do
+      let(:vacancy) { build_stubbed(:vacancy, :without_any_money, hourly_rate: "25 per hour") }
+
+      it "shows hourly rate" do
+        expect(decorated.vacancy_salary).to eq([I18n.t("jobs.hourly_rate"), "25 per hour"])
+      end
+    end
+  end
 end

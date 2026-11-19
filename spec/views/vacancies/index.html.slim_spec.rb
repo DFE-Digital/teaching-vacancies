@@ -7,9 +7,9 @@ RSpec.describe "vacancies/index" do
 
   let(:form) { Jobseekers::SearchForm.new(search_criteria) }
   let(:vacancies_search) { Search::VacancySearch.new(form.to_hash, sort:) }
-  let(:school) { build_stubbed(:school) }
-  let(:vacancy) { build_stubbed(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
-  let(:vacancies) { [vacancy] }
+  let(:school) { create(:school, :with_image) }
+  let(:vacancy) { create(:vacancy, :secondary, job_title: "Head of Hogwarts", subjects: %w[Potions], working_patterns: %w[part_time], organisations: [school]) }
+  let(:vacancies) { [vacancy].map(&:decorate) }
   let(:sort) { form.sort }
   let(:pagy) { pagy_array(build_stubbed_list(:vacancy, 2)).first }
 
