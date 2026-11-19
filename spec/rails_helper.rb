@@ -352,12 +352,6 @@ VCR.configure do |config|
     end
   end
 
-  config.filter_sensitive_data("<ORDNANCE_SURVEY_API_KEY>") do |interaction|
-    if interaction.request.parsed_uri.host == "api.os.uk"
-      URI::QueryParams.parse(interaction.request.parsed_uri.query)["key"]
-    end
-  end
-
   config.filter_sensitive_data("<TOKEN>") do |interaction|
     if interaction.request.uri == "https://becomingateacher.zendesk.com/api/v2/uploads"
       content_type = interaction.response.headers["Content-Type"]&.first
