@@ -10,7 +10,7 @@ their own tool's configuration. Agent hook rules live in `.agents/hooks/lib/`; t
 Teaching Vacancies is a free DfE job-listing service: teachers search and apply for jobs at
 schools, trusts and colleges in England; hiring staff list and manage vacancies.
 
-Ruby 4.0.9, Rails 8.x, PostgreSQL with PostGIS, Solid Queue, Redis (production cache only).
+Ruby 4.0.10, Rails 8.x, PostgreSQL with PostGIS, Solid Queue, Redis (production cache only).
 
 Two things shape every rule below:
 
