@@ -5,6 +5,8 @@ RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
   describe "GET #new" do
+    let(:email) { Faker::Internet.email }
+
     context "with search criteria pre-populated" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
         get new_subscription_path(search_criteria: { keyword: "value" })
@@ -42,9 +44,9 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the ECT job alerts url" do
-      let(:params) { { ect_job_alert: true, search_criteria: { "ect_statuses" => ["ect_suitable"] } } }
+      let(:params) { { email_contact: email, ect_job_alert: true, search_criteria: { "ect_statuses" => ["ect_suitable"] } } }
 
-      before { get ect_job_alerts_path }
+      before { get ect_job_alerts_path(params: { email_contact: email }) }
 
       it "includes the correct parameters" do
         expect(request.parameters.symbolize_keys.except(:controller, :action)).to eq(params)
@@ -52,9 +54,9 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the FE job alerts url" do
-      let(:params) { { fe_job_alert: true, search_criteria: { "phases" => ["sixth_form_or_college"] } } }
+      let(:params) { { email_contact: email, fe_job_alert: true, search_criteria: { "phases" => ["sixth_form_or_college"] } } }
 
-      before { get fe_job_alerts_path }
+      before { get fe_job_alerts_path(params: { email_contact: email }) }
 
       it "includes the correct parameters" do
         expect(request.parameters.symbolize_keys.except(:controller, :action)).to eq(params)

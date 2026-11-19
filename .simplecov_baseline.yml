@@ -2446,14 +2446,14 @@ app/helpers/navigations_helper.rb:
     missed: 0
 app/helpers/notify_views_helper.rb:
   lines:
-    percent: 68.85
-    missed: 19
+    percent: 70.96
+    missed: 18
   branches:
     percent: 100.0
     missed: 0
 app/helpers/organisations_helper.rb:
   lines:
-    percent: 90.54
+    percent: 90.66
     missed: 7
   branches:
     percent: 76.19
@@ -3594,7 +3594,7 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.46
+    percent: 99.47
     missed: 1
   branches:
     percent: 98.07
@@ -4136,7 +4136,7 @@ app/services/publishers/ats_api/organisation_fetcher.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 92.85
+    percent: 93.75
     missed: 1
 app/services/publishers/ats_api/update_vacancy_service.rb:
   lines:
@@ -7584,10 +7584,10 @@ app/views/subscriptions/_subscription_details.html.slim:
     missed: 1
 app/views/subscriptions/campaign/_fields.html.slim:
   lines:
-    percent: 95.0
+    percent: 95.23
     missed: 1
   branches:
-    percent: 50.0
+    percent: 62.5
     missed: 3
 app/views/subscriptions/campaign/_form.html.slim:
   lines:
@@ -7626,11 +7626,11 @@ app/views/subscriptions/edit.html.slim:
     missed: 0
 app/views/subscriptions/new.html.slim:
   lines:
-    percent: 85.71
-    missed: 3
-  branches:
-    percent: 50.0
+    percent: 90.47
     missed: 2
+  branches:
+    percent: 75.0
+    missed: 1
 app/views/subscriptions/unsubscribe.html.slim:
   lines:
     percent: 100.0
@@ -8122,13 +8122,6 @@ lib/tasks/backfill_vacancy_geolocation.rake:
     percent: 100.0
     missed: 0
 lib/tasks/backfill_vacancy_searchable_content.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/clear_employment_end_dates_for_currently_employed_references.rake:
   lines:
     percent: 100.0
     missed: 0
