@@ -124,7 +124,7 @@ There is one [OS Data Hub](https://osdatahub.os.uk/) project, and so one key, pe
 
 To get access to the projects:
 1. Sign up at [OS Data Hub](https://osdatahub.os.uk/) using your `education.gov.uk` email.
-1. When prompted, select the **Public Sector Plan** and set **Organisation** to `Department of Education`.
+1. When prompted, select the **Public Sector Plan** and set **Organisation** to `Department for Education`.
 1. Wait for the Department for Education account holder to approve your account.
 1. Once approved, the projects are listed under [API projects](https://osdatahub.os.uk/projects).
 

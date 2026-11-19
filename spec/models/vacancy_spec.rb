@@ -1141,6 +1141,50 @@ RSpec.describe Vacancy do
         expect { subject.geocode_job_address }.not_to(change(subject, :geolocation))
       end
     end
+
+    context "when the address has a postcode" do
+      let(:postcode_geocoding) { instance_double(Geocoding, coordinates: [51.5, -0.1]) }
+      let(:address_geocoding) { instance_double(Geocoding, coordinates: [52.5, -1.1]) }
+
+      before do
+        subject.job_address_line1 = "10 Campus Road"
+        subject.job_address_town = "Brighton"
+        subject.job_address_postcode = "BN1 1AA"
+        allow(Geocoding).to receive(:new).with("BN1 1AA").and_return(postcode_geocoding)
+        allow(Geocoding).to receive(:new).with("10 Campus Road, Brighton, BN1 1AA").and_return(address_geocoding)
+      end
+
+      it "geocodes the postcode on its own" do
+        subject.geocode_job_address
+        expect(subject.geolocation.y).to eq(51.5)
+        expect(subject.geolocation.x).to eq(-0.1)
+        expect(Geocoding).not_to have_received(:new).with("10 Campus Road, Brighton, BN1 1AA")
+      end
+
+      context "when the postcode does not geocode" do
+        let(:postcode_geocoding) { instance_double(Geocoding, coordinates: Geocoding::COORDINATES_NO_MATCH) }
+
+        it "falls back to the full address" do
+          subject.geocode_job_address
+          expect(subject.geolocation.y).to eq(52.5)
+          expect(subject.geolocation.x).to eq(-1.1)
+        end
+      end
+    end
+
+    context "when the address has no postcode" do
+      before do
+        subject.job_address_line1 = "10 Campus Road"
+        subject.job_address_town = "Brighton"
+        subject.job_address_postcode = nil
+        allow(Geocoding).to receive(:new).with("10 Campus Road, Brighton").and_return(instance_double(Geocoding, coordinates: [52.5, -1.1]))
+      end
+
+      it "geocodes the joined address" do
+        subject.geocode_job_address
+        expect(subject.geolocation.y).to eq(52.5)
+      end
+    end
   end
 
   describe "#refresh_geolocation" do

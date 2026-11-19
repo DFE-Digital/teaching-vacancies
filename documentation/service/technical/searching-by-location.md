@@ -173,9 +173,9 @@ As many location search terms don't match a polygon name, the service falls back
 
 We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey returns no match or is unavailable. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
 
-The first Ordnance Survey result in England whose name matches the first part of the search is used. For comma-separated searches, every remaining part must also match the result's name, district, county or region; otherwise Google receives the full search. A single-part search still accepts a weak name match because this only runs when no location polygon matches the search.
+Of the Ordnance Survey results in England whose name matches the first part of the search, the largest place type wins (city, town, postcode, village, other settlement, then hamlet), keeping Ordnance Survey's order within a type. Vacancy addresses are geocoded by postcode alone first, because a street address never matches an Ordnance Survey place name. For comma-separated searches, every remaining part must also match the result's name, district, county or region; otherwise Google receives the full search. A single-part search still accepts a weak name match because this only runs when no location polygon matches the search.
 
-If Google reports it is over quota, the first Ordnance Survey result is used as a last resort and is not cached.
+If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
 
 This remains a weak-match approach: a single-part name such as "Wales" or "New York" can match an English place with the same name. The result is restricted to England, but the query itself is not checked against country or foreign-place names.
 

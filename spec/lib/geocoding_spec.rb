@@ -137,7 +137,7 @@ RSpec.describe Geocoding, geocode: true do
         let(:os_response) { { status: 200, body: { error: "Unauthorized" }.to_json } }
 
         it "logs the failure and falls back to Google" do
-          expect(Rails.logger).to receive(:error).with("Ordnance Survey Names API lookup failed")
+          expect(Rails.logger).to receive(:error).with("Ordnance Survey Names API lookup failed: NoMethodError")
           expect(subject.coordinates).to eq(google_coordinates)
         end
       end
@@ -167,6 +167,61 @@ RSpec.describe Geocoding, geocode: true do
         it "uses the first result in England" do
           expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 450_100, northing: 89_100).lat_lng)
           expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when a hamlet and a town share the searched name" do
+        let(:location) { "Ashford" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Hamlet", "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 100_000),
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 601_000, "GEOMETRY_Y" => 142_000),
+          ]
+        end
+
+        it "prefers the town without calling Google" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 601_000, northing: 142_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when only a hamlet matches the searched name" do
+        let(:location) { "Ashford" }
+        let(:os_entries) { [os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Hamlet")] }
+
+        it "uses the hamlet without calling Google" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when the matching results have an unknown or missing local type" do
+        let(:location) { "Ashford" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => nil, "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 100_000),
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Hamlet", "GEOMETRY_X" => 601_000, "GEOMETRY_Y" => 142_000),
+          ]
+        end
+
+        it "ranks them below a known type" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 601_000, northing: 142_000).lat_lng)
+        end
+      end
+
+      {
+        "Stoke on Trent" => "Stoke-on-Trent",
+        "St. Albans" => "St Albans",
+        "King’s Lynn" => "King's Lynn",
+      }.each do |searched, os_name|
+        context "when '#{searched}' is searched and Ordnance Survey names it '#{os_name}'" do
+          let(:location) { searched }
+          let(:os_entries) { [os_entry.merge("NAME1" => os_name, "LOCAL_TYPE" => "Town")] }
+
+          it "matches without calling Google" do
+            expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+            expect(google_stub).not_to have_been_requested
+          end
         end
       end
 
@@ -203,6 +258,27 @@ RSpec.describe Geocoding, geocode: true do
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
             { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
           )
+        end
+
+        context "when the first Ordnance Survey result is outside England" do
+          let(:os_entries) do
+            [
+              os_entry.merge("NAME1" => "Cardiff", "COUNTRY" => "Wales", "GEOMETRY_X" => 318_000, "GEOMETRY_Y" => 177_000),
+              os_entry.merge("NAME1" => "Other", "GEOMETRY_X" => 450_100, "GEOMETRY_Y" => 89_100),
+            ]
+          end
+
+          it "uses the first result in England" do
+            expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 450_100, northing: 89_100).lat_lng)
+          end
+        end
+
+        context "when every Ordnance Survey result is outside England" do
+          let(:os_entries) { [os_entry.merge("COUNTRY" => "Wales")] }
+
+          it "returns no_match" do
+            expect(subject.coordinates).to eq(no_match)
+          end
         end
 
         context "when Ordnance Survey returns no results" do

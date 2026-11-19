@@ -332,7 +332,7 @@ class Vacancy < ApplicationRecord
       return
     end
 
-    coordinates = Geocoding.new(address).coordinates
+    coordinates = coordinates_for_job_address(address)
     return if coordinates == Geocoding::COORDINATES_NO_MATCH
 
     geopoint = GeoFactories::FACTORY_4326.point(coordinates.second, coordinates.first)
@@ -341,6 +341,17 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  # A street address never matches an Ordnance Survey place name, so try the postcode alone first (Ordnance Survey
+  # matches postcodes) and only send the full address to the geocoder if that finds nothing.
+  def coordinates_for_job_address(address)
+    if job_address_postcode.present?
+      coordinates = Geocoding.new(job_address_postcode).coordinates
+      return coordinates unless coordinates == Geocoding::COORDINATES_NO_MATCH
+    end
+
+    Geocoding.new(address).coordinates
+  end
 
   def with_utm_params(url)
     uri = Addressable::URI.heuristic_parse(url)

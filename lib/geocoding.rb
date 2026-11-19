@@ -1,9 +1,12 @@
 class Geocoding
   # The geographical coordinates of the UK are stable and unlikely to change, allowing us to cache the results for an
   # extended period.
-  # Due to the high volume of location searches we receive daily (over 70k/day at the time of writing),
-  # the cache refresh period significantly impacts our Google Geocoding API usage and billing.
+  # Ordnance Survey lookups are free, so the cache mainly saves latency. It still avoids repeat Google calls for
+  # locations Ordnance Survey cannot match (see ADR 0017).
   CACHE_DURATION = 180.days
+
+  # Preferred Ordnance Survey LOCAL_TYPE when several results share the searched name, so a town wins over a hamlet.
+  OS_LOCAL_TYPE_PRIORITY = %w[City Town Postcode Village Other_Settlement Hamlet].freeze
 
   ACCEPTED_UK_CENTROID_LOCATIONS = ["united kingdom", "uk", "gb", "great britain", "britain"].freeze
   COORDINATES_UK_CENTROID = [55.378051, -3.435973].freeze
@@ -23,7 +26,7 @@ class Geocoding
     end || no_coordinates_match
   rescue Geocoder::OverQueryLimitError
     # Last resort, deliberately not cached: the weak match must not outlive the Google quota problem.
-    os_results.first&.coordinates || no_coordinates_match
+    os_results.find { |result| in_england?(result) }&.coordinates || no_coordinates_match
   end
 
   # Why not use: 'Geocoder.search(value).map(&:country).include?("United Kingdom")'?
@@ -72,16 +75,29 @@ class Geocoding
     return [] if Geocoder.config_for_lookup(:uk_ordnance_survey_names)[:api_key].blank?
 
     Geocoder.search(location, lookup: :uk_ordnance_survey_names)
-  rescue StandardError
-    Rails.logger.error("Ordnance Survey Names API lookup failed")
+  rescue StandardError => e
+    # Log the class only: the message can include the request URL, which carries the API key.
+    Rails.logger.error("Ordnance Survey Names API lookup failed: #{e.class}")
     []
   end
 
-  # Weak single-name matches are acceptable because this only runs when no location polygon matches the search.
+  # Weak name matches are accepted. They are bounded by requiring England, a matching name, and preferring larger
+  # places (see OS_LOCAL_TYPE_PRIORITY), keeping Ordnance Survey's order between results of the same type.
   def os_coordinates(results)
     results
-      .find { |result| result.data["COUNTRY"] == "England" && same_name?(result) }
+      .each_with_index
+      .select { |result, _index| in_england?(result) && same_name?(result) }
+      .min_by { |result, index| [local_type_rank(result), index] }
+      &.first
       &.coordinates
+  end
+
+  def in_england?(result)
+    result.data["COUNTRY"] == "England"
+  end
+
+  def local_type_rank(result)
+    OS_LOCAL_TYPE_PRIORITY.index(result.data["LOCAL_TYPE"]) || OS_LOCAL_TYPE_PRIORITY.size
   end
 
   def same_name?(result)
@@ -93,7 +109,7 @@ class Geocoding
   end
 
   def normalise(text)
-    text.to_s.downcase.delete(" ")
+    text.to_s.downcase.gsub(/[^[:alnum:]]/, "")
   end
 
   # 'components: "country:gb"' is used to restrict the results to within the UK.
