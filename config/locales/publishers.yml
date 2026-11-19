@@ -605,6 +605,8 @@ en:
         page_title: "%{heading} - Create job listing - Teaching Vacancies - GOV.UK"
         steps: Create a job listing steps
         hint: Check the job listing before you publish it. Make sure the details are correct and there are no spelling mistakes.
+        publish_terms_html: By publishing this job listing you agree to the %{link}.
+        terms_and_conditions: terms and conditions
       start:
         page_title: Create a job listing
         title: Create a job listing
