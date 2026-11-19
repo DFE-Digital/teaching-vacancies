@@ -11,5 +11,6 @@ Geocoder.configure(
 
   uk_ordnance_survey_names: {
     api_key: Rails.env.test? ? "placeholder_key" : ENV.fetch("ORDNANCE_SURVEY_API_KEY", ""),
+    timeout: 2,
   },
 )

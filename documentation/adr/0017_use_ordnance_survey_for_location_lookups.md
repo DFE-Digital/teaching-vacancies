@@ -58,7 +58,8 @@ Should Ordnance Survey or Google be the primary provider for geocoding?
 Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 
 - Geocoding of free-text locations comes from the OS Names API. A result is used only if it is in
-  England and its name matches the search.
+  England and its name matches the first part of the search. Any remaining comma-separated parts
+  must match the result's name, district, county or region.
 - Google is called only when Ordnance Survey returns no usable match or is unavailable.
 - A cache miss no longer costs money: it is a free OS call. The cache becomes a latency
   optimisation rather than a cost control, so Solid Cache's FIFO eviction is acceptable and we do
@@ -84,6 +85,8 @@ Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 - Two location providers to maintain and monitor instead of one.
 - Ordnance Survey is weaker than Google at fuzzy matching, so misspelt terms rely on the
   fallback.
+- Single-part country or foreign-place names can still match an English homonym; the name match is
+  intentionally not restricted to settlement types or checked against a country-name list.
 - Ordnance Survey APIs are throttled, so bulk lookups must stay within their limits. Cache
   evictions in Solid Cache mean more OS calls than with a long-lived cache, so this limit needs
   watching.

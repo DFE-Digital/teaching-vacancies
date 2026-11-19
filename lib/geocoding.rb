@@ -16,9 +16,14 @@ class Geocoding
   end
 
   def coordinates
+    os_results = []
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      os_coordinates || google_coordinates
+      os_results = ordnance_survey_results
+      os_coordinates(os_results) || google_coordinates
     end || no_coordinates_match
+  rescue Geocoder::OverQueryLimitError
+    # Last resort, deliberately not cached: the weak match must not outlive the Google quota problem.
+    os_results.first&.coordinates || no_coordinates_match
   end
 
   # Why not use: 'Geocoder.search(value).map(&:country).include?("United Kingdom")'?
@@ -63,17 +68,28 @@ class Geocoding
 
   private
 
-  # A weak match is acceptable: we only get here when no location polygon matches the search.
-  # OS Names also returns fuzzy matches (e.g. an English hamlet for "Edinburgh"), so the name must match the search.
-  def os_coordinates
+  def ordnance_survey_results
+    return [] if Geocoder.config_for_lookup(:uk_ordnance_survey_names)[:api_key].blank?
+
     Geocoder.search(location, lookup: :uk_ordnance_survey_names)
-      .find { |result| result.data["COUNTRY"] == "England" && same_name?(result.data["NAME1"]) }
+  rescue StandardError
+    Rails.logger.error("Ordnance Survey Names API lookup failed")
+    []
+  end
+
+  # Weak single-name matches are acceptable because this only runs when no location polygon matches the search.
+  def os_coordinates(results)
+    results
+      .find { |result| result.data["COUNTRY"] == "England" && same_name?(result) }
       &.coordinates
   end
 
-  # Compares against the part before any comma ("Guisborough, Redcar and Cleveland"), ignoring case and spaces.
-  def same_name?(name)
-    normalise(name) == normalise(location.split(",").first)
+  def same_name?(result)
+    segments = location.split(",").map(&:strip)
+    return false unless normalise(result.data["NAME1"]) == normalise(segments.first)
+
+    location_fields = %w[NAME1 DISTRICT_BOROUGH COUNTY_UNITARY REGION].filter_map { |field| result.data[field] }
+    segments.drop(1).all? { |segment| location_fields.any? { |field| normalise(field) == normalise(segment) } }
   end
 
   def normalise(text)
@@ -89,7 +105,7 @@ class Geocoding
   rescue Geocoder::OverQueryLimitError
     trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
     Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-    nil
+    raise
   end
 
   def trigger_google_geocoding_api_hit_event(type:, location:, result:)

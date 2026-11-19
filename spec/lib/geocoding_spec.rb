@@ -95,6 +95,28 @@ RSpec.describe Geocoding, geocode: true do
         end
       end
 
+      context "when the location includes a matching county for an ambiguous place name" do
+        let(:location) { "Newport, Isle of Wight" }
+        let(:os_entries) do
+          [os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Isle of Wight")]
+        end
+
+        it "returns the matching Ordnance Survey coordinates" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+        end
+      end
+
+      context "when the location includes a county that does not match the Ordnance Survey result" do
+        let(:location) { "Newport, Wales" }
+        let(:os_entries) do
+          [os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Isle of Wight")]
+        end
+
+        it "falls back to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
       context "when Ordnance Survey returns nothing" do
         let(:os_entries) { [] }
 
@@ -108,6 +130,29 @@ RSpec.describe Geocoding, geocode: true do
 
         it "falls back to Google" do
           expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when Ordnance Survey returns an error body without a header" do
+        let(:os_response) { { status: 200, body: { error: "Unauthorized" }.to_json } }
+
+        it "logs the failure and falls back to Google" do
+          expect(Rails.logger).to receive(:error).with("Ordnance Survey Names API lookup failed")
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when the Ordnance Survey API key is blank" do
+        before do
+          allow(Geocoder).to receive(:config_for_lookup).and_call_original
+          allow(Geocoder).to receive(:config_for_lookup)
+            .with(:uk_ordnance_survey_names)
+            .and_return({ api_key: "" })
+        end
+
+        it "skips Ordnance Survey and falls back to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+          expect(a_request(:get, os_url)).not_to have_been_made
         end
       end
 
@@ -137,14 +182,20 @@ RSpec.describe Geocoding, geocode: true do
         end
       end
 
-      context "when Ordnance Survey finds nothing and Google returns status OVER_QUERY_LIMIT" do
-        let(:os_entries) { [] }
+      context "when Ordnance Survey has no exact match and Google returns status OVER_QUERY_LIMIT" do
+        let(:os_entries) { [os_entry.merge("NAME1" => "A different name")] }
         let(:google_response) { { status: 200, body: { status: "OVER_QUERY_LIMIT", results: [] }.to_json } }
 
-        it "returns no_match and logs an error" do
+        it "falls back to the first Ordnance Survey result and logs an error" do
           allow(Rails.logger).to receive(:error)
-          expect(subject.coordinates).to eq(no_match)
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
           expect(Rails.logger).to have_received(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT")
+        end
+
+        it "does not cache the fallback result" do
+          allow(Rails.cache).to receive(:write)
+          subject.coordinates
+          expect(Rails.cache).not_to have_received(:write)
         end
 
         it "triggers a Google Geocoding API hit event" do
@@ -152,6 +203,14 @@ RSpec.describe Geocoding, geocode: true do
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_tvs_analytics_events_with_data(
             { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
           )
+        end
+
+        context "when Ordnance Survey returns no results" do
+          let(:os_entries) { [] }
+
+          it "returns no_match" do
+            expect(subject.coordinates).to eq(no_match)
+          end
         end
       end
     end
