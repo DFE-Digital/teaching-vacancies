@@ -85,7 +85,7 @@ section#job-details class="govuk-!-margin-bottom-5"
   = govuk_inset_text text: t("vacancies.sponsorship_available.#{vacancy.visa_sponsorship_available}")
   .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
   .govuk-body == vacancy.further_details
-  - if vacancy.organisation_safeguarding_information.present?
+  - if vacancy.organisation.safeguarding_information.present?
     h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
     .govuk-body == simple_format(vacancy.organisation_safeguarding_information)
 

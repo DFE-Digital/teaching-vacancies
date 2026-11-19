@@ -1,5 +1,5 @@
-- if malware_scan_clean?(@vacancy.organisation_logo)
-  - content_for :social_image, polymorphic_url(@vacancy.organisation_logo)
+- if malware_scan_clean?(@vacancy.organisation.logo)
+  - content_for :social_image, polymorphic_url(@vacancy.organisation.logo)
 
 - if @newly_created_user
   = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
