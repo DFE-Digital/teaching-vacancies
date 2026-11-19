@@ -87,7 +87,10 @@ Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
   fallback.
 - Single-part country or foreign-place names can still match an English homonym; the name match is
   intentionally not restricted to settlement types or checked against a country-name list.
-- Ordnance Survey APIs are throttled, so bulk lookups must stay within their limits. Cache
+- Ambiguous names, such as two towns called Ashford, still go to Google: Ordnance Survey is only
+  used when exactly one place of the most important type matches, so results stay close to what
+  Google returned.
+- Ordnance Survey APIs are throttled (600 requests a minute per live project), so bulk lookups must stay within their limits. Cache
   evictions in Solid Cache mean more OS calls than with a long-lived cache, so this limit needs
   watching.
 - Evicted entries that OS cannot match still go to Google. The 180-day `CACHE_DURATION` is left

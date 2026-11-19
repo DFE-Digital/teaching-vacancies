@@ -5,8 +5,16 @@ class Geocoding
   # locations Ordnance Survey cannot match (see ADR 0017).
   CACHE_DURATION = 180.days
 
-  # Preferred Ordnance Survey LOCAL_TYPE when several results share the searched name, so a town wins over a hamlet.
-  OS_LOCAL_TYPE_PRIORITY = %w[City Town Postcode Village Other_Settlement Hamlet].freeze
+  # The Ordnance Survey LOCAL_TYPE values we search. The geocoder gem's own filter omits Suburban_Area, which Ordnance
+  # Survey uses for places such as the London districts.
+  OS_LOCAL_TYPES = %w[City Town Suburban_Area Village Other_Settlement Hamlet Postcode].freeze
+
+  # Searched names are ranked by place type: a more important place wins over a less important one with the same name.
+  OS_LOCAL_TYPE_TIERS = [%w[City], %w[Town Suburban_Area], %w[Village], %w[Other_Settlement Hamlet]].freeze
+
+  # Trailing parts such as the ", UK" that Google Places autocomplete adds to its suggestions.
+  COUNTRY_SUFFIXES = ["uk", "united kingdom", "england", "gb", "great britain"].freeze
+  UK_POSTCODE = /\A[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\z/i
 
   ACCEPTED_UK_CENTROID_LOCATIONS = ["united kingdom", "uk", "gb", "great britain", "britain"].freeze
   COORDINATES_UK_CENTROID = [55.378051, -3.435973].freeze
@@ -71,37 +79,61 @@ class Geocoding
 
   private
 
-  def ordnance_survey_results
-    return [] if Geocoder.config_for_lookup(:uk_ordnance_survey_names)[:api_key].blank?
+  # The search location split on commas, without trailing country parts ("Clapham, London, UK" => Clapham, London).
+  def segments
+    @segments ||= begin
+      parts = location.to_s.split(",").map(&:strip).compact_blank
+      parts.pop while parts.size > 1 && COUNTRY_SUFFIXES.include?(parts.last.downcase.delete("."))
+      parts
+    end
+  end
 
-    Geocoder.search(location, lookup: :uk_ordnance_survey_names)
+  def postcode_segment
+    segments.find { |segment| UK_POSTCODE.match?(segment) }
+  end
+
+  # Ordnance Survey is asked for one term only: the postcode if there is one, otherwise the first part of the search.
+  def ordnance_survey_results
+    term = postcode_segment || segments.first
+    return [] if term.blank? || Geocoder.config_for_lookup(:uk_ordnance_survey_names)[:api_key].blank?
+
+    Geocoder.search(term, lookup: :uk_ordnance_survey_names, params: { fq: OS_LOCAL_TYPES.map { |type| "local_type:#{type}" }.join(" ") })
   rescue StandardError => e
     # Log the class only: the message can include the request URL, which carries the API key.
     Rails.logger.error("Ordnance Survey Names API lookup failed: #{e.class}")
     []
   end
 
-  # Weak name matches are accepted. They are bounded by requiring England, a matching name, and preferring larger
-  # places (see OS_LOCAL_TYPE_PRIORITY), keeping Ordnance Survey's order between results of the same type.
+  # Ordnance Survey only answers when the answer is clear, otherwise Google gets the full search as before.
   def os_coordinates(results)
-    results
-      .each_with_index
-      .select { |result, _index| in_england?(result) && same_name?(result) }
-      .min_by { |result, index| [local_type_rank(result), index] }
-      &.first
-      &.coordinates
+    result = postcode_segment ? postcode_match(results) : dominant_place(results)
+    result&.coordinates
+  end
+
+  def postcode_match(results)
+    results.find do |result|
+      result.data["LOCAL_TYPE"] == "Postcode" && in_england?(result) && normalise(result.data["NAME1"]) == normalise(postcode_segment)
+    end
+  end
+
+  # The one place of the most important type sharing the searched name, if it is in England. A tie (two towns called
+  # Ashford) or a more important place elsewhere (Newport in Wales outranks the English Newports) is left to Google.
+  def dominant_place(results)
+    candidates = results.select { |result| same_name?(result) }
+    best_tier = candidates.map { |result| local_type_tier(result) }.min
+    best = candidates.select { |result| local_type_tier(result) == best_tier }
+    best.first if best.one? && in_england?(best.first)
   end
 
   def in_england?(result)
     result.data["COUNTRY"] == "England"
   end
 
-  def local_type_rank(result)
-    OS_LOCAL_TYPE_PRIORITY.index(result.data["LOCAL_TYPE"]) || OS_LOCAL_TYPE_PRIORITY.size
+  def local_type_tier(result)
+    OS_LOCAL_TYPE_TIERS.index { |types| types.include?(result.data["LOCAL_TYPE"]) } || OS_LOCAL_TYPE_TIERS.size
   end
 
   def same_name?(result)
-    segments = location.split(",").map(&:strip)
     return false unless normalise(result.data["NAME1"]) == normalise(segments.first)
 
     location_fields = %w[NAME1 DISTRICT_BOROUGH COUNTY_UNITARY REGION].filter_map { |field| result.data[field] }

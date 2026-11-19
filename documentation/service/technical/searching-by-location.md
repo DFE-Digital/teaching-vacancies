@@ -173,7 +173,12 @@ As many location search terms don't match a polygon name, the service falls back
 
 We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey returns no match or is unavailable. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
 
-Of the Ordnance Survey results in England whose name matches the first part of the search, the largest place type wins (city, town, postcode, village, other settlement, then hamlet), keeping Ordnance Survey's order within a type. Vacancy addresses are geocoded by postcode alone first, because a street address never matches an Ordnance Survey place name. For comma-separated searches, every remaining part must also match the result's name, district, county or region; otherwise Google receives the full search. A single-part search still accepts a weak name match because this only runs when no location polygon matches the search.
+Ordnance Survey is asked for one term only: a UK postcode if the search contains one, otherwise the first part of the search (trailing country parts such as ", UK", which Google Places autocomplete adds, are ignored). We search the Ordnance Survey place types city, town, suburban area, village, other settlement, hamlet and postcode; the geocoder gem's own filter leaves out suburban areas, which Ordnance Survey uses for places such as the London districts.
+
+Ordnance Survey is only used when its answer is clear; otherwise Google receives the full search, as it did before:
+
+- **Postcode:** an exact postcode match in England is used. Vacancy addresses and trust postcodes mostly follow this path.
+- **Place name:** of the results whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), the most important place type wins (city, then town or suburban area, then village, then other settlement or hamlet). It is used only if exactly one result has that type and it is in England. Two towns with the same name, or a Welsh city outranking an English town, are left to Google.
 
 If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
 

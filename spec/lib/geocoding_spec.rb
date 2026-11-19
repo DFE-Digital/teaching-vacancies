@@ -209,6 +209,110 @@ RSpec.describe Geocoding, geocode: true do
         end
       end
 
+      context "when a suburb and two villages share the searched name" do
+        let(:location) { "Clapham" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Clapham", "LOCAL_TYPE" => "Village", "GEOMETRY_X" => 410_000, "GEOMETRY_Y" => 460_000),
+            os_entry.merge("NAME1" => "Clapham", "LOCAL_TYPE" => "Suburban_Area", "GEOMETRY_X" => 530_000, "GEOMETRY_Y" => 175_000),
+            os_entry.merge("NAME1" => "Clapham", "LOCAL_TYPE" => "Village", "GEOMETRY_X" => 503_000, "GEOMETRY_Y" => 252_000),
+          ]
+        end
+
+        it "uses the suburb without calling Google" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 530_000, northing: 175_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when two towns share the searched name" do
+        let(:location) { "Ashford" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 601_000, "GEOMETRY_Y" => 142_000),
+            os_entry.merge("NAME1" => "Ashford", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 507_000, "GEOMETRY_Y" => 171_000),
+          ]
+        end
+
+        it "leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when a more important place with the searched name is outside England" do
+        let(:location) { "Newport" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Town", "COUNTRY" => "England"),
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "City", "COUNTRY" => "Wales"),
+          ]
+        end
+
+        it "leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when no result has the searched name" do
+        let(:location) { "Nowhere" }
+
+        it "falls back to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when the search ends with a country, as suggested by Google Places autocomplete" do
+        let(:location) { "Clapham, London, UK" }
+        let(:os_entries) do
+          [os_entry.merge("NAME1" => "Clapham", "LOCAL_TYPE" => "Suburban_Area", "REGION" => "London")]
+        end
+
+        it "ignores the country and uses Ordnance Survey" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when the search is only a country" do
+        let(:location) { "UK" }
+
+        it "does not use Ordnance Survey" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when the search is an address with a postcode" do
+        let(:location) { "1 High Street, Leeds, LS1 1AA" }
+        let(:os_entries) { [os_entry.merge("NAME1" => "LS1 1AA")] }
+
+        it "asks Ordnance Survey for the postcode only and uses its result" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+          expect(a_request(:get, os_url).with(query: hash_including("query" => "LS1 1AA"))).to have_been_made
+          expect(google_stub).not_to have_been_requested
+        end
+
+        context "when Ordnance Survey has no exact postcode match" do
+          let(:os_entries) { [os_entry.merge("NAME1" => "LS1 1AB")] }
+
+          it "falls back to Google with the full address" do
+            expect(subject.coordinates).to eq(google_coordinates)
+            expect(a_request(:get, google_url).with(query: hash_including("address" => location))).to have_been_made
+          end
+        end
+      end
+
+      context "when the search is a place name" do
+        let(:location) { "Newport, Isle of Wight" }
+        let(:os_entries) { [os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Isle of Wight")] }
+
+        it "asks Ordnance Survey for the first part only, including suburbs" do
+          subject.coordinates
+          expect(
+            a_request(:get, os_url).with(query: hash_including("query" => "Newport", "fq" => a_string_including("local_type:Suburban_Area"))),
+          ).to have_been_made
+        end
+      end
+
       {
         "Stoke on Trent" => "Stoke-on-Trent",
         "St. Albans" => "St Albans",
