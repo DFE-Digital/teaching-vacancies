@@ -260,7 +260,7 @@ module AuthHelpers
     stub_jobseeker_govuk_one_login_for(email: email.presence || jobseeker.email,
                                        one_login_id: jobseeker.govuk_one_login_id,
                                        nonce: error ? "wrong-nonce-causes-error" : session[:govuk_one_login_nonce])
-    one_login_url = find("a", text: I18n.t("buttons.one_login_sign_in"))[:href]
+    one_login_url = find_link(href: /^#{Jobseekers::GovukOneLogin::ENDPOINTS[:login]}/)[:href]
 
     # The rack_test driver doesn't support requests to external urls (the domain info is just ignored and all paths are
     # routed directly to the AUT)
