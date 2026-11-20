@@ -115,7 +115,7 @@ class SubscriptionsController < ApplicationController
       location: campaign[:email_postcode].presence,
       radius: campaign[:email_radius].presence || "25",
       teaching_job_roles: (campaign[:email_jobrole].present? ? [campaign[:email_jobrole]] : ["teacher"]),
-      ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
+      ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable", "qts_not_needed"]),
       working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
       email: campaign[:email_contact].presence,
       user_name: campaign[:email_name].presence,

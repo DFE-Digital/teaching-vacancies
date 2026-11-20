@@ -54,7 +54,12 @@ RSpec.describe "Subscriptions" do
     end
 
     context "when hit via the FE job alerts url" do
-      let(:params) { { email_contact: email, fe_job_alert: true, search_criteria: { "phases" => ["sixth_form_or_college"] } } }
+      let(:params) do
+        { email_contact: email,
+          fe_job_alert: true,
+          search_criteria: { "ect_statuses" => ["qts_not_needed"],
+                             "phases" => ["sixth_form_or_college"] } }
+      end
 
       before { get fe_job_alerts_path(params: { email_contact: email }) }
 

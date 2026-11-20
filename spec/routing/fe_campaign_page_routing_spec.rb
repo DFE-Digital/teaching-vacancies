@@ -7,7 +7,7 @@ RSpec.describe "FE job alert campaign page routing" do
       action: "new",
       email_contact: "fred@contoso.com",
       fe_job_alert: true,
-      search_criteria: { "phases" => %w[sixth_form_or_college] },
+      search_criteria: { "ect_statuses" => %w[qts_not_needed], "phases" => %w[sixth_form_or_college] },
     )
   end
 end
