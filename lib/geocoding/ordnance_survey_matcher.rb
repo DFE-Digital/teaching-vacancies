@@ -26,6 +26,10 @@ class Geocoding
       postcode ? postcode_match : best_place
     end
 
+    def name_matches?
+      results.any? { |result| in_england?(result) && name_match?(result) }
+    end
+
     # Google Places describes a place with a nearby locality that Ordnance Survey doesn't record against it ("Bolton
     # Abbey, Skipton"). Among the places with the searched name, whatever the rest of the search says, this is the one
     # closest to that locality, if it is near enough.

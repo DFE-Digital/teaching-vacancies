@@ -454,6 +454,16 @@ RSpec.describe Geocoding, geocode: true do
         end
       end
 
+      context "when no place has the name of the first part of a search with a locality" do
+        let(:location) { "Hull Street, London" }
+        let(:os_entries) { [os_entry.merge("NAME1" => "Hull Docks", "LOCAL_TYPE" => "Town")] }
+
+        it "falls back to Google without looking the locality up" do
+          expect(subject.coordinates).to eq(google_coordinates)
+          expect(a_request(:get, os_url).with(query: hash_including("query" => "London"))).not_to have_been_made
+        end
+      end
+
       context "when a place with the name is in the county the search names" do
         let(:location) { "Newport, Essex" }
         let(:os_entries) { [os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Village", "COUNTY_UNITARY" => "Essex")] }

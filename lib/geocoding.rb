@@ -115,7 +115,7 @@ class Geocoding
   # "Bolton Abbey, Skipton": Google Places names a nearby locality that Ordnance Survey doesn't record for the place, so
   # look the locality up too and use the place with that name that is closest to it.
   def place_near_locality(matcher)
-    return if segments.one? || postcode_segment
+    return if segments.one? || postcode_segment || !matcher.name_matches?
 
     locality = OrdnanceSurveyMatcher.new(segments: [segments.second], postcode: nil, results: search_ordnance_survey(segments.second)).match
     matcher.nearest_to(locality) if locality
