@@ -89,3 +89,8 @@ To do so:
 2. Build a PR review app (or start the app locally for local testing) and visit the `/ats-api-docs/` path.
 3. Click on the `Authorize` button and fill the `X-Api-Key` authorisation using the the api key defined in `ATS_API_CLIENT_TESTING_API_KEY` env variable.
 4. Test the different API endpoint using their `Try it out` button, modifying each request payload as needed.
+
+The seeds attach 30 vacancies to that client (external references `SEED-1` to `SEED-30`), so
+listing, showing, updating and deleting can be tried without creating vacancies first. If
+`ATS_API_CLIENT_TESTING_API_KEY` isn't set, the client gets a random key; look it up in the support
+console.
