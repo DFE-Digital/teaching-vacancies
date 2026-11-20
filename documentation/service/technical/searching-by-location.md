@@ -178,7 +178,12 @@ Ordnance Survey is asked for one term only: a UK postcode if the search contains
 Ordnance Survey is only used when its answer is clear; otherwise Google receives the full search, as it did before:
 
 - **Postcode:** an exact postcode match in England is used. Vacancy addresses and trust postcodes mostly follow this path.
-- **Place name:** of the results whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), the most important place type wins (city, then town or suburban area, then village, then other settlement or hamlet). It is used only if exactly one result has that type and it is in England. Two towns with the same name, or a Welsh city outranking an English town, are left to Google.
+- **Place name:** of the results whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), Ordnance Survey is used only if one place clearly dominates and is in England:
+  - the only city (Preston in Lancashire beats the hamlets called Preston), or
+  - the only major place, meaning anything other than a village or hamlet (Croydon in London beats a village called Croydon). Ordnance Survey labels large places such as Clapham, Hackney and Wimbledon as "Other Settlement", so the place type alone says little about size, or
+  - the only place at all, when every place with that name is a village or hamlet.
+
+  Anything ambiguous goes to Google, which weighs prominence: two towns called Ashford, Newport in Wales, or a bare name such as Henley when a town has a longer name starting with it (Henley-on-Thames).
 
 If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
 

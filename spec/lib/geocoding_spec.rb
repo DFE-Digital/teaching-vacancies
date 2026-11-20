@@ -204,8 +204,114 @@ RSpec.describe Geocoding, geocode: true do
           ]
         end
 
-        it "ranks them below a known type" do
-          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 601_000, northing: 142_000).lat_lng)
+        it "treats an unknown type as a major place, which beats a hamlet" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 300_000, northing: 100_000).lat_lng)
+        end
+      end
+
+      context "when a large London district and a village share the searched name" do
+        let(:location) { "Croydon" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Croydon", "LOCAL_TYPE" => "Village", "COUNTY_UNITARY" => "Cambridgeshire", "GEOMETRY_X" => 531_000, "GEOMETRY_Y" => 249_000),
+            os_entry.merge("NAME1" => "Croydon", "LOCAL_TYPE" => "Other Settlement", "COUNTY_UNITARY" => "Greater London", "GEOMETRY_X" => 532_000, "GEOMETRY_Y" => 165_000),
+          ]
+        end
+
+        it "uses the district, whichever way Ordnance Survey spells its type" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 532_000, northing: 165_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when several major places share the searched name and one is a city" do
+        let(:location) { "Cambridge" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Cambridge", "LOCAL_TYPE" => "Suburban_Area", "GEOMETRY_X" => 430_000, "GEOMETRY_Y" => 430_000),
+            os_entry.merge("NAME1" => "Cambridge", "LOCAL_TYPE" => "City", "GEOMETRY_X" => 545_000, "GEOMETRY_Y" => 258_000),
+            os_entry.merge("NAME1" => "Cambridge", "LOCAL_TYPE" => "Other Settlement", "GEOMETRY_X" => 360_000, "GEOMETRY_Y" => 200_000),
+          ]
+        end
+
+        it "uses the city" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 545_000, northing: 258_000).lat_lng)
+        end
+      end
+
+      context "when several cities share the searched name" do
+        let(:location) { "Newport" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "City"),
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "City"),
+          ]
+        end
+
+        it "leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when a town has a longer name starting with the searched name" do
+        let(:location) { "Henley" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Henley", "LOCAL_TYPE" => "Suburban Area", "COUNTY_UNITARY" => "Gloucestershire"),
+            os_entry.merge("NAME1" => "Henley-on-Thames", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Oxfordshire"),
+          ]
+        end
+
+        it "leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+
+        context "when the search names the county" do
+          let(:location) { "Henley, Gloucestershire" }
+
+          it "uses Ordnance Survey" do
+            expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+          end
+        end
+      end
+
+      context "when only a district has a longer name starting with the searched name" do
+        let(:location) { "Hackney" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Hackney", "LOCAL_TYPE" => "Other Settlement", "COUNTY_UNITARY" => "Greater London"),
+            os_entry.merge("NAME1" => "Hackney Wick", "LOCAL_TYPE" => "Suburban Area", "COUNTY_UNITARY" => "Greater London"),
+            os_entry.merge("NAME1" => "Hackneyfield", "LOCAL_TYPE" => "Town"),
+          ]
+        end
+
+        it "still uses the matching place, ignoring names that only share letters" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+        end
+      end
+
+      context "when the only city has a longer-named town nearby in the results" do
+        let(:location) { "Bradford" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Bradford", "LOCAL_TYPE" => "City", "COUNTY_UNITARY" => "Bradford"),
+            os_entry.merge("NAME1" => "Bradford-on-Avon", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Wiltshire"),
+          ]
+        end
+
+        it "uses the city" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+        end
+      end
+
+      context "when only villages and hamlets share the searched name" do
+        let(:location) { "Aisby" }
+        let(:os_entries) do
+          [os_entry.merge("NAME1" => "Aisby", "LOCAL_TYPE" => "Village"), os_entry.merge("NAME1" => "Aisby", "LOCAL_TYPE" => "Hamlet")]
+        end
+
+        it "leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
         end
       end
 

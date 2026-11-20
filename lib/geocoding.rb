@@ -9,8 +9,11 @@ class Geocoding
   # Survey uses for places such as the London districts.
   OS_LOCAL_TYPES = %w[City Town Suburban_Area Village Other_Settlement Hamlet Postcode].freeze
 
-  # Searched names are ranked by place type: a more important place wins over a less important one with the same name.
-  OS_LOCAL_TYPE_TIERS = [%w[City], %w[Town Suburban_Area], %w[Village], %w[Other_Settlement Hamlet]].freeze
+  # Villages and hamlets are minor places. Every other type (including types we don't know) is a major place: Ordnance
+  # Survey also uses "Other Settlement" and "Suburban Area" for large places such as Clapham, Hackney or Brixton.
+  # Compared with `normalise`, as the API may spell the types with spaces or underscores.
+  OS_MINOR_LOCAL_TYPES = %w[village hamlet].freeze
+  OS_TOWN_LOCAL_TYPES = %w[town city].freeze
 
   # Trailing parts such as the ", UK" that Google Places autocomplete adds to its suggestions.
   COUNTRY_SUFFIXES = ["uk", "united kingdom", "england", "gb", "great britain"].freeze
@@ -116,21 +119,46 @@ class Geocoding
     end
   end
 
-  # The one place of the most important type sharing the searched name, if it is in England. A tie (two towns called
-  # Ashford) or a more important place elsewhere (Newport in Wales outranks the English Newports) is left to Google.
+  # The place sharing the searched name that clearly dominates, if it is in England:
+  # - the only city (Preston, Lancashire beats the hamlets called Preston), or
+  # - the only major place (Croydon in London beats a village called Croydon), or
+  # - the only place at all, when every place with that name is a village or hamlet.
+  # Anything ambiguous (two towns called Ashford, or Newport in Wales) is left to Google, which weighs prominence.
   def dominant_place(results)
     candidates = results.select { |result| same_name?(result) }
-    best_tier = candidates.map { |result| local_type_tier(result) }.min
-    best = candidates.select { |result| local_type_tier(result) == best_tier }
-    best.first if best.one? && in_england?(best.first)
+    place = only(candidates.select { |result| local_type(result) == "city" }) || unambiguous_place(candidates, results)
+    place if place && in_england?(place)
+  end
+
+  # A bare name is left to Google when a town or city has a longer name starting with it as a whole word (Henley and
+  # Henley-on-Thames, Bury and Bury St Edmunds): people searching for it may mean the more prominent place. Longer
+  # names of districts and suburbs (Hackney Wick, Wimbledon Park) don't count, as they are parts of the place itself.
+  def unambiguous_place(candidates, results)
+    return if segments.one? && longer_town_name?(results)
+
+    majors = candidates.select { |result| major_place?(result) }
+    only(majors) || (only(candidates) if majors.empty?)
+  end
+
+  def longer_town_name?(results)
+    longer_name = /\A#{Regexp.escape(segments.first)}[\s-]/i
+    results.any? { |result| OS_TOWN_LOCAL_TYPES.include?(local_type(result)) && longer_name.match?(result.data["NAME1"].to_s) }
+  end
+
+  def only(list)
+    list.first if list.one?
   end
 
   def in_england?(result)
     result.data["COUNTRY"] == "England"
   end
 
-  def local_type_tier(result)
-    OS_LOCAL_TYPE_TIERS.index { |types| types.include?(result.data["LOCAL_TYPE"]) } || OS_LOCAL_TYPE_TIERS.size
+  def major_place?(result)
+    OS_MINOR_LOCAL_TYPES.exclude?(local_type(result))
+  end
+
+  def local_type(result)
+    normalise(result.data["LOCAL_TYPE"])
   end
 
   def same_name?(result)

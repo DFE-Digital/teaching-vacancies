@@ -57,9 +57,10 @@ Should Ordnance Survey or Google be the primary provider for geocoding?
 
 Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 
-- Geocoding of free-text locations comes from the OS Names API. A result is used only if it is in
-  England and its name matches the first part of the search. Any remaining comma-separated parts
-  must match the result's name, district, county or region.
+- Geocoding of free-text locations comes from the OS Names API. A postcode is used when it matches
+  exactly. A place name is used only when one place in England clearly dominates (the only city,
+  the only place that is not a village or hamlet, or the only place at all); the details are in
+  [Searching by location](/documentation/service/technical/searching-by-location.md).
 - Google is called only when Ordnance Survey returns no usable match or is unavailable.
 - A cache miss no longer costs money: it is a free OS call. The cache becomes a latency
   optimisation rather than a cost control, so Solid Cache's FIFO eviction is acceptable and we do
@@ -85,11 +86,13 @@ Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 - Two location providers to maintain and monitor instead of one.
 - Ordnance Survey is weaker than Google at fuzzy matching, so misspelt terms rely on the
   fallback.
-- Single-part country or foreign-place names can still match an English homonym; the name match is
-  intentionally not restricted to settlement types or checked against a country-name list.
-- Ambiguous names, such as two towns called Ashford, still go to Google: Ordnance Survey is only
-  used when exactly one place of the most important type matches, so results stay close to what
-  Google returned.
+- Single-part country or foreign-place names can still match an English homonym (Dublin, Sydney).
+  Google, called with `components=country:gb`, returns the same English namesake, so this is not a
+  change in behaviour.
+- Ambiguous names, such as two towns called Ashford, still go to Google, because Ordnance Survey has
+  no measure of prominence. In offline testing with the OS Open Names data (the same data as the
+  API), about four in five sample searches were answered by Ordnance Survey; the monitoring in the
+  decision above shows the real rate.
 - Ordnance Survey APIs are throttled (600 requests a minute per live project), so bulk lookups must stay within their limits. Cache
   evictions in Solid Cache mean more OS calls than with a long-lived cache, so this limit needs
   watching.
