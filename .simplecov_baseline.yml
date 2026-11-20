@@ -2446,7 +2446,7 @@ app/helpers/navigations_helper.rb:
     missed: 0
 app/helpers/notify_views_helper.rb:
   lines:
-    percent: 68.85
+    percent: 70.31
     missed: 19
   branches:
     percent: 100.0
@@ -6607,8 +6607,8 @@ app/views/publishers/vacancies/_job_details.html.slim:
     percent: 97.8
     missed: 2
   branches:
-    percent: 82.92
-    missed: 7
+    percent: 86.04
+    missed: 6
 app/views/publishers/vacancies/_review_banner.html.slim:
   lines:
     percent: 100.0
@@ -6789,7 +6789,7 @@ app/views/publishers/vacancies/build/pay_package.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
+    percent: 87.5
     missed: 1
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
@@ -7584,7 +7584,7 @@ app/views/subscriptions/_subscription_details.html.slim:
     missed: 1
 app/views/subscriptions/campaign/_fields.html.slim:
   lines:
-    percent: 95.23
+    percent: 96.15
     missed: 1
   branches:
     percent: 62.5
