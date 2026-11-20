@@ -179,6 +179,11 @@ FactoryBot.define do
       end
       anonymise_applications { [false, true].sample }
       fe_role_qts_required { [false, true].sample }
+
+      after(:build) do |model|
+        model.benefits = model.organisations.any?(&:fe_college?)
+        model.benefits_details = nil unless model.benefits
+      end
     end
 
     trait :with_fixed_title do
