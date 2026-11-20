@@ -11,7 +11,7 @@ class Geocoding
   # Survey uses for places such as the London districts.
   OS_LOCAL_TYPES = %w[City Town Suburban_Area Village Other_Settlement Hamlet Postcode].freeze
 
-  # Trailing parts such as the ", UK" that Google Places autocomplete adds to its suggestions.
+  # Trailing parts such as the ", UK" that Google Places autocomplete suggestions, still held by job alerts, end with.
   COUNTRY_SUFFIXES = ["uk", "united kingdom", "england", "gb", "great britain"].freeze
   UK_POSTCODE = /\A[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\z/i
 
@@ -114,8 +114,8 @@ class Geocoding
     (matcher.match || place_near_locality(matcher))&.coordinates
   end
 
-  # "Bolton Abbey, Skipton": Google Places names a nearby locality that Ordnance Survey doesn't record for the place, so
-  # look the locality up too and use the place with that name that is closest to it.
+  # "Bolton Abbey, Skipton": older Google Places suggestions name a nearby locality that Ordnance Survey doesn't record
+  # for the place, so look the locality up too and use the place with that name that is closest to it.
   def place_near_locality(matcher)
     return if segments.one? || postcode_segment || !matcher.name_matches?
 

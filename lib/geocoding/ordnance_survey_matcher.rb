@@ -36,13 +36,19 @@ class Geocoding
       results.any? { |result| in_england?(result) && name_match?(result) }
     end
 
-    # Google Places describes a place with a nearby locality that Ordnance Survey doesn't record against it ("Bolton
-    # Abbey, Skipton"). Among the places with the searched name, whatever the rest of the search says, this is the one
-    # closest to that locality, if it is near enough.
+    # Google Places suggestions, still held by job alerts and preferences, describe a place with a nearby locality that
+    # Ordnance Survey doesn't record against it ("Bolton Abbey, Skipton"). Among the places with the searched name,
+    # whatever the rest of the search says, this is the one closest to that locality, if it is near enough.
     def nearest_to(locality, radius_km: LOCALITY_RADIUS_KM)
       places = results.select { |result| in_england?(result) && name_match?(result) }
       nearest = places.min_by { |result| distance_km(result, locality) }
       nearest if nearest && distance_km(nearest, locality) <= radius_km
+    end
+
+    # How a place ranks against others with the same name: the most important type wins, then London, then the
+    # largest. Ordnance Survey has no population, so the size of a place's bounding box stands in for how prominent it is.
+    def prominence(result)
+      [importance(result), london?(result) ? 0 : 1, -bounding_box_area(result)]
     end
 
     private
@@ -55,8 +61,7 @@ class Geocoding
       end
     end
 
-    # Of the places in England sharing the searched name, the most important type wins, then London, then the largest:
-    # Ordnance Survey has no population, so the size of a place's bounding box stands in for how prominent it is.
+    # Of the places in England sharing the searched name, the most prominent.
     def best_place
       places = exact_places
       places = whole_word_places if places.empty?
@@ -64,7 +69,7 @@ class Geocoding
     end
 
     def best(places)
-      places.min_by { |result| [importance(result), london?(result) ? 0 : 1, -bounding_box_area(result)] }
+      places.min_by { |result| prominence(result) }
     end
 
     # A place in London ranks at least as a town, and wins ties: most searches for an ambiguous name such as Acton or

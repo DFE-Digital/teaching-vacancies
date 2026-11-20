@@ -148,7 +148,6 @@ RSpec.configure do |config|
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
     )
 
-    stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
     stub_request(:get, %r{api\.os\.uk/search/names/v1/find}).to_return(status: 200, body: '{"header": {"totalresults": 0}}', headers: {})
   end
 

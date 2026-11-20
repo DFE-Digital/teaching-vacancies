@@ -18,6 +18,7 @@
   - [Purpose](#purpose)
   - [Mappings](#mappings)
 - [Getting the geographical coordinates](#getting-the-geographical-coordinates)
+  - [Location autocomplete](#location-autocomplete)
   - [Google Geocoding API costs](#google-geocoding-api-costs)
 
 
@@ -185,22 +186,20 @@ Ordnance Survey is asked for one term only: a UK postcode if the search contains
 
   If nothing in England, or anywhere, is called exactly the first part of the search, places containing it as whole words are used, except villages and hamlets (Tooting finds Upper Tooting, Leamington Spa finds Royal Leamington Spa, Hull finds Kingston upon Hull). If another country has a place called exactly that (Cardiff), Google answers instead.
 
-  The location autocomplete offers Google Places suggestions such as "Bolton Abbey, Skipton" or "New York, North Shields". The part after the comma is a nearby locality that Ordnance Survey doesn't record against the place (it only knows its county, district and region). When no place with the name is in a county, district or region matching that part, we look the locality up in Ordnance Survey too and use the place with the name that is closest to it, if it is within 20 km. This costs one more Ordnance Survey call, and only when the search has a locality that doesn't match.
+  The location autocomplete used to offer Google Places suggestions such as "Bolton Abbey, Skipton" or "New York, North Shields", which job alerts and job preferences still hold. The part after the comma is a nearby locality that Ordnance Survey doesn't record against the place (it only knows its county, district and region). When no place with the name is in a county, district or region matching that part, we look the locality up in Ordnance Survey too and use the place with the name that is closest to it, if it is within 20 km. This costs one more Ordnance Survey call, and only when the search has a locality that doesn't match.
 
-Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search whose locality we can't place near the name, a street, station or business that the autocomplete suggests (Ordnance Survey holds roads and stations, but we only search places), an error, or no API key.
+Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search whose locality we can't place near the name, a typed street, station or business (Ordnance Survey holds roads and stations, but we only search places), an error, or no API key.
 
 If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
 
-In testing against Google's real answers, Ordnance Survey answered about 95% of typed place names, and nine in ten of its answers were within 5 km of Google's. Of the strings the autocomplete actually suggests, about a third go to Ordnance Survey, because most suggestions are streets, stations and businesses; nearly all of the place suggestions do. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
+In testing against Google's real answers, Ordnance Survey answered about 95% of typed place names, and nine in ten of its answers were within 5 km of Google's. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
 
-The `ORDNANCE_SURVEY_API_KEY` environment variable holds the OS key; see [Application secrets](/documentation/operations/maintenance/application-secrets.md#ordnance_survey_api_key) for how to get one.
+### Location autocomplete
 
-Information about the Google API usage/costs should be accessible from the Google Cloud panel using your DfE email account.
+The location fields ("Enter a postcode, town or region") suggest locations from [`LocationSuggestion`](/app/services/location_suggestion.rb) instead of Google Places (see [ADR 0018](/documentation/adr/0018_suggest_locations_from_ordnance_survey.md)), so that every suggestion is something the search resolves without Google:
 
-### Google Geocoding API costs
+- up to two regions, counties or cities we hold a polygon for, searched by area;
+- places in England from the OS Names API. The API matches whole words fuzzily ("Nott" returns Bott End before Nottingham), so we keep only the places whose name, or a later word of a town or suburb ("Leam" finds Royal Leamington Spa), starts with the search, and rank them as `Geocoding` does. Each is labelled "Name, qualifier" ("Clapham, London", "Caldecote, South Cambridgeshire") with the first of London, district, county or region for which `Geocoding` picks that same place;
+- postcodes in England, once the search looks like the start of one ("SW4 0").
 
-Google Geocoding API is one of our higher costs in Google Cloud, which is why it is now only a fallback.
-A `google_geocoding_api_hit` analytics event fires on every Google call, so it measures the fallback rate directly.
-To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period (Currently set at 180 days), so there are fewer API hits renewing existing cached results.
-
-Please be aware of the impact on the API costs if deciding to modify the Geocoding cache duration period.
+Each keystroke after the third (debounced) is one OS Names API call. The API allows 600 calls a minute per project, shared with geocoding; the suggestion endpoint is cached with `caches_action`. If Ordnance Survey fails, only polygon areas are suggested.

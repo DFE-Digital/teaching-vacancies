@@ -49,7 +49,7 @@ __Once you are inside:__
 
 ### Google API Keys
 There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
-- `GOOGLE_LOCATION_SEARCH_API_KEY` is used for both the Google Places API and the Google Geocoding API
+- `GOOGLE_LOCATION_SEARCH_API_KEY` is used for the Google Geocoding API, the fallback when Ordnance Survey has no match. The location autocomplete no longer uses the Google Places API (see [ADR 0018](/documentation/adr/0018_suggest_locations_from_ordnance_survey.md))
 - `GOOGLE_API_JSON_KEY` is used for indexing and drive.
    - This key belongs to the `analytics-prod` Service Account in the [Google Cloud APIs and Services Credentials](https://console.cloud.google.com/apis/credentials?project=teacher-vacancy-service).
    - The service account needs to be added as `owner` in the [Google Search Console](https://search.google.com/u/2/search-console/users?resource_id=sc-domain%3Ateaching-vacancies.service.gov.uk) to be able to do Google Index API requests.
