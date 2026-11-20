@@ -304,6 +304,18 @@ RSpec.describe Geocoding, geocode: true do
         end
       end
 
+      context "when Ordnance Survey returns a full page of results" do
+        let(:location) { "Newton" }
+        let(:os_entries) do
+          [os_entry.merge("NAME1" => "Newton", "LOCAL_TYPE" => "Town")] +
+            Array.new(Geocoding::OS_MAX_RESULTS - 1) { |index| os_entry.merge("NAME1" => "Newton #{index}", "LOCAL_TYPE" => "Village") }
+        end
+
+        it "cannot tell the place is unique, so leaves the choice to Google" do
+          expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
       context "when only villages and hamlets share the searched name" do
         let(:location) { "Aisby" }
         let(:os_entries) do
@@ -480,6 +492,30 @@ RSpec.describe Geocoding, geocode: true do
 
           it "uses the first result in England" do
             expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 450_100, northing: 89_100).lat_lng)
+          end
+        end
+
+        context "when the search is a place name and the first result has a different name" do
+          let(:location) { "Foobarton" }
+          let(:os_entries) do
+            [
+              os_entry.merge("NAME1" => "Foobar Farm", "LOCAL_TYPE" => "Hamlet"),
+              os_entry.merge("NAME1" => "Foobarton", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 450_100, "GEOMETRY_Y" => 89_100),
+              os_entry.merge("NAME1" => "Foobarton", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 90_000),
+            ]
+          end
+
+          it "uses the first result with the searched name, even if the name is ambiguous" do
+            expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 450_100, northing: 89_100).lat_lng)
+          end
+        end
+
+        context "when the search is a place name and no result has that name" do
+          let(:location) { "Foobarton" }
+          let(:os_entries) { [os_entry.merge("NAME1" => "Foobar Farm", "LOCAL_TYPE" => "Hamlet")] }
+
+          it "returns no_match" do
+            expect(subject.coordinates).to eq(no_match)
           end
         end
 

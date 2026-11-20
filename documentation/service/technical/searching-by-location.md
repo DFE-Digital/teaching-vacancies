@@ -185,7 +185,9 @@ Ordnance Survey is only used when its answer is clear; otherwise Google receives
 
   Anything ambiguous goes to Google, which weighs prominence: two towns called Ashford, Newport in Wales, or a bare name such as Henley when a town has a longer name starting with it (Henley-on-Thames).
 
-If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
+If Ordnance Survey returns a full page of results (100), we can't tell whether a name is unique, so Google decides.
+
+If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort (for a place name, the first with the searched name) and is not cached.
 
 This remains a weak-match approach: a single-part name such as "Wales" or "New York" can match an English place with the same name. The result is restricted to England, but the query itself is not checked against country or foreign-place names.
 
