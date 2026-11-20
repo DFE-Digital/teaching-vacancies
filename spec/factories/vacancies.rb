@@ -181,7 +181,7 @@ FactoryBot.define do
       fe_role_qts_required { [false, true].sample }
 
       after(:build) do |model|
-        model.benefits = model.organisations.any?(&:fe_college?)
+        model.benefits = model.organisations.none?(&:fe_college?)
         model.benefits_details = nil unless model.benefits
       end
     end
