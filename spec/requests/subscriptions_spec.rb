@@ -53,6 +53,21 @@ RSpec.describe "Subscriptions" do
       end
     end
 
+    context "when specifying ect settings" do
+      let(:params) do
+        { email_contact: email,
+          email_ect: "ect_suitable",
+          ect_job_alert: true,
+          search_criteria: { "ect_statuses" => ["ect_suitable"] } }
+      end
+
+      before { get ect_job_alerts_path(params: { email_contact: email, email_ect: "ect_suitable" }) }
+
+      it "includes the correct parameters" do
+        expect(request.parameters.symbolize_keys.except(:controller, :action)).to eq(params)
+      end
+    end
+
     context "when hit via the FE job alerts url" do
       let(:params) do
         { email_contact: email,
