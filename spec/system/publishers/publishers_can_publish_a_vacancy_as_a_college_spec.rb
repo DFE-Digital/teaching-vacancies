@@ -63,9 +63,6 @@ RSpec.describe "Creating a vacancy as an FE college" do
     ])
     publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
-    expect(publisher_school_visits_page).to be_displayed
-    publisher_school_visits_page.fill_in_and_submit_form(vacancy.school_visits)
-
     expect(publisher_visa_sponsorship_page).to be_displayed
     publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy.visa_sponsorship_available)
 

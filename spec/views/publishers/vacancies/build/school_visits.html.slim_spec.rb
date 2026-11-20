@@ -14,15 +14,6 @@ RSpec.describe "publishers/vacancies/build/school_visits" do
     render
   end
 
-  context "with a college" do
-    let(:organisation) { build_stubbed(:college) }
-
-    it "offers college visits" do
-      expect(rendered).to have_content("college visits")
-      expect(rendered).to have_no_content("school visits")
-    end
-  end
-
   context "with a school" do
     let(:organisation) { build_stubbed(:school) }
 
