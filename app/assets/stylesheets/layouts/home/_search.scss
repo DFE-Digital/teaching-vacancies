@@ -1,74 +1,12 @@
 @use 'govuk-frontend/dist/govuk/base' as *;
 
-.search {
-  color: govuk-colour('white');
-  background-color: govuk-functional-colour('brand');
+// GOV.UK Frontend has no shaded container class, so the panel background is the one custom rule.
+.home-hero {
+  background-color: govuk-functional-colour('surface-background');
+}
 
-  @include govuk-media-query($until: tablet) {
-    padding: govuk-spacing(4);
-
-    .govuk-button {
-      margin-bottom: 0;
-      margin-top: govuk-spacing(4);
-    }
-  }
-
-  @include govuk-media-query($from: tablet) {
-    padding: govuk-spacing(6);
-
-    .govuk-button,
-    .govuk-form-group {
-      align-self: flex-end;
-      margin: 0;
-    }
-  }
-
-  .govuk-label,
-  .govuk-hint,
-  .govuk-link,
-  h1,
-  h2 {
-    color: govuk-colour('white');
-  }
-
-  .govuk-hint {
-    display: none;
-  }
-
-  h2 {
-    margin-bottom: govuk-spacing(2);
-    margin-top: govuk-spacing(2);
-  }
-
-  &__form {
-    @include govuk-media-query($from: tablet) {
-      align-items: end;
-      column-gap: govuk-spacing(4);
-      display: flex;
-
-      >div {
-        width: 33.33%;
-      }
-    }
-
-    .autocomplete__menu {
-      @include govuk-media-query($from: desktop) {
-        position: absolute;
-      }
-    }
-
-    >div:last-child {
-      align-items: center;
-      display: flex;
-    }
-  }
-
-  &__popular {
-    display: flex;
-    flex-wrap: wrap;
-
-    .govuk-link {
-      margin-right: govuk-spacing(2);
-    }
+.search__form .autocomplete__menu {
+  @include govuk-media-query($from: desktop) {
+    position: absolute;
   }
 }

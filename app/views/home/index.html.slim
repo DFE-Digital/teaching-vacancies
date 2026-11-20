@@ -2,7 +2,7 @@
 
 = render "search", form: @form
 
-.govuk-grid-row class="govuk-!-margin-top-6"
+.govuk-grid-row class="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
   .govuk-grid-column-one-third
     h2.govuk-heading-m = t("nav.create_a_job_alert")
     p.govuk-body = t(".alerts_description")
@@ -30,4 +30,5 @@
 
 = render "landing_page_links", school_counts: @school_counts, fe_counts: @fe_counts
 
-= govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-!-font-size-19")
+p.govuk-body class="govuk-!-margin-top-6"
+  = govuk_link_to(t(".browse_all"), jobs_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

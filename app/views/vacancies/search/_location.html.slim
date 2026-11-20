@@ -2,7 +2,8 @@
 
 .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" data-debouncems="400"
   = f.govuk_text_field :location,
-    label: { text: label_text, size: "s" },
+    label: { text: label_text, size: local_assigns.fetch(:label_size, "s") },
+    hint: { text: local_assigns[:hint_text] },
     autocomplete: "off",
     form_group: { class: %w[location-finder__input govuk-!-margin-bottom-0] },
     data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }
