@@ -183,13 +183,15 @@ Ordnance Survey is asked for one term only: a UK postcode if the search contains
 
   For a bare name, towns and cities with a longer name starting with it as a whole word (Newcastle upon Tyne) also compete, unless an exact match is already a town or city.
 
-  If nothing in England, or anywhere, is called exactly that, places containing the name as whole words are used, except villages and hamlets (Tooting finds Upper Tooting, Leamington Spa finds Royal Leamington Spa, Hull finds Kingston upon Hull). If another country has a place called exactly that (Cardiff), Google answers instead.
+  If nothing in England, or anywhere, is called exactly the first part of the search, places containing it as whole words are used, except villages and hamlets (Tooting finds Upper Tooting, Leamington Spa finds Royal Leamington Spa, Hull finds Kingston upon Hull). If another country has a place called exactly that (Cardiff), Google answers instead.
 
-Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search with a county Ordnance Survey doesn't know for that place ("Sutton, Surrey"), an error, or no API key.
+  The location autocomplete offers Google Places suggestions such as "Bolton Abbey, Skipton" or "New York, North Shields". The part after the comma is a nearby locality that Ordnance Survey doesn't record against the place (it only knows its county, district and region). When no place with the name is in a county, district or region matching that part, we look the locality up in Ordnance Survey too and use the place with the name that is closest to it, if it is within 20 km. This costs one more Ordnance Survey call, and only when the search has a locality that doesn't match.
+
+Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search whose locality we can't place near the name, a street, station or business that the autocomplete suggests (Ordnance Survey holds roads and stations, but we only search places), an error, or no API key.
 
 If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
 
-In testing against Google's real answers, Ordnance Survey answered about 95% of realistic searches, and nine in ten of its answers were within 5 km of Google's. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
+In testing against Google's real answers, Ordnance Survey answered about 95% of typed place names, and nine in ten of its answers were within 5 km of Google's. Of the strings the autocomplete actually suggests, about a third go to Ordnance Survey, because most suggestions are streets, stations and businesses; nearly all of the place suggestions do. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
 
 The `ORDNANCE_SURVEY_API_KEY` environment variable holds the OS key; see [Application secrets](/documentation/operations/maintenance/application-secrets.md#ordnance_survey_api_key) for how to get one.
 

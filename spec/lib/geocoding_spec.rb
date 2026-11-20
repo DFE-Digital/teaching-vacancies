@@ -376,10 +376,11 @@ RSpec.describe Geocoding, geocode: true do
         end
 
         context "when the search has more than one part" do
-          let(:location) { "Tooting, Greater London" }
+          let(:location) { "Tooting, London" }
 
-          it "falls back to Google" do
-            expect(subject.coordinates).to eq(google_coordinates)
+          it "uses the place, whatever the other parts say" do
+            expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 528_000, northing: 172_000).lat_lng)
+            expect(google_stub).not_to have_been_requested
           end
         end
       end
@@ -404,6 +405,62 @@ RSpec.describe Geocoding, geocode: true do
 
         it "falls back to Google" do
           expect(subject.coordinates).to eq(google_coordinates)
+        end
+      end
+
+      context "when the search names a nearby locality that Ordnance Survey doesn't record for the place" do
+        let(:location) { "Newport, Saffron Walden" }
+        let(:os_entries) do
+          [
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Isle of Wight", "GEOMETRY_X" => 450_000, "GEOMETRY_Y" => 89_000),
+            os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Village", "COUNTY_UNITARY" => "Essex", "GEOMETRY_X" => 552_000, "GEOMETRY_Y" => 234_000),
+          ]
+        end
+        let(:locality_entries) do
+          [os_entry.merge("NAME1" => "Saffron Walden", "LOCAL_TYPE" => "Town", "COUNTY_UNITARY" => "Essex", "GEOMETRY_X" => 553_500, "GEOMETRY_Y" => 238_500)]
+        end
+
+        before do
+          stub_request(:get, os_url).with(query: hash_including("query" => "Saffron Walden")).to_return(status: 200, body: os_body(locality_entries))
+        end
+
+        it "uses the place closest to the locality, without calling Google" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 552_000, northing: 234_000).lat_lng)
+          expect(google_stub).not_to have_been_requested
+        end
+
+        context "when no place with the name is near the locality" do
+          let(:locality_entries) { [os_entry.merge("NAME1" => "Saffron Walden", "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 300_000)] }
+
+          it "falls back to Google" do
+            expect(subject.coordinates).to eq(google_coordinates)
+          end
+        end
+
+        context "when Ordnance Survey doesn't know the locality" do
+          let(:locality_entries) { [] }
+
+          it "falls back to Google" do
+            expect(subject.coordinates).to eq(google_coordinates)
+          end
+        end
+
+        context "when the locality is outside England" do
+          let(:locality_entries) { [os_entry.merge("NAME1" => "Saffron Walden", "COUNTRY" => "Wales")] }
+
+          it "falls back to Google" do
+            expect(subject.coordinates).to eq(google_coordinates)
+          end
+        end
+      end
+
+      context "when a place with the name is in the county the search names" do
+        let(:location) { "Newport, Essex" }
+        let(:os_entries) { [os_entry.merge("NAME1" => "Newport", "LOCAL_TYPE" => "Village", "COUNTY_UNITARY" => "Essex")] }
+
+        it "uses it without looking the county up as a locality" do
+          expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 462_000, northing: 516_000).lat_lng)
+          expect(a_request(:get, os_url).with(query: hash_including("query" => "Essex"))).not_to have_been_made
         end
       end
 

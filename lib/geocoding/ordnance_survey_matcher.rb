@@ -12,6 +12,9 @@ class Geocoding
     MINOR_TIER = LOCAL_TYPE_TIERS.index(%w[village])
     LONDON_REGION = "London".freeze
 
+    # How far from the locality in a search such as "Bolton Abbey, Skipton" a place can be.
+    LOCALITY_RADIUS_KM = 20
+
     # `segments` are the comma-separated parts of the search, `postcode` the one that is a postcode, if any.
     def initialize(segments:, postcode:, results:)
       @segments = segments
@@ -21,6 +24,15 @@ class Geocoding
 
     def match
       postcode ? postcode_match : best_place
+    end
+
+    # Google Places describes a place with a nearby locality that Ordnance Survey doesn't record against it ("Bolton
+    # Abbey, Skipton"). Among the places with the searched name, whatever the rest of the search says, this is the one
+    # closest to that locality, if it is near enough.
+    def nearest_to(locality, radius_km: LOCALITY_RADIUS_KM)
+      places = results.select { |result| in_england?(result) && name_match?(result) }
+      nearest = places.min_by { |result| distance_km(result, locality) }
+      nearest if nearest && distance_km(nearest, locality) <= radius_km
     end
 
     private
@@ -61,10 +73,10 @@ class Geocoding
     end
 
     # Ordnance Survey sometimes names a place with extra words (Royal Leamington Spa, Kingston upon Hull, Upper
-    # Tooting). For a bare name that nothing is called exactly, in England or elsewhere (Cardiff is not Walton
-    # Cardiff), the places with the name as whole words are used, except villages and hamlets.
+    # Tooting). When nothing is called exactly the first part of the search, in England or elsewhere (Cardiff is not
+    # Walton Cardiff), the places with it as whole words are used, except villages and hamlets.
     def whole_word_places
-      return [] unless segments.one? && results.none? { |result| normalise(result.data["NAME1"]) == normalise(segments.first) }
+      return [] if results.any? { |result| name_match?(result) }
 
       whole_word = /(\A|[\s-])#{Regexp.escape(segments.first)}(\z|[\s-])/i
       results.select do |result|
@@ -78,10 +90,20 @@ class Geocoding
     end
 
     def same_name?(result)
-      return false unless normalise(result.data["NAME1"]) == normalise(segments.first)
+      name_match?(result) && qualifiers_match?(result)
+    end
 
+    def name_match?(result)
+      normalise(result.data["NAME1"]) == normalise(segments.first)
+    end
+
+    def qualifiers_match?(result)
       location_fields = %w[NAME1 DISTRICT_BOROUGH COUNTY_UNITARY REGION].filter_map { |field| result.data[field] }
       segments.drop(1).all? { |segment| location_fields.any? { |field| normalise(field) == normalise(segment) } }
+    end
+
+    def distance_km(place, other)
+      Geocoder::Calculations.distance_between(place.coordinates, other.coordinates, units: :km)
     end
 
     def town?(result)

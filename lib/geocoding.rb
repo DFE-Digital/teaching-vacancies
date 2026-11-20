@@ -93,7 +93,10 @@ class Geocoding
 
   # Ordnance Survey is asked for one term only: the postcode if there is one, otherwise the first part of the search.
   def ordnance_survey_results
-    term = postcode_segment || segments.first
+    search_ordnance_survey(postcode_segment || segments.first)
+  end
+
+  def search_ordnance_survey(term)
     return [] if term.blank? || Geocoder.config_for_lookup(:uk_ordnance_survey_names)[:api_key].blank?
 
     Geocoder.search(term, lookup: :uk_ordnance_survey_names, params: { fq: OS_LOCAL_TYPES.map { |type| "local_type:#{type}" }.join(" ") })
@@ -105,7 +108,17 @@ class Geocoding
 
   # Ordnance Survey answers whenever it has a match in England: Google is only the fallback for when it has none.
   def os_coordinates(results)
-    OrdnanceSurveyMatcher.new(segments:, postcode: postcode_segment, results:).match&.coordinates
+    matcher = OrdnanceSurveyMatcher.new(segments:, postcode: postcode_segment, results:)
+    (matcher.match || place_near_locality(matcher))&.coordinates
+  end
+
+  # "Bolton Abbey, Skipton": Google Places names a nearby locality that Ordnance Survey doesn't record for the place, so
+  # look the locality up too and use the place with that name that is closest to it.
+  def place_near_locality(matcher)
+    return if segments.one? || postcode_segment
+
+    locality = OrdnanceSurveyMatcher.new(segments: [segments.second], postcode: nil, results: search_ordnance_survey(segments.second)).match
+    matcher.nearest_to(locality) if locality
   end
 
   # 'components: "country:gb"' is used to restrict the results to within the UK.
