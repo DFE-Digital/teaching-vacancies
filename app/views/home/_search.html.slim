@@ -1,18 +1,23 @@
-.search
-  h1.govuk-heading-l = t(".title_h1")
+h1.govuk-heading-l#home-hero-title = t(".title_h1")
+p.govuk-body-l = t(".subtitle")
 
+section.search.home-hero class="govuk-!-padding-4 govuk-!-margin-bottom-6" aria-labelledby="home-hero-title"
   = form_for form, as: "", url: jobs_path, html: { method: "get" } do |f|
-    .search__form
-      = render "vacancies/search/keyword", f: f
-      = render "vacancies/search/location", f: f, label_text: t(".location_label"), show_hint: false, desktop: true
-      = render "vacancies/search/current_location", target: "location-field"
-      = f.govuk_submit t("buttons.search"), class: "govuk-button--start govuk-button--inverse"
+    .govuk-grid-row.search__form
+      .govuk-grid-column-one-half
+        = f.govuk_text_field :keyword,
+          label: { text: t(".keyword_label"), size: "m" },
+          hint: { text: t(".keyword_hint") },
+          autocomplete: "off"
+      .govuk-grid-column-one-half
+        = render "vacancies/search/location", f: f, label_text: t(".location_label"), hint_text: t(".location_hint"), label_size: "m"
+        = render "vacancies/search/current_location", target: "location-field"
+    = f.govuk_submit t("buttons.search"), class: "govuk-!-margin-top-4"
 
-  h2.govuk-heading-s = t("jobs.search.popular_searches.title")
-
-  .search__popular
-    = search_keyword_quick_link("primary", page: "primary-school-jobs")
-    = search_keyword_quick_link("maths", page: "maths-teacher-jobs")
-    = search_keyword_quick_link("science", page: "science-teacher-jobs")
-    = search_keyword_quick_link("teaching_assistant", page: "teaching-assistant-jobs")
-    = search_keyword_quick_link("headteacher", page: "headteacher-jobs")
+  = govuk_details(summary_text: t(".popular_searches"), classes: "govuk-!-margin-bottom-0") do
+    p.govuk-body class="govuk-!-margin-bottom-0"
+      =< search_keyword_quick_link("primary", page: "primary-school-jobs", class: "govuk-!-margin-right-3")
+      =< search_keyword_quick_link("maths", page: "maths-teacher-jobs", class: "govuk-!-margin-right-3")
+      =< search_keyword_quick_link("science", page: "science-teacher-jobs", class: "govuk-!-margin-right-3")
+      =< search_keyword_quick_link("teaching_assistant", page: "teaching-assistant-jobs", class: "govuk-!-margin-right-3")
+      =< search_keyword_quick_link("headteacher", page: "headteacher-jobs", class: "govuk-!-margin-right-3")

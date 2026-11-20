@@ -21,7 +21,7 @@ RSpec.describe "Searching on the schools page" do
 
   context "when the location is not a polygon" do
     scenario "resets radius to a default radius" do
-      fill_in I18n.t("home.search.location_label"), with: "my house"
+      fill_in I18n.t("jobs.search.location"), with: "my house"
 
       click_on I18n.t("buttons.search")
 
