@@ -18,6 +18,8 @@
   - [Purpose](#purpose)
   - [Mappings](#mappings)
 - [Getting the geographical coordinates](#getting-the-geographical-coordinates)
+  - [Location autocomplete](#location-autocomplete)
+  - [Locations outside England](#locations-outside-england)
   - [Google Geocoding API costs](#google-geocoding-api-costs)
 
 
@@ -131,7 +133,7 @@ Once a location is provided for a search, there are three possibilities:
 
 3. **No polygon is found** for the given location.
 
-    We get the geographical coordinates for the given location.
+    We get the geographical coordinates for the given location, from Ordnance Survey first and Google as a fallback (see [Getting the geographical coordinates](#getting-the-geographical-coordinates)).
 
 ## Location Polygons
 
@@ -171,13 +173,46 @@ The current team knowledge and understanding on this area is very limited and ba
 
 As many location search terms don't match a polygon name, the service falls back to obtaining the location coordinates.
 
-We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The default source for retrieving the location coordinates is the Google Geocoding API.
+We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey has no match or is unavailable. We don't call Google because we dislike the Ordnance Survey result. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
 
-Information about the API usage/costs should be accessible from the Google Cloud panel using your DfE email account.
+Ordnance Survey is asked for one term only: a UK postcode if the search contains one, otherwise the first part of the search (trailing country parts such as ", UK", which Google Places autocomplete adds, are ignored). We search the Ordnance Survey place types city, town, suburban area, village, other settlement, hamlet and postcode; the geocoder gem's own filter leaves out suburban areas, which Ordnance Survey uses for places such as the London districts. The matching is in [`Geocoding::OrdnanceSurveyMatcher`](/lib/geocoding/ordnance_survey_matcher.rb):
 
-### Google Geocoding API costs
+- **Postcode:** an exact postcode match in England is used. Vacancy addresses and trust postcodes mostly follow this path.
+- **Place name:** of the places in England whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), one is chosen:
+  1. The most important type wins: city, then town, then suburban area or "other settlement", then village, then hamlet. Ordnance Survey labels large places such as Clapham, Hackney and Wimbledon "Other Settlement", so they rank above villages and hamlets.
+  2. A place in London ranks at least as a town and wins ties. Searches for ambiguous names such as Acton or Sutton mostly mean the London one, which is also what Google returns.
+  3. The largest place wins: Ordnance Survey has no population, so the size of the place's bounding box stands in for how prominent it is.
 
-Google Geocoding API is one of our higher costs in Google Cloud.
-To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period (Currently set at 180 days), so there are fewer API hits renewing existing cached results.
+  For a bare name, towns and cities with a longer name starting with it as a whole word (Newcastle upon Tyne) also compete, unless an exact match is already a town or city.
 
-Please be aware of the impact on the API costs if deciding to modify the Geocoding cache duration period.
+  If nothing in England, or anywhere, is called exactly the first part of the search, places containing it as whole words are used, except villages and hamlets (Tooting finds Upper Tooting, Leamington Spa finds Royal Leamington Spa, Hull finds Kingston upon Hull). If another country has a place called exactly that (Cardiff), Google answers instead.
+
+  The location autocomplete used to offer Google Places suggestions such as "Bolton Abbey, Skipton" or "New York, North Shields", which job alerts and job preferences still hold. The part after the comma is a nearby locality that Ordnance Survey doesn't record against the place (it only knows its county, district and region). When no place with the name is in a county, district or region matching that part, we look the locality up in Ordnance Survey too and use the place with the name that is closest to it, if it is within 20 km. This costs one more Ordnance Survey call, and only when the search has a locality that doesn't match.
+
+Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search whose locality we can't place near the name, a typed street, station or business (Ordnance Survey holds roads and stations, but we only search places), an error, or no API key.
+
+If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
+
+In testing against Google's real answers, Ordnance Survey answered about 95% of typed place names, and nine in ten of its answers were within 5 km of Google's. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
+
+### Location autocomplete
+
+The location fields ("Enter a postcode, town or region") suggest locations from [`LocationSuggestion`](/app/services/location_suggestion.rb) instead of Google Places (see [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md)), so that every suggestion is something the search resolves without Google:
+
+- up to two regions, counties or cities we hold a polygon for, searched by area;
+- places in England from the OS Names API. The API matches whole words fuzzily ("Nott" returns Bott End before Nottingham), so we keep only the places whose name, or a later word of a town or suburb ("Leam" finds Royal Leamington Spa), starts with the search, and rank them as `Geocoding` does. Each is labelled "Name, qualifier" ("Clapham, London", "Caldecote, South Cambridgeshire") with the first of London, district, county or region for which `Geocoding` picks that same place;
+- postcodes in England, once the search looks like the start of one ("SW4 0").
+
+Job alerts, job preferences and the school and college search use the same autocomplete and resolve locations the same way: a polygon by name, otherwise `Geocoding`. The UK check on job alert and job preference locations (`WithinUnitedKingdomValidator`) accepts a polygon name without a lookup, as Ordnance Survey has no place called "Essex".
+
+### Locations outside England
+
+We only list jobs in England, so the autocomplete only suggests places and postcodes in England, and our polygons are all in England. A location elsewhere in the UK can still be typed and searched without picking a suggestion, and this is deliberate: someone living in Gretna or Cardiff can look for jobs in England within a radius of home.
+
+- Search: Ordnance Survey has no match in England for "Edinburgh" or "Cardiff", so `Geocoding` falls back to Google, which returns the place itself. The search then finds the jobs in England within the radius (Newcastle and Carlisle are within 100 miles of Edinburgh), or none.
+- Job alerts and job preferences: the location must be in the UK, not in England (`WithinUnitedKingdomValidator`), so "Edinburgh" is accepted.
+- Places outside the UK are rejected: Google, restricted to the UK, returns the UK centre point for them, which the UK check treats as outside the UK. A foreign name that is also a place in England (Sydney, New York) resolves to the English place instead (see ADR 0017).
+
+Where the search goes with the text as typed, if no suggestion is picked, is listed first: the polygon it names, otherwise the place `Geocoding` picks ("Kingston" lists Kingston upon Thames first, "Durham" the city of Durham), so the list agrees with the search.
+
+Each keystroke after the third (debounced) is one OS Names API call. The API allows 600 calls a minute per project, shared with geocoding; the suggestion endpoint is cached with `caches_action`. If Ordnance Survey fails, only polygon areas are suggested.

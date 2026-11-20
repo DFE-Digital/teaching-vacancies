@@ -93,4 +93,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Bot mitigation](/documentation/service/technical/bot-mitigation.md)
 * [Tracking vacancy views](documentation/service/technical/tracking-vacancy-views.md)
 
+#### Architecture decisions
+* [Architecture Decision Records](/documentation/adr/)
+
 

@@ -2,15 +2,11 @@ class Api::LocationSuggestionController < Api::ApplicationController
   before_action :verify_json_request, only: %i[show]
   before_action :check_valid_params, only: %i[show]
 
-  # By caching this action, we considerably reduce our Google Places API bill
+  # Caching saves Ordnance Survey Names API calls, which are rate limited per minute (see LocationSuggestion).
   caches_action :show
 
   def show
-    begin
-      suggestions, matched_terms = LocationSuggestion.new(location).suggest_locations
-    rescue LocationSuggestion::RequestError, LocationSuggestion::GooglePlacesAutocompleteError => e
-      return render(json: { error: e }, status: :bad_request)
-    end
+    suggestions, matched_terms = LocationSuggestion.new(location).suggest_locations
 
     render json: {
       query: location,

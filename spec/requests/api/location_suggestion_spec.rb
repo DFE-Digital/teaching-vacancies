@@ -59,32 +59,5 @@ RSpec.describe "Api::LocationSuggestion" do
         expect(json[:matched_terms]).to eq(matched_terms)
       end
     end
-
-    context "LocationSuggestion raises RequestError" do
-      before do
-        allow(location_suggestion).to receive(:suggest_locations).and_raise(LocationSuggestion::RequestError, "HTTP error")
-      end
-
-      it "returns status :bad_request" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
-
-        expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eq("HTTP error")
-      end
-    end
-
-    context "LocationSuggestion raises GooglePlacesAutocompleteError" do
-      before do
-        allow(location_suggestion).to receive(:suggest_locations)
-          .and_raise(LocationSuggestion::GooglePlacesAutocompleteError, "Google error")
-      end
-
-      it "returns status :bad_request" do
-        get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
-
-        expect(response).to have_http_status(:bad_request)
-        expect(json[:error]).to eq("Google error")
-      end
-    end
   end
 end
