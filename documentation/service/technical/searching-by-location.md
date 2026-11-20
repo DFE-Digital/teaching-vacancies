@@ -202,6 +202,8 @@ The location fields ("Enter a postcode, town or region") suggest locations from 
 - places in England from the OS Names API. The API matches whole words fuzzily ("Nott" returns Bott End before Nottingham), so we keep only the places whose name, or a later word of a town or suburb ("Leam" finds Royal Leamington Spa), starts with the search, and rank them as `Geocoding` does. Each is labelled "Name, qualifier" ("Clapham, London", "Caldecote, South Cambridgeshire") with the first of London, district, county or region for which `Geocoding` picks that same place;
 - postcodes in England, once the search looks like the start of one ("SW4 0").
 
+Job alerts, job preferences and the school and college search use the same autocomplete and resolve locations the same way: a polygon by name, otherwise `Geocoding`. The UK check on job alert and job preference locations (`WithinUnitedKingdomValidator`) accepts a polygon name without a lookup, as Ordnance Survey has no place called "Essex".
+
 Where the search goes with the text as typed, if no suggestion is picked, is listed first: the polygon it names, otherwise the place `Geocoding` picks ("Kingston" lists Kingston upon Thames first, "Durham" the city of Durham), so the list agrees with the search.
 
 Each keystroke after the third (debounced) is one OS Names API call. The API allows 600 calls a minute per project, shared with geocoding; the suggestion endpoint is cached with `caches_action`. If Ordnance Survey fails, only polygon areas are suggested.
