@@ -14,7 +14,7 @@ module Jobseekers
       def message
         t("notifications.jobseekers/self_disclosure_request_received_notification.message_html",
           link: disclosure_link, job_title: job_application.vacancy.job_title,
-          school_name: job_application.vacancy.organisation.name)
+          school_name: job_application.vacancy.organisation_name)
       end
 
       include DatesHelper

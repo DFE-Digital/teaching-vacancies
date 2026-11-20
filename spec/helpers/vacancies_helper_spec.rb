@@ -243,7 +243,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build_stubbed(:vacancy, organisations: [school]) }
 
       it "returns the full location" do
-        expect(subject).to eq("#{vacancy.organisation.name}, Cool Town, Orange County, SW1A")
+        expect(subject).to eq("#{vacancy.organisation_name}, Cool Town, Orange County, SW1A")
       end
     end
 
@@ -276,7 +276,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build_stubbed(:vacancy, organisations: [school, school2]) }
 
       it "returns the multiple schools location" do
-        expect(subject).to eq("More than one location, #{vacancy.organisation.name}")
+        expect(subject).to eq("More than one location, #{vacancy.organisation_name}")
       end
     end
 

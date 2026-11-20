@@ -41,7 +41,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
       description += description_paragraph(I18n.t("jobs.skills_and_experience.jobseeker"), vacancy.skills_and_experience)
       description += description_paragraph(I18n.t("jobs.school_offer.jobseeker.#{school_or_college_type}"), vacancy.school_offer)
       description += description_paragraph(I18n.t("jobs.further_details"), vacancy.further_details)
-      description += description_paragraph(I18n.t("jobs.safeguarding_information.jobseeker"), vacancy.organisation.safeguarding_information)
+      description += description_paragraph(I18n.t("jobs.safeguarding_information.jobseeker"), vacancy.organisation_safeguarding_information)
       description.strip
     end
 

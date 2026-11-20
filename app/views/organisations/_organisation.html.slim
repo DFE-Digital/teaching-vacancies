@@ -91,7 +91,7 @@ h2.govuk-heading-m = t("organisations.show.vacancies.heading")
       - summary_list.with_row do |row|
         - if organisation.trust?
           - row.with_key text: t("organisations.show.vacancy.school_name"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-          - row.with_value text: vacancy.organisation.name, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - row.with_value text: vacancy.organisation_name, classes: "govuk-body-s govuk-!-padding-bottom-0"
         - else
           - row.with_key text: t("organisations.show.vacancy.job_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.with_value text: humanize_array(vacancy.job_roles), classes: "govuk-body-s govuk-!-padding-bottom-0"

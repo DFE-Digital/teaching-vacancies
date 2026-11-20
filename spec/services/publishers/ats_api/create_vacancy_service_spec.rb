@@ -337,7 +337,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(school)
+          expect(PublishedVacancy.last.organisations).to eq([school])
         end
       end
 
@@ -347,7 +347,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "assigns the vacancy to the trust" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(trust)
+          expect(PublishedVacancy.last.organisations).to eq([trust])
         end
       end
 
@@ -357,7 +357,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "assigns the vacancy to the school within the trust" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(school)
+          expect(PublishedVacancy.last.organisations).to eq([school])
         end
       end
 
@@ -369,7 +369,6 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         it "only assigns the vacancy to the school within the trust" do
           create_vacancy_service
           vacancy = PublishedVacancy.last
-          expect(vacancy.organisation).to eq(school)
           expect(vacancy.organisations).to contain_exactly(school)
         end
       end
@@ -383,7 +382,6 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         it "only assigns the vacancy to the school within the trust" do
           create_vacancy_service
           vacancy = PublishedVacancy.last
-          expect(vacancy.organisation).to eq(school)
           expect(vacancy.organisations).to contain_exactly(school)
         end
       end

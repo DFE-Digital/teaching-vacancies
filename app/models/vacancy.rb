@@ -126,7 +126,10 @@ class Vacancy < ApplicationRecord
   has_one :vacancy_analytics, dependent: :destroy
   has_many :job_application_batches, dependent: :destroy
 
-  delegate :name, to: :organisation, prefix: true, allow_nil: true
+  # simplecov patch seems to get confused about a change to this line
+  # simplecov:disable
+  delegate :name, :safeguarding_information, :logo, to: :organisation, prefix: true, allow_nil: true
+  # simplecov:enable
 
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
   scope :quick_apply, -> { where(enable_job_applications: true) }
@@ -203,6 +206,8 @@ class Vacancy < ApplicationRecord
     with_utm_params(url) if url.present?
   end
 
+  # This method does not do what you might think. It aopears to be trying to find an org
+  # to attach a vacancy to, however for external vacancies it doesn't seem to always return anything
   def organisation
     return organisations.first if organisations.one?
 

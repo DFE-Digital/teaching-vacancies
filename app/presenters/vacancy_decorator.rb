@@ -1,7 +1,8 @@
 class VacancyDecorator < Draper::Decorator
   # TODO: try to reduce this surface by bringing methods into this class
   # to reduce logic in slim templates (which don't support coverage, and can get ungainly)
-  delegate :school_group_names, :job_title, :organisation_name, :organisation, :organisations,
+  delegate :school_group_names, :job_title,
+           :organisation_name, :organisation, :organisations, :organisation_logo, :organisation_safeguarding_information,
            :is_job_share, :id, :school_group_types,
            :publish_on, :skills_and_experience, :job_roles,
            :hourly_rate?, :hourly_rate, :salary?, :pay_scale?, :salary, :pay_scale,
