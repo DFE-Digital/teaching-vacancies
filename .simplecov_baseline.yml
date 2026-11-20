@@ -1329,8 +1329,8 @@ app/controllers/subscriptions_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.11
-    missed: 2
+    percent: 96.87
+    missed: 1
 app/controllers/support_requests_controller.rb:
   lines:
     percent: 100.0
@@ -4551,6 +4551,20 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
+app/views/api/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/api/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -6196,6 +6210,27 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
@@ -7584,10 +7619,10 @@ app/views/subscriptions/_subscription_details.html.slim:
     missed: 1
 app/views/subscriptions/campaign/_fields.html.slim:
   lines:
-    percent: 95.0
+    percent: 95.23
     missed: 1
   branches:
-    percent: 50.0
+    percent: 62.5
     missed: 3
 app/views/subscriptions/campaign/_form.html.slim:
   lines:
@@ -8122,13 +8157,6 @@ lib/tasks/backfill_vacancy_geolocation.rake:
     percent: 100.0
     missed: 0
 lib/tasks/backfill_vacancy_searchable_content.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
-lib/tasks/clear_employment_end_dates_for_currently_employed_references.rake:
   lines:
     percent: 100.0
     missed: 0
