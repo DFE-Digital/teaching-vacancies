@@ -108,6 +108,8 @@ class Geocoding
 
   # Ordnance Survey answers whenever it has a match in England: Google is only the fallback for when it has none.
   def os_coordinates(results)
+    return if segments.empty?
+
     matcher = OrdnanceSurveyMatcher.new(segments:, postcode: postcode_segment, results:)
     (matcher.match || place_near_locality(matcher))&.coordinates
   end
@@ -117,7 +119,7 @@ class Geocoding
   def place_near_locality(matcher)
     return if segments.one? || postcode_segment || !matcher.name_matches?
 
-    locality = OrdnanceSurveyMatcher.new(segments: [segments.second], postcode: nil, results: search_ordnance_survey(segments.second)).match
+    locality = OrdnanceSurveyMatcher.new(segments: [segments.second], postcode: nil, results: search_ordnance_survey(segments.second)).exact_match
     matcher.nearest_to(locality) if locality
   end
 

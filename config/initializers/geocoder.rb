@@ -11,7 +11,8 @@ Geocoder.configure(
 
   uk_ordnance_survey_names: {
     api_key: Rails.env.test? ? "placeholder_key" : ENV.fetch("ORDNANCE_SURVEY_API_KEY", ""),
-    # Applied to both the connect and the read timeout, so a slow Ordnance Survey delays the Google fallback by up to 2s.
+    # Applied to both the connect and the read timeout, so a slow Ordnance Survey delays the Google fallback by up to 2s
+    # per call, and a search with a locality ("Bolton Abbey, Skipton") can make two calls.
     timeout: 1,
   },
 )

@@ -26,6 +26,12 @@ class Geocoding
       postcode ? postcode_match : best_place
     end
 
+    # The place with exactly the searched name, for a locality: no longer names or whole words ("Virginia Water" is not
+    # Virginia).
+    def exact_match
+      best(results.select { |result| in_england?(result) && same_name?(result) })
+    end
+
     def name_matches?
       results.any? { |result| in_england?(result) && name_match?(result) }
     end
@@ -45,7 +51,7 @@ class Geocoding
 
     def postcode_match
       results.find do |result|
-        result.data["LOCAL_TYPE"] == "Postcode" && in_england?(result) && normalise(result.data["NAME1"]) == normalise(postcode)
+        local_type(result) == "postcode" && in_england?(result) && normalise(result.data["NAME1"]) == normalise(postcode)
       end
     end
 
@@ -54,6 +60,10 @@ class Geocoding
     def best_place
       places = exact_places
       places = whole_word_places if places.empty?
+      best(places)
+    end
+
+    def best(places)
       places.min_by { |result| [importance(result), london?(result) ? 0 : 1, -bounding_box_area(result)] }
     end
 
@@ -84,7 +94,8 @@ class Geocoding
 
       whole_word = /(\A|[\s-])#{Regexp.escape(segments.first)}(\z|[\s-])/i
       results.select do |result|
-        in_england?(result) && MINOR_LOCAL_TYPES.exclude?(local_type(result)) && whole_word.match?(result.data["NAME1"].to_s)
+        in_england?(result) && MINOR_LOCAL_TYPES.exclude?(local_type(result)) && whole_word.match?(result.data["NAME1"].to_s) &&
+          qualifiers_match?(result)
       end
     end
 

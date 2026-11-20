@@ -355,7 +355,7 @@ RSpec.describe Geocoding, geocode: true do
         let(:os_entries) do
           [
             os_entry.merge("NAME1" => "Cooling", "LOCAL_TYPE" => "Village"),
-            os_entry.merge("NAME1" => "Tooting Bec Common", "LOCAL_TYPE" => "Suburban Area", "GEOMETRY_X" => 528_000, "GEOMETRY_Y" => 172_000),
+            os_entry.merge("NAME1" => "Tooting Bec Common", "LOCAL_TYPE" => "Suburban Area", "REGION" => "London", "GEOMETRY_X" => 528_000, "GEOMETRY_Y" => 172_000),
             os_entry.merge("NAME1" => "Tooting Graveney", "LOCAL_TYPE" => "Village", "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 100_000),
             os_entry.merge("NAME1" => "Tootingham", "LOCAL_TYPE" => "Town"),
           ]
@@ -364,6 +364,14 @@ RSpec.describe Geocoding, geocode: true do
         it "uses the larger place, excluding villages and names that only share letters" do
           expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 528_000, northing: 172_000).lat_lng)
           expect(google_stub).not_to have_been_requested
+        end
+
+        context "when the search names an area that the place is not in" do
+          let(:location) { "Tooting, Birmingham" }
+
+          it "falls back to Google" do
+            expect(subject.coordinates).to eq(google_coordinates)
+          end
         end
 
         context "when the name is spelt with the extra word first" do
@@ -378,7 +386,7 @@ RSpec.describe Geocoding, geocode: true do
         context "when the search has more than one part" do
           let(:location) { "Tooting, London" }
 
-          it "uses the place, whatever the other parts say" do
+          it "uses the place when the other parts match it" do
             expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 528_000, northing: 172_000).lat_lng)
             expect(google_stub).not_to have_been_requested
           end
@@ -431,6 +439,14 @@ RSpec.describe Geocoding, geocode: true do
 
         context "when no place with the name is near the locality" do
           let(:locality_entries) { [os_entry.merge("NAME1" => "Saffron Walden", "GEOMETRY_X" => 300_000, "GEOMETRY_Y" => 300_000)] }
+
+          it "falls back to Google" do
+            expect(subject.coordinates).to eq(google_coordinates)
+          end
+        end
+
+        context "when the locality only appears inside a longer place name" do
+          let(:locality_entries) { [os_entry.merge("NAME1" => "Saffron Walden Hall", "LOCAL_TYPE" => "Town", "GEOMETRY_X" => 553_500, "GEOMETRY_Y" => 238_500)] }
 
           it "falls back to Google" do
             expect(subject.coordinates).to eq(google_coordinates)
@@ -515,6 +531,15 @@ RSpec.describe Geocoding, geocode: true do
         it "uses the suburb without calling Google" do
           expect(subject.coordinates).to eq(Geocoder::EastingNorthing.new(easting: 530_000, northing: 175_000).lat_lng)
           expect(google_stub).not_to have_been_requested
+        end
+      end
+
+      context "when the location is blank" do
+        let(:location) { " , " }
+
+        it "falls back to Google without searching Ordnance Survey" do
+          expect(subject.coordinates).to eq(google_coordinates)
+          expect(a_request(:get, os_url)).not_to have_been_made
         end
       end
 
