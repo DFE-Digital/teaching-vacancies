@@ -8177,13 +8177,6 @@ lib/tasks/backfill_vacancy_searchable_content.rake:
   branches:
     percent: 100.0
     missed: 0
-lib/tasks/clear_employment_end_dates_for_currently_employed_references.rake:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 lib/tasks/data.rake:
   lines:
     percent: 70.83
