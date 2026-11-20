@@ -157,7 +157,10 @@ up to date and can suggest partial postcodes, at the cost of one Ordnance Survey
 - Streets, stations, schools and businesses are no longer suggested. They can still be typed and
   searched, and go to the Google Geocoding fallback. So does a fragment searched without picking a
   suggestion ("Manch").
-- Places outside England are no longer suggested.
+- Places outside England are no longer suggested. They can still be typed and searched, as before:
+  Ordnance Survey has no match for them in England, so they go to the Google fallback, and job
+  alerts and job preferences accept any location in the UK. This keeps radius searches from just
+  outside England working (Gretna, Cardiff).
 - Ordnance Survey APIs are throttled. The OS Names API allows 600 calls a minute per live project,
   shared by geocoding and the autocomplete, so bulk lookups must stay within that limit. Cache
   evictions in Solid Cache mean more OS calls than with a long-lived cache, so this limit needs watching.

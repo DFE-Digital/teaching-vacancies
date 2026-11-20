@@ -19,6 +19,7 @@
   - [Mappings](#mappings)
 - [Getting the geographical coordinates](#getting-the-geographical-coordinates)
   - [Location autocomplete](#location-autocomplete)
+  - [Locations outside England](#locations-outside-england)
   - [Google Geocoding API costs](#google-geocoding-api-costs)
 
 
@@ -203,6 +204,14 @@ The location fields ("Enter a postcode, town or region") suggest locations from 
 - postcodes in England, once the search looks like the start of one ("SW4 0").
 
 Job alerts, job preferences and the school and college search use the same autocomplete and resolve locations the same way: a polygon by name, otherwise `Geocoding`. The UK check on job alert and job preference locations (`WithinUnitedKingdomValidator`) accepts a polygon name without a lookup, as Ordnance Survey has no place called "Essex".
+
+### Locations outside England
+
+We only list jobs in England, so the autocomplete only suggests places and postcodes in England, and our polygons are all in England. A location elsewhere in the UK can still be typed and searched without picking a suggestion, and this is deliberate: someone living in Gretna or Cardiff can look for jobs in England within a radius of home.
+
+- Search: Ordnance Survey has no match in England for "Edinburgh" or "Cardiff", so `Geocoding` falls back to Google, which returns the place itself. The search then finds the jobs in England within the radius (Newcastle and Carlisle are within 100 miles of Edinburgh), or none.
+- Job alerts and job preferences: the location must be in the UK, not in England (`WithinUnitedKingdomValidator`), so "Edinburgh" is accepted.
+- Places outside the UK are rejected: Google, restricted to the UK, returns the UK centre point for them, which the UK check treats as outside the UK. A foreign name that is also a place in England (Sydney, New York) resolves to the English place instead (see ADR 0017).
 
 Where the search goes with the text as typed, if no suggestion is picked, is listed first: the polygon it names, otherwise the place `Geocoding` picks ("Kingston" lists Kingston upon Thames first, "Durham" the city of Durham), so the list agrees with the search.
 
