@@ -145,6 +145,12 @@ variable "postgres_server_docker_image" {
   default     = "postgis/postgis:17-3.5"
 }
 
+variable "pg_airbyte_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable PostgreSQL logical replication for Airbyte"
+}
+
 variable "azure_storage_mb" {
   type    = number
   default = 32768

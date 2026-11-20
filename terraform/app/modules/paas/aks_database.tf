@@ -19,4 +19,5 @@ module "postgres" {
   server_version                 = var.postgres_server_version
   azure_maintenance_window       = var.azure_maintenance_window
   server_docker_image            = var.postgres_server_docker_image
+  use_airbyte                    = var.pg_airbyte_enabled
 }

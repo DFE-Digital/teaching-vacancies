@@ -80,6 +80,7 @@ module "paas" {
   postgres_enable_high_availability   = var.postgres_enable_high_availability
   postgres_server_version             = var.postgres_server_version
   postgres_server_docker_image        = var.postgres_server_docker_image
+  pg_airbyte_enabled                  = var.pg_airbyte_enabled
   azure_storage_mb                    = var.azure_storage_mb
   redis_cache_capacity                = var.redis_cache_capacity
   redis_cache_family                  = var.redis_cache_family
