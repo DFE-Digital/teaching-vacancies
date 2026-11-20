@@ -108,8 +108,8 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   href: organisation_job_documents_path(vacancy.id, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.additional_documents")
 
-  - unless vacancy.school_visits.nil?
-    - school_visits_label = t("jobs.school_visits", organisation_type: vacancy.for_an_fe_college? ? "college" : "school")
+  - unless vacancy.school_visits.nil? || vacancy.for_an_fe_college?
+    - school_visits_label = t("jobs.school_visits")
     - summary_list.with_row(html_attributes: { id: "school_visits" }) do |row|
       - row.with_key
         = school_visits_label

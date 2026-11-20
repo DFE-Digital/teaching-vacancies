@@ -82,6 +82,18 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
     end
 
+    context "school_visits step" do
+      context "when the organisation is a school" do
+        it { expect(subject.steps).to include(:school_visits) }
+      end
+
+      context "when the organisation is an FE college" do
+        let(:vacancy_organisation) { build(:college) }
+
+        it { expect(subject.steps).not_to include(:school_visits) }
+      end
+    end
+
     context "important_dates_steps" do
       it "has the required steps" do
         expect(subject.steps).to include(:important_dates, :start_date)
