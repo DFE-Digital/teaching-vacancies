@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_15_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -232,6 +232,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
     t.index ["sluggable_id", "sluggable_type"], name: "index_friendly_id_slugs_sluggable_id_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "geocoded_locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "query", null: false
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "geocoded_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["geocoded_at"], name: "index_geocoded_locations_on_geocoded_at"
+    t.index ["query"], name: "index_geocoded_locations_on_query", unique: true
   end
 
   create_table "job_application_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

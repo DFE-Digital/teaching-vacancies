@@ -91,6 +91,11 @@ production:
     class: 'DeleteOldFeedbackJob'
     queue: default
 
+  purge_stale_geocoded_locations:
+    schedule: '30 3 * * *' # "At 03:30."
+    class: 'PurgeStaleGeocodedLocationsJob'
+    queue: low
+
   remove_vacancies_that_expired_yesterday_from_google_index:
     schedule: '0 04 * * *' # "At 04:00."
     class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
