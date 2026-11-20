@@ -3611,8 +3611,8 @@ app/models/vacancy.rb:
     percent: 99.46
     missed: 1
   branches:
-    percent: 91.07
-    missed: 5
+    percent: 98.0
+    missed: 1
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0

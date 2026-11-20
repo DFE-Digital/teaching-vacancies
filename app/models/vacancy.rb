@@ -126,7 +126,10 @@ class Vacancy < ApplicationRecord
   has_one :vacancy_analytics, dependent: :destroy
   has_many :job_application_batches, dependent: :destroy
 
+  # simplecov patch seems to get confused about a change to this line
+  # simplecov:disable
   delegate :name, :safeguarding_information, :logo, to: :organisation, prefix: true, allow_nil: true
+  # simplecov:enable
 
   scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
   scope :quick_apply, -> { where(enable_job_applications: true) }

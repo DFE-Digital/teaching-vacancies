@@ -100,7 +100,7 @@ jobs:
 
       - name: Check coverage on branch with annotations where missing
         if: always()
-        run: bundle exec simplecov patch --base origin/main --minimum 100
+        run: bundle exec simplecov patch --base origin/main --minimum 100 --annotate github
 
       - name: Upload Capybara failures screenshots
         if: failure()
