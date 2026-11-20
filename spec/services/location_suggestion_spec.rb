@@ -169,6 +169,67 @@ RSpec.describe LocationSuggestion, :geocode do
       end
     end
 
+    context "when the search, as typed, names an area another area would be listed before" do
+      let(:location_input) { "Kingston" }
+
+      before do
+        create(:location_polygon, name: "kingston upon hull")
+        create(:location_polygon, name: "kingston upon thames")
+      end
+
+      it "suggests the area the search goes to first" do
+        expect(suggestions).to eq(["Kingston upon Thames", "Kingston upon Hull"])
+      end
+    end
+
+    context "when the search, as typed, names an area we have no display name for" do
+      let(:location_input) { "Foobarton " }
+
+      before { create(:location_polygon, name: "foobarton") }
+
+      it "suggests the search as typed" do
+        expect(suggestions).to eq(%w[Foobarton])
+      end
+    end
+
+    context "when the search, as typed, finds a place that would be listed after an area" do
+      let(:location_input) { "Durham" }
+      let(:os_entries) { [place("Durham", "City", county_unitary: "County Durham")] }
+
+      before { create(:location_polygon, name: "county durham, darlington, hartlepool and stockton") }
+
+      it "suggests the place the search goes to first" do
+        expect(suggestions).to eq(["Durham, County Durham", "County Durham"])
+      end
+    end
+
+    context "when the search, as typed, finds a place that is a suggested area" do
+      let(:location_input) { "Weston" }
+      let(:os_entries) do
+        [place("Weston-super-Mare", "Town", easting: 332_000, northing: 161_000, county_unitary: "North Somerset")]
+      end
+
+      before { create(:location_polygon, name: "weston-super-mare", centroid: "POINT(-2.9707 51.3459)") }
+
+      it "suggests the area only" do
+        expect(suggestions).to eq(%w[Weston-Super-Mare])
+      end
+    end
+
+    context "when the search, as typed, finds a place no qualifier tells apart" do
+      let(:location_input) { "Testcombe" }
+      let(:os_entries) do
+        [
+          place("Testcombe", "Hamlet", district_borough: "Mid Devon", county_unitary: "Devon", region: "South West"),
+          place("Testcombe", "Hamlet", district_borough: "Mid Devon", county_unitary: "Devon", region: "South West"),
+        ]
+      end
+
+      it "suggests nothing" do
+        expect(suggestions).to be_empty
+      end
+    end
+
     context "when the search looks like the start of a postcode" do
       let(:location_input) { "sw4 0a" }
       let(:os_entries) do

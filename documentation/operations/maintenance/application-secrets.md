@@ -49,7 +49,7 @@ __Once you are inside:__
 
 ### Google API Keys
 There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
-- `GOOGLE_LOCATION_SEARCH_API_KEY` is used for the Google Geocoding API, the fallback when Ordnance Survey has no match. The location autocomplete no longer uses the Google Places API (see [ADR 0018](/documentation/adr/0018_suggest_locations_from_ordnance_survey.md))
+- `GOOGLE_LOCATION_SEARCH_API_KEY` is used for the Google Geocoding API, the fallback when Ordnance Survey has no match. The location autocomplete no longer uses the Google Places API (see [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md))
 - `GOOGLE_API_JSON_KEY` is used for indexing and drive.
    - This key belongs to the `analytics-prod` Service Account in the [Google Cloud APIs and Services Credentials](https://console.cloud.google.com/apis/credentials?project=teacher-vacancy-service).
    - The service account needs to be added as `owner` in the [Google Search Console](https://search.google.com/u/2/search-console/users?resource_id=sc-domain%3Ateaching-vacancies.service.gov.uk) to be able to do Google Index API requests.
@@ -112,7 +112,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 
 
 ### ORDNANCE_SURVEY_API_KEY
-Used for the OS Names API: location geocoding, with Google as a fallback
+Used for the OS Names API: location geocoding, with Google as a fallback, and location suggestions
 (see [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md)).
 
 There is one [OS Data Hub](https://osdatahub.os.uk/) project, and so one key, per environment:

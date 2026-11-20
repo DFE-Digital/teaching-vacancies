@@ -196,10 +196,12 @@ In testing against Google's real answers, Ordnance Survey answered about 95% of 
 
 ### Location autocomplete
 
-The location fields ("Enter a postcode, town or region") suggest locations from [`LocationSuggestion`](/app/services/location_suggestion.rb) instead of Google Places (see [ADR 0018](/documentation/adr/0018_suggest_locations_from_ordnance_survey.md)), so that every suggestion is something the search resolves without Google:
+The location fields ("Enter a postcode, town or region") suggest locations from [`LocationSuggestion`](/app/services/location_suggestion.rb) instead of Google Places (see [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md)), so that every suggestion is something the search resolves without Google:
 
 - up to two regions, counties or cities we hold a polygon for, searched by area;
 - places in England from the OS Names API. The API matches whole words fuzzily ("Nott" returns Bott End before Nottingham), so we keep only the places whose name, or a later word of a town or suburb ("Leam" finds Royal Leamington Spa), starts with the search, and rank them as `Geocoding` does. Each is labelled "Name, qualifier" ("Clapham, London", "Caldecote, South Cambridgeshire") with the first of London, district, county or region for which `Geocoding` picks that same place;
 - postcodes in England, once the search looks like the start of one ("SW4 0").
+
+Where the search goes with the text as typed, if no suggestion is picked, is listed first: the polygon it names, otherwise the place `Geocoding` picks ("Kingston" lists Kingston upon Thames first, "Durham" the city of Durham), so the list agrees with the search.
 
 Each keystroke after the third (debounced) is one OS Names API call. The API allows 600 calls a minute per project, shared with geocoding; the suggestion endpoint is cached with `caches_action`. If Ordnance Survey fails, only polygon areas are suggested.

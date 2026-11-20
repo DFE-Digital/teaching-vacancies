@@ -1,11 +1,12 @@
 require "geocoding"
 
 # Suggests locations for the location autocomplete ("Enter a postcode, town or region"), so that each suggestion is
-# something the search resolves without Google (see ADR 0018):
+# something the search resolves without Google (see ADR 0017):
 # - the regions, counties and cities we hold a polygon for ("Essex"), searched by area;
 # - places in England from the Ordnance Survey Names API, labelled "Name, qualifier" with the qualifier Geocoding needs
 #   to pick that same place from Ordnance Survey ("Clapham, London", "Caldecote, South Cambridgeshire");
 # - postcodes in England, once the search looks like the start of one ("SW4 0").
+# Where the search goes with the text as typed is listed first.
 class LocationSuggestion
   MINIMUM_LOCATION_INPUT_LENGTH = 3
   NUMBER_OF_SUGGESTIONS = 5
@@ -37,7 +38,7 @@ class LocationSuggestion
     suggestions = if PARTIAL_POSTCODE.match?(location_input.strip)
                     postcode_suggestions
                   else
-                    (area_names + place_suggestions.map { |place| place[:label] }).first(NUMBER_OF_SUGGESTIONS)
+                    (typed_location + area_names + place_suggestions.map { |place| place[:label] }).uniq.first(NUMBER_OF_SUGGESTIONS)
                   end
     [suggestions, suggestions.map { |suggestion| [suggestion.split(",").first] }]
   end
@@ -65,6 +66,24 @@ class LocationSuggestion
 
   def search_key
     normalise(search_name)
+  end
+
+  # Where the search goes with the text as typed, if no suggestion is picked: the polygon it names, otherwise the
+  # Ordnance Survey place Geocoding picks for it. It comes first, so that the list agrees with the search ("Kingston"
+  # searches Kingston upon Thames, "Durham" the city of Durham).
+  def typed_location
+    return [] if location_input.include?(",")
+
+    if (polygon = LocationPolygon.with_name(location_input.strip))
+      name = CITIES_AND_REGIONS[polygon.name]
+      return [name && LocationPolygon.with_name(name) == polygon ? name : location_input.strip]
+    end
+
+    # A place that is also a suggested area ("Weston" finds Weston-super-Mare) is left to the area.
+    place = Geocoding::OrdnanceSurveyMatcher.new(segments: [search_name.strip], postcode: nil, results: places).match
+    return [] if place.nil? || same_as_an_area?(place)
+
+    [labelled(place)&.fetch(:label)].compact
   end
 
   def postcode_suggestions
