@@ -61,7 +61,7 @@ RSpec.describe "publishers/vacancies/show" do
         expect(rendered).to have_content(vacancy.application_email) if vacancy.receive_applications == "email"
       end
 
-      expect(rendered).to have_content(I18n.t("jobs.school_visits", organisation_type: "school"))
+      expect(rendered).to have_content(I18n.t("jobs.school_visits"))
       expect(rendered).to have_content(vacancy.contact_email)
       expect(rendered).to have_content(vacancy.contact_number)
 
@@ -83,6 +83,15 @@ RSpec.describe "publishers/vacancies/show" do
       expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
       expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.close_early"))
       expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.extend_closing_date"))
+    end
+  end
+
+  context "when the vacancy is for an FE college" do
+    let(:vacancy) { build_stubbed(:vacancy, school_visits: true, organisations: [build_stubbed(:college)]) }
+    let(:next_invalid_step) { nil }
+
+    it "does not display the school visits row" do
+      expect(rendered).to have_no_css("#school_visits")
     end
   end
 
