@@ -58,10 +58,12 @@ Should Ordnance Survey or Google be the primary provider for geocoding?
 Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 
 - Geocoding of free-text locations comes from the OS Names API. A postcode is used when it matches
-  exactly. A place name is used only when one place in England clearly dominates (the only city,
-  the only place that is not a village or hamlet, or the only place at all); the details are in
-  [Searching by location](/documentation/service/technical/searching-by-location.md).
-- Google is called only when Ordnance Survey returns no usable match or is unavailable.
+  exactly. A place name is used whenever Ordnance Survey has a match in England: when several
+  places share the name, the most important type wins, then London, then the largest place. The
+  details are in [Searching by location](/documentation/service/technical/searching-by-location.md).
+- Google is called only when Ordnance Survey has no usable match or is unavailable. It is not
+  called because we would prefer a different Ordnance Survey result: the aim is to use Ordnance
+  Survey as much as possible.
 - A cache miss no longer costs money: it is a free OS call. The cache becomes a latency
   optimisation rather than a cost control, so Solid Cache's FIFO eviction is acceptable and we do
   not need a long-lived, guaranteed-retention cache for location data.
@@ -86,13 +88,16 @@ Chosen option: **3, Ordnance Survey first, with Google as a fallback.**
 - Two location providers to maintain and monitor instead of one.
 - Ordnance Survey is weaker than Google at fuzzy matching, so misspelt terms rely on the
   fallback.
-- Single-part country or foreign-place names can still match an English homonym (Dublin, Sydney).
-  Google, called with `components=country:gb`, returns the same English namesake, so this is not a
-  change in behaviour.
-- Ambiguous names, such as two towns called Ashford, still go to Google, because Ordnance Survey has
-  no measure of prominence. In offline testing with the OS Open Names data (the same data as the
-  API), about four in five sample searches were answered by Ordnance Survey; the monitoring in the
-  decision above shows the real rate.
+- Ordnance Survey has no measure of prominence, so for ambiguous names (Newton, Whitchurch,
+  Clifton) its pick can differ from Google's, which is itself hard to predict. We rank by place type,
+  prefer London, then prefer the largest place. In testing against real Google answers, nine in ten
+  Ordnance Survey answers were within 5 km of Google's and Ordnance Survey answered about 95% of
+  realistic searches; the monitoring in the decision above shows the real rate.
+- Foreign place names that are also English place names now resolve to the English place.
+  Google, restricted to Great Britain, returned the UK centre point for some of them (Sydney, New
+  York), which the UK location check treated as outside the UK. Ordnance Survey returns Sydney in
+  Cheshire or New York in Rotherham instead, so a job preference location of "Sydney" is now
+  accepted. We accept this to keep Google as a fallback only.
 - Ordnance Survey APIs are throttled (600 requests a minute per live project), so bulk lookups must stay within their limits. Cache
   evictions in Solid Cache mean more OS calls than with a long-lived cache, so this limit needs
   watching.

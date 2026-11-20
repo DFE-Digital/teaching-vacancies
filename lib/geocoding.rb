@@ -1,3 +1,5 @@
+require "geocoding/ordnance_survey_matcher"
+
 class Geocoding
   # The geographical coordinates of the UK are stable and unlikely to change, allowing us to cache the results for an
   # extended period.
@@ -8,15 +10,6 @@ class Geocoding
   # The Ordnance Survey LOCAL_TYPE values we search. The geocoder gem's own filter omits Suburban_Area, which Ordnance
   # Survey uses for places such as the London districts.
   OS_LOCAL_TYPES = %w[City Town Suburban_Area Village Other_Settlement Hamlet Postcode].freeze
-
-  # Villages and hamlets are minor places. Every other type (including types we don't know) is a major place: Ordnance
-  # Survey also uses "Other Settlement" and "Suburban Area" for large places such as Clapham, Hackney or Brixton.
-  # Compared with `normalise`, as the API may spell the types with spaces or underscores.
-  OS_MINOR_LOCAL_TYPES = %w[village hamlet].freeze
-  OS_TOWN_LOCAL_TYPES = %w[town city].freeze
-
-  # The Names API returns at most this many results per request (its default `maxresults`).
-  OS_MAX_RESULTS = 100
 
   # Trailing parts such as the ", UK" that Google Places autocomplete adds to its suggestions.
   COUNTRY_SUFFIXES = ["uk", "united kingdom", "england", "gb", "great britain"].freeze
@@ -40,7 +33,7 @@ class Geocoding
     end || no_coordinates_match
   rescue Geocoder::OverQueryLimitError
     # Last resort, deliberately not cached: the weak match must not outlive the Google quota problem.
-    last_resort(os_results)&.coordinates || no_coordinates_match
+    os_results.find { |result| result.data["COUNTRY"] == "England" }&.coordinates || no_coordinates_match
   end
 
   # Why not use: 'Geocoder.search(value).map(&:country).include?("United Kingdom")'?
@@ -110,78 +103,9 @@ class Geocoding
     []
   end
 
-  # Ordnance Survey only answers when the answer is clear, otherwise Google gets the full search as before.
+  # Ordnance Survey answers whenever it has a match in England: Google is only the fallback for when it has none.
   def os_coordinates(results)
-    result = postcode_segment ? postcode_match(results) : dominant_place(results)
-    result&.coordinates
-  end
-
-  def postcode_match(results)
-    results.find do |result|
-      result.data["LOCAL_TYPE"] == "Postcode" && in_england?(result) && normalise(result.data["NAME1"]) == normalise(postcode_segment)
-    end
-  end
-
-  # The place sharing the searched name that clearly dominates, if it is in England:
-  # - the only city (Preston, Lancashire beats the hamlets called Preston), or
-  # - the only major place (Croydon in London beats a village called Croydon), or
-  # - the only place at all, when every place with that name is a village or hamlet.
-  # Anything ambiguous (two towns called Ashford, or Newport in Wales) is left to Google, which weighs prominence.
-  # With a full page of results we can't tell whether the place is unique, so that is left to Google too.
-  def dominant_place(results)
-    return if results.size >= OS_MAX_RESULTS
-
-    candidates = results.select { |result| same_name?(result) }
-    place = only(candidates.select { |result| local_type(result) == "city" }) || unambiguous_place(candidates, results)
-    place if place && in_england?(place)
-  end
-
-  # A bare name is left to Google when a town or city has a longer name starting with it as a whole word (Henley and
-  # Henley-on-Thames, Bury and Bury St Edmunds): people searching for it may mean the more prominent place. Longer
-  # names of districts and suburbs (Hackney Wick, Wimbledon Park) don't count, as they are parts of the place itself.
-  def unambiguous_place(candidates, results)
-    return if segments.one? && longer_town_name?(results)
-
-    majors = candidates.select { |result| major_place?(result) }
-    only(majors) || (only(candidates) if majors.empty?)
-  end
-
-  def longer_town_name?(results)
-    longer_name = /\A#{Regexp.escape(segments.first)}[\s-]/i
-    results.any? { |result| OS_TOWN_LOCAL_TYPES.include?(local_type(result)) && longer_name.match?(result.data["NAME1"].to_s) }
-  end
-
-  def only(list)
-    list.first if list.one?
-  end
-
-  # Used only when Google is over quota: a neighbouring postcode is good enough for a postcode search, and a place name
-  # must still match even if it is ambiguous.
-  def last_resort(results)
-    results.find { |result| in_england?(result) && (postcode_segment || same_name?(result)) }
-  end
-
-  def in_england?(result)
-    result.data["COUNTRY"] == "England"
-  end
-
-  def major_place?(result)
-    OS_MINOR_LOCAL_TYPES.exclude?(local_type(result))
-  end
-
-  def local_type(result)
-    normalise(result.data["LOCAL_TYPE"])
-  end
-
-  def same_name?(result)
-    return false unless normalise(result.data["NAME1"]) == normalise(segments.first)
-
-    location_fields = %w[NAME1 DISTRICT_BOROUGH COUNTY_UNITARY REGION].filter_map { |field| result.data[field] }
-    segments.drop(1).all? { |segment| location_fields.any? { |field| normalise(field) == normalise(segment) } }
-  end
-
-  def normalise(text)
-    text.to_s.downcase.gsub(/[^[:alnum:]]/, "")
+    OrdnanceSurveyMatcher.new(segments:, postcode: postcode_segment, results:).match&.coordinates
   end
 
   # 'components: "country:gb"' is used to restrict the results to within the UK.

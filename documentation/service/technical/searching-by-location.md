@@ -171,25 +171,25 @@ The current team knowledge and understanding on this area is very limited and ba
 
 As many location search terms don't match a polygon name, the service falls back to obtaining the location coordinates.
 
-We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey returns no match or is unavailable. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
+We use the [Geocoding class](/lib/geocoding.rb) to retrieve and cache the location coordinates. The [OS Names API](https://docs.os.uk/os-apis/accessing-os-apis/os-names-api) (Ordnance Survey, free OpenData) is tried first, and the Google Geocoding API is only called when Ordnance Survey has no match or is unavailable. We don't call Google because we dislike the Ordnance Survey result. See [ADR 0017](/documentation/adr/0017_use_ordnance_survey_for_location_lookups.md).
 
-Ordnance Survey is asked for one term only: a UK postcode if the search contains one, otherwise the first part of the search (trailing country parts such as ", UK", which Google Places autocomplete adds, are ignored). We search the Ordnance Survey place types city, town, suburban area, village, other settlement, hamlet and postcode; the geocoder gem's own filter leaves out suburban areas, which Ordnance Survey uses for places such as the London districts.
-
-Ordnance Survey is only used when its answer is clear; otherwise Google receives the full search, as it did before:
+Ordnance Survey is asked for one term only: a UK postcode if the search contains one, otherwise the first part of the search (trailing country parts such as ", UK", which Google Places autocomplete adds, are ignored). We search the Ordnance Survey place types city, town, suburban area, village, other settlement, hamlet and postcode; the geocoder gem's own filter leaves out suburban areas, which Ordnance Survey uses for places such as the London districts. The matching is in [`Geocoding::OrdnanceSurveyMatcher`](/lib/geocoding/ordnance_survey_matcher.rb):
 
 - **Postcode:** an exact postcode match in England is used. Vacancy addresses and trust postcodes mostly follow this path.
-- **Place name:** of the results whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), Ordnance Survey is used only if one place clearly dominates and is in England:
-  - the only city (Preston in Lancashire beats the hamlets called Preston), or
-  - the only major place, meaning anything other than a village or hamlet (Croydon in London beats a village called Croydon). Ordnance Survey labels large places such as Clapham, Hackney and Wimbledon as "Other Settlement", so the place type alone says little about size, or
-  - the only place at all, when every place with that name is a village or hamlet.
+- **Place name:** of the places in England whose name matches the first part of the search (and, for comma-separated searches, whose name, district, county or region matches every remaining part), one is chosen:
+  1. The most important type wins: city, then town, then suburban area or "other settlement", then village, then hamlet. Ordnance Survey labels large places such as Clapham, Hackney and Wimbledon "Other Settlement", so they rank above villages and hamlets.
+  2. A place in London ranks at least as a town and wins ties. Searches for ambiguous names such as Acton or Sutton mostly mean the London one, which is also what Google returns.
+  3. The largest place wins: Ordnance Survey has no population, so the size of the place's bounding box stands in for how prominent it is.
 
-  Anything ambiguous goes to Google, which weighs prominence: two towns called Ashford, Newport in Wales, or a bare name such as Henley when a town has a longer name starting with it (Henley-on-Thames).
+  For a bare name, towns and cities with a longer name starting with it as a whole word (Newcastle upon Tyne) also compete, unless an exact match is already a town or city.
 
-If Ordnance Survey returns a full page of results (100), we can't tell whether a name is unique, so Google decides.
+  If nothing in England, or anywhere, is called exactly that, places containing the name as whole words are used, except villages and hamlets (Tooting finds Upper Tooting, Leamington Spa finds Royal Leamington Spa, Hull finds Kingston upon Hull). If another country has a place called exactly that (Cardiff), Google answers instead.
 
-If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort (for a place name, the first with the searched name) and is not cached.
+Google is used when there is no Ordnance Survey match at all: a name or postcode Ordnance Survey doesn't have, a place only in Wales or Scotland, an outward postcode district such as "SW4" typed alone, a search with a county Ordnance Survey doesn't know for that place ("Sutton, Surrey"), an error, or no API key.
 
-This remains a weak-match approach: a single-part name such as "Wales" or "New York" can match an English place with the same name. The result is restricted to England, but the query itself is not checked against country or foreign-place names.
+If Google reports it is over quota, the first Ordnance Survey result in England is used as a last resort and is not cached.
+
+In testing against Google's real answers, Ordnance Survey answered about 95% of realistic searches, and nine in ten of its answers were within 5 km of Google's. The differences are mostly ambiguous names (Newton, Whitchurch, Clifton) where Google's own choice is hard to predict.
 
 The `ORDNANCE_SURVEY_API_KEY` environment variable holds the OS key; see [Application secrets](/documentation/operations/maintenance/application-secrets.md#ordnance_survey_api_key) for how to get one.
 
