@@ -95,6 +95,61 @@ RSpec.describe "publishers/vacancies/show" do
     end
   end
 
+  describe "benefits" do
+    let(:next_invalid_step) { nil }
+    let(:benefits_text) { "Do you want to include additional allowances" }
+    let(:benefits_details_text) { "Additional allowances" }
+
+    context "with a college" do
+      let(:school) { build_stubbed(:college) }
+
+      context "without benefits" do
+        let(:vacancy) { build_stubbed(:vacancy, benefits: false, organisations: [school]) }
+
+        it "does not show benefits with change link in either place" do
+          expect(rendered).to have_no_content(benefits_text)
+          expect(rendered).to have_no_content(benefits_details_text)
+        end
+      end
+
+      context "with benefits" do
+        let(:vacancy) { build_stubbed(:vacancy, benefits: true, organisations: [school]) }
+
+        it "does not show benefits due to being a college" do
+          expect(rendered).to have_no_content(benefits_text)
+          expect(rendered).to have_no_content(benefits_details_text)
+        end
+      end
+
+      context "with nil benefits" do
+        let(:vacancy) { build_stubbed(:vacancy, benefits: nil, organisations: [school]) }
+
+        it "does not show benefits with change link in either place" do
+          expect(rendered).to have_no_content(benefits_text)
+          expect(rendered).to have_no_content(benefits_details_text)
+        end
+      end
+    end
+
+    context "with nil benefits" do
+      let(:vacancy) { build_stubbed(:vacancy, benefits: nil, organisations: [school]) }
+
+      it "does not show benefits with change link in either place" do
+        expect(rendered).to have_no_content(benefits_text)
+        expect(rendered).to have_no_content(benefits_details_text)
+      end
+    end
+
+    context "with benefits" do
+      let(:vacancy) { build_stubbed(:vacancy, benefits: true, organisations: [school]) }
+
+      it "shows benefits and details" do
+        expect(rendered).to have_content(benefits_text)
+        expect(rendered).to have_content(benefits_details_text)
+      end
+    end
+  end
+
   context "with start date type other" do
     let(:vacancy) { build_stubbed(:vacancy, start_date_type: :other, other_start_date_details: "Next Year") }
     let(:next_invalid_step) { nil }
