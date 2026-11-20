@@ -3594,8 +3594,8 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.46
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
     percent: 98.07
     missed: 1
@@ -6079,11 +6079,11 @@ app/views/organisations/search/_open_filters_button.html.slim:
     missed: 0
 app/views/organisations/search/_results.html.slim:
   lines:
-    percent: 85.71
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 66.66
+    missed: 2
 app/views/organisations/search/_stats.html.slim:
   lines:
     percent: 100.0
