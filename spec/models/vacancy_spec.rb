@@ -711,6 +711,14 @@ RSpec.describe Vacancy do
       end
     end
 
+    context "when the URL is on iTrent, which rejects long query values or special characters" do
+      let(:application_link) { "https://ab1234cd.webitrent.com/ab1234cd_webrecruitment/wrd/run/ETREC179GF.open?WVID=1234567ABC" }
+
+      it "uses our short UTM source" do
+        expect(subject).to eq("#{application_link}&utm_medium=referral&utm_source=tvs")
+      end
+    end
+
     context "when the URL cannot be parsed" do
       let(:vacancy) { build_stubbed(:vacancy, :apply_via_website) }
 
