@@ -19,8 +19,12 @@ This section describes Claude Code's own configuration only. Project rules belon
     remaining RuboCop or slim-lint offences back to Claude to fix.
   - `guard-bash.rb` blocks `git add -f` and `git commit --no-verify`, which enforce the
     non-negotiables in AGENTS.md rather than adding new rules.
+- **`.claude/skills/`** holds symlinks to the shared skills in `.agents/skills/` (`tv-research`,
+  `tv-plan`, `tv-implement`), so Claude Code and Copilot use the same files: edit the targets, not
+  the links. Invoke them as `/tv-research`, `/tv-plan` and `/tv-implement`, in that order.
+  `settings.json` lets `bin/verify` run without a prompt.
 - **`.claude/settings.local.json`** is git-ignored and personal (extra permissions, environment
   such as `PARALLEL_TEST_PROCESSORS`). Don't commit it.
 
-If you change `.claude/settings.json` or `.claude/hooks/`, update this section in the same pull
-request.
+If you change `.claude/settings.json`, `.claude/hooks/` or `.claude/skills/`, update this section in
+the same pull request.

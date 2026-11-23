@@ -20,6 +20,8 @@
       "Bash(bin/rails db:migrate:status)",
       "Bash(bin/rails routes)",
       "Bash(bin/rails routes *)",
+      "Bash(bin/verify)",
+      "Bash(bin/verify *)",
       "Bash(yarn run js:lint)",
       "Bash(yarn run js:test)",
       "Bash(yarn run js:test *)",

@@ -23,6 +23,11 @@ This section describes Copilot's own configuration only. Project rules stay in A
   `git commit --no-verify`, and `lint-edited-file.rb` autocorrects Ruby and Slim files after
   `create`, `edit` and `str_replace_editor` calls (not `apply_patch`) and returns any remaining
   offences. Both are adapters over the shared rules in `.agents/hooks/lib/`.
+- The optional agent-assisted workflow's skills (`tv-research`, `tv-plan`, `tv-implement`) live in
+  `.agents/skills/`, which Copilot loads directly. Claude Code reaches the same files through
+  symlinks in `.claude/skills/`, which Copilot also scans but lists only once. Copilot has no
+  repo-level command allowlist, so in Copilot CLI pass `--allow-tool 'shell(bin/verify)'` to run
+  `bin/verify` without a prompt.
 - `.github/workflows/copilot-setup-steps.yml` prepares the cloud agent's environment: Ruby,
   gems, the database, precompiled assets and the Swagger docs. It also sets `HEADLESS=1`.
 - Gaps compared with Claude Code: Copilot has no repo-level `HEADLESS` setting, so run JavaScript
