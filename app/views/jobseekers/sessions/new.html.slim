@@ -4,13 +4,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title")
 
-    = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner" do |banner|
-        - banner.with_heading(text: t(".banner.header"))
-        p.govuk-body = t(".banner.body")
-
-    p.govuk-body = t(".govuk_one_log_in.paragraph1")
-    p.govuk-body = t(".govuk_one_log_in.paragraph2")
+    p.govuk-body = t(".govuk_one_log_in.paragraph")
 
     = jobseeker_login_button(class: "govuk-!-margin-bottom-6")
-
-    = govuk_details(summary_text: t(".govuk_one_log_in.how_to_find_registered_email.summary"), text: t(".govuk_one_log_in.how_to_find_registered_email.body"))
