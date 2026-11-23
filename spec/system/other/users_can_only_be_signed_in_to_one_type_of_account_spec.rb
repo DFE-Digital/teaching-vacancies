@@ -31,14 +31,14 @@ RSpec.describe "Users can only be signed in to one type of account" do
       end
 
       it "signs out from the jobseeker account when signing in as a publisher using DSI" do
-        visit jobseekers_account_path
-        expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
+        visit help_jobseekers_account_path
+        expect(page).to have_content(I18n.t("jobseekers.accounts.help.page_title"))
 
         visit new_publisher_session_path
         sign_in_publisher
         expect(page).to have_current_path(publisher_root_path)
 
-        visit jobseekers_account_path
+        visit help_jobseekers_account_path
         expect(current_path).to eq(new_jobseeker_session_path)
       end
     end
@@ -50,15 +50,15 @@ RSpec.describe "Users can only be signed in to one type of account" do
       end
 
       it "signs out from the jobseeker account when signing in as a publisher using DSI" do
-        visit jobseekers_account_path
-        expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
+        visit help_jobseekers_account_path
+        expect(page).to have_content(I18n.t("jobseekers.accounts.help.page_title"))
 
         visit publishers_login_key_path(login_key)
         choose school.name
         click_button I18n.t("buttons.sign_in")
         expect(page).to have_current_path(publisher_root_path)
 
-        visit jobseekers_account_path
+        visit help_jobseekers_account_path
         expect(current_path).to eq(new_jobseeker_session_path)
       end
     end

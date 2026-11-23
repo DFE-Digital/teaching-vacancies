@@ -6,7 +6,7 @@ module Jobseekers
 
     def update
       if @jobseeker.update(email_preferences_params)
-        redirect_to jobseekers_account_path, success: t(".success")
+        redirect_to help_jobseekers_account_path, success: t(".success")
       else
         render :edit
       end

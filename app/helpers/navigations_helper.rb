@@ -23,7 +23,11 @@ module NavigationsHelper
     request.original_fullpath =~ %r{^/publishers/schools}
   end
 
+  def your_profile_active?
+    request.path.start_with?("/jobseekers/profile")
+  end
+
   def your_account_active?
-    !current_page?(jobseekers_profile_path) && request.path.start_with?("/jobseekers")
+    request.path.start_with?("/jobseekers/account")
   end
 end

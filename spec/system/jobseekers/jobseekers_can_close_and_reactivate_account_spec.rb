@@ -13,9 +13,9 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
   # rubocop:disable Capybara/SpecificActions
   it "allows closing and reactivating a jobseeker account" do
-    visit jobseekers_account_path
+    visit help_jobseekers_account_path
 
-    click_on I18n.t("jobseekers.accounts.show.close_account")
+    click_on I18n.t("jobseekers.accounts.help.close_account")
 
     choose "Other"
     fill_in "jobseekers_close_account_feedback_form[close_account_reason_comment]", with: "Worst service ever!!"
