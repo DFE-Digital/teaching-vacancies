@@ -729,9 +729,6 @@ en:
           caption: Current role and employment history
           heading: Add a gap in work history
           title: Add a reason for gap — Profile
-      preview:
-        show:
-          page_title: Preview your profile
       personal_details:
         edit:
           caption: Personal details
