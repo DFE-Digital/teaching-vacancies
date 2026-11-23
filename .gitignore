@@ -109,9 +109,13 @@ bin/konduit.sh
 # RVM gemset support
 /.ruby-gemset
 
-# Claude Code: share settings.json and hooks/, keep personal and runtime state local.
+# Claude Code: share settings.json, hooks/ and the skills/ symlinks, keep personal and runtime state local.
 # The negation overrides a global `.claude` ignore.
 !/.claude/
 /.claude/*
 !/.claude/settings.json
 !/.claude/hooks/
+!/.claude/skills/
+
+# Local working notes for the agent-assisted workflow (plans, research, progress). Never committed.
+/.work/
