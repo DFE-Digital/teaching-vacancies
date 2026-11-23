@@ -1,0 +1,16 @@
+# Changes to agent configuration need a review from the developers team. In a public repository,
+# a change to an agent instruction, skill or hook can steer what agents do or run on developers'
+# machines, so it is reviewed like code. Enforced only when branch protection requires code owner
+# review.
+
+/AGENTS.md                                  @DFE-Digital/teaching-vacancies-developers
+/CLAUDE.md                                  @DFE-Digital/teaching-vacancies-developers
+/.claude/                                   @DFE-Digital/teaching-vacancies-developers
+/.agents/                                   @DFE-Digital/teaching-vacancies-developers
+/.github/hooks/                             @DFE-Digital/teaching-vacancies-developers
+/.github/skills/                            @DFE-Digital/teaching-vacancies-developers
+/.github/agents/                            @DFE-Digital/teaching-vacancies-developers
+/.github/copilot-instructions.md            @DFE-Digital/teaching-vacancies-developers
+/.github/workflows/copilot-setup-steps.yml  @DFE-Digital/teaching-vacancies-developers
+/.github/CODEOWNERS                         @DFE-Digital/teaching-vacancies-developers
+/bin/verify                                 @DFE-Digital/teaching-vacancies-developers
