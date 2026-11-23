@@ -15,11 +15,9 @@ const getSuggestions = (url, populateResults) => axios.get(url)
   });
 
 export const getLocationSuggestions = ({ query, populateResults }) => getSuggestions(`/api/v1/location_suggestion/${query}?format=json`, populateResults);
-export const getOrganisations = ({ query, populateResults }) => getSuggestions(`/api/v1/organisations?query=${query}&format=json`, populateResults);
 
 const api = {
   getLocationSuggestions,
-  getOrganisations,
 };
 
 export default api;

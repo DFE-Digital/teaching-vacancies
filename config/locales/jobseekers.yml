@@ -729,46 +729,10 @@ en:
           caption: Current role and employment history
           heading: Add a gap in work history
           title: Add a reason for gap — Profile
-      hide_profile:
-        add:
-          cannot_find_school: I cannot find the school I'm looking for
-          caption: Hide profile from schools or trusts
-          hint:  Enter the name or address of the school or trust
-          page_title: Name of school or trust
-        cannot_find_school:
-          lead_in: "This may be because:"
-          not_in_england: the school is not in England
-          page_title: This school cannot be found
-          private_or_independent: it is a private or independent school
-          return_to_profile: Return to profile
-          search_again: Search again
-          spelled_incorrectly: the school is spelled incorrectly
-        choose_school_or_trust:
-          page_title: This school is in a trust. Do you want to hide your profile from all schools within %{trust_name}?
-          hint: A trust is an organisation that runs an academy.
-          options:
-            school: No, just %{school_name}
-            trust: Yes, hide from all schools within %{trust_name}
-        delete:
-          delete_school: Delete organisation
-          page_title: Confirm that you no longer want to hide your profile from %{name}, %{address}
-        review:
-          page_title: Hide profile from schools or trusts
-        schools:
-          add_another: Do you want to add another school or trust?
-          already_hidden: You are already hidden from %{name}
-          hidden_from_trust_and_schools: Your profile will be hidden from all schools within this Trust.
-          page_title: Hide profile from schools or trusts
-        show:
-          page_title: Do you want to hide your profile from a school or trust?
-        summary:
-          add_a_school: Add a school or trust
-          hide_profile: Do you want to hide your profile from a school or trust?
       preview:
         show:
           page_title: Preview your profile
       personal_details:
-        incomplete_message: You must complete your personal details before you turn on your profile.
         edit:
           caption: Personal details
           heading: Name and visa sponsorship
@@ -825,12 +789,6 @@ en:
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
           paragraph2_html: You can request to %{link}
           transfer_profile_link_text: transfer your existing profile.
-      confirm_toggle:
-        confirm_turn_off: Confirm that you want to turn off your profile
-        confirm_turn_on: Confirm that you want to turn on your profile
-      toggle:
-        not_ready: >-
-          You must complete your personal details, job preferences, professional status, qualifications and work history before you turn on your profile
       about_you:
         edit:
           page_title: Your personal statement

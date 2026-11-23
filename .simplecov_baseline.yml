@@ -3214,13 +3214,6 @@ app/models/jobseeker_message.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/jobseeker_profile_excluded_organisation.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/jobseekers/message_received_notifier.rb:
   lines:
     percent: 100.0
@@ -3300,7 +3293,7 @@ app/models/option.rb:
     missed: 0
 app/models/organisation.rb:
   lines:
-    percent: 98.19
+    percent: 98.16
     missed: 2
   branches:
     percent: 100.0

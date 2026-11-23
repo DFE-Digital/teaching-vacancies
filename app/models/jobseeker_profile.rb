@@ -9,8 +9,6 @@ class JobseekerProfile < ApplicationRecord
   has_many :employment_jobs, -> { where(employment_type: :job) }, class_name: "ProfileEmployment"
   has_many :employment_gaps, -> { where(employment_type: :break) }, class_name: "ProfileEmploymentGap"
   has_many :qualifications, dependent: :destroy
-  has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
-  has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
 
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
   delegate :email, to: :jobseeker
@@ -27,6 +25,8 @@ class JobseekerProfile < ApplicationRecord
   validates :about_you_words, length: { maximum: 1500 }, if: -> { about_you_richtext.present? }, on: :about_you
 
   validates :jobseeker, uniqueness: true
+
+  # TODO - drop jobseeker_profile_excluded_organisations table
 
   def about_you
     about_you_richtext.presence || self[:about_you]
