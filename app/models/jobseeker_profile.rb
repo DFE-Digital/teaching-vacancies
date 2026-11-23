@@ -26,7 +26,7 @@ class JobseekerProfile < ApplicationRecord
 
   validates :jobseeker, uniqueness: true
 
-  # TODO - drop jobseeker_profile_excluded_organisations table
+  # TODO: - drop jobseeker_profile_excluded_organisations table
 
   def about_you
     about_you_richtext.presence || self[:about_you]
