@@ -39,6 +39,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 
 #### AI coding agents
 * [Guidance for AI coding agents](/AGENTS.md)
+* [Agent-assisted workflow: shift left and the until loop (experimental)](/documentation/development/agent-assisted-workflow/README.md)
 
 ### Operations
 

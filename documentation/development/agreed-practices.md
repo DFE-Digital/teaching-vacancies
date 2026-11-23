@@ -36,3 +36,6 @@ This document records those decisions so every developer can stay aligned with o
 
 ## Code style standards
 - Do not default to `return` guard clauses instead of `if`/`else` clauses. `return` guard clauses are early exit guards for "do nothing/exit if..."
+
+## Experiments
+- The [agent-assisted workflow](agent-assisted-workflow/README.md) is an optional experiment, not an agreed practice yet.
