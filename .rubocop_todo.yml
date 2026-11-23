@@ -1494,7 +1494,6 @@ Style/DateTime:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/DirectiveScope:
   Exclude:
-    - 'app/components/dashboard_component.rb'
     - 'app/controllers/jobseekers/govuk_one_login_callbacks_controller.rb'
     - 'app/controllers/jobseekers/job_applications_controller.rb'
     - 'app/controllers/jobseekers/profiles/qualified_teacher_status_controller.rb'
