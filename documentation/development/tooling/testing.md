@@ -37,6 +37,37 @@ yarn run js:lint
 yarn run sass:lint
 ```
 
+## Optional pre-push check: `bin/verify`
+
+`bin/verify` runs the checks CI runs, but only on what changed on your branch compared with
+`origin/main` (committed, uncommitted and untracked files), so it finishes in seconds to minutes
+rather than the full suite's time. It is optional and useful with or without AI agents.
+
+```bash
+bin/verify                     # RuboCop, slim-lint, ESLint, Jest and Stylelint on changed files, Brakeman, and the related specs
+bin/verify spec/system/foo_spec.rb   # also run extra spec paths
+bin/verify --full              # also database_consistency and the 100% patch coverage check, as CI does
+bin/verify --acceptance FILE   # also run the acceptance specs listed in FILE (see below)
+```
+
+It runs changed spec files, plus the spec mapped from each changed source file when one exists
+(`app/services/foo.rb` → `spec/services/foo_spec.rb`, `lib/foo.rb` → `spec/lib/foo_spec.rb`, a
+component template → its component spec, a view template → its view spec). Specs run headless.
+The last line is `PASS` or `FAIL`, and the exit code is 0 or 1.
+
+`--acceptance FILE` supports the [agent-assisted workflow](../agent-assisted-workflow/README.md).
+`FILE` lists spec paths, one per line (`#` lines are comments), and a `base: <commit>` line naming
+the commit that added them. The check fails if any listed spec has changed since that commit, or
+skips or focuses examples (`xit`, `skip`, `pending`, `fit`, `focus:` and so on).
+
+With `--full`, the specs run with `COVERAGE=1` and `simplecov patch` judges coverage of the lines
+you changed. The suite-wide and per-file thresholds in `.simplecov` only make sense for a full run,
+so `bin/verify` ignores them, and it restores `.simplecov_baseline.yml`, which a partial run would
+otherwise rewrite. If you changed code under `app/` or `lib/` but no specs ran, `--full` fails
+rather than trusting old coverage data.
+
+`bin/verify` also fails if anything under `.work/` (local working notes) is tracked or staged.
+
 ## RSpec parallel testing
 The service include [parallel_tests](https://github.com/grosser/parallel_tests) gem, that allows to split the RSpec test
 suite run accross multiple CPU cores.

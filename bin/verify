@@ -1,0 +1,217 @@
+#!/usr/bin/env ruby
+# Runs the checks CI runs, scoped to what changed on this branch against origin/main (committed,
+# uncommitted and untracked files). Useful as an optional pre-push check for anyone, with or without
+# AI agents. Run `bin/verify --help` for options. See documentation/development/tooling/testing.md.
+require "English"
+require "fileutils"
+require "open3"
+require "optparse"
+
+class Verify
+  # Acceptance specs: the until loop's stop condition. They must exist, must not skip or focus, and
+  # must not have changed since the commit that added them (the `base:` line in the file).
+  module AcceptanceChecks
+    SKIP_OR_FOCUS_CALL = /^\s*(x(it|describe|context|scenario|feature|specify|example)|f(it|describe|context|scenario|feature|specify|example)|skip|pending)\b(?!:)/
+    SKIP_OR_FOCUS_METADATA = /^\s*(RSpec\.)?(describe|context|it|scenario|feature|specify|example)\b.*[,(]\s*(:(skip|pending|focus)\b|(skip|pending|focus):\s)/
+
+    def acceptance_specs
+      return [] unless @options[:acceptance]
+
+      @acceptance_specs ||= acceptance_lines.reject { |line| line.start_with?("base:") }
+    end
+
+    def acceptance_lines
+      abort "bin/verify: #{@options[:acceptance]} not found" unless File.file?(@options[:acceptance])
+
+      File.readlines(@options[:acceptance], chomp: true).map(&:strip).reject { |line| line.empty? || line.start_with?("#") }
+    end
+
+    def check_acceptance
+      missing = acceptance_specs.reject { |path| File.file?(path) }
+      record("Acceptance specs exist", missing.empty?, missing.empty? ? nil : "Missing: #{missing.join(', ')}")
+      check_no_skips(acceptance_specs - missing)
+      check_unchanged(acceptance_specs - missing)
+    end
+
+    def check_no_skips(specs)
+      offences = specs.flat_map do |path|
+        File.readlines(path).each_with_index.filter_map do |line, index|
+          "#{path}:#{index + 1}" if line.match?(SKIP_OR_FOCUS_CALL) || line.match?(SKIP_OR_FOCUS_METADATA)
+        end
+      end
+      record("Acceptance specs not skipped or focused", offences.empty?, offences.empty? ? nil : offences.join(", "))
+    end
+
+    def check_unchanged(specs)
+      base = acceptance_lines.find { |line| line.start_with?("base:") }&.delete_prefix("base:")&.strip
+      return record("Acceptance specs unchanged", false, "No `base: <commit>` line in #{@options[:acceptance]}") if base.to_s.empty?
+
+      changed = git("diff", "--name-only", base, "--", *specs).lines.map(&:strip)
+      record("Acceptance specs unchanged since #{base[0, 10]}", changed.empty?, changed.empty? ? nil : "Changed: #{changed.join(', ')}")
+    end
+  end
+
+  include AcceptanceChecks
+
+  RUBY_FILE = /(\.(rb|rake|gemspec)|\A(Gemfile|Rakefile))\z/
+  COVERAGE_FILES = %w[coverage/.resultset.json coverage/coverage.json].freeze
+  COVERAGE_BASELINE = ".simplecov_baseline.yml".freeze
+  MINIMUM_COVERAGE_STATUS = 2
+
+  def initialize(argv)
+    @options = { base: "origin/main", full: false, acceptance: nil }
+    @extra_specs = parser.parse(argv)
+    @results = []
+    ENV["HEADLESS"] ||= "1"
+  end
+
+  def run
+    Dir.chdir(File.expand_path("..", __dir__))
+    check_work_directory
+    check_acceptance if @options[:acceptance]
+    run_linters
+    run_specs
+    run_full_checks if @options[:full]
+    summarise
+  end
+
+  private
+
+  def parser
+    OptionParser.new do |opts|
+      opts.banner = "Usage: bin/verify [options] [extra spec paths]"
+      opts.on("--acceptance FILE", "Also run the acceptance specs listed in FILE and check they are untouched") { |f| @options[:acceptance] = f }
+      opts.on("--full", "Also run database_consistency and the coverage check, as CI does") { @options[:full] = true }
+      opts.on("--base REF", "Compare against REF instead of origin/main") { |ref| @options[:base] = ref }
+    end
+  end
+
+  # Changed files
+
+  def changed_files
+    @changed_files ||= begin
+      base = git("merge-base", "HEAD", @options[:base]).strip
+      abort "bin/verify: cannot find the merge-base with #{@options[:base]}. Try `git fetch origin main`." if base.empty?
+
+      committed_and_uncommitted = git("diff", "--name-only", "--diff-filter=d", base).lines
+      untracked = git("ls-files", "--others", "--exclude-standard").lines
+      (committed_and_uncommitted + untracked).map(&:strip).uniq.select { |path| File.file?(path) }
+    end
+  end
+
+  def changed(pattern)
+    changed_files.grep(pattern)
+  end
+
+  # Checks
+
+  def check_work_directory
+    tracked = (git("ls-files", "--", ".work").lines + git("diff", "--cached", "--name-only", "--", ".work").lines).map(&:strip)
+    record(".work/ not committed", tracked.empty?, tracked.empty? ? nil : "Unstage or remove: #{tracked.uniq.join(', ')}")
+  end
+
+  def run_linters
+    ruby_files = changed_files.select { |path| File.basename(path).match?(RUBY_FILE) }
+    command("RuboCop", ruby_files, "bundle", "exec", "rubocop", "--force-exclusion", *ruby_files)
+    slim_files = changed(%r{\Aapp/(views|components)/.*\.slim\z})
+    command("slim-lint", slim_files, "bundle", "exec", "slim-lint", *slim_files)
+    quiet_command("Brakeman", "bundle", "exec", "brakeman", "-q", "--no-pager")
+    run_frontend_linters
+  end
+
+  def run_frontend_linters
+    js_files = changed(%r{\Aapp/assets/javascript/.*\.js\z})
+    scss_files = changed(/\.scss\z/)
+    return if js_files.empty? && scss_files.empty?
+    return record("Frontend checks", false, "yarn not found: run `corepack enable`") unless system("which yarn > /dev/null 2>&1")
+
+    command("ESLint", js_files, "yarn", "eslint", *js_files)
+    command("Jest (related tests)", js_files, "yarn", "jest", "--findRelatedTests", "--passWithNoTests", *js_files)
+    command("Stylelint", scss_files, "yarn", "stylelint", "-q", *scss_files)
+  end
+
+  def run_specs
+    @specs = (spec_files + acceptance_specs + @extra_specs).uniq
+    return command("RSpec", @specs, "bundle", "exec", "rspec", *@specs) unless @options[:full]
+    return record("RSpec", true, "skipped: nothing changed") if @specs.empty?
+
+    run_specs_with_coverage
+  end
+
+  # A partial run always misses the suite-wide and per-file thresholds in .simplecov, which exit
+  # with SimpleCov's MINIMUM_COVERAGE status (2). Spec failures keep RSpec's status (1). The
+  # coverage verdict for changed lines comes from `simplecov patch` instead.
+  # A partial run would also ratchet (prune) the checked-in per-file baseline, so it is restored.
+  def run_specs_with_coverage
+    COVERAGE_FILES.each { |path| FileUtils.rm_f(path) }
+    baseline = File.read(COVERAGE_BASELINE) if File.file?(COVERAGE_BASELINE)
+    puts "\n==> RSpec (with coverage)"
+    system({ "COVERAGE" => "1" }, "bundle", "exec", "rspec", *@specs)
+    record("RSpec", [0, MINIMUM_COVERAGE_STATUS].include?($CHILD_STATUS.exitstatus))
+  ensure
+    File.write(COVERAGE_BASELINE, baseline) if baseline
+  end
+
+  def run_full_checks
+    if @specs.empty? && changed(%r{\A(app|lib)/}).any?
+      record("simplecov patch", false, "no specs ran for the changed code; run the specs that cover it, or the full suite with COVERAGE=1")
+    else
+      command("simplecov patch", [:always], "bundle", "exec", "simplecov", "patch", "--base", @options[:base], "--minimum", "100")
+    end
+    command("database_consistency", [:always], "bundle", "exec", "database_consistency")
+  end
+
+  # Specs: changed spec files, plus specs mapped from changed source files when they exist.
+
+  def spec_files
+    changed_files.flat_map { |path| mapped_specs(path) }.select { |path| File.file?(path) }
+  end
+
+  def mapped_specs(path)
+    case path
+    when %r{\Aspec/.*_spec\.rb\z} then [path]
+    when %r{\Aapp/(.+)\.rb\z} then ["spec/#{Regexp.last_match(1)}_spec.rb"]
+    when %r{\Alib/(.+)\.rb\z} then ["spec/lib/#{Regexp.last_match(1)}_spec.rb"]
+    when %r{\Aapp/components/(.+)\.html\.slim\z} then ["spec/components/#{Regexp.last_match(1).sub(%r{(\w+)/\1\z}, '\1')}_spec.rb"]
+    when %r{\Aapp/views/(.+\.slim)\z} then ["spec/views/#{Regexp.last_match(1)}_spec.rb"]
+    else []
+    end
+  end
+
+  # Helpers
+
+  def command(name, files, *cmd)
+    return record(name, true, "skipped: nothing changed") if files.empty?
+
+    puts "\n==> #{name}"
+    record(name, system(*cmd))
+  end
+
+  # Prints the output only when the check fails, for tools that are noisy when they pass.
+  def quiet_command(name, *cmd)
+    output, status = Open3.capture2e(*cmd)
+    puts "\n==> #{name}\n#{output}" unless status.success?
+    record(name, status.success?)
+  end
+
+  def record(name, passed, note = nil)
+    @results << [name, passed, note]
+  end
+
+  def git(*)
+    output, = Open3.capture2("git", *)
+    output
+  end
+
+  def summarise
+    puts "\n#{'-' * 60}"
+    @results.each do |name, passed, note|
+      puts sprintf("%-4s %s%s", passed ? "ok" : "FAIL", name, note ? " (#{note})" : "")
+    end
+    failed = @results.reject { |_, passed| passed }.map(&:first)
+    puts failed.empty? ? "PASS: all checks passed" : "FAIL: #{failed.join(', ')}"
+    exit(failed.empty? ? 0 : 1)
+  end
+end
+
+Verify.new(ARGV).run
