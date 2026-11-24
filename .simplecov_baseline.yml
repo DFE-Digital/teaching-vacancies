@@ -125,8 +125,8 @@ app/components/filters_component.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 93.75
+    missed: 1
 app/components/filters_component/filters_component.html.slim:
   lines:
     percent: 100.0
@@ -3503,11 +3503,11 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 99.47
-    missed: 1
+    percent: 92.94
+    missed: 17
   branches:
-    percent: 98.07
-    missed: 1
+    percent: 57.14
+    missed: 42
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0
@@ -4259,11 +4259,11 @@ app/services/self_disclosure_pdf_generator.rb:
     missed: 0
 app/services/step_process.rb:
   lines:
-    percent: 100.0
-    missed: 0
+    percent: 84.84
+    missed: 5
   branches:
-    percent: 100.0
-    missed: 0
+    percent: 50.0
+    missed: 4
 app/services/string_anonymiser.rb:
   lines:
     percent: 100.0
@@ -4453,6 +4453,20 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
+app/views/api/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/api/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -6014,6 +6028,27 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
+app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 83.33
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
+app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
+  lines:
+    percent: 100.0
+    missed: 0
+  branches:
+    percent: 50.0
+    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0
