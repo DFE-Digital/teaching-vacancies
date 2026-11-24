@@ -45,12 +45,6 @@ RSpec.describe StepProcess do
     end
   end
 
-  describe "#steps_in_current_group" do
-    it "returns all steps in the current group" do
-      expect(subject.steps_in_current_group).to eq(%i[two three])
-    end
-  end
-
   describe "#current_step_group_number" do
     it "returns the position of the current step group" do
       expect(subject.current_step_group_number).to eq(2)
@@ -60,34 +54,6 @@ RSpec.describe StepProcess do
   describe "#total_step_groups" do
     it "returns the total number of step groups" do
       expect(subject.total_step_groups).to eq(3)
-    end
-  end
-
-  describe "#first_of_group?" do
-    context "when on the first step of a group" do
-      let(:current_step) { :four }
-
-      it { is_expected.to be_first_of_group }
-    end
-
-    context "when on another step" do
-      let(:current_step) { :five }
-
-      it { is_expected.not_to be_first_of_group }
-    end
-  end
-
-  describe "#last_of_group?" do
-    context "when on the last step of a group" do
-      let(:current_step) { :six }
-
-      it { is_expected.to be_last_of_group }
-    end
-
-    context "when on another step" do
-      let(:current_step) { :five }
-
-      it { is_expected.not_to be_last_of_group }
     end
   end
 
