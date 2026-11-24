@@ -26,5 +26,5 @@ RSpec.configure do |config|
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
-# This is here for 1 scenario in extend_dealine_spec where we want to check 2 negatives
+# This is here for 1 scenario in extend_deadline_spec where we want to check 2 negatives
 RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job
