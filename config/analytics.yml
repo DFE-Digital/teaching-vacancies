@@ -187,17 +187,9 @@ shared:
     - qualified_teacher_status
     - qts_age_range_and_subject
     - qualified_teacher_status_year
-    - active
-    - requested_hidden_profile
     - is_statutory_induction_complete
     - teacher_reference_number
     - statutory_induction_complete_details
-  jobseeker_profile_excluded_organisations:
-    - id
-    - jobseeker_profile_id
-    - organisation_id
-    - created_at
-    - updated_at
   jobseekers:
     - id
     - email
