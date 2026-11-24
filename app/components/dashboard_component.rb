@@ -2,9 +2,8 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
-  # rubocop:disable Metrics/ParameterLists
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:, vacancy_types:,
-                 filter_form:, selected_organisation_ids:, selected_job_roles:)
+                 filter_form:, selected_organisation_ids:, selected_job_roles:) # rubocop:disable Metrics/ParameterLists
     super()
     @organisation = organisation
     @sort = sort
@@ -21,7 +20,6 @@ class DashboardComponent < ApplicationComponent
     set_job_role_options
     @count = count
   end
-  # rubocop:enable Metrics/ParameterLists
 
   def grid_column_class
     organisation.school_group? ? "govuk-grid-column-two-thirds-at-desktop" : "govuk-grid-column-three-quarters"
