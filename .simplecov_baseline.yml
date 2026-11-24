@@ -1256,7 +1256,7 @@ app/controllers/publishers/vacancies/wizard_controller.rb:
     missed: 0
 app/controllers/publishers/vacancies_controller.rb:
   lines:
-    percent: 98.86
+    percent: 98.85
     missed: 1
   branches:
     percent: 100.0
@@ -3503,11 +3503,11 @@ app/models/uploaded_job_application.rb:
     missed: 0
 app/models/vacancy.rb:
   lines:
-    percent: 92.94
-    missed: 17
+    percent: 99.47
+    missed: 1
   branches:
-    percent: 57.14
-    missed: 42
+    percent: 98.07
+    missed: 1
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0
@@ -4259,11 +4259,11 @@ app/services/self_disclosure_pdf_generator.rb:
     missed: 0
 app/services/step_process.rb:
   lines:
-    percent: 84.84
-    missed: 5
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 4
+    percent: 100.0
+    missed: 0
 app/services/string_anonymiser.rb:
   lines:
     percent: 100.0

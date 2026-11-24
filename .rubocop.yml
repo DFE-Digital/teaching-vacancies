@@ -79,13 +79,6 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-Lint/Debugger:
-  DebuggerMethods:
-    Capybara:
-      - saop
-      - save_and_open_page
-      - save_and_open_screenshot
-
 Lint/UselessMethodDefinition:
   Exclude:
     - "app/controllers/**/*_controller.rb"
