@@ -3,11 +3,13 @@
 = govuk_notification_banner title_text: t("banners.important") do |notification_banner|
   - notification_banner.with_heading(text: t("helpers.label.publishers_job_listing_application_form_form.banner_text"))
 
+= render "back_path", back_path: back_path
+
 div data-controller="upload-documents" data-upload-documents-inactive-value=vacancy.enable_job_applications?
   = form_for form, url: organisation_job_application_forms_path(vacancy.id) do |f|
     = f.govuk_error_summary
 
-    = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+    = vacancy_form_page_heading(vacancy, step_process)
 
     - if params["back_to_#{action_name}"]
       = f.hidden_field "back_to_#{action_name}", value: "true"

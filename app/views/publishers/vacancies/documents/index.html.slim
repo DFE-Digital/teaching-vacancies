@@ -1,5 +1,7 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, confirmation_form)
 
+= render "back_path", back_path: new_organisation_job_document_path(vacancy.id, :documents)
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds data-controller="upload-documents"
 
@@ -9,7 +11,7 @@
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      = vacancy_form_page_heading(vacancy, step_process, back_path: new_organisation_job_document_path(vacancy.id, :documents), fieldset: false)
+      = vacancy_form_page_heading(vacancy, step_process)
 
       h2.govuk-heading-m = t("publishers.vacancies.documents.index.summary_list_heading")
 

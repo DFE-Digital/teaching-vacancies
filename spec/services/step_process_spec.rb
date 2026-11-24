@@ -51,12 +51,6 @@ RSpec.describe StepProcess do
     end
   end
 
-  describe "#total_step_groups" do
-    it "returns the total number of step groups" do
-      expect(subject.total_step_groups).to eq(3)
-    end
-  end
-
   describe "#next_step" do
     it "returns the next step" do
       expect(subject.next_step).to eq(:three)

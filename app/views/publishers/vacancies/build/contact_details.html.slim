@@ -1,9 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
+= render "back_path", back_path: back_path
+
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = vacancy_form_page_heading(vacancy, step_process)
 
   = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m", tag: nil } do
     = f.govuk_radio_button :contact_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
