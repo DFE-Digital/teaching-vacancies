@@ -662,14 +662,14 @@ RSpec.describe Vacancy do
     let(:application_link) { "https://contoso.com/jobs/123" }
 
     it "tags the application link with our UTM parameters" do
-      expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=teaching-vacancies")
+      expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=tvs")
     end
 
     context "when the vacancy is from an ATS API client" do
       let(:vacancy) { build_stubbed(:external_vacancy, external_source: nil, external_advert_url: "https://contoso.com/adverts/123") }
 
       it "tags the external advert URL" do
-        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
+        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=tvs")
       end
     end
 
@@ -677,7 +677,7 @@ RSpec.describe Vacancy do
       let(:vacancy) { build_stubbed(:external_vacancy, publisher_ats_api_client: nil, external_advert_url: "https://contoso.com/adverts/123") }
 
       it "tags the external advert URL" do
-        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=teaching-vacancies")
+        expect(subject).to eq("https://contoso.com/adverts/123?utm_medium=referral&utm_source=tvs")
       end
     end
 
@@ -691,7 +691,7 @@ RSpec.describe Vacancy do
       let(:application_link) { "https://contoso.com/jobs?id=123&tag=a&tag=b" }
 
       it "appends our UTM parameters without changing the existing ones" do
-        expect(subject).to eq("https://contoso.com/jobs?id=123&tag=a&tag=b&utm_medium=referral&utm_source=teaching-vacancies")
+        expect(subject).to eq("https://contoso.com/jobs?id=123&tag=a&tag=b&utm_medium=referral&utm_source=tvs")
       end
     end
 
@@ -699,7 +699,7 @@ RSpec.describe Vacancy do
       let(:application_link) { "https://contoso.com/jobs/123#apply" }
 
       it "keeps the fragment after the query string" do
-        expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=teaching-vacancies#apply")
+        expect(subject).to eq("https://contoso.com/jobs/123?utm_medium=referral&utm_source=tvs#apply")
       end
     end
 
