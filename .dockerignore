@@ -43,6 +43,8 @@ config/localhost/https/*.crt
 /pkg/
 /spec/*
 !/spec/factories
+# Attached to upload-form vacancies when seeding review apps
+!/spec/fixtures/files/blank_job_spec.pdf
 /test/tmp/
 /test/version_tmp/
 /tmp/
