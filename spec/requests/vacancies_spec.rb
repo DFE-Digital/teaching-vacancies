@@ -77,7 +77,7 @@ RSpec.describe "Vacancies" do
       get apply_job_path(vacancy)
 
       expect(Addressable::URI.parse(response.location).query_values)
-        .to include("utm_source" => "teaching-vacancies", "utm_medium" => "referral")
+        .to include("utm_source" => "tvs", "utm_medium" => "referral")
     end
 
     it "only sends our origin as the referrer to the destination" do

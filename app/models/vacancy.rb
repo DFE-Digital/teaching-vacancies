@@ -182,10 +182,8 @@ class Vacancy < ApplicationRecord
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
-  OUTBOUND_UTM_PARAMS = { utm_source: "teaching-vacancies", utm_medium: "referral" }.freeze
-  # iTrent rejects query param values over 10 characters or containing special characters
-  SHORT_UTM_SOURCE_DOMAINS = %w[webitrent.com].freeze
-  SHORT_UTM_SOURCE = "tvs".freeze
+  # Kept short and free of special characters because iTrent rejects values over 10 characters or with special characters
+  OUTBOUND_UTM_PARAMS = { utm_source: "tvs", utm_medium: "referral" }.freeze
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -352,16 +350,10 @@ class Vacancy < ApplicationRecord
     # don't override existing utm params in case organisations are doing their own analytics
     return url if uri.query.to_s.split("&").any? { |param| param.downcase.start_with?("utm_") }
 
-    uri.query = [uri.query.presence, outbound_utm_params_for(uri.host).to_query].compact.join("&")
+    uri.query = [uri.query.presence, OUTBOUND_UTM_PARAMS.to_query].compact.join("&")
     uri.to_s
   rescue Addressable::URI::InvalidURIError
     url
-  end
-
-  def outbound_utm_params_for(host)
-    host = host.to_s.downcase
-    short_source = SHORT_UTM_SOURCE_DOMAINS.any? { |domain| host.include?(domain) }
-    short_source ? OUTBOUND_UTM_PARAMS.merge(utm_source: SHORT_UTM_SOURCE) : OUTBOUND_UTM_PARAMS
   end
 
   def update_conversation_searchable_content
