@@ -125,8 +125,8 @@ app/components/filters_component.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 93.75
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/components/filters_component/filters_component.html.slim:
   lines:
     percent: 100.0
