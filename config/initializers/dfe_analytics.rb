@@ -63,6 +63,8 @@ DfE::Analytics.configure do |config|
 
   config.azure_federated_auth = ENV.include? "GOOGLE_CLOUD_CREDENTIALS"
 
-  # Perform airbyte checks on startup and allow airbyte config generation
-  config.airbyte_enabled = %w[review].include? config.environment
+  # Perform airbyte checks on startup and allow airbyte config generation.
+  # RAILS_ENV is "production" in every deployed environment, so it can't pick them out.
+  # Terraform only sets the dataset where Airbyte is enabled.
+  config.airbyte_enabled = ENV["BIGQUERY_AIRBYTE_DATASET"].present?
 end
