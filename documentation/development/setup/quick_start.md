@@ -71,7 +71,7 @@ The service uses the `parallel_tests` gem:
 CI=1 bundle exec rake parallel:spec
 ```
 
-Without `CI=1` (or `HEADLESS=1`) the JavaScript specs open a visible browser, which helps when
+JavaScript specs run headless; set `HEADED=1` to watch them in a visible browser when
 debugging. Set `PARALLEL_TEST_PROCESSORS` in your shell to control how many processes run. See
 [tests and linting](/documentation/development/tooling/testing.md) for more.
 
