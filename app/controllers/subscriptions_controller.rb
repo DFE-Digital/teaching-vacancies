@@ -15,14 +15,14 @@ class SubscriptionsController < ApplicationController
     @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
 
-    render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
+    render("subscriptions/campaign/new") if campaign_link?
   end
 
   def create # rubocop:disable Metrics/AbcSize
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
 
     if @form.invalid?
-      @form.campaign.present? ? render("subscriptions/campaign/new", layout: "subscription_campaign") : render(:new)
+      @form.campaign.present? ? render("subscriptions/campaign/new") : render(:new)
     else
       recaptcha_protected(form: @form) do
         subscription = Jobseekers::CreateSubscription.new(@form, recaptcha_reply&.score).call
