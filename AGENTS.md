@@ -55,6 +55,9 @@ the dockerised database (via `bin/dev-db`; skip with `SKIP_DEV_DB=1`), web, asse
 the Solid Queue worker. The app only works on port 3000. Outside the devcontainer, run
 `corepack enable` first (Yarn 4).
 
+In a git worktree (the Copilot app creates one per session), run `bin/setup-worktree` first if
+`node_modules` or `app/assets/builds` is missing; specs and `bin/dev` fail without them.
+
 ## Commands
 
 ```bash
