@@ -1,18 +1,26 @@
 - content_for :page_title_prefix, t(".page_title")
 
-- sections = { applications: jobseekers_job_applications_path,
-    saved_jobs: jobseekers_saved_jobs_path,
-    job_alerts: jobseekers_subscriptions_path,
-    notifications: jobseekers_notifications_path,
-    help: help_jobseekers_account_path,
-    sign_out: jobseeker_logout_uri.to_s }
+- sections = { applications: [jobseekers_job_applications_path, "account-work"],
+    saved_jobs: [jobseekers_saved_jobs_path, "account-bookmark"],
+    job_alerts: [jobseekers_subscriptions_path, "account-notifications"],
+    notifications: [jobseekers_notifications_path, "account-chat"],
+    profile: [jobseekers_profile_path, "account-person"],
+    help: [help_jobseekers_account_path, "account-help"] }
+
+- unread_notifications_count = current_jobseeker.notifications.unread.count
 
 h1.govuk-heading-l = t(".page_title")
 
-p.govuk-body-l = t(".lead_in")
+p.govuk-body = t(".lead_in")
 
 ul.govuk-list
-  - sections.each do |key, path|
+  - sections.each do |key, (path, icon)|
     li class="govuk-section-break govuk-section-break--visible govuk-!-padding-top-3 govuk-!-padding-bottom-3"
-      h2.govuk-heading-s class="govuk-!-margin-bottom-1" = govuk_link_to t(".#{key}.link"), path
-      p.govuk-body class="govuk-!-margin-bottom-0" = t(".#{key}.description")
+      .account-section
+        span class="account-section__icon account-section__icon--#{key}"
+          = inline_svg_icon(icon)
+        div
+          - link_text = t(".#{key}.link")
+          - link_text = t(".notifications.link_with_unread", count: unread_notifications_count) if key == :notifications && unread_notifications_count.positive?
+          h2.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to link_text, path
+          p.govuk-body class="govuk-!-margin-bottom-0" = t(".#{key}.description")

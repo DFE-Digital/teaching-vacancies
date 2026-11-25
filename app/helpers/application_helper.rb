@@ -45,6 +45,11 @@ module ApplicationHelper
     "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
   end
 
+  def inline_svg_icon(name)
+    svg = Rails.root.join("app/assets/images/svg/#{name}.svg").read
+    svg.sub("<svg ", '<svg aria-hidden="true" focusable="false" ').html_safe
+  end
+
   def malware_scan_clean?(attachment)
     return false unless attachment.attached?
 

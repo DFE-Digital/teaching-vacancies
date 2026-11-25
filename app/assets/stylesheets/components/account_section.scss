@@ -1,0 +1,44 @@
+.account-section {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.account-section__icon {
+  display: flex;
+  flex: 0 0 46px;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+
+  &--profile {
+    background-color: #ddd6e8;
+    color: #3b0764;
+  }
+
+  &--applications {
+    background-color: #f4dce5;
+    color: #942514;
+  }
+
+  &--saved_jobs {
+    background-color: #e5f5fa;
+    color: #0b556c;
+  }
+
+  &--job_alerts {
+    background-color: #cadbee;
+    color: #0b556c;
+  }
+
+  &--notifications {
+    background-color: #cce2d8;
+    color: #00401a;
+  }
+
+  &--help {
+    background-color: #f3f2f1;
+    color: #0b0c0c;
+  }
+}
