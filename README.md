@@ -39,6 +39,7 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 
 #### AI coding agents
 * [Guidance for AI coding agents](/AGENTS.md)
+* [AI mob sessions and AI compounding](/documentation/development/ai-mob-sessions.md)
 
 ### Operations
 

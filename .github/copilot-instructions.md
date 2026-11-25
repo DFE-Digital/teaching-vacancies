@@ -27,6 +27,10 @@ This section describes Copilot's own configuration only. Project rules stay in A
   script skips read-only tools by name.
 - Worktrees made by the GitHub app start from the **pushed** branch, so push hook changes before
   testing them there.
+- Project skills live in `.claude/skills/`. The cloud agent, Copilot CLI and VS Code read that
+  folder as well as `.github/skills/`, so Copilot and Claude Code share one copy. Visual Studio
+  reads only `.github/skills/`. See
+  [AI mob sessions](../documentation/development/ai-mob-sessions.md).
 - `.github/workflows/copilot-setup-steps.yml` prepares the cloud agent's environment: Ruby,
   gems, the database, precompiled assets and the Swagger docs.
 - Gap compared with Claude Code: Copilot has no repo-level deny rules for secret files. Only

@@ -136,6 +136,18 @@ Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK On
 
 More in [tests and linting](documentation/development/tooling/testing.md).
 
+## Skills and AI compounding
+
+Shared agent skills live in `.claude/skills/`, which Claude Code and most Copilot surfaces read. They hold
+knowledge an agent should load only when relevant: the AI mob session protocol, design,
+accessibility and other discipline rules. Universal rules stay in this file. See
+[AI mob sessions](documentation/development/ai-mob-sessions.md).
+
+- Change a skill only in a separate pull request titled `AI compound: <summary>`, reviewed by
+  the owner named in the skill. Never change one as part of feature work.
+- Every rule must be safe to publish: no names, internal URLs, colleague or participant quotes,
+  or unpublished research.
+
 ## Keeping documentation current
 
 Update docs in the **same PR** as the change that makes them true. If you change the Ruby or Rails
