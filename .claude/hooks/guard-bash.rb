@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # PreToolUse hook for shell commands: blocks `git add -f` and `git commit --no-verify` (AGENTS.md non-negotiables).
-# Claude Code and GitHub Copilot (CLI and app) both run it from .claude/settings.json.
+# Claude Code runs it from .claude/settings.json (matcher Bash); GitHub Copilot (CLI and app) runs it from
+# .github/hooks/agent-hooks.json. It checks no tool name: it only acts on a `command` argument, so an unknown
+# Copilot shell tool name can't let a command through.
 require "json"
 require "shellwords"
 

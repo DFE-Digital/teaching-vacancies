@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 # PostToolUse hook for file edits: autocorrects the edited Ruby or Slim files and reports any remaining offences.
-# Claude Code and GitHub Copilot (CLI and app) both run it from .claude/settings.json.
+# Claude Code runs it from .claude/settings.json (matcher Edit|Write|MultiEdit); GitHub Copilot (CLI and app) runs it
+# from .github/hooks/agent-hooks.json, which cannot filter by tool, so the script skips read-only tools itself.
 require "json"
 require "open3"
+
+# Claude: Edit, Write, MultiEdit. Copilot: edit, create, str_replace_editor, apply_patch. Read-only tools (Read, view,
+# grep, glob) also carry a path and must not trigger autocorrect.
+EDIT_TOOL = /edit|write|create|patch|replace|insert/i
 
 def lint_command(path)
   case path
@@ -30,8 +35,9 @@ def paths(args)
 end
 
 def edited_paths(input)
-  calls = input["toolCalls"] || [{ "args" => input["tool_input"] || input["toolArgs"] }]
-  calls.flat_map { |call| call.is_a?(Hash) ? paths(call["args"]) : [] }.select { |path| File.file?(path) }.uniq
+  calls = input["toolCalls"] || [{ "name" => input["tool_name"] || input["toolName"], "args" => input["tool_input"] || input["toolArgs"] }]
+  calls = calls.select { |call| call.is_a?(Hash) && (call["toolName"] || call["name"]).to_s.match?(EDIT_TOOL) }
+  calls.flat_map { |call| paths(call["args"]) }.select { |path| File.file?(path) }.uniq
 end
 
 begin

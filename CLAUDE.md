@@ -23,6 +23,9 @@ This section describes Claude Code's own configuration only. Project rules belon
     asdf and chruby install folders too, because desktop apps may resolve `ruby` to another
     version. If that Ruby isn't installed, every hook blocks rather than letting tools run
     unguarded. Hooks must accept both Claude and Copilot input fields.
+  - Hooks should run only when needed. `settings.json` limits them with `matcher`s (`Bash` for the
+    guard, `Edit|Write|MultiEdit` for the linter). Copilot's config has no matchers, so
+    `lint-edited-file.rb` also skips read-only tools by name; keep both in step.
 - **`.claude/settings.local.json`** is git-ignored and personal (extra permissions, environment
   such as `PARALLEL_TEST_PROCESSORS`). Don't commit it.
 

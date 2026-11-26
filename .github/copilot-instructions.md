@@ -23,7 +23,8 @@ This section describes Copilot's own configuration only. Project rules stay in A
   `.claude/hooks/`. The Copilot app only runs hooks from `.github/hooks/`, so don't remove it. They
   block `git add -f` and `git commit --no-verify` and lint edited Ruby and Slim files. The Copilot
   CLI and app may also load `.claude/settings.json`, so a hook can run more than once and lint
-  feedback can appear twice; both hooks are safe to repeat. See the Claude Code section of `CLAUDE.md`.
+  feedback can appear twice; both hooks are safe to repeat. This config has no matchers, so the lint
+  script skips read-only tools by name.
 - Worktrees made by the GitHub app start from the **pushed** branch, so push hook changes before
   testing them there.
 - `.github/workflows/copilot-setup-steps.yml` prepares the cloud agent's environment: Ruby,
