@@ -363,8 +363,8 @@ app/components/vacancy_form_page_heading_component.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 41.66
-    missed: 7
+    percent: 50.0
+    missed: 2
 app/controllers/api/application_controller.rb:
   lines:
     percent: 100.0
@@ -5533,11 +5533,11 @@ app/views/jobseekers/profiles/qualified_teacher_status/show.html.slim:
     missed: 0
 app/views/jobseekers/profiles/show.html.slim:
   lines:
-    percent: 73.07
-    missed: 7
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 16.66
-    missed: 10
+    percent: 100.0
+    missed: 0
 app/views/jobseekers/publisher_messages/_publisher_message.html.slim:
   lines:
     percent: 100.0
