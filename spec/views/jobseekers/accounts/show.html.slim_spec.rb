@@ -1,14 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/accounts/show" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:job_application) { create(:job_application, :status_submitted, jobseeker:) }
-  let(:conversation) { create(:conversation, job_application:) }
-  let(:messages) { [] }
+  let(:unread_notifications_count) { 0 }
 
   before do
-    messages
-    assign(:unread_notifications_count, jobseeker.notifications.unread.count)
+    assign(:unread_notifications_count, unread_notifications_count)
     render
   end
 
@@ -18,15 +14,15 @@ RSpec.describe "jobseekers/accounts/show" do
     expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.applications.link"), href: jobseekers_job_applications_path)
     expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.saved_jobs.link"), href: jobseekers_saved_jobs_path)
     expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.job_alerts.link"), href: jobseekers_subscriptions_path)
-    expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.notifications.link"), href: jobseekers_notifications_path)
+    expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.notifications.link"), href: jobseekers_notifications_path, exact_text: true)
     expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.help.link"), href: help_jobseekers_account_path)
   end
 
-  context "with unread notifications", :perform_enqueued do
-    let(:messages) { create_list(:publisher_message, 3, conversation:) }
+  context "with unread notifications" do
+    let(:unread_notifications_count) { 3 }
 
     it "shows the unread count next to the notifications link" do
-      expect(rendered).to have_link("Notifications (#{jobseeker.notifications.unread.count} unread)", href: jobseekers_notifications_path)
+      expect(rendered).to have_link("Notifications (3 unread)", href: jobseekers_notifications_path, exact_text: true)
     end
   end
 
