@@ -1,6 +1,6 @@
 - if vacancy.job_roles.include? "teacher"
   - if vacancy.for_an_fe_college?
-    = f.govuk_radio_buttons_fieldset :fe_role_qts_required, id: "needs_qts_status_radios" do
+    = f.govuk_radio_buttons_fieldset :fe_role_qts_required, class: "needs_qts_status_radios" do
       = f.govuk_radio_button :fe_role_qts_required, "true", link_errors: true
       = f.govuk_radio_button :fe_role_qts_required, "false"
   = f.govuk_collection_radio_buttons :ect_status,

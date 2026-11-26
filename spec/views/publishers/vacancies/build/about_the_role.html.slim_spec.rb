@@ -5,13 +5,15 @@ RSpec.describe "publishers/vacancies/build/about_the_role" do
   let(:publisher) { build_stubbed(:publisher) }
   let(:vacancy) { build_stubbed(:vacancy, organisations: [organisation]) }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:about_the_role, vacancy: vacancy, organisation: organisation) }
-  let(:form) { Publishers::JobListing::AboutTheRoleForm.new }
+  let(:form) { Publishers::JobListing::AboutTheRoleForm.load_from_model(vacancy, current_publisher: publisher) }
 
   before do
-    allow(view).to receive_messages(current_organisation: local_authority, vacancy: vacancy,
+    allow(view).to receive_messages(current_organisation: local_authority,
                                     back_path: "",
                                     current_step: :about_the_role,
-                                    step_process: step_process, form: form, wizard_path: "")
+                                    step_process: step_process, wizard_path: "")
+    assign(:form, form)
+    assign(:vacancy, vacancy)
     render
   end
 

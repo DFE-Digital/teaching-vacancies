@@ -14,14 +14,14 @@ module Publishers
       def step_process
         Publishers::Vacancies::VacancyStepProcess.new(
           current_step || :review,
-          vacancy: vacancy,
+          vacancy: @vacancy,
           organisation: current_organisation,
         )
       end
 
       def form_sequence
         @form_sequence ||= Publishers::VacancyFormSequence.new(
-          vacancy: vacancy,
+          vacancy: @vacancy,
           step_names: step_process.steps,
         )
       end

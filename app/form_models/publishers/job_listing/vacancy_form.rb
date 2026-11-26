@@ -2,7 +2,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   # so that these can be passed through the 'params' hash
   attr_writer :completed_steps
 
-  def initialize(params = {}, vacancy = nil)
+  def initialize(params, vacancy)
     @params = params
     @vacancy = vacancy
 
@@ -11,6 +11,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
 
   def params_to_save
     @params
+    # @params.to_h.symbolize_keys
   end
 
   # Some forms may cause some previously completed steps in the Vacancy to be marked as incomplete again after updating
