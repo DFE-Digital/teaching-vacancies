@@ -62,6 +62,8 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the vacancy does not allow key stages" do
+        before { allow(vacancy).to receive(:allow_key_stages?).and_return(false) }
+
         it "has the expected steps" do
           expect(subject.steps).not_to include(:key_stages)
         end

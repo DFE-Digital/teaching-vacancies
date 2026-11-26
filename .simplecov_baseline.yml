@@ -6383,8 +6383,8 @@ app/views/publishers/vacancies/_about_the_role.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 75.0
-    missed: 10
+    percent: 76.31
+    missed: 9
 app/views/publishers/vacancies/_application_process.html.slim:
   lines:
     percent: 91.02

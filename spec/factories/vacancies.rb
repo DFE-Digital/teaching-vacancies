@@ -82,6 +82,7 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     subjects { [] }
     key_stages { %w[ks1] }
+    phases { %w[primary] }
     # details only make sense for part-time vacancies
     working_patterns { %w[part_time] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
@@ -387,6 +388,7 @@ FactoryBot.define do
         job_roles { nil }
         ect_status { nil }
         pay_scale { nil }
+        phases { nil }
         publish_on { nil }
         salary { nil }
         hourly_rate { nil }

@@ -19,6 +19,7 @@ RSpec.describe CopyVacancyAsaTemplate do
          include_additional_documents
          anonymise_applications
          school_visits
+         key_stages
          visa_sponsorship
          contact_details
          confirm_contact_details]
