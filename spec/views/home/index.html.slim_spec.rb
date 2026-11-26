@@ -60,7 +60,6 @@ RSpec.describe "home/index" do
     it "renders the correct links" do
       expect(rendered).to have_content(I18n.t("sub_nav.jobs"))
       expect(rendered).to have_content(I18n.t("sub_nav.schools"))
-      expect(rendered).to have_content(I18n.t("nav.your_profile"))
       expect(rendered).to have_content(I18n.t("nav.your_account"))
       expect(rendered).to have_content(I18n.t("nav.sign_out"))
     end

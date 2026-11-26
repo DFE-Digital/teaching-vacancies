@@ -12,9 +12,6 @@
                       class: "govuk-header__link",
                       method: :delete
         - elsif jobseeker_signed_in?
-          li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if your_profile_active?}"
-            = link_to t("nav.your_profile"), jobseekers_profile_path,
-                      class: "govuk-header__link"
           li class="govuk-header__navigation-item#{" govuk-header__navigation-item--active" if your_account_active?}"
             = link_to t("nav.your_account"), jobseekers_account_path,
                       class: "govuk-header__link"
