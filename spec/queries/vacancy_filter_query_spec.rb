@@ -317,7 +317,10 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time] } }
 
         it "returns pt jobs" do
-          expect(subject.map(&:job_title)).to contain_exactly("ECT Suitable", "Part Time Job")
+          expect(subject.map(&:job_title)).to contain_exactly("ECT Suitable",
+                                                              "Vacancy 11FR", "Vacancy 11S", "Vacancy 12FR", "Vacancy 12S", "Vacancy 13F", "Vacancy 13FR",  "Vacancy 191FR", "Vacancy 19FR", "Vacancy 3", "Vacancy 4FR", "Vacancy 5", "Vacancy 6FR",
+                                                              "Vacancy 14", "Vacancy 14-NFV3", "Vacancy 15-NFV2", "Vacancy 15FR", "Vacancy 16FR", "Vacancy 17FR", "Vacancy 18FR",
+                                                              "Part Time Job", "College QTS", "College non QTS", "Vacancy 10FR", "Vacancy 10S", "Vacancy 7FR", "Vacancy 7S", "Vacancy 8FR", "Vacancy 8S", "Vacancy 9FR", "Vacancy 9S")
         end
       end
 
@@ -333,7 +336,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[full_time] } }
 
         it "returns fewer jobs" do
-          expect(subject.count).to eq(31)
+          expect(subject.count).to eq(2)
         end
       end
 
@@ -361,7 +364,11 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { working_patterns: %w[part_time job_share] } }
 
         it "returns two jobs" do
-          expect(subject.map(&:job_title)).to contain_exactly("ECT Suitable", "Part Time Job", "Full Time Job")
+          expect(subject.map(&:job_title)).to contain_exactly("College QTS", "College non QTS", "Vacancy 10FR", "Vacancy 10S",
+                                                              "ECT Suitable", "Full Time Job", "Part Time Job", "Vacancy 12FR", "Vacancy 12S",
+                                                              "Vacancy 13F", "Vacancy 191FR", "Vacancy 19FR", "Vacancy 3", "Vacancy 4FR", "Vacancy 5", "Vacancy 6FR",
+                                                              "Vacancy 13FR", "Vacancy 14", "Vacancy 14-NFV3", "Vacancy 15-NFV2", "Vacancy 15FR", "Vacancy 16FR", "Vacancy 17FR", "Vacancy 18FR",
+                                                              "Vacancy 11FR", "Vacancy 11S", "Vacancy 7FR", "Vacancy 7S", "Vacancy 8FR", "Vacancy 8S", "Vacancy 9FR", "Vacancy 9S")
         end
       end
 

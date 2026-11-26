@@ -82,8 +82,9 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     subjects { [] }
     key_stages { %w[ks1] }
+    # details only make sense for part-time vacancies
+    working_patterns { %w[part_time] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
-    working_patterns { %w[full_time] }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
     is_job_share { false }
@@ -96,6 +97,11 @@ FactoryBot.define do
           vacancy.publisher.organisations << organisation unless vacancy.publisher.organisations.include?(organisation)
         end
       end
+    end
+
+    trait :full_time do
+      working_patterns { %w[full_time] }
+      working_patterns_details { nil }
     end
 
     trait :it_support do

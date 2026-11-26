@@ -345,27 +345,10 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_working_patterns) { %w[full_time] }
 
         it "finds the vacancies matching the subscription working pattern" do
-          expect(query_results).to match_array([french_job,
-                                                german_job,
-                                                headteacher_job,
+          expect(query_results).to match_array([headteacher_job,
                                                 it_support_job,
-                                                maths_and_english_job,
-                                                no_subject_job,
-                                                ect_job,
-                                                great_job,
-                                                nice_job,
-                                                really_nice_job,
-                                                fantastic_job,
-                                                non_visa_sponsorship_job,
-                                                nursery_job,
-                                                primary_and_secondary_job,
-                                                secondary_job,
                                                 full_time_job,
-                                                through_job,
-                                                college_job_not_qts,
-                                                college_job_qts,
                                                 teacher_and_other_support_job,
-                                                visa_sponsorship_job,
                                                 full_and_part_time_job].map(&:job_title))
         end
       end
@@ -410,8 +393,26 @@ RSpec.describe SubscriptionVacanciesMatchingQuery do
         let(:subscription_working_patterns) { %w[job_share part_time] }
 
         it "finds the vacancies that are job share or match any of the other working patterns" do
-          expect(query_results)
-            .to contain_exactly(part_time_job.job_title, full_and_part_time_job.job_title, job_share_job.job_title)
+          expect(query_results).to match_array([french_job,
+                                                german_job,
+                                                maths_and_english_job,
+                                                no_subject_job,
+                                                ect_job,
+                                                great_job,
+                                                nice_job,
+                                                really_nice_job,
+                                                fantastic_job,
+                                                non_visa_sponsorship_job,
+                                                nursery_job,
+                                                primary_and_secondary_job,
+                                                secondary_job,
+                                                through_job,
+                                                college_job_not_qts,
+                                                college_job_qts,
+                                                visa_sponsorship_job,
+                                                job_share_job,
+                                                part_time_job,
+                                                full_and_part_time_job].map(&:job_title))
         end
       end
 
