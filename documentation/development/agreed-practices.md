@@ -12,7 +12,7 @@ This document records those decisions so every developer can stay aligned with o
 - Avoid deploying on Fridays when possible. Friday morning releases are acceptable only for minor, easily reversible changes when we have time to monitor throughout the day.
 
 ## AI mob sessions
-- We are trialling whole-squad AI mob sessions and AI compounding. See [AI mob sessions](ai-mob-sessions.md) for how sessions run, how learnings become agent skills, and how we measure the trial.
+- We are trialling whole-squad AI mob sessions and AI compounding. See [AI mob sessions](ai-mob-sessions.md) for how sessions run, how knowledge becomes agent skills, and how we measure the trial.
 
 ## Data
 

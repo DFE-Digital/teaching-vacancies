@@ -12,7 +12,7 @@ This skill grows through AI compounding. See
 
 ## How to add or change a rule
 
-- Add a rule only when a decision has come up more than once, in a session or in review.
+- Add a rule when it is knowledge the agent should apply next time.
 - Write it as an instruction the agent can follow, with a short reason.
 - Keep it public-safe: state the principle, not the evidence behind it. No names, participant
   quotes or unpublished research findings.

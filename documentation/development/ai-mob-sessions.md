@@ -1,12 +1,26 @@
 # AI mob sessions
 
-An experiment in whole-squad working: product, design, research and development work together, at the same time, around one AI coding agent. One person, the operator, drives the
-agent. Everyone else shapes the prompt and reviews the result in a review app. The operator role
-rotates.
+An experiment in whole-squad working: product, design, service design, research, accessibility
+and development work together, at the same time, around one AI coding agent. One person, the
+operator, drives the agent, and the role rotates. Everyone else, developers included, acts as a
+navigator: they watch the wider system and the result in a review app, and give their input
+through the operator. Start with the whole squad, then use what the team sees about who adds
+value to decide whether fewer people are needed.
 
-This page covers how a session runs, how the team turns what it learns into rules the agent
+This page covers how a session runs, how the team turns what it knows into rules the agent
 follows (**AI compounding**), and how we measure whether the experiment works. Everything
 recorded here, and in the skills it describes, is public: see [Public-safety rule](#public-safety-rule).
+
+## Choosing work and what to expect
+
+- Sessions suit requirements that are still emerging, where seeing working output may change a
+  decision. Work that is already fully specified, technical debt and known bugs may suit parallel
+  work better.
+- Prompt the agent directly rather than pasting in a detailed story. It can infer a lot from the
+  codebase, and the team learns by inspecting what it produces.
+- Treat the first one or two sessions as table reads, to learn the mechanics. By about the third
+  or fourth session, success means bringing a real problem, solving it in the session and
+  agreeing on the solution together. If that isn't happening, find out why or rethink the approach.
 
 ## What does not change
 
@@ -22,40 +36,43 @@ The agent follows the [`ai-mob-session` skill](/.claude/skills/ai-mob-session/SK
 session by telling the agent it is an AI mob session.
 
 1. **Understand.** The agent restates the goal and uses the
-   [`grill-me` skill](/.claude/skills/grill-me/SKILL.md) to ask the team about open decisions,
-   in numbered rounds, each with a recommended answer. It looks up codebase facts itself.
+   [`grill-me` skill](/.claude/skills/grill-me/SKILL.md) to ask the team about decisions that are
+   really open, in numbered rounds, each with a recommended answer. For low-risk details it
+   states its assumption and moves on. It looks up codebase facts itself. The team can also ask
+   what-if questions that change nothing, such as the specification a change implies or what a
+   signed-out user sees today.
 2. **Plan, then stop.** The agent writes a numbered plan and waits. The team changes it until
    they agree, then says "implement".
 3. **Implement.** The agent works in small steps. It stops and flags before migrations,
    personal-data fields, `Vacancy` or `JobApplication` enum or validation changes, public route
    changes and security middleware. The team reviews the result in the review app.
-4. **Session state.** At an impasse, the agent writes where things stand, then the team reverts
-   and closes the review app. Locally this goes in `tmp/ai-mob-sessions/`, which is git-ignored.
-   In a pull request it goes in a "Session state" section of the description.
-5. **AI compounding wrap-up.** The agent lists the decisions made, marks the recurring ones, and
-   proposes rules for them (see below).
+4. **Session state.** When the team pauses or reaches an impasse, the agent writes where things
+   stand and the work carries on, so the next operator, who may be on another machine, can pick
+   it up. Keep the branch and draft pull request, with the state in a "Session state" section of
+   the description. `tmp/ai-mob-sessions/` is git-ignored and only for work that hasn't been
+   pushed. Revert and close the review app only at a deadlock or when the team drops the idea.
+5. **AI compounding wrap-up.** The agent lists the decisions and knowledge from the session and
+   proposes which are worth turning into rules (see below).
 
 Label pull requests that come out of a session `ai-mob`.
 
 ## AI compounding
 
-Each session should make the next one cheaper. Decisions the team makes repeatedly, such as
-design trade-offs, content choices, accessibility fixes, research findings and technical
-conventions, get written down once as rules the agent applies every time. Expert review then
-moves from "by hand in every session" to "once, when the rule is written".
+Each session should make the next one cheaper. Knowledge the agent should apply next time, such
+as design principles, content choices, trade-offs, accessibility fixes, publishable research
+findings and technical conventions, is written down once as a rule. Expert review then moves
+from "by hand in every session" to "once, when the rule is written".
 
-A learning moves up a rung only when it recurs:
-
-| Rung | Where it lives | Applied by |
+| Level | Where it lives | Applied by |
 |---|---|---|
-| 1. Note | [Learnings log](#learnings-log) on this page | the team |
-| 2. Rule | A skill in [`.claude/skills/`](/.claude/skills/), or [AGENTS.md](/AGENTS.md) if universal and short | the agent, when relevant |
-| 3. Check | A spec, CI job or agent hook | always enforced |
+| Rule | A skill for that area in [`.claude/skills/`](/.claude/skills/), or [AGENTS.md](/AGENTS.md) if universal and short | the agent, when relevant |
+| Check | A spec, CI job or agent hook | always enforced |
 
+- Put a rule in the skill for its area. If none fits, propose a new skill with an owner.
 - Add a check only after a rule has been missed in practice.
 - Keep AGENTS.md short. Discipline knowledge belongs in skills, which the agent loads only when
   relevant.
-- Prune as well as add. Remove rules that are wrong or unused at each reflection session.
+- Prune as well as add. Remove rules that are wrong or unused when the team reflects.
 
 ### Skills and owners
 
@@ -64,7 +81,7 @@ A learning moves up a rung only when it recurs:
 | [`ai-mob-session`](/.claude/skills/ai-mob-session/SKILL.md) | Developers | Session protocol |
 | [`grill-me`](/.claude/skills/grill-me/SKILL.md) | Developers | Clarifying questions; vendored from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
 | [`ucd-principles`](/.claude/skills/ucd-principles/SKILL.md) | Design and user research | User-facing changes |
-| [`accessibility-review`](/.claude/skills/accessibility-review/SKILL.md) | Design and developers, shared | Views, components, front end |
+| [`accessibility-review`](/.claude/skills/accessibility-review/SKILL.md) | Accessibility, design and developers, shared | Views, components, front end |
 
 The owner reviews every change to their skill. Claude Code and the Copilot cloud agent, CLI and
 VS Code all read project skills from `.claude/skills/`
@@ -84,8 +101,8 @@ and symlink `.claude/skills/` to it.
 
 ### Public-safety rule
 
-This repository is public, and there is nowhere private to keep learnings. Anything that isn't
-safe to publish is not recorded. Before adding a rule or a learnings log entry, remove:
+This repository is public, and there is nowhere private to keep what isn't safe to publish.
+Before adding a rule, remove:
 
 - names of people
 - internal tools, URLs and hostnames
@@ -96,8 +113,11 @@ Record the general principle. If the evidence behind it can't be published, leav
 
 ## Measuring the experiment
 
-We want evidence, not a feeling of productivity. Compare cycle time, from pull request creation
-to merge, for `ai-mob` pull requests against other merged pull requests from the same period:
+We want evidence, not a feeling of productivity. The measure is a proposal until the team agrees
+it. One candidate is cycle time, from pull request creation to merge, for `ai-mob` pull requests
+against other merged pull requests from the same period. Mob pull requests tend to be opened at
+the end of a session, while others are opened early as drafts, so this flatters the mob. Time
+from starting the work to production is a fairer alternative if it can be measured.
 
 ```bash
 gh pr list --state merged --label ai-mob --limit 200 --json createdAt,mergedAt \
@@ -109,30 +129,10 @@ gh pr list --state merged --limit 200 --search "-label:ai-mob -label:ai-compound
   --jq '[.[] | ((.mergedAt | fromdate) - (.createdAt | fromdate)) / 86400] | sort | {prs: length, median_days: .[length / 2 | floor]}'
 ```
 
-Cycle time alone flatters small changes, so also record:
+Cycle time alone flatters small changes, so also track:
 
 - how many `ai-mob` pull requests were merged and how many were closed unmerged
 - issues found in code review or CI after the session
 - person-hours spent in the session, not just elapsed time
 - how many `ai-compounding` pull requests each session produced. If there are none, compounding
   isn't happening.
-
-## Learnings log
-
-Add a dated entry after each reflection session. Record aggregate numbers and public-safe
-observations:
-
-- what worked and what didn't
-- which types of work suit a session and which suit parallel work
-- how many people each session needed
-
-<!-- Newest first. Template:
-### YYYY-MM-DD
-- Sessions: n. Merged / closed `ai-mob` PRs: n / n. Median cycle time: n days (others: n days).
-- Worked:
-- Didn't work:
-- Work types that suited a session / suited parallel work:
-- Rules added or removed (link the AI compound PRs):
--->
-
-No entries yet.
