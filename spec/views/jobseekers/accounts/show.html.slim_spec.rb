@@ -1,12 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "jobseekers/accounts/show" do
-  let(:unread_count) { 0 }
-  let(:jobseeker) { build_stubbed(:jobseeker) }
+  let(:jobseeker) { create(:jobseeker) }
+  let(:job_application) { create(:job_application, :status_submitted, jobseeker:) }
+  let(:conversation) { create(:conversation, job_application:) }
+  let(:messages) { [] }
 
   before do
     allow(view).to receive(:current_jobseeker).and_return(jobseeker)
-    allow(jobseeker).to receive(:notifications).and_return(instance_double(ActiveRecord::Relation, unread: instance_double(ActiveRecord::Relation, count: unread_count)))
+    messages
     render
   end
 
@@ -20,11 +22,11 @@ RSpec.describe "jobseekers/accounts/show" do
     expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.help.link"), href: help_jobseekers_account_path)
   end
 
-  context "with unread notifications" do
-    let(:unread_count) { 3 }
+  context "with unread notifications", :perform_enqueued do
+    let(:messages) { create_list(:publisher_message, 3, conversation:) }
 
     it "shows the unread count next to the notifications link" do
-      expect(rendered).to have_link("#{I18n.t('jobseekers.accounts.show.notifications.link')} (3)", href: jobseekers_notifications_path)
+      expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.notifications.link_with_unread", count: jobseeker.notifications.unread.count), href: jobseekers_notifications_path)
     end
   end
 
