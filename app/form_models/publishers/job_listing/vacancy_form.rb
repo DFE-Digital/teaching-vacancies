@@ -2,7 +2,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   # so that these can be passed through the 'params' hash
   attr_writer :completed_steps
 
-  def initialize(params = {}, vacancy = nil)
+  def initialize(params = {}, vacancy)
     @params = params
     @vacancy = vacancy
 
@@ -10,7 +10,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   end
 
   def params_to_save
-    @params
+    @params.to_h.symbolize_keys
   end
 
   # Some forms may cause some previously completed steps in the Vacancy to be marked as incomplete again after updating
@@ -25,13 +25,21 @@ class Publishers::JobListing::VacancyForm < BaseForm
   class << self
     # rubocop:disable Lint/UnusedMethodArgument
     def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*fields), vacancy)
+      new(vacancy.slice(*field_list), vacancy)
     end
 
     def load_from_params(form_params, vacancy, current_publisher:)
       new(form_params, vacancy)
     end
     # rubocop:enable Lint/UnusedMethodArgument
+
+    def field_list
+      if fields.is_a? Hash
+        fields.keys
+      else
+        fields
+      end
+    end
   end
 
   private

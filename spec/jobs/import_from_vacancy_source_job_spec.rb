@@ -117,6 +117,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "contact_number_provided" => true,
           "contract_type" => "permanent",
           "created_at" => nil,
+          "draft" => false,
           "discarded_at" => nil,
           "earliest_start_date" => nil,
           "ect_status" => "ect_suitable",

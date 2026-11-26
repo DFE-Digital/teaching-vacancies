@@ -87,7 +87,7 @@ Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK On
   (`LandingPage.exists?`, …); add new top-level routes above them or they never match.
   **Removing or renaming a public route requires a redirect** in
   `config/routes/legacy_redirects.rb`.
-- **`Vacancy`** is STI (`DraftVacancy`, `PublishedVacancy`) with **no `status` enum**; status is
+- **`Vacancy`** is STI (`InternalVacancy`, `ExternalVacancy`) with **no `status` enum**; status is
   derived (`draft?`, `scheduled?`, `live?`, `expired?`). Array-valued fields use a custom
   `ArrayEnum` extension.
 - **`JobApplication`** is STI (`NativeJobApplication`, `UploadedJobApplication`); `enum :status`
@@ -123,7 +123,7 @@ Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK On
 - **In factories, use `factory_rand`, `factory_sample` and `factory_rand_sample`**
   (`spec/factories/support/random_helpers.rb`), not `rand`/`sample`, to keep coverage stable.
   Factories also seed review apps via `:for_seed_data` traits, so they are not test-only.
-- `:vacancy` builds a `PublishedVacancy`; `:job_application` builds a `NativeJobApplication`.
+- `:vacancy` builds a `InternalVacancy`; `:job_application` builds a `NativeJobApplication`.
 - Sign-in helpers are in `spec/support/auth_helpers.rb`; behaviour-changing metadata tags
   (`:geocode`, `:perform_enqueued`, `disable_integrations`, …) are in `spec/rails_helper.rb`.
 - **`Geocoder.search` raises** unless the example is tagged `:geocode`.

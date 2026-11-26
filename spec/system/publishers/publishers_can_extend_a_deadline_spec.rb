@@ -49,7 +49,7 @@ RSpec.describe "Publishers can extend a deadline" do
   context "when the vacancy has expired" do
     let(:vacancy_type) { :expired }
     let(:extend_expires_at) { I18n.t("publishers.vacancies.show.heading_component.action.relist") }
-    let(:new_vacancy) { PublishedVacancy.order(:created_at).last }
+    let(:new_vacancy) { InternalVacancy.published.order(:created_at).last }
 
     before do
       fill_in "publishers_job_listing_relist_form[expires_at(1i)]", with: expires_at.year

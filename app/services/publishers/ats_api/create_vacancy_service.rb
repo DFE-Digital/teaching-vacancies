@@ -5,7 +5,7 @@ module Publishers
 
       class << self
         def call(params)
-          vacancy = PublishedVacancy.new(sanitised_params(params))
+          vacancy = ExternalVacancy.new(sanitised_params(params))
 
           if vacancy.save
             success_response(vacancy)
@@ -40,6 +40,7 @@ module Publishers
           params.except(:schools, :ect_suitable)
                 .merge(organisations: organisations)
                 .merge(start_date_fields(params[:starts_on]))
+                .merge(draft: false)
         end
 
         def start_date_fields(starts_on)

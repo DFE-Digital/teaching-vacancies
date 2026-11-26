@@ -35,7 +35,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
     end
 
     it "yields vacancies with correct attributes" do
-      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(PublishedVacancy))
+      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(ExternalVacancy))
     end
 
     it "yield a newly built vacancy the correct vacancy information" do

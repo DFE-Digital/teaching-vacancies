@@ -85,7 +85,7 @@ class Organisation < ApplicationRecord
   # This can safely ignore the 'extra' LA mappings as it is always called with a scope which excludes LAs in the first place
   scope :with_live_vacancies, lambda {
     # use inner/right join to just select organisations with live vacancies
-    organisations = joins(:vacancies).merge(PublishedVacancy.live)
+    organisations = joins(:vacancies).merge(Vacancy.live)
 
     groups, schools = organisations.partition(&:school_group?)
 
@@ -115,15 +115,15 @@ class Organisation < ApplicationRecord
   end
 
   def all_internal_vacancies
-    Vacancy.in_organisation_ids(all_organisation_ids).internal
+    InternalVacancy.in_organisation_ids(all_organisation_ids).internal
   end
 
   def all_listed_internal_vacancies
-    PublishedVacancy.internal.in_organisation_ids(all_organisation_ids).listed
+    InternalVacancy.in_organisation_ids(all_organisation_ids).listed
   end
 
   def all_live_vacancies
-    PublishedVacancy.in_organisation_ids(all_organisation_ids).live
+    Vacancy.in_organisation_ids(all_organisation_ids).live
   end
 
   def name

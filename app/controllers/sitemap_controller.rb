@@ -32,7 +32,7 @@ class SitemapController < ApplicationController
   private
 
   def add_live_vacancies(sitemap)
-    PublishedVacancy.live.applicable.find_each do |vacancy|
+    Vacancy.live.applicable.find_each do |vacancy|
       sitemap.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: VACANCY_REFRESH_PERIOD, priority: 0.7
     end
   end

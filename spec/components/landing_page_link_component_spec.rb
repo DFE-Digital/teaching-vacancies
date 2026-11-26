@@ -47,7 +47,7 @@ RSpec.describe LandingPageLinkComponent, type: :component do
     describe "school phases" do
       before do
         create_list(:vacancy, 4, phases: %w[primary])
-        create(:vacancy, phases: %w[secondary])
+        create(:vacancy, :secondary)
       end
 
       it "shows the correct count for 'Primary'" do

@@ -16,7 +16,7 @@ class Publishers::Vacancies::PublishController < Publishers::Vacancies::WizardBa
       end
       redirect_to organisation_job_review_path(vacancy.id), alert: messages.join(" ")
     elsif all_steps_valid? && PublishVacancy.new(vacancy, current_publisher, current_organisation).call
-      update_google_index(vacancy) if PublishedVacancy.find(vacancy.id).live?
+      update_google_index(vacancy) if InternalVacancy.find(vacancy.id).live?
 
       unless vacancy.contact_email_belongs_to_a_publisher?
         Publishers::AccountInvitationMailer.invite_user(

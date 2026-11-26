@@ -5,7 +5,7 @@ class Search::VacancySearch
 
   attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
 
-  def initialize(search_criteria, sort: nil, scope: PublishedVacancy.live)
+  def initialize(search_criteria, sort: nil, scope: Vacancy.live)
     @search_criteria = search_criteria.except(:keyword, :location, :radius)
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]

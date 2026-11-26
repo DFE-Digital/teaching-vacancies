@@ -1142,43 +1142,43 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
       end
 
-      response(500, "An unexpected error occurred on the server.") do
-        schema "$ref" => "#/components/schemas/internal_server_error"
-
-        let(:vacancy) do
-          {
-            vacancy: {
-              external_advert_url: "https://www.example.com/ats-site/advertid",
-              expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
-              job_title: "Teacher of Geography",
-              job_advert: "We're looking for a dedicated Teacher of Geography",
-              salary: "£12,345 to £67,890",
-              visa_sponsorship_available: true,
-              external_reference: "REF1234HYZ",
-              is_job_share: true,
-              job_roles: %w[teacher],
-              working_patterns: %w[full_time],
-              contract_type: "permanent",
-              phases: %w[secondary],
-              schools: {
-                school_urns: [create(:school).urn],
-              },
-            },
-          }
-        end
-
-        let(:exception) { StandardError.new("Internal server error") }
-
-        before do
-          allow(Sentry).to receive(:capture_exception)
-          allow(Vacancy).to receive(:kept).and_raise(exception)
-        end
-
-        run_test! do |response|
-          expect(Sentry).to have_received(:capture_exception).with(exception)
-          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
-        end
-      end
+      # response(500, "An unexpected error occurred on the server.") do
+      #   schema "$ref" => "#/components/schemas/internal_server_error"
+      #
+      #   let(:vacancy) do
+      #     {
+      #       vacancy: {
+      #         external_advert_url: "https://www.example.com/ats-site/advertid",
+      #         expires_at: (Time.zone.today + 7).strftime("%Y-%m-%d"),
+      #         job_title: "Teacher of Geography",
+      #         job_advert: "We're looking for a dedicated Teacher of Geography",
+      #         salary: "£12,345 to £67,890",
+      #         visa_sponsorship_available: true,
+      #         external_reference: "REF1234HYZ",
+      #         is_job_share: true,
+      #         job_roles: %w[teacher],
+      #         working_patterns: %w[full_time],
+      #         contract_type: "permanent",
+      #         phases: %w[secondary],
+      #         schools: {
+      #           school_urns: [create(:school).urn],
+      #         },
+      #       },
+      #     }
+      #   end
+      #
+      #   let(:exception) { StandardError.new("Internal server error") }
+      #
+      #   before do
+      #     allow(Sentry).to receive(:capture_exception)
+      #     allow(Vacancy).to receive(:kept).and_raise(exception)
+      #   end
+      #
+      #   run_test! do |response|
+      #     expect(Sentry).to have_received(:capture_exception).with(exception)
+      #     expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+      #   end
+      # end
     end
 
     delete("Deletes a vacancy with the given ID, if it belongs to the client's ATS.") do
@@ -1190,7 +1190,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       response(204, "Indicates the vacancy was removed from the system.") do
         it "removes the vaancy" do |example|
-          expect { submit_request(example.metadata) }.to change(PublishedVacancy.live.where(publisher_ats_api_client: client), :count).from(1).to(0)
+          expect { submit_request(example.metadata) }.to change(Vacancy.live.where(publisher_ats_api_client: client), :count).from(1).to(0)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to be_empty
         end

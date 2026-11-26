@@ -33,24 +33,22 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
   end
 
   describe "#call" do
-    let(:newly_created) { PublishedVacancy.last }
-
     context "when the vacancy is successfully created" do
-      let(:new_vacancy) { PublishedVacancy.last }
+      let(:new_vacancy) { ExternalVacancy.last }
 
       it "returns a success response" do
-        expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.last.id })
+        expect(create_vacancy_service).to eq(status: :created, json: { id: Vacancy.last.id })
       end
 
       it "creates a published vacancy with the correct external reference" do
-        expect { create_vacancy_service }.to change(PublishedVacancy, :count).by(1)
+        expect { create_vacancy_service }.to change(ExternalVacancy, :count).by(1)
         expect(new_vacancy.external_reference).to eq("new-ref")
       end
 
       describe "'publish_on'" do
         it "defaults to the current date when not provided" do
           create_vacancy_service
-          expect(PublishedVacancy.last.publish_on).to eq(Time.zone.today)
+          expect(new_vacancy.publish_on).to eq(Time.zone.today)
         end
 
         it "gets set from the parameters when provided" do
@@ -236,7 +234,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
               it "persists the same instant: 9am UK time (08:00 UTC) regardless of input format" do
                 response = described_class.call(vacancy_params)
-                vacancy = PublishedVacancy.find(response[:json][:id])
+                vacancy = ExternalVacancy.find(response[:json][:id])
                 db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
 
                 expect(db_expires_at).to eq(expected_db_timestamp)
@@ -272,7 +270,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
               it "persists the same instant: 9am UK time (09:00 UTC) regardless of input format" do
                 response = described_class.call(vacancy_params)
-                vacancy = PublishedVacancy.find(response[:json][:id])
+                vacancy = ExternalVacancy.find(response[:json][:id])
                 db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
 
                 expect(db_expires_at).to eq(expected_db_timestamp)
@@ -299,7 +297,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
             it "stores the April BST instant correctly even when submitted before BST begins" do
               response = described_class.call(vacancy_params)
-              vacancy = PublishedVacancy.find(response[:json][:id])
+              vacancy = ExternalVacancy.find(response[:json][:id])
               db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
 
               expect(db_expires_at).to eq("2026-04-10 08:00:00")
@@ -323,7 +321,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
             it "stores the November date correctly even when submitted during BST" do
               response = described_class.call(vacancy_params)
-              vacancy = PublishedVacancy.find(response[:json][:id])
+              vacancy = ExternalVacancy.find(response[:json][:id])
               db_expires_at = Vacancy.where(id: vacancy.id).pick(raw_expires_at_query)
 
               expect(db_expires_at).to eq("2026-11-15 09:00:00")
@@ -337,7 +335,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(school)
+          expect(ExternalVacancy.last.organisation).to eq(school)
         end
       end
 
@@ -347,7 +345,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "assigns the vacancy to the trust" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(trust)
+          expect(ExternalVacancy.last.organisation).to eq(trust)
         end
       end
 
@@ -357,7 +355,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "assigns the vacancy to the school within the trust" do
           create_vacancy_service
-          expect(PublishedVacancy.last.organisation).to eq(school)
+          expect(ExternalVacancy.last.organisation).to eq(school)
         end
       end
 
@@ -368,7 +366,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "only assigns the vacancy to the school within the trust" do
           create_vacancy_service
-          vacancy = PublishedVacancy.last
+          vacancy = ExternalVacancy.last
           expect(vacancy.organisation).to eq(school)
           expect(vacancy.organisations).to contain_exactly(school)
         end
@@ -382,7 +380,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
         it "only assigns the vacancy to the school within the trust" do
           create_vacancy_service
-          vacancy = PublishedVacancy.last
+          vacancy = ExternalVacancy.last
           expect(vacancy.organisation).to eq(school)
           expect(vacancy.organisations).to contain_exactly(school)
         end
@@ -396,7 +394,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "does not create a new vacancy" do
-        expect { create_vacancy_service }.not_to change(PublishedVacancy, :count)
+        expect { create_vacancy_service }.not_to change(ExternalVacancy, :count)
       end
 
       it "returns a conflict response" do
@@ -419,13 +417,13 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "creates a new published vacancy with the same external reference" do
-        expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
-        vacancy = PublishedVacancy.kept.last
+        expect { create_vacancy_service }.to change { ExternalVacancy.kept.count }.by(1)
+        vacancy = ExternalVacancy.kept.last
         expect(vacancy.external_reference).to eq(existing_vacancy.external_reference)
       end
 
       it "returns a success response" do
-        expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
+        expect(create_vacancy_service).to eq(status: :created, json: { id: ExternalVacancy.kept.last.id })
       end
     end
 
@@ -673,8 +671,8 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "creates a new published vacancy" do
-        expect { create_vacancy_service }.to change { PublishedVacancy.kept.count }.by(1)
-        vacancy = PublishedVacancy.kept.last
+        expect { create_vacancy_service }.to change { ExternalVacancy.kept.count }.by(1)
+        vacancy = ExternalVacancy.kept.last
         expect(vacancy).to have_attributes(
           job_title: job_title,
           organisations: [school],
@@ -686,7 +684,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "returns a success response" do
-        expect(create_vacancy_service).to eq(status: :created, json: { id: PublishedVacancy.kept.last.id })
+        expect(create_vacancy_service).to eq(status: :created, json: { id: ExternalVacancy.kept.last.id })
       end
     end
   end

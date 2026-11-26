@@ -664,7 +664,7 @@ app/controllers/jobseekers/job_applications_controller.rb:
     percent: 99.28
     missed: 1
   branches:
-    percent: 97.91
+    percent: 97.95
     missed: 1
 app/controllers/jobseekers/login_keys_controller.rb:
   lines:
@@ -2019,18 +2019,18 @@ app/form_models/publishers/job_listing/job_role_form.rb:
     missed: 0
 app/form_models/publishers/job_listing/job_title_form.rb:
   lines:
-    percent: 91.66
-    missed: 1
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/key_stages_form.rb:
   lines:
     percent: 100.0
     missed: 0
   branches:
-    percent: 83.33
-    missed: 1
+    percent: 100.0
+    missed: 0
 app/form_models/publishers/job_listing/pay_package_form.rb:
   lines:
     percent: 100.0
@@ -3074,13 +3074,6 @@ app/models/conversation.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/draft_vacancy.rb:
-  lines:
-    percent: 88.88
-    missed: 1
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/education_gap.rb:
   lines:
     percent: 100.0
@@ -3361,13 +3354,6 @@ app/models/profile_employment_gap.rb:
   branches:
     percent: 100.0
     missed: 0
-app/models/published_vacancy.rb:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/models/publisher.rb:
   lines:
     percent: 100.0
@@ -3443,7 +3429,7 @@ app/models/school.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 66.66
+    percent: 71.42
     missed: 2
 app/models/school_group.rb:
   lines:
@@ -4353,11 +4339,11 @@ app/services/vacancies/import/sources/broadbean.rb:
     percent: 97.46
     missed: 2
   branches:
-    percent: 78.57
+    percent: 78.84
     missed: 12
 app/services/vacancies/import/sources/fusion.rb:
   lines:
-    percent: 98.75
+    percent: 99.16
     missed: 1
   branches:
     percent: 82.25
@@ -4371,7 +4357,7 @@ app/services/vacancies/import/sources/vacancy_poster.rb:
     missed: 15
 app/services/vacancies/import/sources/ventrus.rb:
   lines:
-    percent: 96.0
+    percent: 96.22
     missed: 3
   branches:
     percent: 81.48
@@ -4453,20 +4439,6 @@ app/views/active_storage/blobs/_blob.html.slim:
   branches:
     percent: 0.0
     missed: 8
-app/views/api/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/api/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/colleges/_filters.html.slim:
   lines:
     percent: 100.0
@@ -5911,11 +5883,11 @@ app/views/organisations/search/_open_filters_button.html.slim:
     missed: 0
 app/views/organisations/search/_results.html.slim:
   lines:
-    percent: 85.71
-    missed: 3
+    percent: 100.0
+    missed: 0
   branches:
-    percent: 50.0
-    missed: 3
+    percent: 66.66
+    missed: 2
 app/views/organisations/search/_stats.html.slim:
   lines:
     percent: 100.0
@@ -6028,27 +6000,6 @@ app/views/publishers/accounts/unsubscribe.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/ats_api/v1/vacancies/_show.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 83.33
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/index.json.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
-app/views/publishers/ats_api/v1/vacancies/show.jbuilder:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/publishers/authentication_fallback_mailer/sign_in_fallback.text.erb:
   lines:
     percent: 100.0

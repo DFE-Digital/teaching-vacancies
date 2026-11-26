@@ -3,7 +3,7 @@
   = govuk_warning_text text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"), classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-5"
 end
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_with model: @vacancy, scope: :publishers_job_listing_job_title_form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_text_field :job_title,
