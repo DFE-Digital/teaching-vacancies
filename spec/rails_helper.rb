@@ -202,25 +202,15 @@ RSpec.configure do |config|
     allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
   end
 
-  # allow developers to see JS backed tests by default
+  # JS specs run headless by default (so coding agents never open browser windows); set HEADED=1 to watch them
   config.before(:each, type: :system, js: true) do
-    # In CI, devcontainers (without X11) or when HEADLESS is set (e.g. by coding agents), use headless mode
-    if ENV.key?("CI") || ENV.key?("HEADLESS") || ENV["DEVCONTAINER"] == "true"
-      driven_by :cuprite_headless
-    else
-      driven_by :cuprite_full
-    end
+    driven_by ENV.key?("HEADED") ? :cuprite_full : :cuprite_headless
   end
 
   #  Neither Cuprite nor playwright are supported by axe-rspec
   # https://github.com/dequelabs/axe-core-gems/issues/418
   config.before(:each, type: :system, a11y: true) do
-    # In CI, devcontainers (without X11) or when HEADLESS is set (e.g. by coding agents), use headless mode
-    if ENV.key?("CI") || ENV.key?("HEADLESS") || ENV["DEVCONTAINER"] == "true"
-      driven_by :chrome_headless
-    else
-      driven_by :chrome
-    end
+    driven_by ENV.key?("HEADED") ? :chrome : :chrome_headless
   end
 
   # view specs idiom is allow(view).to receive_messages(x)

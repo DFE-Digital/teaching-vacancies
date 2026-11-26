@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Prepares a fresh git worktree so that bin/dev and the specs work: symlinks the git-ignored
-# env files from the main checkout and installs dependencies. Safe to re-run.
+# env files from the main checkout, installs dependencies and builds the git-ignored JavaScript and
+# CSS bundles that the specs need. Safe to re-run.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -22,4 +23,8 @@ done
 
 corepack enable
 yarn install
-bundle check > /dev/null || bundle install
+# A global safe.bareRepository=explicit git setting stops Bundler using its cached clones of git-sourced
+# gems, so allow bare repositories for this one command only (this does not change your git config).
+bundle check > /dev/null || GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.bareRepository GIT_CONFIG_VALUE_0=all bundle install
+yarn build
+yarn build:css

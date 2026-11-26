@@ -71,7 +71,7 @@ The service uses the `parallel_tests` gem:
 CI=1 bundle exec rake parallel:spec
 ```
 
-Without `CI=1` (or `HEADLESS=1`) the JavaScript specs open a visible browser, which helps when
+JavaScript specs run headless; set `HEADED=1` to watch them in a visible browser when
 debugging. Set `PARALLEL_TEST_PROCESSORS` in your shell to control how many processes run. See
 [tests and linting](/documentation/development/tooling/testing.md) for more.
 
@@ -79,8 +79,8 @@ debugging. Set `PARALLEL_TEST_PROCESSORS` in your shell to control how many proc
 
 In a new git worktree, run `bin/setup-worktree`. It symlinks the git-ignored `.env`,
 `.env.development.local`, `.env.test.local` and `mise.local.toml` files from the main checkout and
-installs the JavaScript and Ruby dependencies. Without it `bin/dev` fails on the missing
-`node_modules` and environment variables.
+installs the JavaScript and Ruby dependencies and builds the JavaScript and CSS bundles. Without it
+`bin/dev` and the specs fail on the missing `node_modules`, bundles and environment variables.
 
 All worktrees share the one database container from `compose.yaml` (it has a fixed project name),
 so `bin/dev` finds it already running. Don't run specs in two worktrees at the same time unless

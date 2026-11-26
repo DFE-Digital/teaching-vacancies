@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {
-    "HEADLESS": "1"
-  },
   "permissions": {
     "allow": [
       "Bash(bundle exec rspec)",
@@ -50,18 +47,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/guard-bash.rb"
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/run-ruby.sh \"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/guard-bash.rb"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/lint-edited-file.rb",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/run-ruby.sh \"${CLAUDE_PROJECT_DIR:-.}\"/.claude/hooks/lint-edited-file.rb",
             "timeout": 120
           }
         ]

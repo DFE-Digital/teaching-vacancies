@@ -19,13 +19,15 @@ Copilot can also load `AGENTS.md` directly:
 
 This section describes Copilot's own configuration only. Project rules stay in AGENTS.md.
 
-- `.github/hooks/agent-hooks.json` runs two hooks: `guard-bash.rb` blocks `git add -f` and
-  `git commit --no-verify`, and `lint-edited-file.rb` autocorrects Ruby and Slim files after
-  `create`, `edit` and `str_replace_editor` calls (not `apply_patch`) and returns any remaining
-  offences. Both are adapters over the shared rules in `.agents/hooks/lib/`.
+- Hooks are shared with Claude Code: `.github/hooks/agent-hooks.json` runs the scripts in
+  `.claude/hooks/`. The Copilot app only runs hooks from `.github/hooks/`, so don't remove it. They
+  block `git add -f` and `git commit --no-verify` and lint edited Ruby and Slim files. The Copilot
+  CLI and app may also load `.claude/settings.json`, so a hook can run more than once and lint
+  feedback can appear twice; both hooks are safe to repeat. This config has no matchers, so the lint
+  script skips read-only tools by name.
+- Worktrees made by the GitHub app start from the **pushed** branch, so push hook changes before
+  testing them there.
 - `.github/workflows/copilot-setup-steps.yml` prepares the cloud agent's environment: Ruby,
-  gems, the database, precompiled assets and the Swagger docs. It also sets `HEADLESS=1`.
-- Gaps compared with Claude Code: Copilot has no repo-level `HEADLESS` setting, so run JavaScript
-  specs locally with `HEADLESS=1`, or add `HEADLESS=1` to your git-ignored `.env.test.local`.
-  Copilot also has no repo-level deny rules for secret files.
-  Only organisation content exclusion blocks those reads.
+  gems, the database, precompiled assets and the Swagger docs.
+- Gap compared with Claude Code: Copilot has no repo-level deny rules for secret files. Only
+  organisation content exclusion blocks those reads.

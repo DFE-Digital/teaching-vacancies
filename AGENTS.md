@@ -1,9 +1,9 @@
 # AGENTS.md
 
 The single source of truth for project rules for AI coding agents. Tool-specific files
-(`CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`) point here and may only describe
-their own tool's configuration. Agent hook rules live in `.agents/hooks/lib/`; the adapters in
-`.claude/hooks/` and `.github/hooks/` only translate formats, so change rules in the core.
+(`CLAUDE.md`, `.github/copilot-instructions.md`) point here and may only describe
+their own tool's configuration. Agent hooks live in `.claude/hooks/` and are configured in
+`.claude/settings.json` for Claude Code and `.github/hooks/agent-hooks.json` for GitHub Copilot.
 
 ## Overview
 
@@ -55,12 +55,15 @@ the dockerised database (via `bin/dev-db`; skip with `SKIP_DEV_DB=1`), web, asse
 the Solid Queue worker. The app only works on port 3000. Outside the devcontainer, run
 `corepack enable` first (Yarn 4).
 
+In a git worktree (the Copilot app creates one per session), run `bin/setup-worktree` first if
+`node_modules` or `app/assets/builds` is missing; specs and `bin/dev` fail without them.
+
 ## Commands
 
 ```bash
 bundle exec rspec                         # all specs; .rspec excludes ~smoke_test and ~a11y
 bundle exec rspec --tag a11y              # accessibility specs
-CI=1 bundle exec rake parallel:spec       # parallel; without CI=1 or HEADLESS=1, js specs open a browser
+CI=1 bundle exec rake parallel:spec       # parallel; HEADED=1 shows the browser for js specs
 RAILS_ENV=test bin/rails parallel:create  # one-off parallel DB setup
 COVERAGE=1 bundle exec rspec && bundle exec simplecov patch --base origin/main --minimum 100  # fails on new/changed code without coverage
 bundle exec rake rswag:specs:swaggerize   # on a fresh clone and after ATS API changes (specs read the git-ignored swagger/v1/swagger.yaml)
@@ -128,8 +131,8 @@ Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK On
   (`:geocode`, `:perform_enqueued`, `disable_integrations`, …) are in `spec/rails_helper.rb`.
 - **`Geocoder.search` raises** unless the example is tagged `:geocode`.
 - WebMock blocks real HTTP (`disable_net_connect!`).
-- System specs use `rack_test`; `js: true` switches to Cuprite (headless under `CI`/`HEADLESS`),
-  `a11y: true` to Chrome with axe. `CAPYBARA_DRIVER=chrome` gives a headed browser for debugging.
+- System specs use `rack_test`; `js: true` switches to Cuprite and
+  `a11y: true` to Chrome with axe; both run headless unless `HEADED=1` is set for debugging.
 
 More in [tests and linting](documentation/development/tooling/testing.md).
 

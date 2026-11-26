@@ -45,6 +45,3 @@ jobs:
 
       - name: Generate Swagger (OpenAPI) docs
         run: bundle exec rake rswag:specs:swaggerize
-
-      - name: Run JavaScript specs headless
-        run: echo "HEADLESS=1" >> "$GITHUB_ENV"
