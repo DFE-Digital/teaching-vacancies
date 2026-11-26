@@ -7,7 +7,7 @@
     profile: [jobseekers_profile_path, "account-person"],
     help: [help_jobseekers_account_path, "account-help"] }
 
-- unread_notifications_count = current_jobseeker.notifications.unread.count
+- link_text_overrides = { notifications: (t(".notifications.link_with_unread_html", count: @unread_notifications_count) if @unread_notifications_count.positive?) }
 
 h1.govuk-heading-l = t(".page_title")
 
@@ -20,7 +20,5 @@ ul.govuk-list
         span class="account-section__icon account-section__icon--#{key}"
           = inline_svg_icon(icon)
         div
-          - link_text = t(".#{key}.link")
-          - link_text = t(".notifications.link_with_unread_html", count: unread_notifications_count) if key == :notifications && unread_notifications_count.positive?
-          h2.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to link_text, path
+          h2.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to link_text_overrides[key] || t(".#{key}.link"), path
           p.govuk-body class="govuk-!-margin-bottom-0" = t(".#{key}.description")

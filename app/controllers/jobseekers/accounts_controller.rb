@@ -1,5 +1,7 @@
 class Jobseekers::AccountsController < Jobseekers::BaseController
-  def show; end
+  def show
+    @unread_notifications_count = current_jobseeker.notifications.unread.count
+  end
 
   def help; end
 

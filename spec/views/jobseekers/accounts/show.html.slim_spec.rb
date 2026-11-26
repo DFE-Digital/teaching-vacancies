@@ -7,8 +7,8 @@ RSpec.describe "jobseekers/accounts/show" do
   let(:messages) { [] }
 
   before do
-    allow(view).to receive(:current_jobseeker).and_return(jobseeker)
     messages
+    assign(:unread_notifications_count, jobseeker.notifications.unread.count)
     render
   end
 
