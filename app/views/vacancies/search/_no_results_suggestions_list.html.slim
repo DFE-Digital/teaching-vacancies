@@ -1,0 +1,25 @@
+- if no_results_suggestions.spelling
+  - spelling = no_results_suggestions.spelling
+  p.govuk-body
+    = t("vacancies.no_results_suggestions.spelling_html",
+        link: govuk_link_to(spelling.options[:keyword], jobs_path(spelling.criteria)))
+    '
+    = t("vacancies.no_results_suggestions.count", count: spelling.count)
+
+- if no_results_suggestions.suggestions.any?
+  h2.govuk-heading-m = t("vacancies.no_results_suggestions.heading")
+  ul.govuk-list
+    - no_results_suggestions.suggestions.each do |suggestion|
+      li
+        - label = suggestion.type == :filter ? t("vacancies.no_results_suggestions.filter.#{suggestion.options[:filter]}") : t("vacancies.no_results_suggestions.#{suggestion.type}", **suggestion.options.slice(:radius, :word))
+        = govuk_link_to(label, jobs_path(suggestion.criteria))
+        '
+        = t("vacancies.no_results_suggestions.count", count: suggestion.count)
+- elsif no_results_suggestions.browse.any?
+  h2.govuk-heading-m = t("vacancies.no_results_suggestions.browse_heading")
+  ul.govuk-list
+    - no_results_suggestions.browse.each do |suggestion|
+      li
+        = govuk_link_to(t("vacancies.no_results_suggestions.browse.#{suggestion.type}"), jobs_path(suggestion.criteria))
+        '
+        = t("vacancies.no_results_suggestions.count", count: suggestion.count)
