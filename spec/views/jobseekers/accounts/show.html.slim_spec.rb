@@ -26,7 +26,7 @@ RSpec.describe "jobseekers/accounts/show" do
     let(:messages) { create_list(:publisher_message, 3, conversation:) }
 
     it "shows the unread count next to the notifications link" do
-      expect(rendered).to have_link(I18n.t("jobseekers.accounts.show.notifications.link_with_unread", count: jobseeker.notifications.unread.count), href: jobseekers_notifications_path)
+      expect(rendered).to have_link("Notifications (#{jobseeker.notifications.unread.count} unread)", href: jobseekers_notifications_path)
     end
   end
 

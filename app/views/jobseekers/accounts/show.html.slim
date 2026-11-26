@@ -21,6 +21,6 @@ ul.govuk-list
           = inline_svg_icon(icon)
         div
           - link_text = t(".#{key}.link")
-          - link_text = t(".notifications.link_with_unread", count: unread_notifications_count) if key == :notifications && unread_notifications_count.positive?
+          - link_text = t(".notifications.link_with_unread_html", count: unread_notifications_count) if key == :notifications && unread_notifications_count.positive?
           h2.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to link_text, path
           p.govuk-body class="govuk-!-margin-bottom-0" = t(".#{key}.description")

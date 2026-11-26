@@ -25,7 +25,7 @@ en:
           description: Create, edit and delete email alerts for new jobs that match your search.
         notifications:
           link: Notifications
-          link_with_unread: Notifications (%{count})
+          link_with_unread_html: Notifications (%{count}<span class="govuk-visually-hidden"> unread</span>)
           description: Read updates from schools about your applications and other account activity.
         profile:
           link: Profile
