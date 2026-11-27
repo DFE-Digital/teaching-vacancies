@@ -13,8 +13,6 @@ class JobseekerProfile < ApplicationRecord
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
   delegate :email, to: :jobseeker
 
-  self.ignored_columns += %i[active requested_hidden_profile]
-
   enum :qualified_teacher_status, { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
   has_encrypted :teacher_reference_number

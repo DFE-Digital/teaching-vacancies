@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_26_085611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -396,18 +396,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
     t.index ["reference_request_id"], name: "index_job_references_on_reference_request_id", unique: true
   end
 
-  create_table "jobseeker_profile_excluded_organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.uuid "jobseeker_profile_id", null: false
-    t.uuid "organisation_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["jobseeker_profile_id"], name: "index_excluded_organisations_on_jobseeker_profile_id"
-    t.index ["organisation_id"], name: "index_excluded_organisations_on_organisation_id"
-  end
-
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "about_you"
-    t.boolean "active", default: false, null: false
     t.datetime "created_at", null: false
     t.boolean "is_statutory_induction_complete"
     t.uuid "jobseeker_id", null: false
@@ -415,7 +405,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
     t.integer "qualified_teacher_status"
     t.text "qualified_teacher_status_details"
     t.string "qualified_teacher_status_year"
-    t.boolean "requested_hidden_profile"
     t.string "statutory_induction_complete_details"
     t.text "teacher_reference_number_ciphertext"
     t.datetime "updated_at", null: false
@@ -1150,8 +1139,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_072548) do
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
   add_foreign_key "job_references", "reference_requests"
-  add_foreign_key "jobseeker_profile_excluded_organisations", "jobseeker_profiles"
-  add_foreign_key "jobseeker_profile_excluded_organisations", "organisations"
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "local_authority_publisher_schools", "organisations", column: "school_id", on_delete: :nullify
   add_foreign_key "local_authority_publisher_schools", "publisher_preferences"
