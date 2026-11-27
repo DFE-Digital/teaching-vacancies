@@ -94,6 +94,8 @@ schools.each do |school|
             publisher: active_publishers.sample }
   75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
+  # Upload-form vacancies close sooner so they appear first in the default (closing date) sort
+  2.times { FactoryBot.create(:vacancy, :for_seed_data, :with_uploaded_application_form, expiry_date: 3.months.from_now, **attrs) }
   FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
   FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
   FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
@@ -119,7 +121,7 @@ FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
 emails_with_fewer_applications = ["jobseeker@contoso.com"] + active_publishers.map(&:email)
 # Job Applications
 statuses = JobApplication.statuses.keys
-PublishedVacancy.kept.listed.first(50).each do |vacancy|
+PublishedVacancy.kept.listed.where(enable_job_applications: true).first(50).each do |vacancy|
   Jobseeker.where.not(email: emails_with_fewer_applications).each do |jobseeker|
     application_status = JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :for_seed_data, :"status_#{application_status}",
