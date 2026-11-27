@@ -402,7 +402,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[primary] } }
 
         it "returns primary jobs" do
-          expect(subject.count).to eq(27)
+          expect(subject.count).to eq(29)
         end
       end
 
@@ -410,7 +410,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[primary secondary] } }
 
         it "returns both primary and secondary jobs" do
-          expect(subject.count).to eq(28)
+          expect(subject.count).to eq(30)
         end
       end
 
@@ -426,7 +426,7 @@ RSpec.describe VacancyFilterQuery do
         let(:filters) { { phases: %w[middle primary] } }
 
         it "ignores the legacy filters and applies the filter for the valid value" do
-          expect(subject.count).to eq(27)
+          expect(subject.count).to eq(29)
         end
       end
     end
