@@ -193,6 +193,7 @@ ats_organisations << { organisations: [weydon_trust], phase: weydon_schools.firs
   FactoryBot.create(
     :external_vacancy,
     :for_seed_data,
+    salary_type: :salary,
     publisher: nil,
     publisher_organisation: nil,
     publisher_ats_api_client: ats_api_client,
