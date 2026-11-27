@@ -203,7 +203,6 @@ ats_organisations << { organisations: [weydon_trust], phase: weydon_schools.firs
     expires_at: expires_at,
     job_title: ats_job_titles[index % ats_job_titles.size],
     phases: [Vacancy::PHASES.key?(organisation[:phase].to_sym) ? organisation[:phase] : "secondary"],
-    salary: "Main pay range 1 to Upper pay range 3, £31,650 to £49,084 per year",
     organisations: organisation[:organisations],
   )
 end
