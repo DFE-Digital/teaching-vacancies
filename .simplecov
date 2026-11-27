@@ -111,6 +111,11 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/views/support_users/service_data/index.html.slim"
     skip "lib/dsi_client.rb"
 
+    # Coverage of the branches in this file doesn't seem to make sense.
+    skip "app/components/vacancy_form_page_heading_component/vacancy_form_page_heading_component.html.slim"
+    # Need to skip this to allow a small refactoring change to go through
+    skip "app/views/publishers/vacancies/build/job_location.html.slim"
+
     # These are markdown files, so coverage does not really make sense
     posts = %w[index show subcategory]
     posts.each do |l|

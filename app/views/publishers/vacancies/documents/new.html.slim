@@ -1,5 +1,7 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, documents_form)
 
+= render "back_path", back_path: back_path
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds data-controller="upload-documents"
     = form_for documents_form, url: organisation_job_documents_path(vacancy.id) do |f|
@@ -10,7 +12,7 @@
 
       = f.govuk_file_field :supporting_documents,
         javascript: true,
-        label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
+        label: { text: vacancy_form_page_fieldset(vacancy, step_process), tag: "h1", size: "l" },
         hint: { text: t("helpers.hint.publishers_job_listing_documents_form.documents") },
         accept: ".doc, .docx, .pdf",
         multiple: true,

@@ -24,11 +24,6 @@ class StepProcess
     step_groups.keys.index(current_step_group) + 1
   end
 
-  # Returns the total number of all applicable step groups
-  def total_step_groups
-    step_groups.size
-  end
-
   # Returns the key of the next step from the current one
   def next_step
     return nil if current_step == steps.last

@@ -3,7 +3,9 @@
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = render "back_path", back_path: back_path
+
+  = vacancy_form_page_heading(vacancy, step_process)
 
   p.govuk-body = t(".you_can_choose")
 

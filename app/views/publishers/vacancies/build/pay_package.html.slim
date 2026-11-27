@@ -1,14 +1,14 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
+= render "back_path", back_path: back_path
+
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   - if @vacancy.for_an_fe_college?
-    = vacancy_form_page_heading(vacancy, step_process, back_path: back_path,
-      fieldset: false, heading: t("publishers.vacancies.steps.salary"))
+    = vacancy_form_page_heading(vacancy, step_process, heading: t("publishers.vacancies.steps.salary"))
   - else
-    = vacancy_form_page_heading(vacancy, step_process, back_path: back_path,
-      fieldset: false)
+    = vacancy_form_page_heading(vacancy, step_process)
 
   = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m", tag: nil } do
     - if vacancy.contract_type != "casual"

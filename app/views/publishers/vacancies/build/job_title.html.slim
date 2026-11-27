@@ -3,11 +3,13 @@
   = govuk_warning_text text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"), classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-5"
 end
 
+= render "back_path", back_path: back_path
+
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_text_field :job_title,
-    label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
+    label: { text: vacancy_form_page_fieldset(vacancy, step_process), tag: "h1", size: "l" },
     hint: { text: vacancy_job_title_form_hint_text(vacancy) },
     required: true
 

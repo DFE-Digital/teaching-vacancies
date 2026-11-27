@@ -14,6 +14,7 @@ module ComponentsHelper
     supportal_table: "SupportalTableComponent",
     tvs_tabs: "TabsComponent",
     vacancy_form_page_heading: "VacancyFormPageHeadingComponent",
+    vacancy_form_page_fieldset: "VacancyFormPageFieldsetComponent",
   }.each do |name, klass|
     define_method(name) do |*args, **kwargs, &block|
       capture do

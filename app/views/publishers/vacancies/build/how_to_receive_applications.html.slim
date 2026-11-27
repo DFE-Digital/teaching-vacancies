@@ -1,9 +1,12 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
+= render "back_path", back_path: back_path
+
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = f.govuk_radio_buttons_fieldset :receive_applications, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
+  = f.govuk_radio_buttons_fieldset :receive_applications,
+    legend: { text: vacancy_form_page_fieldset(vacancy, step_process), tag: "h1", size: "l" } do
     = f.govuk_radio_button :receive_applications, :uploaded_form, link_errors: true
     = f.govuk_radio_button :receive_applications, :website
 

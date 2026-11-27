@@ -4,7 +4,9 @@
 = form_for form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = render "back_path", back_path: back_path
+
+  = vacancy_form_page_heading(vacancy, step_process)
 
   - if vacancy.organisation&.description.present?
     p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description", organisation: org_type)
