@@ -18,6 +18,16 @@ RSpec.describe "Vacancies" do
     end
   end
 
+  describe "GET #index with no results" do
+    it "shows the generic advice and no suggestions when nothing is similar or live" do
+      get jobs_path(keyword: "unicorn")
+
+      expect(response.body).to include(I18n.t("jobs.no_jobs.heading"))
+      expect(response.body).not_to include(I18n.t("vacancies.no_results_suggestions.heading"))
+      expect(response.body).not_to include(I18n.t("vacancies.no_results_suggestions.browse_heading"))
+    end
+  end
+
   describe "GET #campaign_landing_page" do
     before { create(:vacancy, :secondary, subjects: %w[Languages]) }
 
@@ -25,6 +35,16 @@ RSpec.describe "Vacancies" do
       get campaign_landing_page_path, params: { utm_content: "languagesbespoke" }
 
       expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe "GET #campaign_landing_page with no results" do
+    before { create(:vacancy, :past_publish, job_title: "Geography teacher", subjects: %w[Geography]) }
+
+    it "shows suggestions" do
+      get campaign_landing_page_path, params: { utm_content: "languagesbespoke" }
+
+      expect(response.body).to include(I18n.t("vacancies.no_results_suggestions.filter.subjects"))
     end
   end
 

@@ -1,0 +1,20 @@
+en:
+  vacancies:
+    no_results_suggestions:
+      spelling_html: "Did you mean %{link}?"
+      heading: "You could find more jobs by:"
+      count:
+        one: "(%{count} job)"
+        other: "(%{count} jobs)"
+      radius: "Increasing your search radius to %{radius} miles"
+      keyword: "Removing ‘%{word}’ from your keyword"
+      filter:
+        phases: "Removing the education phase filter"
+        working_patterns: "Removing the working pattern filter"
+        job_roles: "Removing the job role filter"
+        subjects: "Removing the subject filter"
+        quick_apply: "Removing the quick apply filter"
+      browse_heading: "Or browse:"
+      browse:
+        teaching: "All teaching jobs"
+        support: "All support jobs"

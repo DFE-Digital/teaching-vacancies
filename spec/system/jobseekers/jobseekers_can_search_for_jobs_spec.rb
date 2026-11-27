@@ -97,10 +97,10 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       let(:keyword) { "dark" }
 
       it "shows a wider search" do
-        expect(page).to have_content("wider location search")
+        expect(page).to have_link(I18n.t("vacancies.no_results_suggestions.radius", radius: 200))
       end
 
-      it "passes a11y", :a11y do
+      it "passes a11y", :a11y, vcr: { cassette_name: "Jobseekers_can_search_for_jobs_on_the_jobs_index_page/when_searching_using_the_desktop_search_field/when_invoking_wider_search/shows_a_wider_search" } do
         expect(page).to be_axe_clean
       end
     end
