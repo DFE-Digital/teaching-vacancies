@@ -211,7 +211,12 @@ en:
       support_roles: Support roles
 
     search:
-      location_label: City, county, or postcode
+      keyword_hint: Enter job title, skill or keywords
+      keyword_label: What
+      location_hint: Enter a postcode, town or region
+      location_label: Where
+      popular_searches: Popular keyword searches
+      subtitle: Search teaching, leadership and support roles in schools and colleges in England
       title_h1: Find school and college jobs near you
 
   pages:
