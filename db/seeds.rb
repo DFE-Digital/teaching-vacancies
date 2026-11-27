@@ -109,7 +109,7 @@ end
 # avoid users turning up in waaay to many orgs in review apps
 dummy_publisher = FactoryBot.create(:publisher)
 
-School.schools_visible_to_jobseekers.find_each(batch_size: 100).in_groups_of(4).map(&:last).each do |school|
+School.schools_visible_to_jobseekers.find_each(batch_size: 100).in_groups_of(4).filter_map(&:last).each do |school|
   phases = if school.phase.in?(%w[not_applicable middle_deemed_secondary])
              %w[secondary]
            elsif school.phase == "middle_deemed_primary"
