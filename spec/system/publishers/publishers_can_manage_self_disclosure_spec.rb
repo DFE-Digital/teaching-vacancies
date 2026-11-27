@@ -133,7 +133,8 @@ RSpec.describe "Publishers manage self disclosure", :perform_enqueued do
       after { logout }
 
       it "shows as a notification to the jobseeker", :js do
-        find(".count-badge").click
+        visit jobseekers_account_path
+        find("a[href='#{jobseekers_notifications_path}']").click
         within ".notification" do
           find("a").click
         end

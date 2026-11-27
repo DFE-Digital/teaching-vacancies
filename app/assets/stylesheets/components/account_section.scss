@@ -1,0 +1,37 @@
+.account-section {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.account-section__icon {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  background-position: center;
+  background-size: 24px;
+
+  &--profile {
+    background-color: #ddd6e8;
+  }
+
+  &--applications {
+    background-color: #f4dce5;
+  }
+
+  &--saved_jobs {
+    background-color: #e5f5fa;
+  }
+
+  &--job_alerts {
+    background-color: #cadbee;
+  }
+
+  &--notifications {
+    background-color: #cce2d8;
+  }
+
+  &--help {
+    background-color: #f3f2f1;
+  }
+}

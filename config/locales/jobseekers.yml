@@ -12,10 +12,32 @@ en:
       header:
         accessible_signed_in_as: You are signed in as
       show:
+        page_title: Your account
+        lead_in: Manage applications, job alerts, notifications, profile and account help in one place.
+        applications:
+          link: Applications
+          description: View and track jobs you have applied for, including application status.
+        saved_jobs:
+          link: Saved jobs
+          description: Review vacancies you have saved and apply when you are ready.
+        job_alerts:
+          link: Job alerts
+          description: Create, edit and delete email alerts for new jobs that match your search.
+        notifications:
+          link: Notifications
+          link_with_unread_html: Notifications (%{count}<span class="govuk-visually-hidden"> unread</span>)
+          description: Read updates from schools about your applications and other account activity.
+        profile:
+          link: Profile
+          description: Update your name, teacher reference number (TRN) and contact email address.
+        help:
+          link: Help with your account
+          description: Sign-in help, transferring account details, closing your account and email preferences.
+      help:
         close_account: Close account
         close_account_explanation: If you do not want to use your Teaching Vacancies account any more you can close your account.
         delete_account: Delete your account
-        page_title: Your account
+        page_title: Help with your account
         change_details_link_text: Change your sign in details in your GOV.UK One Login.
         data_to_change_in_govuk_one_login:
           email: email address

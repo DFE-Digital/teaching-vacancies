@@ -19,7 +19,6 @@ RSpec.describe "Jobseekers can manage their personal details" do
 
       before do
         visit jobseekers_profile_path
-        click_on "Your profile"
         click_link("Add personal details")
       end
 

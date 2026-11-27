@@ -40,6 +40,7 @@
 @use 'layouts/vacancies/show';
 
 // View Components
+@use 'components/account_section';
 @use 'components/banner_button';
 @use 'components/banners';
 @use 'components/card';

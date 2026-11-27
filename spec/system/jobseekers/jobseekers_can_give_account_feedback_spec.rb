@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can give account feedback" do
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    visit jobseekers_account_path
+    visit help_jobseekers_account_path
   end
 
   after { logout }
@@ -40,16 +40,16 @@ RSpec.describe "Jobseekers can give account feedback" do
                                   feedback_type: "jobseeker_account",
                                   user_participation_response: "interested",
                                   occupation: occupation,
-                                  origin_path: jobseekers_account_path).count
+                                  origin_path: help_jobseekers_account_path).count
       }.by(1)
-      expect(page).to have_current_path(jobseekers_account_path, ignore_query: true)
+      expect(page).to have_current_path(help_jobseekers_account_path, ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))
     end
   end
 
   describe "email opt-out" do
     before do
-      click_on I18n.t("jobseekers.accounts.show.email_preferences.link")
+      click_on I18n.t("jobseekers.accounts.help.email_preferences.link")
     end
 
     it "passes a11y", :a11y do

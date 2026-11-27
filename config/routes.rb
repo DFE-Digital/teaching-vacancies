@@ -180,6 +180,7 @@ Rails.application.routes.draw do
     resources :subscriptions, only: %i[index]
     resource :account, only: %i[show] do
       member do
+        get :help
         get :account_found
         get :account_not_found
       end

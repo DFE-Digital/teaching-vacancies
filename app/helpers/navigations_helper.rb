@@ -24,6 +24,6 @@ module NavigationsHelper
   end
 
   def your_account_active?
-    !current_page?(jobseekers_profile_path) && request.path.start_with?("/jobseekers")
+    current_page?(jobseekers_account_path)
   end
 end

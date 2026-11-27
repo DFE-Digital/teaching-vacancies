@@ -1,0 +1,31 @@
+- content_for :page_title_prefix, t(".page_title")
+
+h1.govuk-heading-l = t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h2.govuk-heading-m = t(".change_sign_in.heading")
+    p = t(".change_sign_in.description")
+    p = t(".change_sign_in.change_details_description")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".data_to_change_in_govuk_one_login.email")
+      li = t(".data_to_change_in_govuk_one_login.password")
+      li = t(".data_to_change_in_govuk_one_login.security_codes")
+    p = govuk_link_to t(".change_details_link_text"), "https://home.account.gov.uk/settings"
+
+    h2.govuk-heading-m = t(".find_account_details.heading")
+    p = t(".find_account_details.paragraph1")
+    p = t(".find_account_details.paragraph2", link: govuk_link_to(t(".find_account_details.link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
+    h2.govuk-heading-m = t(".close_account")
+    p = t(".close_account_explanation")
+
+    p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
+
+    h2.govuk-heading-m = t(".email_preferences.heading")
+    p = t(".email_preferences.description")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".email_preferences.website_updates")
+      li = t(".email_preferences.tips_to_find_a_job")
+    p = t(".email_preferences.choose_to_only")
+    p = govuk_link_to t(".email_preferences.link"), edit_jobseekers_account_email_preferences_path
