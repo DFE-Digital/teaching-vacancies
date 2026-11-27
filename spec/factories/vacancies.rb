@@ -158,7 +158,13 @@ FactoryBot.define do
 
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
-      subjects { factory_sample(VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first), 3).sort }
+      subjects do
+        if organisations.any?(:fe_college?)
+          factory_rand_sample(FURTHER_EDUCATION_SUBJECT_OPTIONS.map(&:first), 1..3).sort
+        else
+          factory_rand_sample(SUBJECT_OPTIONS.map(&:first), 1..3).sort
+        end
+      end
 
       job_title do
         role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}")

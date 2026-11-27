@@ -87,10 +87,7 @@ end
 
 active_publishers = Publisher.where(email: active_users.map { |u| u.fetch(:email) })
 
-# avoid users turning up in waaay to many orgs in review apps
-dummy_publisher = FactoryBot.create(:publisher)
-
-School.schools_visible_to_jobseekers.find_each(batch_size: 100) do |school|
+schools.each do |school|
   phases = if school.phase.in?(%w[not_applicable middle_deemed_secondary])
              %w[secondary]
            elsif school.phase == "middle_deemed_primary"
@@ -102,15 +99,29 @@ School.schools_visible_to_jobseekers.find_each(batch_size: 100) do |school|
             phases: phases,
             publisher_organisation: school,
             publisher: active_publishers.sample }
-  if schools.include?(school)
-    75.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
-    FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
-    FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
-    FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
-    FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
-  else
-    FactoryBot.create(:vacancy, :for_seed_data, **attrs, publisher: dummy_publisher)
-  end
+  25.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+  FactoryBot.create(:vacancy, :for_seed_data, :apply_via_website, **attrs)
+  FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs)
+  FactoryBot.create(:draft_vacancy, :for_seed_data, **attrs)
+  FactoryBot.build(:vacancy, :for_seed_data, :expired, **attrs).save(validate: false)
+end
+
+# avoid users turning up in waaay to many orgs in review apps
+dummy_publisher = FactoryBot.create(:publisher)
+
+School.schools_visible_to_jobseekers.find_each(batch_size: 100).in_groups_of(4).map(&:last).each do |school|
+  phases = if school.phase.in?(%w[not_applicable middle_deemed_secondary])
+             %w[secondary]
+           elsif school.phase == "middle_deemed_primary"
+             %w[primary]
+           else
+             [school.phase]
+           end
+  attrs = { organisations: [school],
+            phases: phases,
+            publisher_organisation: school,
+            publisher: dummy_publisher }
+  FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 end
 
 # Vacancies at Weydon trust central office
@@ -120,7 +131,7 @@ FactoryBot.create(:vacancy, :for_seed_data, **attrs)
 # Vacancies at multiple schools in Weydon trust
 attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: active_publishers.sample }
 # need some secondary jobs with subjects sometimes
-30.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
+20.times { FactoryBot.create(:vacancy, :for_seed_data, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: active_publishers.sample }
