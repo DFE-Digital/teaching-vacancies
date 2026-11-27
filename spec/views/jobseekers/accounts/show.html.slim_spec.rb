@@ -26,7 +26,9 @@ RSpec.describe "jobseekers/accounts/show" do
     end
   end
 
-  it "shows a decorative icon for each section" do
-    expect(rendered).to have_css("svg[aria-hidden='true']", count: 6)
+  it "shows an icon for each section" do
+    %w[work bookmark notifications chat person help].each do |icon|
+      expect(rendered).to have_css("span.icon.icon--account-#{icon}")
+    end
   end
 end

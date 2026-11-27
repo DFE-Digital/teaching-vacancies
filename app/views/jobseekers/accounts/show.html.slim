@@ -17,8 +17,7 @@ ul.govuk-list
   - sections.each do |key, (path, icon)|
     li class="govuk-section-break govuk-section-break--visible govuk-!-padding-top-3 govuk-!-padding-bottom-3"
       .account-section
-        span class="account-section__icon account-section__icon--#{key}"
-          = inline_svg_icon(icon)
+        span class="icon icon--#{icon} account-section__icon account-section__icon--#{key}"
         div
           h2.govuk-body class="govuk-!-margin-bottom-1" = govuk_link_to link_text_overrides[key] || t(".#{key}.link"), path
           p.govuk-body class="govuk-!-margin-bottom-0" = t(".#{key}.description")
