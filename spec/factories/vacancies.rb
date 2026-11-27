@@ -143,7 +143,7 @@ FactoryBot.define do
 
     trait :for_seed_data do
       #  use a single job role for seed data - job title only depends on first role anyway
-      job_roles { [Vacancy.job_roles.keys.sample] }
+      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       visa_sponsorship_available { [true, false].sample }
