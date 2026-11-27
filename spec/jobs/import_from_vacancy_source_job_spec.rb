@@ -67,6 +67,7 @@ RSpec.describe ImportFromVacancySourceJob do
       let(:contact_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
       let(:vacancy) do
         build(:external_vacancy,
+              :full_time,
               :ect_suitable,
               phases: [],
               enable_job_applications: true,
