@@ -4,7 +4,7 @@
   = render "publishers/vacancies/review_breadcrumbs", vacancy: @vacancy
   = render "publishers/vacancies/heading", vacancy: @vacancy
 
-  = render "publishers/vacancies/review_banners/draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
+  p = render "publishers/vacancies/review_banners/draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
 
   = govuk_task_list do |task_list|
     - status = vacancy_draft_status(@current_organisation, @vacancy, :job_details)
