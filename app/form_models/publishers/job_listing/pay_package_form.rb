@@ -22,7 +22,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   class << self
     # rubocop:disable Lint/UnusedMethodArgument
     def load_from_model(vacancy, current_publisher:)
-      new(vacancy.slice(*FIELDS + %i[benefits]))
+      new(vacancy.slice(*FIELDS + %i[benefits]), vacancy)
     end
     # rubocop:enable Lint/UnusedMethodArgument
 

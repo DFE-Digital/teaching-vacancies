@@ -1,9 +1,9 @@
 = govuk_notification_banner title_text: t("banners.important") do |banner|
   - banner.with_heading(text: t("helpers.hint.publishers_job_listing_confirm_contact_details_form.banner_heading"))
 
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)

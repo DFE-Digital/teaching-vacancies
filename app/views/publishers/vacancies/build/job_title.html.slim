@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 - unless current_organisation.trust_or_la?
   = govuk_warning_text text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"), classes: "govuk-!-margin-top-0 govuk-!-margin-bottom-5"
 end
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_text_field :job_title,

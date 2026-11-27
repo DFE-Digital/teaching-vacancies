@@ -1,18 +1,18 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
 = govuk_notification_banner title_text: t("banners.important") do |notification_banner|
   - notification_banner.with_heading(text: t("helpers.label.publishers_job_listing_application_form_form.banner_text"))
 
-div data-controller="upload-documents" data-upload-documents-inactive-value=vacancy.enable_job_applications?
-  = form_for form, url: organisation_job_application_forms_path(vacancy.id) do |f|
+div data-controller="upload-documents" data-upload-documents-inactive-value=@vacancy.enable_job_applications?
+  = form_for @form, url: organisation_job_application_forms_path(@vacancy.id) do |f|
     = f.govuk_error_summary
 
-    = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+    = vacancy_form_page_heading(@vacancy, step_process, back_path: back_path, fieldset: false)
 
     - if params["back_to_#{action_name}"]
       = f.hidden_field "back_to_#{action_name}", value: "true"
 
-    - if vacancy.application_form.blank?
+    - if @vacancy.application_form.blank?
       = f.govuk_file_field :application_form,
         javascript: true,
         label: { size: "m" },
@@ -23,10 +23,10 @@ div data-controller="upload-documents" data-upload-documents-inactive-value=vaca
       dl.govuk-summary-list
         .govuk-summary-list__row
           dt.govuk-summary-list__key = t("helpers.label.publishers_job_listing_application_form_form.application_form")
-          - if vacancy.application_form.blob.malware_scan_clean?
-            dd.govuk-summary-list__value == govuk_link_to("#{vacancy.application_form.filename}  (#{number_to_human_size(vacancy.application_form.byte_size)})", vacancy.application_form, download: "true")
+          - if @vacancy.application_form.blob.malware_scan_clean?
+            dd.govuk-summary-list__value == govuk_link_to("#{@vacancy.application_form.filename}  (#{number_to_human_size(@vacancy.application_form.byte_size)})", @vacancy.application_form, download: "true")
           - else
-            dd.govuk-summary-list__value = vacancy.application_form.filename.to_s
+            dd.govuk-summary-list__value = @vacancy.application_form.filename.to_s
           dd.govuk-summary-list__actions = remove_application_form_link
 
     = render "publishers/vacancies/vacancy_form_partials/submit", f: f

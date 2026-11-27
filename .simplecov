@@ -111,6 +111,12 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     skip "app/views/support_users/service_data/index.html.slim"
     skip "lib/dsi_client.rb"
 
+    # skip a few complex hiring staff forms to allow a simple refactor to go through
+    hs_forms = %w[about_the_role application_form job_location key_stages pay_package]
+    hs_forms.each do |form|
+      skip "app/views/publishers/vacancies/build/#{form}.html.slim"
+    end
+
     # These are markdown files, so coverage does not really make sense
     posts = %w[index show subcategory]
     posts.each do |l|

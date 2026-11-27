@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
-  = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+  = vacancy_form_page_heading(@vacancy, step_process, back_path: back_path, fieldset: false)
 
-  - if vacancy.disable_editing_publish_on?
+  - if @vacancy.disable_editing_publish_on?
     #publish_on
       legend.govuk-fieldset__legend.govuk-fieldset__legend--m
         .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_day")

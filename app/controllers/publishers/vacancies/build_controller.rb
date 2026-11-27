@@ -7,8 +7,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   before_action :set_steps
   before_action :setup_wizard
 
-  helper_method :form
-
   before_action :strip_checkbox_params, only: %i[update]
   before_action :set_school_options
 
@@ -50,8 +48,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::WizardBase
   end
 
   private
-
-  attr_reader :form
 
   def form_params
     case step

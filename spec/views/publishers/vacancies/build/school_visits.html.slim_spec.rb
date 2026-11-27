@@ -10,7 +10,8 @@ RSpec.describe "publishers/vacancies/build/school_visits" do
   before do
     allow(view).to receive_messages(current_organisation: local_authority, vacancy: vacancy,
                                     back_path: "",
-                                    step_process: step_process, form: form, wizard_path: "")
+                                    step_process: step_process, wizard_path: "")
+    assign(:form, form)
     render
   end
 

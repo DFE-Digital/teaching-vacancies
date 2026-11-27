@@ -1,6 +1,6 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
-= form_for form, url: wizard_path(current_step), method: :patch do |f|
+= form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_url_field :application_link, label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" }
