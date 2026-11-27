@@ -1,9 +1,7 @@
 class Geocoding
-  # The geographical coordinates of the UK are stable and unlikely to change, allowing us to cache the results for an
-  # extended period.
-  # Due to the high volume of location searches we receive daily (over 70k/day at the time of writing),
-  # the cache refresh period significantly impacts our Google Geocoding API usage and billing.
-  CACHE_DURATION = 180.days
+  # Coordinates are stored in the geocoded_locations table (see GeocodedLocation) rather than in Rails.cache:
+  # the cache is short-lived and evicts entries oldest-first, while the volume of location searches we receive
+  # daily (over 70k/day at the time of writing) makes every avoided Google Geocoding API call a cost saving.
 
   ACCEPTED_UK_CENTROID_LOCATIONS = ["united kingdom", "uk", "gb", "great britain", "britain"].freeze
   COORDINATES_UK_CENTROID = [55.378051, -3.435973].freeze
@@ -16,23 +14,25 @@ class Geocoding
   end
 
   def coordinates
-    Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      # 'components: "country:gb"' is used to restrict the results to within the UK.
-      # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
-      Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
-        trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
-      end
-    rescue Geocoder::OverQueryLimitError
-      trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
-      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-      Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
-    end || no_coordinates_match
+    return no_coordinates_match if lookup_key.blank?
+
+    stored = GeocodedLocation.find_by(query: lookup_key)
+    return stored_coordinates(stored) if stored&.fresh?
+
+    coords, confirmed_no_match = legacy_cached_coordinates || fetch_coordinates
+    if coords
+      GeocodedLocation.store!(lookup_key, coords)
+      coords
+    else
+      GeocodedLocation.store!(lookup_key, nil) if confirmed_no_match
+      stored&.coordinates || no_coordinates_match # a stale row is better than no answer when the APIs fail
+    end
   end
 
   # Why not use: 'Geocoder.search(value).map(&:country).include?("United Kingdom")'?
   #
   # This would always trigger a new API call to Geocoder, which is not ideal.
-  # We are already caching all the search location coordinates to avoid unnecessary API calls and costs.
+  # We are already storing all the search location coordinates to avoid unnecessary API calls and costs.
   # We want to avoid triggering API calls when possible and reduce costs.
   #
   # The search call also marks some legitimate UK location terms (suggested by Google Place Autocomplete) as outside the UK.
@@ -51,24 +51,6 @@ class Geocoding
     end
   end
 
-  def postcode_from_coordinates # rubocop:disable Metrics/AbcSize
-    Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      result = Geocoder.search(location, lookup: :google).first
-      if result.present?
-        postcode = result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name")
-        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: postcode)
-        postcode
-      else
-        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: nil)
-        nil
-      end
-    rescue Geocoder::OverQueryLimitError
-      trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: "OVER_QUERY_LIMIT")
-      Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
-      fallback_postcode_from_coords
-    end || no_postcode_match
-  end
-
   private
 
   def trigger_google_geocoding_api_hit_event(type:, location:, result:)
@@ -79,23 +61,35 @@ class Geocoding
     DfE::Analytics::SendEvents.do([event])
   end
 
-  def fallback_postcode_from_coords(service: :nominatim)
-    result = Geocoder.search(location, lookup: service).first.data
-    if result["error"].present?
-      Rails.logger.error("Geocoding Nominatim API responded with error: #{result['error']}")
-      no_postcode_match
-    else
-      result["address"]["postcode"]
-    end
+  def lookup_key
+    @lookup_key ||= GeocodedLocation.normalise(location)
+  end
+
+  def stored_coordinates(stored)
+    stored.no_match? ? no_coordinates_match : stored.coordinates
+  end
+
+  # TODO: remove once the Rails cache no longer holds geocoding entries from before GeocodedLocation existed.
+  def legacy_cached_coordinates
+    cached = Rails.cache.read([:geocoding, location])
+    [cached, false] if cached
+  end
+
+  # Returns the coordinates, and whether Google positively reported no result (as opposed to failing).
+  def fetch_coordinates
+    # 'components: "country:gb"' is used to restrict the results to within the UK.
+    # When searching for a location outside the UK, the Google Geocoding API returns the UK centroid coordinates.
+    coords = Geocoder.coordinates(location, lookup: :google, components: "country:gb")
+    trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
+    [coords, coords.nil?]
+  rescue Geocoder::OverQueryLimitError
+    trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
+    Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
+    [Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names), false]
   end
 
   def no_coordinates_match
-    Rails.logger.info("The Geocoder API returned no coordinates match (0, 0) for '#{location}'. This was not cached.")
+    Rails.logger.info("The Geocoder API returned no coordinates match (0, 0) for '#{location}'.")
     COORDINATES_NO_MATCH
-  end
-
-  def no_postcode_match
-    Rails.logger.info("The Geocoder API returned no postcode match for '#{location}'. This was not cached.")
-    nil
   end
 end
