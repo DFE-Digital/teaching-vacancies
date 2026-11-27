@@ -7657,8 +7657,8 @@ app/views/vacancies/listing/_job_details.html.slim:
     percent: 93.16
     missed: 8
   branches:
-    percent: 82.69
-    missed: 9
+    percent: 80.76
+    missed: 10
 app/views/vacancies/listing/_key_dates_sidebar.html.slim:
   lines:
     percent: 71.42
