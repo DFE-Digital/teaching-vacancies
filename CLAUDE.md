@@ -26,8 +26,13 @@ This section describes Claude Code's own configuration only. Project rules belon
   - Hooks should run only when needed. `settings.json` limits them with `matcher`s (`Bash` for the
     guard, `Edit|Write|MultiEdit` for the linter). Copilot's config has no matchers, so
     `lint-edited-file.rb` also skips read-only tools by name; keep both in step.
+- **`.claude/skills/`** holds the project skills: the AI mob session checklist and its step skills,
+  `grill-me`, and the design and accessibility rules that grow through AI compounding. The
+  Copilot cloud agent, CLI and VS Code read this folder too, so it is the single copy. The skills
+  are listed in the Skills and AI compounding section of [AGENTS.md](AGENTS.md); see also
+  [AI mob sessions](documentation/development/ai-mob-sessions.md).
 - **`.claude/settings.local.json`** is git-ignored and personal (extra permissions, environment
   such as `PARALLEL_TEST_PROCESSORS`). Don't commit it.
 
-If you change `.claude/settings.json` or `.claude/hooks/`, update this section in the same pull
-request.
+If you change `.claude/settings.json`, `.claude/hooks/` or the layout of `.claude/skills/`, update
+this section in the same pull request.

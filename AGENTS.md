@@ -136,6 +136,28 @@ Publishers and support users sign in with DfE Sign In; jobseekers with GOV.UK On
 
 More in [tests and linting](documentation/development/tooling/testing.md).
 
+## Skills and AI compounding
+
+Shared agent skills live in `.claude/skills/`, which Claude Code and most Copilot surfaces read. They hold
+knowledge an agent should load only when relevant: the AI mob session checklist and its steps,
+design, accessibility and other discipline rules. Universal rules stay in this file. See
+[AI mob sessions](documentation/development/ai-mob-sessions.md). Add every new skill to this table.
+
+| Skill | Use | Maintained by |
+|---|---|---|
+| `ai-mob-session` | Checklist for an AI mob session | Developers |
+| `ai-compound` | Propose rules from a session and open the `AI compound:` PR | Developers |
+| `verify-against-plan` | Check agreed outcomes by hand in the running app | Developers |
+| `how-to-check` | Plain-language test steps for non-developers | Developers, with product and design |
+| `grill-me` | Clarifying questions; copied from a third party (MIT) | Developers |
+| `ucd-principles` | User-facing changes | Developers, with designers |
+| `accessibility-review` | Views, components, front end | Developers, with designers |
+
+- Change a skill only in a separate pull request titled `AI compound: <summary>`. Never change
+  one as part of feature work. A developer approves before it merges.
+- Every rule must be safe to publish: no names, internal URLs, colleague or participant quotes,
+  or unpublished research.
+
 ## Keeping documentation current
 
 Update docs in the **same PR** as the change that makes them true. If you change the Ruby or Rails
@@ -154,8 +176,9 @@ or stale, fix it in the same PR. Also update:
 ## Git and pull requests
 
 - Branch off `main`. Short, sentence-case commit subjects.
-- Create PRs as drafts (`gh pr create --draft`); only the developer marks them ready. Keep the
-  description to a short what/why.
+- Create PRs as drafts (`gh pr create --draft`); only the developer marks them ready. The
+  exception is `AI compound:` PRs, which are opened ready for review. Keep the description to a
+  short what/why.
 - **Complete the data and schema checklist** in `.github/pull_request_template.md`. Changing a
   `Vacancy` enum, validation or database field can break DfE Analytics schemas, legacy imports,
   the DWP Find a Job export, the Publisher ATS API (which may need versioning), subscription

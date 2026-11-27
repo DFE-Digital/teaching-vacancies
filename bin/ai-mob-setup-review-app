@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Starts an AI mob session: creates a branch from an up-to-date main, pushes an empty commit and
+# opens a draft pull request labelled `deploy` and `ai-mob`, so the review app starts building
+# while the team plans. Usage: bin/ai-mob-setup-review-app <short-slug>
+#
+# Set AI_COAUTHOR to the agent's co-author trailer value, for example
+# AI_COAUTHOR="Claude Opus 5 <noreply@anthropic.com>", so the commit discloses AI assistance.
+#
+# Closing the pull request or removing the `deploy` label deletes the review app.
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+slug="${1:-}"
+if [[ ! "$slug" =~ ^[a-z0-9][a-z0-9-]*$ ]]; then
+  echo "Usage: bin/ai-mob-setup-review-app <short-slug>  (lowercase letters, numbers and hyphens)" >&2
+  exit 1
+fi
+
+if [ -z "${AI_COAUTHOR:-}" ]; then
+  echo "Set AI_COAUTHOR to the agent's co-author trailer value, e.g. \"Tool Model <noreply@example.com>\"." >&2
+  exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "Your working tree has uncommitted changes. Commit or stash them first." >&2
+  exit 1
+fi
+
+branch="ai-mob/$(date +%Y-%m-%d)-${slug}"
+
+git fetch origin main
+git switch --create "$branch" origin/main --no-track
+git commit --allow-empty --message "Start AI mob session: ${slug}" \
+  --message "Co-Authored-By: ${AI_COAUTHOR}"
+git push --set-upstream origin "$branch"
+
+body="$(cat <<'BODY'
+## Trello card URL
+
+N/A
+
+## Changes in this PR:
+
+AI mob session. Review app building from the start of the session.
+
+### Goal
+
+To be agreed in the session.
+
+### Plan
+
+Numbered outcomes, to be agreed in the session.
+
+### Session state
+
+Nothing yet.
+
+### How to check this
+
+To be written when the work is ready for testing.
+
+## Checklists:
+
+Complete the data and schema checklist from the pull request template before marking this ready.
+BODY
+)"
+
+gh pr create --draft --label deploy --label ai-mob --base main --title "AI mob session: ${slug}" --body "$body"
+
+echo
+echo "The review app is building. Its link will appear in the pull request's sticky comment."
+echo "Do not close the pull request or remove the 'deploy' label: either deletes the review app."
