@@ -346,10 +346,10 @@ app/components/tvs_classes_component.rb:
     missed: 0
 app/components/vacancy_form_page_heading_component.rb:
   lines:
-    percent: 93.1
+    percent: 90.9
     missed: 2
   branches:
-    percent: 41.66
+    percent: 30.0
     missed: 7
 app/components/vacancy_form_page_heading_component/vacancy_form_page_heading_component.html.slim:
   lines:
@@ -3506,8 +3506,8 @@ app/models/vacancy.rb:
     percent: 99.47
     missed: 1
   branches:
-    percent: 98.07
-    missed: 1
+    percent: 96.15
+    missed: 2
 app/models/vacancy_analytics.rb:
   lines:
     percent: 100.0
@@ -6383,7 +6383,7 @@ app/views/publishers/vacancies/_about_the_role.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 77.5
+    percent: 76.31
     missed: 9
 app/views/publishers/vacancies/_application_process.html.slim:
   lines:
@@ -6478,8 +6478,8 @@ app/views/publishers/vacancies/base/_twitter_x_link.html.slim:
     missed: 0
 app/views/publishers/vacancies/build/about_the_role.html.slim:
   lines:
-    percent: 91.3
-    missed: 2
+    percent: 85.71
+    missed: 3
   branches:
     percent: 60.0
     missed: 4
@@ -6506,7 +6506,7 @@ app/views/publishers/vacancies/build/application_link.html.slim:
     missed: 0
 app/views/publishers/vacancies/build/applying_for_the_job.html.slim:
   lines:
-    percent: 96.87
+    percent: 95.83
     missed: 1
   branches:
     percent: 75.0
@@ -6600,7 +6600,7 @@ app/views/publishers/vacancies/build/pay_package.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 90.0
+    percent: 87.5
     missed: 1
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
@@ -6681,14 +6681,14 @@ app/views/publishers/vacancies/documents/_documents.html.slim:
     missed: 0
 app/views/publishers/vacancies/documents/index.html.slim:
   lines:
-    percent: 95.0
+    percent: 93.33
     missed: 1
   branches:
     percent: 50.0
     missed: 4
 app/views/publishers/vacancies/documents/new.html.slim:
   lines:
-    percent: 90.9
+    percent: 87.5
     missed: 1
   branches:
     percent: 50.0
