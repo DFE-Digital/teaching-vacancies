@@ -185,6 +185,8 @@ class Vacancy < ApplicationRecord
   # Kept short and free of special characters because iTrent rejects values over 10 characters or with special characters
   OUTBOUND_UTM_PARAMS = { utm_source: "tvs", utm_medium: "referral" }.freeze
 
+  self.ignored_columns += [:contact_number_provided]
+
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
   def self.array_enums
