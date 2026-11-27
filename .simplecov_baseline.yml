@@ -5727,13 +5727,6 @@ app/views/layouts/_phase_banner.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/layouts/_publisher_secondary_nav.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 100.0
-    missed: 0
 app/views/layouts/_sentry_js_config.html.slim:
   lines:
     percent: 100.0
@@ -5748,13 +5741,6 @@ app/views/layouts/_skip_links.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/layouts/_sub_navigation.html.slim:
-  lines:
-    percent: 66.66
-    missed: 3
-  branches:
-    percent: 50.0
-    missed: 1
 app/views/layouts/action_text/contents/_content.html.slim:
   lines:
     percent: 100.0
@@ -5797,13 +5783,6 @@ app/views/layouts/print.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/layouts/subscription_campaign.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 50.0
-    missed: 4
 app/views/notifications/_notification.html.slim:
   lines:
     percent: 100.0
