@@ -8,9 +8,9 @@
             = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
           p.govuk-body.address class="govuk-!-margin-bottom-0 govuk-!-margin-top-0"
             = vacancy_full_job_location(vacancy)
-        - if malware_scan_clean?(vacancy.organisation.logo)
+        - if malware_scan_clean?(vacancy.organisation_logo)
           div class="header-with-logo-logo--search-result"
-            = image_tag(vacancy.organisation.logo, alt: "")
+            = image_tag(vacancy.organisation_logo, alt: "")
       p.govuk-body
         = safe_join([organisation_type_value(vacancy), vacancy.readable_working_patterns_with_details], " ")
       p.govuk-body

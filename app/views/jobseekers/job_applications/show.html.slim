@@ -2,7 +2,7 @@
 
 - if job_application.self_disclosure_request&.sent?
   = govuk_notification_banner title_text: t("banners.important") do |notification_banner|
-    - organisation = job_application.vacancy.organisation.name
+    - organisation = job_application.vacancy.organisation_name
     - link = govuk_link_to(t(".self_disclosure.form"), jobseekers_job_application_self_disclosure_path(job_application, Wicked::FIRST_STEP))
     - notification_banner.with_heading(text: t(".self_disclosure.cta_html", organisation:, link:))
 

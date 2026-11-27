@@ -70,7 +70,7 @@ RSpec.describe "publishers/vacancies/show" do
       expect(rendered).to have_content(vacancy.school_offer)
       expect(rendered).to have_content(vacancy.flexi_working)
 
-      expect(rendered).to have_content(vacancy.organisation.safeguarding_information)
+      expect(rendered).to have_content(vacancy.organisation_safeguarding_information)
 
       expect(rendered).to have_content(vacancy.further_details) if vacancy.further_details_provided
       expect(rendered).to have_content(I18n.t("jobs.include_additional_documents"))

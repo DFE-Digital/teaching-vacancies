@@ -99,7 +99,7 @@ RSpec.describe "jobseekers/job_applications/show" do
     end
 
     it "displays common elements" do
-      expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation.name}")
+      expect(banner).to have_css(selectors[:header], text: "#{vacancy.job_title} at #{vacancy.organisation_name}")
       expect(banner).to have_css(selectors[:view_link], text: "View job listing (opens in new tab)")
       expect(banner).to have_link("View job listing (opens in new tab)", href: job_path(vacancy))
     end
@@ -250,7 +250,7 @@ RSpec.describe "jobseekers/job_applications/show" do
       I18n.t(
         ".cta_html",
         scope:,
-        organisation: job_application.vacancy.organisation.name,
+        organisation: job_application.vacancy.organisation_name,
         link: "self-disclosure form",
       )
     end
