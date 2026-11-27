@@ -365,7 +365,8 @@ Rails.application.routes.draw do
   end
 
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { ect_statuses: ["ect_suitable"] } }
-  get "sign-up-for-FE-job-alerts", to: "subscriptions#new", as: "fe_job_alerts", defaults: { fe_job_alert: true, search_criteria: { phases: ["sixth_form_or_college"] } }
+  get "sign-up-for-FE-job-alerts", to: "subscriptions#new", as: "fe_job_alerts",
+                                   defaults: { fe_job_alert: true, search_criteria: { ect_statuses: ["qts_not_needed"], phases: ["sixth_form_or_college"] } }
 
   # (very) Legacy API, users unknown
   namespace :api do

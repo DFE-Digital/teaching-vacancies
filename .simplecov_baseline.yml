@@ -1301,8 +1301,8 @@ app/controllers/subscriptions_controller.rb:
     percent: 100.0
     missed: 0
   branches:
-    percent: 94.11
-    missed: 2
+    percent: 96.87
+    missed: 1
 app/controllers/support_requests_controller.rb:
   lines:
     percent: 100.0
@@ -7395,10 +7395,10 @@ app/views/subscriptions/_subscription_details.html.slim:
     missed: 1
 app/views/subscriptions/campaign/_fields.html.slim:
   lines:
-    percent: 95.0
+    percent: 95.23
     missed: 1
   branches:
-    percent: 50.0
+    percent: 62.5
     missed: 3
 app/views/subscriptions/campaign/_form.html.slim:
   lines:
