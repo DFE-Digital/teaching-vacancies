@@ -5,7 +5,7 @@ description: User-centred design, content and research principles the Teaching V
 
 # User-centred design principles
 
-Owner: design and user research. Last reviewed: 2026-11-25.
+Maintained by developers, with designers. Last reviewed: 2026-11-27.
 
 This skill grows through AI compounding. See
 `documentation/development/ai-mob-sessions.md` for how rules get here.
@@ -16,7 +16,7 @@ This skill grows through AI compounding. See
 - Write it as an instruction the agent can follow, with a short reason.
 - Keep it public-safe: state the principle, not the evidence behind it. No names, participant
   quotes or unpublished research findings.
-- Propose it in an `AI compound:` pull request, reviewed by design or research.
+- Propose it in an `AI compound:` pull request.
 - Remove rules that turn out to be wrong or that nobody uses.
 
 ## Baseline

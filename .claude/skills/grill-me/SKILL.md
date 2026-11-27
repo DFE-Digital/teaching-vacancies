@@ -7,7 +7,7 @@ description: Grill the team relentlessly about a plan, decision, or idea until t
 Vendored from https://github.com/mattpocock/skills (skills/productivity/grilling/SKILL.md)
 at commit 7739eaed7f8f3915437a8def198a6d0d7206dbc7, under the MIT licence below.
 Upstream splits this into a `grill-me` stub that calls a `grilling` skill; here it is one file
-because not every agent we use can call one skill from another.
+to keep the vendored copy simple.
 Local adaptations, marked [TV]: the "user" is the squad in an AI mob session, relayed by the
 operator. Update only by re-vendoring in an `AI compound:` PR, never with an installer.
 

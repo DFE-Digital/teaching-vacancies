@@ -5,7 +5,7 @@ description: Accessibility rules and checks the Teaching Vacancies squad has agr
 
 # Accessibility review
 
-Owner: accessibility, design and developers, shared. Last reviewed: 2026-11-25.
+Maintained by developers, with designers. Last reviewed: 2026-11-27.
 
 This skill grows through AI compounding. See
 `documentation/development/ai-mob-sessions.md` for how rules get here.
@@ -15,7 +15,7 @@ This skill grows through AI compounding. See
 - Add a rule when it is knowledge the agent should apply next time.
 - Write it as an instruction the agent can follow, with a short reason.
 - Keep it public-safe: no names, participant quotes or unpublished research findings.
-- Propose it in an `AI compound:` pull request, reviewed by at least one designer and one developer.
+- Propose it in an `AI compound:` pull request.
 - Remove rules that turn out to be wrong or that nobody uses.
 
 ## Baseline

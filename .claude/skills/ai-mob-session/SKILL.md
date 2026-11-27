@@ -1,22 +1,33 @@
 ---
 name: ai-mob-session
-description: Protocol for an AI mob session, where the whole squad works through one agent operator. Use when the operator says this is an AI mob session, or asks to plan, build or iterate on a change "with the team" or "for the mob".
+description: Checklist for an AI mob session, where the whole squad works through one agent operator. Use when the operator says this is an AI mob session, or asks to plan, build or iterate on a change "with the team" or "for the mob".
 ---
 
 # AI mob session
 
-Owner: developers. Last reviewed: 2026-11-25. The team process around this skill is in
+Maintained by developers. Last reviewed: 2026-11-27. The team process around this skill is in
 `documentation/development/ai-mob-sessions.md`.
 
 You are working with a whole squad (product, service design, design, research, accessibility
-and development) through one operator. Everything you write is read on a shared screen and may end up in this
-**public** repository, so never write names, internal URLs or quotes from team members.
+and development) through one operator. Everything you write is read on a shared screen and may end
+up in this **public** repository, so never write names, internal URLs or quotes from team members.
 
-Follow these phases in order. Do not skip ahead.
+Follow the steps in order. Each step names the skill or script to use and says what it must
+achieve, so carry on from that description if a skill doesn't load. Do not skip ahead.
 
-**Explore on request.** At any point the team may ask a what-if question, such as the
-specification a change implies or what a signed-out user would see today. Answer it from the
-codebase without editing any files, then carry on.
+**Explore on request.** At any point the team may ask a what-if question, such as the specification
+a change implies or what a signed-out user would see today. Answer it from the codebase without
+editing any files, then carry on.
+
+## 0. Start the review app, then plan mode
+
+1. Ask the operator to confirm you may open a draft pull request, because it deploys a review app.
+2. Run `bin/ai-mob-setup-review-app <short-slug>` with `AI_COAUTHOR` set to your own co-author
+   trailer value. It branches from `main`, opens a draft pull request labelled `deploy` and
+   `ai-mob`, and the review app starts building while the team plans.
+3. Tell the team that the review app link will appear in the pull request's sticky comment, and
+   that closing the pull request or removing the `deploy` label deletes the review app.
+4. **Stop and ask the operator to switch to `/plan` mode.** Grilling and planning happen there.
 
 ## 1. Understand
 
@@ -29,9 +40,9 @@ codebase without editing any files, then carry on.
 
 ## 2. Plan, then stop
 
-- Write a numbered plan: what changes, in which files, how it will be tested, and what is out of
-  scope.
-- If you are working in a pull request, put the plan in its description.
+- Write the plan as numbered, checkable outcomes: what the user will be able to do or see, which
+  files change, how it will be tested, and what is out of scope.
+- Put the plan in the pull request description.
 - **Stop and wait.** Do not edit any files until the team says "implement". If they change the
   plan, rewrite it and wait again.
 
@@ -46,40 +57,29 @@ codebase without editing any files, then carry on.
   - removing or renaming a public route
   - editing security middleware or CSRF protection
 
-  These are where the `AGENTS.md` rules on encryption, `filter_parameter_logging.rb`, the PR
-  data and schema checklist and legacy redirects apply. Say which rule applies and how you will
-  meet it.
+  These are where the `AGENTS.md` rules on encryption, `filter_parameter_logging.rb`, the PR data
+  and schema checklist and legacy redirects apply. Say which rule applies and how you will meet it.
 
-## 4. Session state (at an impasse, or when the team pauses)
+## 4. Verify, then push once
 
-Write down where things stand so the next operator, who may be on another machine, can pick up
-where the team left off. The work carries on: keep the branch and its draft pull request.
+Use the `verify-against-plan` skill to check every agreed outcome in the running app. Push to the
+pull request branch once, when every outcome has passed or been explained. The review app was
+built at the start, so this push updates it quickly.
 
-- **Working in a pull request:** add or update a "Session state" section in its description,
-  written so it is safe to publish.
-- **Not pushed yet:** write `tmp/ai-mob-sessions/<yyyy-mm-dd>-<short-slug>.md`. The `tmp/`
-  folder is git-ignored, so this file never gets committed. Push the branch and move the state
-  into a draft pull request before handing over.
+## 5. Tell the team how to check it
 
-Include the goal, the decisions made and why, the open questions, what was tried and didn't
-work, and the next step.
+Use the `how-to-check` skill to write plain-language test steps for the people who are not
+developers, in the chat and in the pull request description.
 
-Revert the changes and close the review app only at a deadlock, or when the team decides to drop
-the idea. Write the state first.
+## 6. Session state (at a pause or an impasse)
 
-## 5. AI compounding wrap-up (end of every session)
+Write where things stand in the "Session state" section of the pull request description, so the
+next operator, who may be on another machine, can carry on. Include the goal, the decisions made
+and why, the open questions, what was tried and didn't work, and the next step. Keep the work and
+the review app. Revert the changes and close the review app only at a deadlock, or when the team
+decides to drop the idea, and write the state first.
 
-Before the session ends, list for the team:
+## 7. Compounding
 
-1. **Decisions and knowledge** from this session: design, content, accessibility, research,
-   technical. Include anything you had to be told that a rule would have answered.
-2. **Proposed rules:** for each one worth keeping, a concrete diff to the skill for its area, or
-   a new skill if none fits, or to `AGENTS.md` only if the rule is universal and short. Name the
-   owning discipline that should review it.
-3. **Rules that were wrong or unused:** propose removing or rewording them.
-
-The team chooses which proposals to keep. Do not apply them inside the feature work. They go in
-a separate small pull request titled `AI compound: <summary>`, reviewed by the owning
-discipline. Every proposed rule must be
-generic and public-safe: no names, no internal URLs, no participant quotes, no unpublished
-research findings.
+Use the `ai-compound` skill to propose rules from the session and, once the team has chosen, to
+open the `AI compound:` pull request.
