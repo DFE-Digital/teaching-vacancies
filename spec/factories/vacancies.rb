@@ -148,11 +148,12 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
-      job_roles { factory_rand_sample(Vacancy.job_roles.keys, 2..4) }
+      #  use a single job role for seed data - job title only depends on first role anyway
+      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
       is_job_share { [true, false].sample }
       visa_sponsorship_available { [true, false].sample }
-      working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
+      working_patterns { factory_rand_sample(Vacancy::WORKING_PATTERNS, 1..2) }
       working_patterns_details { Faker::Educator.campus }
       phases { factory_rand_sample(Vacancy::PHASES.keys, 1..3) }
 
@@ -163,10 +164,16 @@ FactoryBot.define do
 
       # Subjects are ignored when phases don't include secondary
       # SUBJECT_OPTIONS is a list of pairs (to go directly into an HTML select)
-      subjects { factory_sample(VACANCY_SEARCH_SUBJECT_OPTIONS.map(&:first), 3).sort }
+      subjects do
+        if organisations.any?(&:fe_college?)
+          factory_rand_sample(FURTHER_EDUCATION_SUBJECT_OPTIONS.map(&:first), 1..3).sort
+        else
+          factory_rand_sample(SUBJECT_OPTIONS.map(&:first), 1..3).sort
+        end
+      end
 
       job_title do
-        role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}", default: "Teacher")
+        role_name = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_roles.first}")
         base = if subjects.present? && Vacancy::TEACHING_JOB_ROLES.include?(job_roles.first)
                  "#{role_name} (#{subjects.join(', ')})"
                else
