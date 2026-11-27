@@ -157,7 +157,51 @@ end
 # still need to delete jobs without an organisation
 Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)
 
-# Adds one ATS API Client for testing locally or on review apps
-if ENV["ATS_API_CLIENT_TESTING_API_KEY"].present?
-  PublisherAtsApiClient.create(name: "Testing ATS Client", api_key: ENV["ATS_API_CLIENT_TESTING_API_KEY"], last_rotated_at: Time.current)
+# ATS API client and its vacancies, for testing locally or on review apps.
+# Most live vacancies come in through the ATS API, so review apps need some too.
+ats_api_client = PublisherAtsApiClient.create!(
+  name: "Testing ATS Client",
+  api_key: ENV.fetch("ATS_API_CLIENT_TESTING_API_KEY") { SecureRandom.hex(20) },
+  last_rotated_at: Time.current,
+)
+
+ats_job_titles = [
+  "Teacher of English",
+  "Teacher of Maths",
+  "Teacher of Science",
+  "Class Teacher",
+  "Head of Geography",
+  "Teaching Assistant",
+  "SENCo",
+  "Deputy Headteacher",
+  "School Business Manager",
+  "Site Manager",
+].freeze
+
+weydon_schools = weydon_trust.schools.first(3)
+ats_organisations = schools.map { |school| { organisations: [school], phase: school.phase } }
+ats_organisations << { organisations: weydon_schools, phase: weydon_schools.first.phase }
+ats_organisations << { organisations: [weydon_trust], phase: weydon_schools.first.phase }
+
+30.times do |index|
+  organisation = ats_organisations[index % ats_organisations.size]
+  # Spread closing dates either side of the 6 months used by the other seeded vacancies, so external vacancies
+  # appear on the first page of the default (closing date) search results.
+  expires_at = (index + 1).weeks.from_now.change(hour: 12)
+
+  FactoryBot.create(
+    :external_vacancy,
+    :for_seed_data,
+    salary_type: :salary,
+    publisher: nil,
+    publisher_organisation: nil,
+    publisher_ats_api_client: ats_api_client,
+    external_source: nil,
+    external_advert_url: "https://ats.example.com/jobs/SEED-#{index + 1}",
+    external_reference: "SEED-#{index + 1}",
+    expires_at: expires_at,
+    job_title: ats_job_titles[index % ats_job_titles.size],
+    phases: [Vacancy::PHASES.key?(organisation[:phase].to_sym) ? organisation[:phase] : "secondary"],
+    organisations: organisation[:organisations],
+  )
 end

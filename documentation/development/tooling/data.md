@@ -5,6 +5,12 @@ on first start and which you run yourself in the native setup. The seeds generat
 vacancies, job applications, and users, as well as importing required data from a number of
 external services.
 
+The seeds also create a "Testing ATS Client" ATS API client with 30 live, model-validated external
+vacancies for the [Publisher ATS API](../../service/integrations/publisher-ats-api.md). Most live
+vacancies arrive this way, so review apps include them so that QA covers external vacancies too.
+They close between 1 and 30 weeks after seeding, mostly before the other seeded vacancies, so they
+fill the first page of the default (closing date) search results.
+
 You shouldn't have to refresh the external data, but if you do need to, you can with the following tasks:
 
 ```bash
