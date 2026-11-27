@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
 = form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary
@@ -28,6 +28,6 @@
 
   = f.govuk_text_area(:working_patterns_details,
                       label: { class: ["govuk-label", "govuk-!-font-weight-bold"] },
-                      max_words: form.class::WORKING_PATTERNS_DETAILS_MAX_WORDS)
+                      max_words: @form.class::WORKING_PATTERNS_DETAILS_MAX_WORDS)
 
   = render "publishers/vacancies/vacancy_form_partials/submit", f: f

@@ -6593,7 +6593,7 @@ app/views/publishers/vacancies/build/key_stages.html.slim:
     percent: 100.0
     missed: 0
   branches:
-    percent: 50.0
+    percent: 66.66
     missed: 1
 app/views/publishers/vacancies/build/pay_package.html.slim:
   lines:
