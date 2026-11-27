@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, page_title_prefix(step_process,@form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @form)
 
 = form_for @form, url: wizard_path(current_step), method: :patch do |f|
   = f.govuk_error_summary

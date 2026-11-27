@@ -6476,13 +6476,6 @@ app/views/publishers/vacancies/base/_twitter_x_link.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/vacancies/build/about_the_role.html.slim:
-  lines:
-    percent: 85.71
-    missed: 3
-  branches:
-    percent: 60.0
-    missed: 4
 app/views/publishers/vacancies/build/anonymise_applications.html.slim:
   lines:
     percent: 100.0
@@ -6490,13 +6483,6 @@ app/views/publishers/vacancies/build/anonymise_applications.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/vacancies/build/application_form.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 70.0
-    missed: 3
 app/views/publishers/vacancies/build/application_link.html.slim:
   lines:
     percent: 100.0
@@ -6567,13 +6553,6 @@ app/views/publishers/vacancies/build/include_additional_documents.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/vacancies/build/job_location.html.slim:
-  lines:
-    percent: 75.0
-    missed: 3
-  branches:
-    percent: 62.5
-    missed: 3
 app/views/publishers/vacancies/build/job_role.html.slim:
   lines:
     percent: 100.0
@@ -6588,20 +6567,6 @@ app/views/publishers/vacancies/build/job_title.html.slim:
   branches:
     percent: 100.0
     missed: 0
-app/views/publishers/vacancies/build/key_stages.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 66.66
-    missed: 1
-app/views/publishers/vacancies/build/pay_package.html.slim:
-  lines:
-    percent: 100.0
-    missed: 0
-  branches:
-    percent: 87.5
-    missed: 1
 app/views/publishers/vacancies/build/school_visits.html.slim:
   lines:
     percent: 100.0
